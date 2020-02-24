@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "191372154028",
+    "firebase_url": "https://letsplay-ec3be.firebaseio.com",
+    "project_id": "letsplay-ec3be",
+    "storage_bucket": "letsplay-ec3be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191372154028:android:a4c314a032c79560417b09",
+        "android_client_info": {
+          "package_name": "com.letsplay.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191372154028-7k3tr7lullhc5h24pnclcls20vser7aj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB97QJRwB9eudtYOjNfC9w7EIKJ_LX8xW0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191372154028-7k3tr7lullhc5h24pnclcls20vser7aj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
