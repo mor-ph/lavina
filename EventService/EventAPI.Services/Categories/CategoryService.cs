@@ -19,8 +19,6 @@ namespace EventAPI.Services.Categories
         }
         public async Task AddCategory(Category category)
         {
-            category.CreatedAt = DateTime.Now;
-            category.UpdatedAt = DateTime.Now;
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
 
@@ -43,7 +41,7 @@ namespace EventAPI.Services.Categories
         public async Task<IEnumerable<Category>> GetSubCategories(int parentId)
         {
             var subCategories = await _context.Categories
-                .Where(c => c.ParentId == parentId)
+                .Where(c => c.ParentCategoryId == parentId)
                 .ToListAsync();
 
             return subCategories;

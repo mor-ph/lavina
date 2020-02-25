@@ -19,7 +19,7 @@ namespace EventAPI.Controllers
     public class EventController : ControllerBase
     {
         //Database 
-        public static List<Event> events = new List<Event> { new Event { ID = 0 }, new Event { ID = 1 } };
+        public static List<Event> events = new List<Event> { new Event { Id = 0 }, new Event { Id = 1 } };
 
         //returns events in json format
         [HttpGet("getall")]
@@ -33,7 +33,7 @@ namespace EventAPI.Controllers
         [HttpGet("get/{id}")]
         public string GetEventById(int id)
         {
-            var dbEvent = events.FirstOrDefault(x => x.ID == id);
+            var dbEvent = events.FirstOrDefault(x => x.Id == id);
 
             if (dbEvent != null)
             {
@@ -53,14 +53,14 @@ namespace EventAPI.Controllers
             {
                 var evt = new Event()
                 {
-                    ID = model.ID,
+                    Id = model.ID,
                     Title = model.Title,
-                    CreatedBy = model.CreatedBy,
+                    UserCreatedById = model.CreatedBy,
                     Description = model.Description,
                     EventStartDate = model.EventStartDate,
                     PeopleNeeded = model.PeopleNeeded,
-                    Location = model.Location,
-                    EventStatus = model.EventStatus,
+                    //Location = model.Location,
+                    //EventStatus = model.EventStatus,
                     //UpdatedOn = model.UpdatedOn,
                     //CreatedOn = model.CreatedOn,
 
@@ -80,17 +80,17 @@ namespace EventAPI.Controllers
         [HttpPut("update/{id}")]
         public IActionResult UpdateEventById(int id, EventInputModel model)
         {
-            var dbEvent = events.FirstOrDefault(x => x.ID == id);
+            var dbEvent = events.FirstOrDefault(x => x.Id == id);
             if (dbEvent != null && ModelState.IsValid)
             {
                 dbEvent.Title = model.Title;
-                dbEvent.CreatedBy = model.CreatedBy;
+                dbEvent.UserCreatedById = model.CreatedBy;
                 dbEvent.Description = model.Description;
                 dbEvent.EventStartDate = model.EventStartDate;
                 dbEvent.PeopleNeeded = model.PeopleNeeded;
-                dbEvent.Location = model.Location;
+                //dbEvent.Location = model.Location;
                 dbEvent.UpdatedOn = DateTime.UtcNow;
-                dbEvent.EventStatus = model.EventStatus;
+                //dbEvent.EventStatus = model.EventStatus;
                 
                 return this.Ok("Event successully updated!");
 
@@ -103,7 +103,7 @@ namespace EventAPI.Controllers
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(int id)
         {
-            var dbEvent = events.FirstOrDefault(x => x.ID == id);
+            var dbEvent = events.FirstOrDefault(x => x.Id == id);
             if (dbEvent != null)
             {
                 events.Remove(dbEvent);

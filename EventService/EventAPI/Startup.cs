@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EventAPI.Controllers;
 using EventAPI.Data.Context;
+using EventAPI.Services.Categories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +33,7 @@ namespace EventAPI
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddDbContext<LetsPlayDbContext>(options =>
             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<ICategoryService,CategoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

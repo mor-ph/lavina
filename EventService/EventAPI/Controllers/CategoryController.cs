@@ -22,14 +22,14 @@ namespace EventAPI.Controllers
         {
             _categoryService = categoryService;
         }
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAllCategories()
         {
             var allCategories = await _categoryService.GetCategories();
             return Ok(allCategories);
         }
 
-        [HttpGet("get/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
             var category = await _categoryService.GetCategory(id);
@@ -43,10 +43,10 @@ namespace EventAPI.Controllers
 
             return Ok(subCategories);
         }
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> AddCategory(Category category)
         {
-            if(!ModelState.IsValid)
+            if(!ModelState.IsValid || category==null)
             {
                 return BadRequest();
             }
