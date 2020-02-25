@@ -5,7 +5,8 @@ using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using EventAPI.Models;
-using EventAPI.Models.EventInputModel;
+using EventAPI.Models.Models;
+using EventAPI.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

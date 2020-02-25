@@ -1,15 +1,14 @@
-﻿using EventAPI.Validations;
+﻿using EventAPI.Models.Enums;
+using EventAPI.Models.Validations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace EventAPI.Models.EventInputModel
+namespace EventAPI.Models.ViewModels
 {
     public class EventInputModel
     {
-
         public int ID { get; set; }
 
         [Required]
@@ -40,11 +39,9 @@ namespace EventAPI.Models.EventInputModel
         public string Title { get; set; }
 
         [Required]
-        [Range(1,int.MaxValue,ErrorMessage = "Invalid Status")]
+        [Range(1, int.MaxValue, ErrorMessage = "Invalid Status")]
         public Status EventStatus { get; set; }
 
         public int CreatedBy { get; set; }
-
-
     }
 }
