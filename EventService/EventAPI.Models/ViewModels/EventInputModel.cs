@@ -9,8 +9,6 @@ namespace EventAPI.Models.ViewModels
 {
     public class EventInputModel
     {
-        public int ID { get; set; }
-
         [Required]
         [DateValidation(ErrorMessage = "Date must be in the future")]
         [DataType(DataType.DateTime, ErrorMessage = "Invalid Date")]
@@ -29,6 +27,16 @@ namespace EventAPI.Models.ViewModels
         [MaxLength(100, ErrorMessage = "Description cannot be greater than {0}")]
         public string Description { get; set; }
         public string Location { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [MaxLength(50,ErrorMessage = "City cannot be longer that {0} symbols")]
+        public string City { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [MaxLength(50, ErrorMessage = "Category cannot be longer that {0} symbols")]
+        public string Category { get; set; }
+
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer Number")]
@@ -41,7 +49,11 @@ namespace EventAPI.Models.ViewModels
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Invalid Status")]
         public Status EventStatus { get; set; }
-
+        [Required]
+        [DataType(DataType.Text)]
+        [MaxLength(100, ErrorMessage = "Address cannot be longer that {0} symbols")]
+        public string Address { get; set; }
+        [Required]
         public int CreatedBy { get; set; }
     }
 }
