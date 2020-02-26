@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lets_play/model/category.dart';
 import 'package:lets_play/model/event.dart';
-import 'package:lets_play/model/location.dart';
 import 'package:lets_play/model/user.dart';
 import 'package:lets_play/screens/event_details_screen.dart';
 
@@ -15,14 +14,11 @@ class EventList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//    final categoryBloc = BlocProvider.of<CategoryBloc>(context);
-//    Category category = categoryBloc.selectedCategory;
-//    List<Event> sortedList = events.where((event) => event.category.id == category.id).toList();
     return events.isEmpty
         ? Column(
             children: <Widget>[
               Text(
-                'No products added yet!',
+                'No events added yet!',
                 style: Theme.of(context).textTheme.title,
               ),
               SizedBox(
@@ -78,7 +74,7 @@ class EventList extends StatelessWidget {
                   SizedBox(
                     width: 5,
                   ),
-                  Text(event.location.address),
+                  Text(event.city.name),
                 ],
               ),
               Row(

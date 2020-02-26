@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:lets_play/bloc/category/category_event.dart';
 import 'package:lets_play/model/category.dart';
 import 'package:lets_play/model/event.dart';
-import 'package:lets_play/model/location.dart';
 import 'package:lets_play/model/user.dart';
 
 import 'category_state.dart';

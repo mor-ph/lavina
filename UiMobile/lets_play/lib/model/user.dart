@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class User {
-  String uid;
+  int uid;
   String userName;
   String email;
-  String phoneNumber;
   String profileImageUrl;
   String role;
 
@@ -12,7 +11,6 @@ class User {
     @required this.uid,
     @required this.userName,
     @required this.email,
-    @required this.phoneNumber,
     @required this.profileImageUrl,
     @required this.role});
 }

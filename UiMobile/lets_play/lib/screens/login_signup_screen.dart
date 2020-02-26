@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:lets_play/model/user.dart';
+import 'package:lets_play/screens/profile_page_tab.dart';
 import 'package:lets_play/services/authentication.dart';
 import 'package:path/path.dart';
 
@@ -10,8 +12,10 @@ class LoginSignupPage extends StatefulWidget {
   static const routeName = '/signup';
   final BaseAuth auth;
   final VoidCallback loginCallback;
+  final User user;
 
-  const LoginSignupPage({this.auth, this.loginCallback});
+  const LoginSignupPage(
+      {@required this.auth, @required this.loginCallback, @required this.user});
 
   @override
   State<StatefulWidget> createState() => __LoginSignupPageState();
@@ -23,7 +27,6 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
   String _email;
   String _password;
   String _errorMessage;
-  String _phoneNumber;
   String _imageUrl;
   String _name;
   File _image;
@@ -31,11 +34,14 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
   bool _isLoginForm;
   bool _isLoading;
 
+  bool _isUpdatePage;
+
   @override
   void initState() {
     _errorMessage = "";
     _isLoading = false;
-    _isLoginForm = true;
+    _isLoginForm = widget.user != null ? false : true;
+    _isUpdatePage = widget.user != null ? true : false;
     super.initState();
   }
 
@@ -48,8 +54,8 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
       //drawer: MainDrawer(),
       body: Stack(
         children: <Widget>[
-          if (_isLoginForm) _showLoginForm(),
-          if (!_isLoginForm) _registerForm(),
+          if (_isLoginForm) _showLoginForm(context),
+          if (!_isLoginForm) _registerForm(context),
           showCircularProgress(),
         ],
       ),
@@ -97,11 +103,11 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
 
   Future<String> uploadPic() async {
     StorageReference firebaseStorageRef =
-    FirebaseStorage.instance.ref().child('images/${(_image.path)}');
+        FirebaseStorage.instance.ref().child('images/${(_image.path)}');
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
     await uploadTask.onComplete;
     print('File Uploaded');
-    firebaseStorageRef.getDownloadURL().then((fileUrl){
+    firebaseStorageRef.getDownloadURL().then((fileUrl) {
       setState(() {
         _imageUrl = fileUrl;
         print("Image seted");
@@ -125,13 +131,13 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
                 height: 180.0,
                 child: (_image != null)
                     ? Image.file(
-                  _image,
-                  fit: BoxFit.fill,
-                )
+                        _image,
+                        fit: BoxFit.fill,
+                      )
                     : Image.network(
-                  "https://images.unsplash.com/photo-1502164980785-f8aa41d53611?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-                  fit: BoxFit.fill,
-                ),
+                        "https://images.unsplash.com/photo-1502164980785-f8aa41d53611?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+                        fit: BoxFit.fill,
+                      ),
               ),
             ),
           ),
@@ -185,28 +191,8 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
               color: Colors.grey,
             )),
         validator: (value) =>
-        value.isEmpty ? 'Your name can\'t be empty' : null,
+            value.isEmpty ? 'Your name can\'t be empty' : null,
         onSaved: (value) => _name = value.trim(),
-      ),
-    );
-  }
-
-  Widget showPhoneNumberInput() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
-      child: new TextFormField(
-        maxLines: 1,
-        keyboardType: TextInputType.phone,
-        autofocus: false,
-        decoration: new InputDecoration(
-            hintText: 'Repeat Password',
-            icon: new Icon(
-              Icons.phone,
-              color: Colors.grey,
-            )),
-        validator: (value) =>
-        value.isEmpty ? 'Phone number can\'t be empty' : null,
-        onSaved: (value) => _phoneNumber = value.trim(),
       ),
     );
   }
@@ -247,24 +233,26 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
         ));
   }
 
-  Widget showSecondaryButton() {
+  Widget showSecondaryButton(BuildContext context) {
     return new FlatButton(
-        onPressed: taggleFormMode,
+        onPressed:(){
+          taggleFormMode(context);
+        },
         child: new Text(
           _isLoginForm ? 'Create an account' : 'Have an account? Sign in',
           style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300),
         ));
   }
 
-  Widget taggleFormMode() {
+  Widget taggleFormMode(BuildContext context) {
     resetForm();
     setState(() {
       _isLoginForm = !_isLoginForm;
     });
     if (_isLoginForm) {
-      return _registerForm();
+      return _registerForm(context);
     } else {
-      return _showLoginForm();
+      return _showLoginForm(context);
     }
   }
 
@@ -285,7 +273,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
     }
   }
 
-  Widget _showLoginForm() {
+  Widget _showLoginForm(BuildContext context) {
     return new Container(
       padding: EdgeInsets.all(16.0),
       child: new Form(
@@ -297,7 +285,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
               showEmailInput(),
               showPasswordInput(),
               showPrimaryButton(),
-              showSecondaryButton(),
+              showSecondaryButton(context),
               showErrorMessage(),
             ],
           )),
@@ -329,7 +317,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
 //          String url = await uploadPic();
 //          print(url);
           userId =
-          await widget.auth.signUp(_email, _password, _name, _phoneNumber, _imageUrl);
+              await widget.auth.signUp(_email, _password, _name, _imageUrl);
 
           print('Sign up user: $userId');
         }
@@ -353,7 +341,51 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
     }
   }
 
-  Widget _registerForm() {
+  Widget _registerFormButtons(BuildContext context) {
+    if (!_isUpdatePage) {
+      return Column(
+        children: <Widget>[
+          showPrimaryButton(),
+          showSecondaryButton(context),
+        ],
+      );
+    } else if (_isUpdatePage) {
+      return GestureDetector(
+        onTap: () {
+          if (_name.isEmpty) {
+            print("Event validation failed!");
+            return;
+          } else {
+//          _createOrder(_email.text,_phoneNumber.text,_name.text,_description.text,_placeLocation);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ProfilePage()));
+          }
+        },
+        child: Container(
+          margin: EdgeInsets.all(25),
+          padding: EdgeInsets.all(25),
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "SAVE",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 16),
+              )
+            ],
+          ),
+        ),
+      );
+    }
+  }
+
+  Widget _registerForm(BuildContext context) {
     return new Container(
       padding: EdgeInsets.all(16.0),
       child: new Form(
@@ -362,14 +394,16 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
             shrinkWrap: true,
             children: <Widget>[
               showProfilePhoto(),
-              if(_image == null)
-                Text("Please choose profile image!", style: TextStyle(color: Colors.red),textAlign: TextAlign.center,),
+              if (_image == null)
+                Text(
+                  "Please choose profile image!",
+                  style: TextStyle(color: Colors.red),
+                  textAlign: TextAlign.center,
+                ),
               showNameInput(),
-              showPhoneNumberInput(),
               showEmailInput(),
               showPasswordInput(),
-              showPrimaryButton(),
-              showSecondaryButton(),
+              _registerFormButtons(context),
               showErrorMessage(),
             ],
           )),

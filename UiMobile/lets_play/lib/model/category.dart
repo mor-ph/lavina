@@ -5,6 +5,7 @@ class Category {
   String name;
   int parentId;
   IconData categoryIcon;
+  bool isSelected = false;
 
-  Category({@required this.id, @required this.name, @required this.parentId, @required this.categoryIcon});
+  Category({@required this.id, @required this.name, @required this.parentId, @required this.categoryIcon, @required this.isSelected});
 }
