@@ -12,5 +12,6 @@ namespace EventAPI.Services.Categories
         Task<IEnumerable<Category>> GetCategories();
         Task<IEnumerable<Category>> GetSubCategories(int parentId);
         Task AddCategory(Category category);
+        Task<bool> CategoryExists(string name);
     }
 }
