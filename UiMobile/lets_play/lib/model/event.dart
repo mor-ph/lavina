@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lets_play/model/category.dart';
-import 'package:lets_play/model/location.dart';
+import 'package:lets_play/model/city.dart';
 import 'package:lets_play/model/user.dart';
 
 class Event {
@@ -10,8 +10,8 @@ class Event {
   String startDate;
   String description;
   DateTime createdAt;
-  Location location;
-  int peopleNeeded;
+  City city;
+  String peopleNeeded;
   DateTime updatedAt;
   String status;
   Category category;
@@ -23,7 +23,7 @@ class Event {
       @required this.startDate,
       @required this.description,
       @required this.createdAt,
-      @required this.location,
+      @required this.city,
       @required this.peopleNeeded,
       @required this.updatedAt,
       @required this.status,

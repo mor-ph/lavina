@@ -37,7 +37,7 @@ class SubCategory extends StatelessWidget {
     return CategoryListItem(
       categoryIcon: category.categoryIcon,
       categoryName: category.name,
-      selected: false,
+      category: category,
     );
   }
 }

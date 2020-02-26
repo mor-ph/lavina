@@ -6,13 +6,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:lets_play/bloc/category/category_bloc.dart';
 import 'package:lets_play/model/category.dart';
+import 'package:lets_play/model/city.dart';
 import 'package:lets_play/model/event.dart';
-import 'package:lets_play/model/location.dart';
 import 'package:lets_play/model/user.dart';
+import 'package:lets_play/screens/profile_page_tab.dart';
 import 'package:lets_play/widgets/categories.dart';
 import 'package:lets_play/widgets/event_list.dart';
 
 import 'home_page_tab.dart';
+import 'new_event_tab.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -31,25 +33,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         category: Category(id: 1, name: "Sport"),
         createdAt: DateTime.now(),
         startDate: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        peopleNeeded: 12,
-        createdByUser: User(userName: "Ivan@gmail.com"),
-        location: Location(address: "Plovdiv")),
+        peopleNeeded: 12.toString(),
+        createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
+        city: City(id: 1, name: "Plovdiv")),
     Event(
         title: "Play football",
         category: Category(id: 1, name: "Sport"),
         createdAt: DateTime.now(),
         startDate: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        peopleNeeded: 4,
-        createdByUser: User(userName: "Ivan@gmail.com"),
-        location: Location(address: "Plovdiv")),
+        peopleNeeded: 4.toString(),
+        createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
+        city: City(id: 1, name: "Plovdiv")),
     Event(
         title: "Play handball",
         category: Category(id: 1, name: "Sport"),
         createdAt: DateTime.now(),
         startDate: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        peopleNeeded: 2,
-        createdByUser: User(userName: "Ivan@gmail.com"),
-        location: Location(address: "Banq")),
+        peopleNeeded: 2.toString(),
+        createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
+        city: City(id: 1, name: "Banq")),
     Event(
         title: "Play monopolia",
         category: Category(
@@ -59,9 +61,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             parentId: 1),
         createdAt: DateTime.now(),
         startDate: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        peopleNeeded: 3,
-        createdByUser: User(userName: "Ivan@gmail.com"),
-        location: Location(address: "Plovdiv")),
+        peopleNeeded: 3.toString(),
+        createdByUser: User(uid: 2, userName: "GOsho@gmail.com"),
+        city: City(id: 1, name: "Plovdiv")),
     Event(
         title: "Play monopolia",
         category: Category(
@@ -71,9 +73,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             parentId: 3),
         createdAt: DateTime.now(),
         startDate: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        peopleNeeded: 3,
-        createdByUser: User(userName: "Ivan@gmail.com"),
-        location: Location(address: "Plovdiv")),
+        peopleNeeded: 3.toString(),
+        createdByUser: User(uid: 2, userName: "GOsho@gmail.com"),
+        city: City(id: 1, name: "Plovdiv")),
   ];
 
   @override
@@ -91,20 +93,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final appBar = AppBar(
-      title: Text(
-        'Lets Play - Home page',
-        style: TextStyle(fontFamily: 'OpenSans'),
-      ),
-    );
     return BlocProvider(
       create: (BuildContext context) => _categoryBloc,
       child: Scaffold(
-        appBar: appBar,
         body: Container(
           child: TabBarView(
             controller: _controller,
-            children: <Widget>[HomePageTab(), HomePageTab(), HomePageTab()],
+            children: <Widget>[HomePageTab(), NewEventPage(), ProfilePage()],
           ),
         ),
         bottomNavigationBar: _tabs(),

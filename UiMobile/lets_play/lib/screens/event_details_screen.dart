@@ -3,9 +3,13 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lets_play/model/event.dart';
+import 'package:lets_play/model/user.dart';
+import 'package:lets_play/screens/new_event_tab.dart';
 
 class EventDetails extends StatelessWidget {
   final Event event;
+
+  User user = User(uid: 1, userName: "Vankata", email: 'Ivan@gmail.com');
 
   EventDetails({@required this.event});
 
@@ -17,6 +21,14 @@ class EventDetails extends StatelessWidget {
           event.title,
           textAlign: TextAlign.center,
         ),
+        actions: event.createdByUser.uid == user.uid ? <Widget>[
+              IconButton(icon: Icon(Icons.edit), onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NewEventPage(event: event)),
+                );
+              }),
+        ] : <Widget>[]
       ),
       body: _eventDetails(),
     );
@@ -71,7 +83,7 @@ class EventDetails extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      event.location.address,
+                      event.city.name,
                       style: TextStyle(fontSize: 18),
                     ),
                   ],
@@ -103,13 +115,16 @@ class EventDetails extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      event.peopleNeeded.toString(),
+                      event.peopleNeeded,
                       style: TextStyle(fontSize: 18),
                     ),
                   ],
                 ),
                 descriptionBox(event),
-                Divider(height: 5,color: Colors.black,)
+                Divider(
+                  height: 5,
+                  color: Colors.black,
+                )
               ],
             ),
           ),
@@ -124,7 +139,13 @@ class EventDetails extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 100),
       child: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Text(event.description == null ? "Description" : event.description , style: TextStyle(fontWeight: FontWeight.w700, fontStyle: FontStyle.italic,),),
+        child: Text(
+          event.description == null ? "Description" : event.description,
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
       ),
       foregroundDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.0),
