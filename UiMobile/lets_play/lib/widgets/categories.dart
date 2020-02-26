@@ -141,8 +141,6 @@ class _CategoryListItemState extends State<CategoryListItem> {
                   spreadRadius: 5)
             ]),
         child: Column(
-//        mainAxisAlignment: MainAxisAlignment.spaceAround,
-
           children: <Widget>[
             Container(
               padding: EdgeInsets.all(20),
