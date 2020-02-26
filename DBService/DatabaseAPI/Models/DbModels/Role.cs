@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace DatabaseAPI.Models.DbModels
 {
-    public class Role : IdentityRole<int>
+    public class Role
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
     }
 }

@@ -26,9 +26,6 @@ namespace DatabaseAPI
             services.AddControllers();
             services.AddDbContext<AppDbContext>(options =>
             options.UseMySql(Configuration.GetConnectionString("LetsPlay")));
-            services.AddIdentity<User, Role>()
-                  .AddEntityFrameworkStores<AppDbContext>()
-                  .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
