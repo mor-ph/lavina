@@ -19,21 +19,16 @@ class SubCategory extends StatelessWidget {
     );
     return Scaffold(
       appBar: appBar,
-      body: Column(
-        children: <Widget>[
-          Container(
-            height: 120,
-            child: ListView(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              children: subCategories
-                  .where((data) => data.parentId != null)
-                  .map((data) => _buildCategoryItem(data))
-                  .toList(),
-            ),
-          ),
-          EventList(),
-        ],
+      body: Container(
+        height: 120,
+        child: ListView(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          children: subCategories
+              .where((data) => data.parentId != null)
+              .map((data) => _buildCategoryItem(data))
+              .toList(),
+        ),
       ),
     );
   }

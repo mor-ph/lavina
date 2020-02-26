@@ -1,12 +1,15 @@
 import 'dart:io';
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lets_play/bloc/category/category_bloc.dart';
+import 'package:lets_play/bloc/category/category_event.dart';
 import 'package:lets_play/model/category.dart';
 import 'package:lets_play/screens/subcategory_screen.dart';
-import 'package:lets_play/services/categoryFilter.dart';
 import 'package:lets_play/widgets/event_list.dart';
+import 'package:provider/provider.dart';
 
 class CategoryWidget extends StatefulWidget {
-
   @override
   _CategoryWidgetState createState() => _CategoryWidgetState();
 }
@@ -21,6 +24,16 @@ class _CategoryWidgetState extends State<CategoryWidget> {
         categoryIcon: Icons.directions_run,
         parentId: 1),
     Category(id: 2, name: 'Video Games', categoryIcon: Icons.videogame_asset),
+    Category(
+        id: 5,
+        name: 'Monopolia',
+        categoryIcon: Icons.directions_run,
+        parentId: 3),
+    Category(
+        id: 6,
+        name: 'Football',
+        categoryIcon: Icons.directions_run,
+        parentId: 1),
     Category(id: 3, name: 'Board Games', categoryIcon: Icons.table_chart),
     Category(id: 4, name: 'Tourism', categoryIcon: Icons.card_travel),
   ];
@@ -39,7 +52,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                 .toList(),
           ),
         ),
-       //EventList()
+        //EventList()
       ],
     );
   }
@@ -89,15 +102,19 @@ class _CategoryListItemState extends State<CategoryListItem> {
                   )),
         );
       },
-      onTap: () {
+      onTap: () async{
         if (widget.selected) {
           setState(() {
             widget.selected = false;
           });
         } else {
-          setState(() {
-            widget.selected = true;
-          });
+
+            BlocProvider.of<CategoryBloc>(context)
+                .add(CategorySelectedEvent(category: widget.category));
+
+            setState(() {
+              widget.selected = true;
+            });
         }
 
         print(widget.selected);

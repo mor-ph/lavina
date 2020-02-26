@@ -9,28 +9,15 @@ import 'package:lets_play/model/user.dart';
 import 'package:lets_play/screens/event_details_screen.dart';
 
 class EventList extends StatelessWidget {
+  final List<Event> events;
 
-  List<Event> events = [
-    Event(
-        title: "Play football",
-        category: Category(id: 1,name: "Sport"),
-        createdAt: DateTime.now(),
-        startDate: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        peopleNeeded: 12,
-        createdByUser: User(userName: "Ivan@gmail.com"),
-        location: Location(address: "Plovdiv")),
-    Event(
-        title: "Play football",
-        category: Category(id: 1,name: "Sport"),
-        createdAt: DateTime.now(),
-        startDate: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        peopleNeeded: 12,
-        createdByUser: User(userName: "Ivan@gmail.com"),
-        location: Location(address: "Plovdiv")),
-  ];
+  const EventList({this.events});
 
   @override
   Widget build(BuildContext context) {
+//    final categoryBloc = BlocProvider.of<CategoryBloc>(context);
+//    Category category = categoryBloc.selectedCategory;
+//    List<Event> sortedList = events.where((event) => event.category.id == category.id).toList();
     return events.isEmpty
         ? Column(
             children: <Widget>[
@@ -52,13 +39,14 @@ class EventList extends StatelessWidget {
         : ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            children: events.map((data) => _buildEventItem(data, context)).toList(),
+            children:
+                events.map((data) => _buildEventItem(data, context)).toList(),
           );
   }
 
   Widget _buildEventItem(Event event, BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => EventDetails(event: event)),
@@ -87,7 +75,9 @@ class EventList extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Icon(Icons.place),
-                  SizedBox(width: 5,),
+                  SizedBox(
+                    width: 5,
+                  ),
                   Text(event.location.address),
                 ],
               ),
@@ -95,7 +85,9 @@ class EventList extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Icon(Icons.access_time),
-                  SizedBox(width: 5,),
+                  SizedBox(
+                    width: 5,
+                  ),
                   Text(event.startDate),
                 ],
               ),
