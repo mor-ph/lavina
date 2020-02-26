@@ -6,8 +6,9 @@ namespace EventAPI.Models.Enums
 {
     public enum Status
     {
-        Created = 1,
-        Repeating = 2,
-        Finished = 3,
+        Upcoming = 1,
+        HappeningNow = 2,
+        Repeating = 3,
+        Finished = 4,
     }
 }
