@@ -14,6 +14,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using CommentService.Models;
 
 namespace CommentService
 {
@@ -31,8 +36,25 @@ namespace CommentService
         {
             //using Dependency Injection
             services.AddControllers();
-            services.AddDbContext<CommentDbContext>(options => 
-            options.UseInMemoryDatabase("TodoList"));
+           services.AddDbContext<CommentDBContext>(options => 
+            options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+
+            // add Authentication using jwt token
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            // whether lifetime will be validated
+                            ValidateLifetime = true,
+
+                            // setting security key
+                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                            //security key validation
+                            ValidateIssuerSigningKey = true,
+                        };
+                    });
 
             services.AddScoped<ICommentsRepository, CommentsRepository>();
         }
@@ -49,6 +71,7 @@ namespace CommentService
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
