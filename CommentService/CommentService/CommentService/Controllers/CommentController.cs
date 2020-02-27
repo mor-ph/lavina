@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CommentService.Data;
 using CommentService.Models;
 using CommentService.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,9 +15,9 @@ namespace CommentService.Controllers
     [ApiController]
     public class CommentController : ControllerBase
     {
-        public ICommentsRepository CommentRepo { get; set; }
+        private ICommentsRepository CommentRepo { get; set; }
 
-        public CommentController(ICommentsRepository _repo)
+        public CommentController(letsplayContext context, ICommentsRepository _repo)
         {
             CommentRepo = _repo;
         }
@@ -23,60 +25,38 @@ namespace CommentService.Controllers
         // GET: /Comment
         [HttpGet]
         [Route("/Comments")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
-            List<Comment> comments = new List<Comment>();
-
-            comments.Add(new Comment
-            {
-                Id = 1,
-                EventId = 1,
-                UserId = 1,
-                Message = "Some message",
-            });
-
-
-            return Ok(comments);
-
-
-            //var commentsList = await CommentRepo.GetAll();
-            //return Ok(commentsList);
+            var commentsList = await CommentRepo.GetAll();
+            return Ok(commentsList);
         }
 
-        // GET: api/Comment/5
-       //[HttpGet("{id}", Name = "GetComments")]
-       //public async Task<IActionResult> Get(int id)
-       // {
+        //GET: api/Comment/5
+        //[HttpGet("{id}", Name = "GetComments")]
+        //public async Task<IActionResult> Get(int id)
+        //{
+        //    return "value";
+        //}
 
-       //     return "value";
-       // }
-
-        // POST: /Comment
+        // POST: /Comments
         [HttpPost]
+        //[Authorize] //use jwt token
         [Route("/Comments")]
         public async Task<IActionResult> Create([FromBody] Comment item)
-            {
-            /// TODO
-            /// Check if user is authenticated from JAVA WEB API
-            /// 
-           
-
+            {           
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            //Test
-            List<Comment> comments = new List<Comment>();
-            comments.Add(item);
-            
-            //// check if this comment already exist
+
+            // check if this comment already exist
             //var commentExist = comments.FirstOrDefault(c => c.Id == item.Id);
+            //return RedirectToAction("/Comments");
 
-            // Real solution
-           await CommentRepo.Add(item);
-            return CreatedAtRoute("GetAll", new { Controller = "Comment", id = item.Id }, item);
-
+            // // Real solution
+            await CommentRepo.Add(item);
+            return Ok(CommentRepo.GetAll());
         }
 
         // PUT: api/Comment/5

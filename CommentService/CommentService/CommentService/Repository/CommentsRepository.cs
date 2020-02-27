@@ -11,8 +11,8 @@ namespace CommentService.Repository
     public class CommentsRepository : ICommentsRepository
     {
 
-        CommentDbContext _context;
-        public CommentsRepository(CommentDbContext context)
+        letsplayContext _context;
+        public CommentsRepository(letsplayContext context)
         {
             _context = context;
         }
