@@ -4,8 +4,10 @@ import 'package:intl/intl.dart';
 import 'package:lets_play/bloc/category/category_bloc.dart';
 import 'package:lets_play/bloc/category/category_state.dart';
 import 'package:lets_play/model/category.dart';
+import 'package:lets_play/model/city.dart';
 import 'package:lets_play/model/event.dart';
 import 'package:lets_play/model/user.dart';
+import 'package:lets_play/screens/subcategory_screen.dart';
 import 'package:lets_play/widgets/categories.dart';
 import 'package:lets_play/widgets/event_list.dart';
 
@@ -26,7 +28,7 @@ class HomePageTab extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       CategoryWidget(),
-                      getEventListByState(state, context),
+                      _eventListByState(state, context),
                     ],
                   ),
                 ),
@@ -36,28 +38,81 @@ class HomePageTab extends StatelessWidget {
         });
   }
 
-  Widget getEventListByState(state, context) {
+  Widget _eventListByState(state, context) {
     if (state is EventCategoryFetchedState) {
       final List<Event> events = state.events;
-      return EventList(events: events);
-    } else if (state is EventCategoryEmptyState) {
       return Column(
         children: <Widget>[
-          Text(
-            'No events added yet!',
-            style: Theme.of(context).textTheme.title,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-              height: 200,
-              child: Image.asset(
-                'assets/images/waiting.png',
-                fit: BoxFit.cover,
-              )),
+          SubCategory(
+              subCategories: state.subCategories,
+              parentCategory: state.category,
+              isSubCategory: true),
+          EventList(events: events)
         ],
       );
+    } else if (state is EventCategoryEmptyState) {
+      print("emptyState!");
+      List<Event> eventsList = [
+        Event(
+            title: "Play football",
+            category: Category(id: 1, name: "Sport"),
+            createdAt: DateTime.now(),
+            startDate: DateTime.utc(2020, 4, 2),
+            peopleNeeded: 12,
+            status: "Active",
+            createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
+            city: City(id: 1, name: "Plovdiv")),
+        Event(
+            title: "Play football",
+            category: Category(id: 1, name: "Sport"),
+            createdAt: DateTime.now(),
+            startDate: DateTime.now(),
+            status: "Active",
+            peopleNeeded: 4,
+            createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
+            city: City(id: 1, name: "Plovdiv")),
+        Event(
+            title: "Play handball",
+            category: Category(
+                id: 5,
+                name: 'Handball',
+                categoryIcon: Icons.category,
+                parentId: 1),
+            createdAt: DateTime.now(),
+            startDate: DateTime.now(),
+            peopleNeeded: 2,
+            status: "Active",
+            createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
+            city: City(id: 1, name: "Banq")),
+        Event(
+            title: "Play monopolia",
+            category: Category(
+                id: 3,
+                name: 'Monopolia',
+                categoryIcon: Icons.directions_run,
+                parentId: 1),
+            createdAt: DateTime.now(),
+            startDate: DateTime.now(),
+            status: "Active",
+            peopleNeeded: 3,
+            createdByUser: User(uid: 2, userName: "GOsho@gmail.com"),
+            city: City(id: 1, name: "Plovdiv")),
+        Event(
+            title: "Play monopolia",
+            category: Category(
+                id: 3,
+                name: 'Monopolia',
+                categoryIcon: Icons.directions_run,
+                parentId: 1),
+            createdAt: DateTime.now(),
+            startDate: DateTime.now(),
+            status: "Active",
+            peopleNeeded: 3,
+            createdByUser: User(uid: 2, userName: "GOsho@gmail.com"),
+            city: City(id: 1, name: "Plovdiv")),
+      ];
+
+      return Column(children: <Widget>[EventList(events: eventsList)]);
     }
   }
 }

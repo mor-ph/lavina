@@ -2,39 +2,100 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lets_play/model/event.dart';
 import 'package:lets_play/model/user.dart';
+import 'package:lets_play/model/user_event.dart';
 import 'package:lets_play/screens/new_event_tab.dart';
 
-class EventDetails extends StatelessWidget {
+class EventDetails extends StatefulWidget {
   final Event event;
 
+  EventDetails({@required this.event});
+
+  @override
+  _EventDetailsState createState() => _EventDetailsState();
+}
+
+class _EventDetailsState extends State<EventDetails> {
   User user = User(uid: 1, userName: "Vankata", email: 'Ivan@gmail.com');
 
-  EventDetails({@required this.event});
+  List<UserEvent> userEvents;
+
+  joinToEvent(User user, context) {
+    bool userAlreadyExist =
+        userEvents.any((userEvent) => userEvent.user.userName == user.userName);
+    if (!userAlreadyExist) {
+      setState(() {
+        widget.event.peopleNeeded--;
+      });
+      userEvents.add(new UserEvent(event: this.widget.event, user: this.user));
+    } else {
+      final snackbar = SnackBar(
+        content: Text("You are already joined to this event!"),
+        duration: Duration(milliseconds: 900),
+      );
+
+      Scaffold.of(context).showSnackBar(snackbar);
+    }
+  }
+
+  @override
+  void initState() {
+    userEvents = [];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          event.title,
+          widget.event.title,
           textAlign: TextAlign.center,
         ),
-        actions: event.createdByUser.uid == user.uid ? <Widget>[
-              IconButton(icon: Icon(Icons.edit), onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NewEventPage(event: event)),
-                );
-              }),
-        ] : <Widget>[]
+        actions: user.uid == widget.event.createdByUser.uid ?
+            <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  FlatButton(
+                    textColor: Colors.white,
+                    onPressed: () {
+                      setState(() {
+                        widget.event.isActive=false;
+                      });
+
+                      //update request to BE
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        Icon(Icons.close),
+                        Text(
+                          "Finish",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15,
+                            letterSpacing: 0.5,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ],
+                    ),
+                    shape:
+                    CircleBorder(side: BorderSide(color: Colors.transparent)),
+                  ),
+                ],
+              ),
+            ] : <Widget>[]
       ),
-      body: _eventDetails(),
+      body: Builder(builder: (context) => _eventDetailsWidget(context)),
     );
   }
 
-  Widget _eventDetails() {
+  Widget _eventDetailsWidget(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(25),
       child: Column(
@@ -56,7 +117,7 @@ class EventDetails extends StatelessWidget {
               Column(
                 children: <Widget>[
                   Text(
-                    event.createdByUser.userName,
+                    widget.event.createdByUser.userName,
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -65,6 +126,10 @@ class EventDetails extends StatelessWidget {
                   ),
                 ],
               ),
+              SizedBox(
+                width: 30,
+              ),
+              Text(widget.event.status)
             ],
           ),
           Center(
@@ -83,7 +148,7 @@ class EventDetails extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      event.city.name,
+                      widget.event.city.name,
                       style: TextStyle(fontSize: 18),
                     ),
                   ],
@@ -99,7 +164,8 @@ class EventDetails extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      event.startDate,
+                      DateFormat('yyyy-MM-dd – kk:mm')
+                          .format(widget.event.startDate),
                       style: TextStyle(fontSize: 18),
                     ),
                   ],
@@ -107,20 +173,23 @@ class EventDetails extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Icon(
-                      Icons.person_add,
-                      size: 35,
+                    IconButton(
+                      icon: Icon(
+                        Icons.person_add,
+                        size: 35,
+                      ),
+                      onPressed: () => joinToEvent(user, context),
                     ),
                     SizedBox(
                       width: 5,
                     ),
                     Text(
-                      event.peopleNeeded,
+                      widget.event.peopleNeeded.toString(),
                       style: TextStyle(fontSize: 18),
                     ),
                   ],
                 ),
-                descriptionBox(event),
+                _descriptionBox(widget.event),
                 Divider(
                   height: 5,
                   color: Colors.black,
@@ -133,7 +202,7 @@ class EventDetails extends StatelessWidget {
     );
   }
 
-  Widget descriptionBox(Event event) {
+  Widget _descriptionBox(Event event) {
     return Container(
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(bottom: 100),

@@ -4,16 +4,18 @@ import 'package:lets_play/model/city.dart';
 import 'package:lets_play/model/user.dart';
 
 class Event {
-  String id;
+  int id;
   String title;
   User createdByUser;
-  String startDate;
+  DateTime startDate;
+  String exactAddress;
   String description;
   DateTime createdAt;
   City city;
-  String peopleNeeded;
+  int peopleNeeded;
   DateTime updatedAt;
   String status;
+  bool isActive;
   Category category;
 
   Event(
@@ -27,5 +29,7 @@ class Event {
       @required this.peopleNeeded,
       @required this.updatedAt,
       @required this.status,
-      @required this.category});
+      @required this.isActive,
+      @required this.category,
+      @required this.exactAddress});
 }

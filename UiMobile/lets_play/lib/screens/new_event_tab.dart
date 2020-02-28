@@ -1,9 +1,13 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:lets_play/enums/repeating_enum.dart';
 import 'package:lets_play/model/category.dart';
 import 'package:lets_play/model/city.dart';
 import 'package:lets_play/model/event.dart';
 import 'package:lets_play/screens/home_page_tab.dart';
+import 'package:lets_play/widgets/new_category.dart';
 
 class NewEventPage extends StatefulWidget {
   final Event event;
@@ -23,6 +27,9 @@ class _NewOrderScreenState extends State<NewEventPage> {
   final _name = TextEditingController();
   final _description = TextEditingController();
   final _peopleNeeded = TextEditingController();
+  final _exactAddress = TextEditingController();
+  bool _isRepeating = false;
+  int _repeatingPeriod;
 
   List<City> _cities = [
     City(id: 1, name: 'Plovdiv'),
@@ -59,7 +66,7 @@ class _NewOrderScreenState extends State<NewEventPage> {
       _email.text = widget.event.createdByUser.userName;
       _name.text = widget.event.title;
       _description.text = widget.event.description;
-      _peopleNeeded.text = widget.event.peopleNeeded;
+      _peopleNeeded.text = widget.event.peopleNeeded.toString();
     }
 
     super.initState();
@@ -90,6 +97,7 @@ class _NewOrderScreenState extends State<NewEventPage> {
             _showCategoryDropDown(),
             _showDateInput(),
             _showCitiesDropDown(),
+            _showExactAddressInput(),
             _showPeopleInput(),
             _showDescription(),
             SizedBox(
@@ -113,6 +121,7 @@ class _NewOrderScreenState extends State<NewEventPage> {
           print("Event validation failed!");
           return;
         } else {
+          //create Event and UserEvent
 //          _createOrder(_email.text,_phoneNumber.text,_name.text,_description.text,_placeLocation);
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => HomePageTab()));
@@ -141,34 +150,72 @@ class _NewOrderScreenState extends State<NewEventPage> {
     );
   }
 
+  void _addNewCategory(Category selectCategory, String name) {
+
+    final category = Category(id: _categories.length+1 ,categoryIcon: Icons.category, name: name, parentId: selectCategory.id);
+    setState(() {
+        _categories.add(category);
+    });
+  }
+
+  void _startAddNewCategory(BuildContext context) {
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+        isScrollControlled: true,
+        context: context,
+        builder: (_) {
+          return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: GestureDetector(
+                onTap: () {},
+                child: NewCategory(_addNewCategory, _categories),
+                behavior: HitTestBehavior.opaque,
+              ));
+        });
+  }
+
   Widget _showCategoryDropDown() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: 40),
           child: Center(
-            child: DropdownButton(
-              hint:
-                  Text('Please choose a category', textAlign: TextAlign.center),
-              // Not necessary for Option 1
-              value: _selectCategory,
-              onChanged: (newValue) {
-                setState(() {
-                  _selectCategory = newValue;
-                });
-              },
-              items: _categories.map((category) {
-                return DropdownMenuItem(
-                  value: category,
-                  child: new Text(
-                    category.name,
-                    textAlign: TextAlign.center,
-                  ),
-                );
-              }).toList(),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                DropdownButton(
+                  hint: Text('Please choose a category',
+                      textAlign: TextAlign.center),
+                  // Not necessary for Option 1
+                  value: _selectCategory,
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectCategory = newValue;
+                    });
+                  },
+                  items: _categories.map((category) {
+                    return DropdownMenuItem(
+                      value: category,
+                      child:
+//                          ExpansionTile(
+//                            title: Text("Expansion Title"),
+//                            children: <Widget>[Text("children 1"), Text("children 2")],
+//                          ),
+                      new Text(
+                        category.name,
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  }).toList(),
+                ),
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () => _startAddNewCategory(context),
+                )
+              ],
             ),
           ),
         ),
@@ -186,7 +233,6 @@ class _NewOrderScreenState extends State<NewEventPage> {
           padding: const EdgeInsets.only(top: 40),
           child: Center(
             child: DropdownButton(
-
               hint: Text('Please choose the city', textAlign: TextAlign.center),
               // Not necessary for Option 1
               value: _selectCity,
@@ -271,6 +317,25 @@ class _NewOrderScreenState extends State<NewEventPage> {
     );
   }
 
+  Widget _showExactAddressInput() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      child: new TextFormField(
+        maxLines: 1,
+        keyboardType: TextInputType.text,
+        autofocus: false,
+        controller: _exactAddress,
+        decoration: new InputDecoration(
+            hintText: 'Exact address',
+            icon: new Icon(
+              Icons.add_location,
+              color: Colors.grey,
+            )),
+        onSaved: (value) => _exactAddress.text = value.trim(),
+      ),
+    );
+  }
+
   Widget _showDateInput() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -284,10 +349,14 @@ class _NewOrderScreenState extends State<NewEventPage> {
                 minTime: DateTime.now(),
                 maxTime: DateTime(2025, 1, 1, 1, 2), onChanged: (date) {
               print('change $date');
-              _dateTime = date;
+              setState(() {
+                _dateTime = date;
+              });
             }, onConfirm: (date) {
               print('confirm $date');
-              _dateTime = date;
+              setState(() {
+                _dateTime = date;
+              });
             }, currentTime: DateTime.now(), locale: LocaleType.en);
           },
           child: Row(
@@ -295,7 +364,9 @@ class _NewOrderScreenState extends State<NewEventPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Choose date & time",
+                _dateTime == null
+                    ? "Choose date & time"
+                    : DateFormat('yyyy-MM-dd – kk:mm').format(_dateTime),
                 style: TextStyle(color: Colors.blue),
               ),
               SizedBox(
@@ -309,9 +380,54 @@ class _NewOrderScreenState extends State<NewEventPage> {
                 Icons.access_time,
                 size: 35,
               ),
+              SizedBox(
+                width: 15,
+              ),
             ],
           ),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            _isRepeating
+                ? DropdownButton(
+                    hint: Text('Please choose a period',
+                        textAlign: TextAlign.center),
+                    // Not necessary for Option 1
+                    value: _repeatingPeriod,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _repeatingPeriod = newValue;
+                      });
+                    },
+                    items: Repeating.values.map((repeat) {
+                      return DropdownMenuItem(
+                        value: repeat.index,
+                        child: new Text(
+                          EnumToString.parse(repeat),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    }).toList(),
+                  )
+                : Text("Repeating off"),
+            Switch(
+              value: _isRepeating,
+              onChanged: (value) {
+                print(value);
+                setState(() {
+                  _isRepeating = value;
+                  if (!value) {
+                    _repeatingPeriod = null;
+                  }
+                });
+              },
+              activeTrackColor: Colors.lightGreenAccent,
+              activeColor: Colors.green,
+            ),
+          ],
+        )
       ],
     );
   }
