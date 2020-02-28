@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using EventAPI.Configuration;
 using EventAPI.Controllers;
 using EventAPI.Data.Context;
@@ -63,7 +64,7 @@ namespace EventAPI
             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<ICategoryService,CategoryService>();
             services.AddTransient<IEventService, EventService>();
-
+            services.AddAutoMapper(typeof(Startup).Assembly);
 
 
 

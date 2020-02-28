@@ -9,6 +9,7 @@ namespace EventAPI.Models.ViewModels
 {
     public class EventInputModel
     {
+        public int Id { get; set; }
         [Required]
         [DateValidation(ErrorMessage = "Date must be in the future")]
         [DataType(DataType.DateTime, ErrorMessage = "Invalid Date")]

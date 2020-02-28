@@ -50,7 +50,7 @@ namespace EventAPI.Data.Context
                 entity.Property(e => e.ParentCategoryId).HasColumnName("ParentCategoryID");
 
                 entity.HasOne(d => d.ParentCategory)
-                    .WithMany(p => p.InverseParentCategory)
+                    .WithMany(p => p.SubCategories)
                     .HasForeignKey(d => d.ParentCategoryId)
                     .HasConstraintName("FK_Categories_Categories_ParentCategoryID");
             });

@@ -9,6 +9,7 @@ namespace CommentService.Repository
     public interface ICommentsRepository
     {
         Task Add(Comment item);
+
         Task<IEnumerable<Comment>> GetAll();
     }
 }

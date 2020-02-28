@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using EventAPI.Data.Context;
 using EventAPI.Models;
 using EventAPI.Models.Models;
+using EventAPI.Models.ViewModels.Categories;
 using EventAPI.Services.Categories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,18 +20,24 @@ namespace EventAPI.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
+        private readonly IMapper _mapper;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService, IMapper mapper)
         {
             _categoryService = categoryService;
+            _mapper = mapper;
         }
+        //GET: api/category
         [HttpGet]
         public async Task<IActionResult> GetAllCategories()
         {
             var allCategories = await _categoryService.GetCategories();
-            return Ok(allCategories);
-        }
 
+            var categoriesToReturn = _mapper.Map<IEnumerable<MainCategoriesViewModel>>(allCategories);
+            return Ok(categoriesToReturn);
+            //return Ok(allCategories);
+        }
+        //GET: api/category/id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
@@ -36,6 +45,7 @@ namespace EventAPI.Controllers
 
             return Ok(category);
         }
+        // GET: api/category/getsub/id
         [HttpGet("getsub/{id}")]
         public async Task<IActionResult> GetSubCategories(int id)
         {
@@ -43,16 +53,22 @@ namespace EventAPI.Controllers
 
             return Ok(subCategories);
         }
+        // POST: api/category
         [HttpPost]
-        public async Task<IActionResult> AddCategory(Category category)
+        public async Task<IActionResult> AddCategory([FromBody] CategoriesAddViewModel category)
         {
-            if(!ModelState.IsValid || category==null)
+            if(ModelState.IsValid)
             {
-                return BadRequest();
-            }
+                if (await _categoryService.CategoryExists(category.Name)) 
+                    return BadRequest("Category already exists");
 
-            await _categoryService.AddCategory(category);
-            return StatusCode(201);
+                var addcategory = _mapper.Map<Category>(category);
+
+                await _categoryService.AddCategory(addcategory);
+                return StatusCode(201, "Successfully added category");
+ 
+            }
+            return BadRequest();
         }
 
        

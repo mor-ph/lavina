@@ -8,7 +8,7 @@ namespace EventAPI.Models.Models
         public Category()
         {
             Events = new HashSet<Event>();
-            InverseParentCategory = new HashSet<Category>();
+            SubCategories = new HashSet<Category>();
         }
 
         public int Id { get; set; }
@@ -17,6 +17,6 @@ namespace EventAPI.Models.Models
 
         public virtual Category ParentCategory { get; set; }
         public virtual ICollection<Event> Events { get; set; }
-        public virtual ICollection<Category> InverseParentCategory { get; set; }
+        public virtual ICollection<Category> SubCategories { get; set; }
     }
 }

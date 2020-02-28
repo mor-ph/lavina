@@ -26,14 +26,22 @@ namespace EventAPI.Services.Categories
 
         public async Task<IEnumerable<Category>> GetCategories()
         {
-            var allCategories = await _context.Categories.ToListAsync();
+            //var allCategories = await _context.Categories.Include(c => c.Events).ToListAsync();
+            //return allCategories;
 
-            return allCategories;
+            var mainCategories = await _context.Categories
+                .Include(c => c.SubCategories)
+                .ThenInclude(c => c.Events)
+                .Include(c => c.Events)
+                .Where(c => c.ParentCategoryId == null)
+                .ToListAsync();
+
+            return mainCategories;
         }
 
         public async Task<Category> GetCategory(int id)
         {
-            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            var category = await _context.Categories.Include(c => c.SubCategories).FirstOrDefaultAsync(c => c.Id == id);
 
             return category;
         }
@@ -45,6 +53,13 @@ namespace EventAPI.Services.Categories
                 .ToListAsync();
 
             return subCategories;
+        }
+        public async Task<bool> CategoryExists(string name)
+        {
+            if (await _context.Categories.AnyAsync(u => u.Name == name))
+                return true;
+
+            return false;
         }
     }
 }

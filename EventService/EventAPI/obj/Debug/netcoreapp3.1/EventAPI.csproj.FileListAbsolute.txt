@@ -202,7 +202,6 @@ C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\Event
 C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\EventAPI.Models.pdb
 C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\EventAPI.Services.pdb
 C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.csprojAssemblyReference.cache
-C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.AssemblyInfoInputs.cache
 C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.AssemblyInfo.cs
 C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.RazorTargetAssemblyInfo.cache
@@ -339,3 +338,13 @@ D:\WorkRepositories\LetsPlay\letsplay\EventService\EventAPI\bin\Debug\netcoreapp
 D:\WorkRepositories\LetsPlay\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
 D:\WorkRepositories\LetsPlay\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
 D:\WorkRepositories\LetsPlay\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.MvcApplicationPartsAssemblyInfo.cache
