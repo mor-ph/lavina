@@ -11,9 +11,19 @@ namespace DatabaseAPI.Models.DbModels
     {
 
 
-        Created = 1,
-        Repeating = 2,
-        Finished = 3,
+        Upcoming = 1,
+        HappeningNow = 2,
+        Repeating = 3,
+        Finished = 4,
+
+
+    }
+    public enum Recurring
+    {
+
+        EveryDay = 1,
+        EveryWeek = 2,
+        EveryMonth = 3,
 
 
     }
@@ -26,6 +36,7 @@ namespace DatabaseAPI.Models.DbModels
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedOn { get; set; } = DateTime.UtcNow;
         public Status EventStatus { get; set; }
+        public Recurring? Recurring { get; set; }
         public string Description { get; set; }
         public int PeopleNeeded { get; set; }
         [Required]

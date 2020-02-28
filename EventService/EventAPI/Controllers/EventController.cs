@@ -59,14 +59,14 @@ namespace EventAPI.Controllers
 
         // POST: api/event/create
         [HttpPost("create")]
-        public async Task<ActionResult<Event>> CreateEvent([FromBody] EventInputModel model)
+        public async Task<ActionResult<Event>> CreateEvent([FromBody] EventInputModel model)     
         {
             if (ModelState.IsValid)
             {
                 var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Name == model.Category);
                 var city = await _dbContext.Cities.FirstOrDefaultAsync(c => c.Name == model.City);
                 if (category == null || city == null)
-                    return BadRequest();
+                    return BadRequest("City or Category is null");
                 var evt = new Event()
                 {
                     Title = model.Title,
@@ -79,11 +79,19 @@ namespace EventAPI.Controllers
                     EventStatus = (int)model.EventStatus,
                     Address = model.Address,
                     CreatedOn = DateTime.UtcNow,
-                    UpdatedOn = DateTime.UtcNow
-                    
-                    
+                    UpdatedOn = DateTime.UtcNow,
+                
 
                 };
+                if (model.Recurring == null)
+                {
+                    evt.Recurring = null;
+                }
+                else 
+                    evt.Recurring = (int)model.Recurring;
+
+
+
                 //Add event to database and save context
                 await _eventService.CreateEvent(evt);
                 return this.Ok("Event successfuly created");

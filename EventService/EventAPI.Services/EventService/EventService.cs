@@ -59,7 +59,7 @@ namespace EventAPI.Services.EventService
             dbEvent.Address = model.Address;
             dbEvent.Category = category;
             dbEvent.City = city;
-
+            dbEvent.Recurring = (int)model.Recurring;
             await _dbContext.SaveChangesAsync();
             return true;
 

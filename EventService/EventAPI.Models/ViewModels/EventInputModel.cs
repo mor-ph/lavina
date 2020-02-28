@@ -56,5 +56,9 @@ namespace EventAPI.Models.ViewModels
         public string Address { get; set; }
         [Required]
         public int CreatedBy { get; set; }
+
+
+        [Range(1, int.MaxValue, ErrorMessage = "Invalid Reccuring data")]
+        public Recurring? Recurring { get; set; }
     }
 }

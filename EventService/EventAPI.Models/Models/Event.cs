@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventAPI.Models.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace EventAPI.Models.Models
@@ -12,6 +13,7 @@ namespace EventAPI.Models.Models
 
         public int Id { get; set; }
         public DateTime EventStartDate { get; set; }
+        public int? Recurring { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
         public int EventStatus { get; set; }

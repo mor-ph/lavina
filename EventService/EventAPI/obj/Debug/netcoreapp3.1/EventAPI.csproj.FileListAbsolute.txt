@@ -348,3 +348,5 @@ C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\Syste
 C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\AutoMapper.dll
 C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Iv\Desktop\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.MvcApplicationPartsAssemblyInfo.cache
+D:\WorkRepositories\LetsPlay\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\AutoMapper.dll
+D:\WorkRepositories\LetsPlay\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
