@@ -1,3 +1,4 @@
+import 'package:dynamic_treeview/dynamic_treeview.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -20,7 +21,7 @@ class NewEventPage extends StatefulWidget {
 
 class _NewOrderScreenState extends State<NewEventPage> {
   City _selectCity;
-  Category _selectCategory;
+  Category _selectedCategory;
   DateTime _dateTime;
   final _email = TextEditingController();
   final _errorMessage = TextEditingController();
@@ -37,25 +38,36 @@ class _NewOrderScreenState extends State<NewEventPage> {
   ];
 
   List<Category> _categories = [
-    Category(id: 1, name: 'Sport', categoryIcon: Icons.directions_run),
+    Category(id: 1, name: 'Root', parentId: -1),
     Category(
-        id: 5,
-        name: 'Handball',
-        categoryIcon: Icons.directions_run,
-        parentId: 1),
-    Category(id: 2, name: 'Video Games', categoryIcon: Icons.videogame_asset),
-    Category(
-        id: 5,
-        name: 'Monopolia',
-        categoryIcon: Icons.directions_run,
-        parentId: 3),
+        id: 2, name: 'Sport', categoryIcon: Icons.directions_run, parentId: 1),
     Category(
         id: 6,
+        name: 'Handball',
+        categoryIcon: Icons.directions_run,
+        parentId: 2),
+    Category(
+        id: 3,
+        name: 'Video Games',
+        categoryIcon: Icons.videogame_asset,
+        parentId: 1),
+    Category(
+        id: 7,
+        name: 'Monopolia',
+        categoryIcon: Icons.directions_run,
+        parentId: 4),
+    Category(
+        id: 8,
         name: 'Football',
         categoryIcon: Icons.directions_run,
+        parentId: 2),
+    Category(
+        id: 4,
+        name: 'Board Games',
+        categoryIcon: Icons.table_chart,
         parentId: 1),
-    Category(id: 3, name: 'Board Games', categoryIcon: Icons.table_chart),
-    Category(id: 4, name: 'Tourism', categoryIcon: Icons.card_travel),
+    Category(
+        id: 5, name: 'Tourism', categoryIcon: Icons.card_travel, parentId: 1),
   ];
 
   @override
@@ -94,7 +106,7 @@ class _NewOrderScreenState extends State<NewEventPage> {
           shrinkWrap: true,
           children: <Widget>[
             _showTitleInput(),
-            _showCategoryDropDown(),
+            _showCategory(),
             _showDateInput(),
             _showCitiesDropDown(),
             _showExactAddressInput(),
@@ -150,11 +162,115 @@ class _NewOrderScreenState extends State<NewEventPage> {
     );
   }
 
-  void _addNewCategory(Category selectCategory, String name) {
+  Widget _showCategory() {
+    return FlatButton(
+      padding: EdgeInsets.only(top: 35),
+      onPressed: () => _categoriesTree(),
+      child: _selectedCategory == null
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "Please choose a category",
+                  style: TextStyle(color: Colors.blue),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Icon(
+                  Icons.category,
+                  size: 35,
+                ),
+              ],
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "You category is: ",
+                  style: TextStyle(color: Colors.blue),
+                ),
+                Text(
+                  _selectedCategory.name,
+                  style: TextStyle(color: Colors.black),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Icon(
+                  Icons.category,
+                  size: 35,
+                ),
+              ],
+            ),
+    );
+  }
 
-    final category = Category(id: _categories.length+1 ,categoryIcon: Icons.category, name: name, parentId: selectCategory.id);
+  // ignore: missing_return
+  Widget _categoriesTree() {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text("Categories"),
+            ),
+            body: DynamicTreeView(
+              data: _categories, // pass here List<BaseModel>
+              config: Config(
+                  parentTextStyle: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w600),
+                  rootId: "1",
+                  parentPaddingEdgeInsets:
+                      EdgeInsets.only(left: 16, top: 0, bottom: 0)),
+              onTap: (m) {
+                print("tapped");
+                Category category;
+                try {
+                  category = m['extra']['key'];
+                } catch (e) {
+                  print(e);
+                  category = _categories.firstWhere((c) => c.id == int.parse(m['id']));
+                }
+
+                setState(() {
+                  _selectedCategory = category;
+                });
+                Navigator.of(context).pop();
+              },
+              width: MediaQuery.of(context).size.width,
+            ),
+            floatingActionButton: FloatingActionButton(
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              heroTag: Text('Approve'),
+              backgroundColor: Colors.green,
+              onPressed: () => _startAddNewCategory(context),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+          );
+        });
+  }
+
+  void _addNewCategory(Category selectCategory, String name) {
+    final category = Category(
+        id: _categories.length + 1,
+        categoryIcon: Icons.category,
+        name: name,
+        parentId: selectCategory.id);
     setState(() {
-        _categories.add(category);
+      _categories.add(category);
     });
   }
 
@@ -173,54 +289,6 @@ class _NewOrderScreenState extends State<NewEventPage> {
                 behavior: HitTestBehavior.opaque,
               ));
         });
-  }
-
-  Widget _showCategoryDropDown() {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(top: 40),
-          child: Center(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                DropdownButton(
-                  hint: Text('Please choose a category',
-                      textAlign: TextAlign.center),
-                  // Not necessary for Option 1
-                  value: _selectCategory,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectCategory = newValue;
-                    });
-                  },
-                  items: _categories.map((category) {
-                    return DropdownMenuItem(
-                      value: category,
-                      child:
-//                          ExpansionTile(
-//                            title: Text("Expansion Title"),
-//                            children: <Widget>[Text("children 1"), Text("children 2")],
-//                          ),
-                      new Text(
-                        category.name,
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  }).toList(),
-                ),
-                IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () => _startAddNewCategory(context),
-                )
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
   }
 
   Widget _showCitiesDropDown() {
