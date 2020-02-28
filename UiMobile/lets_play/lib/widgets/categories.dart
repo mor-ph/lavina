@@ -19,21 +19,12 @@ class _CategoryWidgetState extends State<CategoryWidget> {
   List<Category> categories = [
     Category(id: 1, name: 'Sport', categoryIcon: Icons.directions_run),
     Category(
-        id: 5,
-        name: 'Handball',
-        categoryIcon: Icons.directions_run,
-        parentId: 1),
+        id: 5, name: 'Handball', categoryIcon: Icons.category, parentId: 1),
     Category(id: 2, name: 'Video Games', categoryIcon: Icons.videogame_asset),
     Category(
-        id: 5,
-        name: 'Monopolia',
-        categoryIcon: Icons.directions_run,
-        parentId: 3),
+        id: 5, name: 'Monopolia', categoryIcon: Icons.category, parentId: 3),
     Category(
-        id: 6,
-        name: 'Football',
-        categoryIcon: Icons.directions_run,
-        parentId: 1),
+        id: 6, name: 'Football', categoryIcon: Icons.category, parentId: 1),
     Category(id: 3, name: 'Board Games', categoryIcon: Icons.table_chart),
     Category(id: 4, name: 'Tourism', categoryIcon: Icons.card_travel),
   ];
@@ -68,10 +59,12 @@ class _CategoryWidgetState extends State<CategoryWidget> {
         .where((data) => data.parentId != null && data.parentId == category.id)
         .toList();
     return CategoryListItem(
-        categoryIcon: category.categoryIcon,
-        categoryName: category.name,
-        subCategories: subCategories,
-        category: category);
+      categoryIcon: category.categoryIcon,
+      categoryName: category.name,
+      subCategories: subCategories == null ? categories : subCategories,
+      category: category,
+      categories: categories,
+    );
   }
 }
 
@@ -80,12 +73,14 @@ class CategoryListItem extends StatefulWidget {
   final String categoryName;
   final List<Category> subCategories;
   final Category category;
+  final List<Category> categories;
 
   CategoryListItem(
       {@required this.categoryIcon,
       @required this.categoryName,
       @required this.subCategories,
-      @required this.category});
+      @required this.category,
+      @required this.categories});
 
   @override
   _CategoryListItemState createState() => _CategoryListItemState();
@@ -95,16 +90,6 @@ class _CategoryListItemState extends State<CategoryListItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onDoubleTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => SubCategory(
-                    subCategories: widget.subCategories,
-                    parentCategory: widget.category,
-                  )),
-        );
-      },
       onTap: () async {
         if (widget.category.isSelected) {
           setState(() {
@@ -112,20 +97,26 @@ class _CategoryListItemState extends State<CategoryListItem> {
           });
         } else {
           setState(() {
+            if (widget.categories != null) {
+              widget.categories
+                  .where((cat) => cat.isSelected != null && cat.isSelected)
+                  .forEach((cat) => cat.isSelected = false);
+            }
             widget.category.isSelected = true;
           });
 
-          BlocProvider.of<CategoryBloc>(context)
-              .add(CategorySelectedEvent(category: widget.category));
+          BlocProvider.of<CategoryBloc>(context).add(CategorySelectedEvent(
+              category: widget.category, subCategories: widget.subCategories));
         }
-
-        print(widget.category.isSelected);
       },
       child: Container(
+        alignment: Alignment.topLeft,
         margin: EdgeInsets.fromLTRB(0, 6, 5, 2),
         padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
+            borderRadius: widget.category.parentId != null
+                ? BorderRadius.circular(20)
+                : BorderRadius.circular(50),
             color:
                 widget.category.isSelected ? Color(0xfffeb324) : Colors.white,
             border: Border.all(
@@ -143,10 +134,14 @@ class _CategoryListItemState extends State<CategoryListItem> {
         child: Column(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.all(20),
+              padding: widget.category.parentId != null
+                  ? EdgeInsets.all(5)
+                  : EdgeInsets.all(20),
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: widget.category.parentId != null
+                      ? BorderRadius.circular(20)
+                      : BorderRadius.circular(50),
                   border: Border.all(
                       color: widget.category.isSelected
                           ? Colors.transparent
@@ -155,16 +150,18 @@ class _CategoryListItemState extends State<CategoryListItem> {
               child: Icon(
                 widget.categoryIcon,
                 color: Colors.black,
-                size: 30,
+                size: widget.category.parentId != null ? 10 : 30,
               ),
             ),
             Text(
               widget.categoryName,
               style: TextStyle(
                 fontWeight: FontWeight.w700,
-                color: Colors.black,
+                color: widget.category.isSelected != null
+                    ? Colors.black
+                    : Colors.white,
               ),
-            )
+            ),
           ],
         ),
       ),

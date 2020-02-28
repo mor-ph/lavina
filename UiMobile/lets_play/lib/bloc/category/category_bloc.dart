@@ -11,7 +11,6 @@ import 'package:lets_play/model/user.dart';
 import 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategorySelectedEvent, EventCategorisedState> {
-  // final WeatherRepository weatherRepository;
   final List<Event> events;
 
   CategoryBloc({@required this.events}) : assert(events != null);
@@ -25,11 +24,10 @@ class CategoryBloc extends Bloc<CategorySelectedEvent, EventCategorisedState> {
     if (event is CategorySelectedEvent) {
       yield EventCategoryFetchingState();
       try {
-        //final Weather weather = await weatherRepository.getWeather(event.city);
         final Category category = event.category;
         final List<Event> sortedListEvents =
             events.where((event) => event.category.id == category.id).toList();
-        yield EventCategoryFetchedState(events: sortedListEvents);
+        yield EventCategoryFetchedState(events: sortedListEvents, category: event.category, subCategories: event.subCategories);
       } catch (_) {
         yield EventCategoryErrorState();
       }

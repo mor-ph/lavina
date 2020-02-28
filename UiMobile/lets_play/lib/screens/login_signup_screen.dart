@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class LoginSignupPage extends StatefulWidget {
-  static const routeName = '/signup';
   final BaseAuth auth;
   final VoidCallback loginCallback;
   final User user;
@@ -56,13 +55,13 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
         children: <Widget>[
           if (_isLoginForm) _showLoginForm(context),
           if (!_isLoginForm) _registerForm(context),
-          showCircularProgress(),
+          _showCircularProgress(),
         ],
       ),
     );
   }
 
-  Widget showCircularProgress() {
+  Widget _showCircularProgress() {
     if (_isLoading) {
       return Center(child: CircularProgressIndicator());
     }
@@ -77,8 +76,8 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
     _errorMessage = "";
   }
 
-  Widget showLogo() {
-    return new Hero(
+  Widget _showLogo() {
+    return Hero(
       tag: 'hero',
       child: Padding(
         padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
@@ -91,17 +90,17 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
-  Future getImage() async {
+  Future _getImageFromGallery() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       _image = image;
       print('Image Path $_image');
     });
-    uploadPic();
+    _uploadPic();
   }
 
-  Future<String> uploadPic() async {
+  Future<String> _uploadPic() async {
     StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('images/${(_image.path)}');
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
@@ -116,7 +115,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
     return _imageUrl;
   }
 
-  Widget showProfilePhoto() {
+  Widget _showProfilePhoto() {
     return new Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -150,7 +149,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
               size: 30.0,
             ),
             onPressed: () {
-              getImage();
+              _getImageFromGallery();
             },
           ),
         ),
@@ -281,7 +280,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
           child: new ListView(
             shrinkWrap: true,
             children: <Widget>[
-              showLogo(),
+              _showLogo(),
               showEmailInput(),
               showPasswordInput(),
               showPrimaryButton(),
@@ -393,7 +392,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
           child: new ListView(
             shrinkWrap: true,
             children: <Widget>[
-              showProfilePhoto(),
+              _showProfilePhoto(),
               if (_image == null)
                 Text(
                   "Please choose profile image!",

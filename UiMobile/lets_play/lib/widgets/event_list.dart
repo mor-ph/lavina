@@ -41,6 +41,7 @@ class EventList extends StatelessWidget {
   }
 
   Widget _buildEventItem(Event event, BuildContext context) {
+    bool isNewEvent = event.startDate.compareTo(DateTime.now()) > 0;
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -49,6 +50,7 @@ class EventList extends StatelessWidget {
         );
       },
       child: Card(
+        color: isNewEvent ? Colors.greenAccent : Colors.white,
         elevation: 5,
         margin: EdgeInsets.symmetric(
           vertical: 6,
@@ -84,7 +86,7 @@ class EventList extends StatelessWidget {
                   SizedBox(
                     width: 5,
                   ),
-                  Text(event.startDate),
+                  Text(DateFormat('yyyy-MM-dd – kk:mm').format(event.startDate)),
                 ],
               ),
             ],
