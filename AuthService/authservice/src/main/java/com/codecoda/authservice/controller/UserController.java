@@ -101,7 +101,7 @@ public class UserController {
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getPassword(),
-                null));
+                roles));
     }
 
     @PutMapping("/users")
