@@ -14,7 +14,7 @@ public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
 
     @Autowired
-    public RoleServiceImpl(RoleRepository theRoleRepository){
+    public RoleServiceImpl(RoleRepository theRoleRepository) {
         roleRepository = theRoleRepository;
     }
 
@@ -29,11 +29,10 @@ public class RoleServiceImpl implements RoleService {
 
         Role theRole;
 
-        if (result.isPresent()){
+        if (result.isPresent()) {
             theRole = result.get();
-        }
-        else {
-            throw  new RuntimeException("Did not find role id -" + theId);
+        } else {
+            throw new RuntimeException("Did not find role id -" + theId);
         }
         return theRole;
     }

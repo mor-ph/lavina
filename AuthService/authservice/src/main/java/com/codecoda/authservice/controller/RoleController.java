@@ -14,17 +14,17 @@ public class RoleController {
     private RoleService roleService;
 
     @Autowired
-    public RoleController(RoleService theRoleService){
+    public RoleController(RoleService theRoleService) {
         roleService = theRoleService;
     }
 
     @GetMapping("/roles")
-    public List<Role> getRoles(){
+    public List<Role> getRoles() {
         return roleService.findAll();
     }
 
     @GetMapping("/roles/{roleId}")
-    public Role getUser(@PathVariable int roleId){
+    public Role getUser(@PathVariable int roleId) {
 
         Role role = roleService.findById(roleId);
 
@@ -32,7 +32,7 @@ public class RoleController {
     }
 
     @PostMapping("/roles")
-    public Role addRole(@RequestBody Role theRole){
+    public Role addRole(@RequestBody Role theRole) {
 
         roleService.save(theRole);
 
@@ -40,7 +40,7 @@ public class RoleController {
     }
 
     @PutMapping("/roles")
-    public Role updateRole(@RequestBody Role theRole){
+    public Role updateRole(@RequestBody Role theRole) {
 
         roleService.save(theRole);
 
@@ -48,7 +48,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/users")
-    public String deleteUser(@PathVariable int theId){
+    public String deleteUser(@PathVariable int theId) {
 
         roleService.deleteById(theId);
 

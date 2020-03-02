@@ -6,27 +6,27 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="Id")
+    @Column(name = "Id")
     private int id;
 
-    @Column(name="Username")
+    @Column(name = "Username")
     private String username;
 
-    @Column(name="Password")
+    @Column(name = "Password")
     private String password;
 
-    @Column(name="Email")
+    @Column(name = "Email")
     private String email;
 
-    @Column(name="Createdat")
+    @Column(name = "Createdat")
     private LocalDateTime createdat;
 
-    @Column(name="Updatedat")
+    @Column(name = "Updatedat")
     private LocalDateTime updatedat;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -37,7 +37,7 @@ public class User {
     )
     private List<Role> roles;
 
-    public User(){
+    public User() {
 
     }
 

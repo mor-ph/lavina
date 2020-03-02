@@ -13,13 +13,14 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.Collections.emptyList;
+
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository theUserRepository){
+    public UserServiceImpl(UserRepository theUserRepository) {
         userRepository = theUserRepository;
     }
 
@@ -34,10 +35,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         User theUser;
 
-        if (result.isPresent()){
+        if (result.isPresent()) {
             theUser = result.get();
-        }
-        else {
+        } else {
             throw new RuntimeException("Did not find user id - " + theId);
         }
 
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
 
-        if (user == null){
+        if (user == null) {
             throw new UsernameNotFoundException(username);
         }
 

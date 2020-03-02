@@ -42,19 +42,19 @@ public class UserController {
     JwtUtils jwtUtils;
 
     @Autowired
-    public UserController(UserService theUserService, RoleService theRoleService){
+    public UserController(UserService theUserService, RoleService theRoleService) {
         this.userService = theUserService;
         this.roleService = theRoleService;
     }
 
     @GetMapping("/users")
-    public List<User> getUsers(){
+    public List<User> getUsers() {
 
         return userService.findAll();
     }
 
     @GetMapping("/users/{userId}")
-    public User getUser(@PathVariable int userId){
+    public User getUser(@PathVariable int userId) {
 
         User user = userService.findById(userId);
 
@@ -62,13 +62,13 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public User addUser(@RequestBody User theUser){
+    public User addUser(@RequestBody User theUser) {
 
-        if (userService.existsByUsername(theUser.getUsername())){
-            throw  new ValidationException("The username exists");
+        if (userService.existsByUsername(theUser.getUsername())) {
+            throw new ValidationException("The username exists");
         }
 
-        if (userService.existsByEmail(theUser.getEmail())){
+        if (userService.existsByEmail(theUser.getEmail())) {
             throw new ValidationException("The email exists");
         }
 
@@ -77,13 +77,13 @@ public class UserController {
         theUser.setUpdatedAt(LocalDateTime.now());
         userService.save(theUser);
 
-        return  theUser;
+        return theUser;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest loginRequest){
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest loginRequest) {
 
-        Authentication authentication =authenticationManager.authenticate(
+        Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -105,20 +105,20 @@ public class UserController {
     }
 
     @PutMapping("/users")
-    public User updateUser(@RequestBody User theUser){
+    public User updateUser(@RequestBody User theUser) {
 
         theUser.setUpdatedAt(LocalDateTime.now());
         userService.save(theUser);
 
-        return  theUser;
+        return theUser;
     }
 
     @DeleteMapping("/users/{userId}")
-    public String deleteUser(@PathVariable int userId){
+    public String deleteUser(@PathVariable int userId) {
 
         userService.deleteById(userId);
 
-        return  "Deleted user id - " + userId;
+        return "Deleted user id - " + userId;
     }
 
 }

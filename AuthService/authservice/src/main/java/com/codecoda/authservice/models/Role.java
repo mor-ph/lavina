@@ -5,15 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="Id")
+    @Column(name = "Id")
     private int id;
 
-    @Column(name="Name")
+    @Column(name = "Name")
     private String name;
 
     @ManyToMany
@@ -24,7 +24,7 @@ public class Role {
     )
     private List<User> users;
 
-    public Role(){
+    public Role() {
 
     }
 
