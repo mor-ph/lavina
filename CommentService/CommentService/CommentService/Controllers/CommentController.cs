@@ -17,7 +17,7 @@ namespace CommentService.Controllers
     {
         private ICommentsRepository CommentRepo { get; set; }
 
-        public CommentController(letsplayContext context, ICommentsRepository _repo)
+        public CommentController(CommentDBContext context, ICommentsRepository _repo)
         {
             CommentRepo = _repo;
         }
