@@ -9,11 +9,11 @@ namespace CommentService.Data
 {
     public class AuthOptions
     {
-        const string KEY = "cAtwa1kkEy";   // key for encoding
-        public const int LIFETIME = 999; // token lifetime
+        const string SECRET_KEY = "MaYzkSjmkzPC57Lfghdfhgdhdfhdghfgghgjhggjgfjfgjd";   // key for encoding
+        public const int LIFETIME = 1200000; // token lifetime
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {
-            return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(KEY));
+            return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SECRET_KEY));
         }
     }
 }

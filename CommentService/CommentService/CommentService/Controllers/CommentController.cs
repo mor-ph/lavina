@@ -17,7 +17,7 @@ namespace CommentService.Controllers
     {
         private ICommentsRepository CommentRepo { get; set; }
 
-        public CommentController(CommentDBContext context, ICommentsRepository _repo)
+        public CommentController(ICommentsRepository _repo)
         {
             CommentRepo = _repo;
         }
@@ -38,9 +38,9 @@ namespace CommentService.Controllers
         //    return "value";
         //}
 
-        // POST: /Comments
+
         [HttpPost]
-        //[Authorize] //use jwt token
+        [Authorize] //use jwt token
         [Route("/Comments")]
         public async Task<IActionResult> Create([FromBody] Comment item)
             {           
@@ -56,7 +56,7 @@ namespace CommentService.Controllers
 
             // // Real solution
             await CommentRepo.Add(item);
-            return Ok(CommentRepo.GetAll());
+            return Ok(await CommentRepo.GetAll());
         }
 
         // PUT: api/Comment/5

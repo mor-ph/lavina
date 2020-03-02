@@ -38,6 +38,9 @@ namespace CommentService
             services.AddControllers();
            services.AddDbContext<CommentDBContext>(options => 
             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 
             // add Authentication using jwt token
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -51,6 +54,8 @@ namespace CommentService
 
                             // setting security key
                             IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                            ValidateAudience = false,
+                            ValidateIssuer = false,
                             //security key validation
                             ValidateIssuerSigningKey = true,
                         };
