@@ -26,6 +26,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   CategoryBloc _categoryBloc;
 
   TabController _controller;
+
+  //dummy data
   List<Event> eventsList = [
     Event(
         title: "Play football",
@@ -34,6 +36,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         startDate: DateTime.utc(2020, 4, 2),
         status: "Active",
         peopleNeeded: 12,
+        exactAddress: 'Kichuk',
         createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
         city: City(id: 1, name: "Plovdiv")),
     Event(

@@ -7,7 +7,7 @@ class UserEvent {
   User user;
   Event event;
 
-  UserEvent({this.id,@required this.user,@required this.event});
+  UserEvent({@required this.id,@required this.user,@required this.event});
 
 
 }

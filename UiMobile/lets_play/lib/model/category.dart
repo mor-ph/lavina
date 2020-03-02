@@ -12,25 +12,21 @@ class Category extends BaseData {
 
   @override
   Map<String, Category> getExtraData() {
-    // TODO: implement getExtraData
     return {'key': this};
   }
 
   @override
   String getId() {
-    // TODO: implement getId
     return this.id.toString();
   }
 
   @override
   String getParentId() {
-    // TODO: implement getParentId
     return this.parentId.toString();
   }
 
   @override
   String getTitle() {
-    // TODO: implement getTitle
     return this.name;
   }
 }

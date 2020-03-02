@@ -52,6 +52,8 @@ class HomePageTab extends StatelessWidget {
       );
     } else if (state is EventCategoryEmptyState) {
       print("emptyState!");
+
+      // dummy data
       List<Event> eventsList = [
         Event(
             title: "Play football",
@@ -60,6 +62,7 @@ class HomePageTab extends StatelessWidget {
             startDate: DateTime.utc(2020, 4, 2),
             peopleNeeded: 12,
             status: "Active",
+            exactAddress: 'Kichuk',
             createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
             city: City(id: 1, name: "Plovdiv")),
         Event(

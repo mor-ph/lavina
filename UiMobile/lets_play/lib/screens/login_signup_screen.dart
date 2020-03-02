@@ -71,7 +71,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
-  void resetForm() {
+  void _resetForm() {
     _formKey.currentState.reset();
     _errorMessage = "";
   }
@@ -157,7 +157,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
-  Widget showEmailInput() {
+  Widget _showEmailInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: new TextFormField(
@@ -176,7 +176,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
-  Widget showNameInput() {
+  Widget _showNameInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: new TextFormField(
@@ -196,7 +196,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
-  Widget showPasswordInput() {
+  Widget _showPasswordInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: new TextFormField(
@@ -215,7 +215,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
-  Widget showPrimaryButton() {
+  Widget _showPrimaryButton() {
     return new Padding(
         padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
         child: SizedBox(
@@ -232,10 +232,10 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
         ));
   }
 
-  Widget showSecondaryButton(BuildContext context) {
+  Widget _showSecondaryButton(BuildContext context) {
     return new FlatButton(
         onPressed:(){
-          taggleFormMode(context);
+          _taggleFormMode(context);
         },
         child: new Text(
           _isLoginForm ? 'Create an account' : 'Have an account? Sign in',
@@ -243,8 +243,8 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
         ));
   }
 
-  Widget taggleFormMode(BuildContext context) {
-    resetForm();
+  Widget _taggleFormMode(BuildContext context) {
+    _resetForm();
     setState(() {
       _isLoginForm = !_isLoginForm;
     });
@@ -255,7 +255,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
     }
   }
 
-  Widget showErrorMessage() {
+  Widget _showErrorMessage() {
     if (_errorMessage.length > 0 && _errorMessage != null) {
       return new Text(
         _errorMessage,
@@ -281,11 +281,11 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
             shrinkWrap: true,
             children: <Widget>[
               _showLogo(),
-              showEmailInput(),
-              showPasswordInput(),
-              showPrimaryButton(),
-              showSecondaryButton(context),
-              showErrorMessage(),
+              _showEmailInput(),
+              _showPasswordInput(),
+              _showPrimaryButton(),
+              _showSecondaryButton(context),
+              _showErrorMessage(),
             ],
           )),
     );
@@ -344,8 +344,8 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
     if (!_isUpdatePage) {
       return Column(
         children: <Widget>[
-          showPrimaryButton(),
-          showSecondaryButton(context),
+          _showPrimaryButton(),
+          _showSecondaryButton(context),
         ],
       );
     } else if (_isUpdatePage) {
@@ -399,11 +399,11 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
                   style: TextStyle(color: Colors.red),
                   textAlign: TextAlign.center,
                 ),
-              showNameInput(),
-              showEmailInput(),
-              showPasswordInput(),
+              _showNameInput(),
+              _showEmailInput(),
+              _showPasswordInput(),
               _registerFormButtons(context),
-              showErrorMessage(),
+              _showErrorMessage(),
             ],
           )),
     );

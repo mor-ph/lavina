@@ -26,6 +26,8 @@ class _CategoryWidgetState extends State<CategoryWidget> {
     Category(
         id: 6, name: 'Football', categoryIcon: Icons.category, parentId: 1),
     Category(id: 3, name: 'Board Games', categoryIcon: Icons.table_chart),
+    Category(id: 9, name: 'Board Gamesssssss', categoryIcon: Icons.table_chart),
+
     Category(id: 4, name: 'Tourism', categoryIcon: Icons.card_travel),
   ];
 
@@ -99,6 +101,12 @@ class _CategoryListItemState extends State<CategoryListItem> {
           setState(() {
             if (widget.categories != null) {
               widget.categories
+                  .where((cat) => cat.isSelected != null && cat.isSelected)
+                  .forEach((cat) => cat.isSelected = false);
+            }
+
+            if(widget.subCategories != null){
+              widget.subCategories
                   .where((cat) => cat.isSelected != null && cat.isSelected)
                   .forEach((cat) => cat.isSelected = false);
             }

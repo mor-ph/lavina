@@ -19,6 +19,7 @@ class _ProfilePageState extends State<ProfilePage>
     with TickerProviderStateMixin {
   TabController _controller;
 
+  //dummy data
   List<UserEvent> allUserEvents = [
     UserEvent(
         event: Event(
@@ -103,10 +104,9 @@ class _ProfilePageState extends State<ProfilePage>
     return Scaffold(
         appBar: AppBar(
           title: Text("My profile"),
-          bottom: _tabs(),
+          bottom: _profileTabs(),
           actions: <Widget>[
             Column(
-//            mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -145,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage>
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            myEvents(),
+            _userEvents(),
             Expanded(
               child: TabBarView(
                 controller: _controller,
@@ -160,7 +160,7 @@ class _ProfilePageState extends State<ProfilePage>
         ));
   }
 
-  Widget myEvents() {
+  Widget _userEvents() {
     return Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
@@ -208,7 +208,7 @@ class _ProfilePageState extends State<ProfilePage>
             ]));
   }
 
-  Widget _tabs() => TabBar(
+  Widget _profileTabs() => TabBar(
         unselectedLabelColor: Colors.white,
         labelColor: Colors.white,
         indicatorColor: Colors.white,

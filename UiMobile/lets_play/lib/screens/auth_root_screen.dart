@@ -68,7 +68,7 @@ class _RootPageState extends State<RootPage> {
     });
   }
 
-  Widget buildWaitingScreen() {
+  Widget _buildWaitingScreen() {
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
@@ -82,7 +82,7 @@ class _RootPageState extends State<RootPage> {
 
     switch (authStatus) {
       case AuthStatus.NOT_DETERMINED:
-        return buildWaitingScreen();
+        return _buildWaitingScreen();
         break;
       case AuthStatus.NOT_LOGGED_IN:
         return new LoginSignupPage(
@@ -93,7 +93,7 @@ class _RootPageState extends State<RootPage> {
         //todo
         break;
       default:
-        return buildWaitingScreen();
+        return _buildWaitingScreen();
     }
   }
 
