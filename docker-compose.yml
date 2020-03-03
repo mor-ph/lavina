@@ -1,0 +1,18 @@
+version: '3'
+services:
+eventapi:
+    build: .
+    context: ./EventService/EventAPI
+    depends_on:
+        - dbapi
+        - authapi
+    ports: 
+        - 5001:80    
+commentapi:
+    build: .
+    context: ./CommentService/CommentService
+    depends_on:
+        - dbapi
+        - authapi
+    ports: 
+        - 5002:80      
