@@ -8,7 +8,6 @@ namespace EventAPI.Models.Enums
     {
         Upcoming = 1,
         HappeningNow = 2,
-        Repeating = 3,
-        Finished = 4,
+        Finished = 3,
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
+using AutoMapper;
 using EventAPI.Data.Context;
 using EventAPI.Models;
 using EventAPI.Models.Models;
@@ -22,17 +23,20 @@ namespace EventAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    
     public class EventController : ControllerBase
     {
         //Database 
         private readonly LetsPlayDbContext _dbContext;
         private readonly IEventService _eventService;
+        private readonly IMapper _mapper;
 
-        public EventController(LetsPlayDbContext dbContext,IEventService eventService)
+        public EventController(LetsPlayDbContext dbContext,IEventService eventService, IMapper mapper)
         {
 
             _dbContext = dbContext;
             _eventService = eventService;
+            _mapper = mapper;
         }
 
 
@@ -41,6 +45,7 @@ namespace EventAPI.Controllers
         public async Task<IEnumerable<Event>> GetAll()
         {
             return await _eventService.GetAllEvents();
+            
         }
         //Get event/get/id
         [HttpGet("get/{id}")]
@@ -67,10 +72,16 @@ namespace EventAPI.Controllers
                 var city = await _dbContext.Cities.FirstOrDefaultAsync(c => c.Name == model.City);
                 if (category == null || city == null)
                     return BadRequest("City or Category is null");
+
+                int userId;
+                if (!int.TryParse(User.Claims.FirstOrDefault(x => x.Type == "userId").Value.ToString(), out userId))
+                {
+                    return this.BadRequest("Invalid EventCreatedByID");
+                }
                 var evt = new Event()
                 {
                     Title = model.Title,
-                    UserCreatedById = model.CreatedBy,
+                    UserCreatedById = userId,
                     Description = model.Description,
                     EventStartDate = model.EventStartDate,
                     PeopleNeeded = model.PeopleNeeded,
@@ -81,7 +92,6 @@ namespace EventAPI.Controllers
                     CreatedOn = DateTime.UtcNow,
                     UpdatedOn = DateTime.UtcNow,
                 
-
                 };
                 if (model.Recurring == null)
                 {

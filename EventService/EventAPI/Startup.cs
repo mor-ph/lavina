@@ -1,24 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using EventAPI.Configuration;
-using EventAPI.Controllers;
 using EventAPI.Data.Context;
 using EventAPI.Services.Categories;
 using EventAPI.Services.EventService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
@@ -51,19 +43,23 @@ namespace EventAPI
             {
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
+                
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false
-                };
+                    ValidateAudience = false,                   
+                   
+
+            };
             });
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddDbContext<LetsPlayDbContext>(options =>
             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<ICategoryService,CategoryService>();
-            services.AddTransient<IEventService, EventService>();
+            services.AddScoped<IEventService, EventService>();
             services.AddAutoMapper(typeof(Startup).Assembly);
 
 
@@ -81,7 +77,9 @@ namespace EventAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
