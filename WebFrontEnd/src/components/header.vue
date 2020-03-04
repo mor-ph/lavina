@@ -11,17 +11,23 @@
            <b-button-toolbar class="ml-auto">
              <b-button-group class="ml-auto">
 
+                <router-link to="/">
               <b-button title="Category">
                  <b-icon icon="filter" font-scale="2.5" aria-hidden="true"></b-icon>
               </b-button>
+              </router-link>
 
+            <router-link to="/createEvent">
               <b-button title="CreatEvent">
                  <b-icon icon="plus"  font-scale="2.5" aria-hidden="true"></b-icon>
               </b-button>
+            </router-link>
 
-              <b-button title="Profil">
+               <router-link to="/profile">
+              <b-button title="Profile">
                  <b-icon icon="person-fill" font-scale="2.5" aria-hidden="true"></b-icon>
               </b-button>
+              </router-link>
 
              </b-button-group>
            </b-button-toolbar>
