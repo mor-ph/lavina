@@ -1,18 +1,15 @@
-version: '3'
+version: '3.7'
+
 services:
-eventapi:
-    build: .
-    context: ./EventService/EventAPI
-    depends_on:
-        - dbapi
-        - authapi
-    ports: 
-        - 5001:80    
-commentapi:
-    build: .
-    context: ./CommentService/CommentService
-    depends_on:
-        - dbapi
-        - authapi
-    ports: 
-        - 5002:80      
+    eventapi:
+        build:
+          context: .
+          dockerfile: ./EventService/Dockerfile
+        ports: 
+            - 5001:80    
+    commentapi:
+        build:
+          context: .
+          dockerfile: ./CommentService/CommentService/Dockerfile
+        ports: 
+            - 5002:80      
