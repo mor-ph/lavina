@@ -1,7 +1,7 @@
 
 <template>
   <div>
-   
+
     <!-- Color fon -->
     <div class="body">
     <div class="p-3 bg-dark" style="min-height: 170px;" >
@@ -25,18 +25,15 @@
               <b-form-select id="example-category" v-model="category" :options="categorys" class="sm-2"></b-form-select>
           </b-col>
 
-
         <!-- Subcategory -->
           <b-col sm="3">
-             <label for="example-subcategorys" class="text-white">   Subcategories:</label> 
-              <b-form-select id="example-subcategorys" v-model="subcategory" :options="subcategorys" class="sm-2"> </b-form-select> 
+             <label for="example-subcategorys" class="text-white">   Subcategories:</label>
+              <b-form-select id="example-subcategorys" v-model="subcategory" :options="subcategorys" class="sm-2"> </b-form-select>
           </b-col>
-     
+
             <!-- Add subcategory -->
                  <div>
     <b-button v-b-modal.modal-prevent-closing>Add Subcategories</b-button>
-
-    
 
     <b-modal
       id="modal-prevent-closing"
@@ -99,70 +96,69 @@
 import Header from './components/header.vue'
 
 export default {
-   name:'app',
-  components:{
-    'app-header':Header
+  name: 'app',
+  components: {
+    'app-header': Header
   },
-  data() {
+  data () {
     return {
       name: '',
       nameState: null,
-      
-      types: ["date", "time"],
-      valueDate: "",
-      valueTame: "",
-      text: "",
-      category: "Sport",
+
+      types: ['date', 'time'],
+      valueDate: '',
+      valueTame: '',
+      text: '',
+      category: 'Sport',
       categorys: [
-        { value: "Sport", text: "Sport" },
-        { value: "KiberSport", text: "KiberSport" },
-        
+        { value: 'Sport', text: 'Sport' },
+        { value: 'KiberSport', text: 'KiberSport' }
+
       ],
       subcategory: 0,
       subcategorys: [
-       { value: "Sport", text: "Football" },
-        { value: "Sport", text: "Voleyball" },
-        { value: "Sport", text: "Handball" },
-        { value: "Sport", text: "Tenis" },
-        { value: "Sport", text: "Swim" },
-        { value: "Sport", text: "Run" }
+        { value: 'Sport', text: 'Football' },
+        { value: 'Sport', text: 'Voleyball' },
+        { value: 'Sport', text: 'Handball' },
+        { value: 'Sport', text: 'Tenis' },
+        { value: 'Sport', text: 'Swim' },
+        { value: 'Sport', text: 'Run' }
       ],
       labels: {
         Two: {}
       }
-      
+
     }
-    
   },
   methods: {
-      checkFormValidity() {
-        const valid = this.$refs.form.checkValidity()
-        this.nameState = valid
-        return valid
-      },
-      resetModal() {
-        this.name = ''
-        this.nameState = null
-      },
-      handleOk(bvModalEvt) {
-        // Prevent modal from closing
-        bvModalEvt.preventDefault()
-        // Trigger submit handler
-        this.handleSubmit()
-      },
-      handleSubmit() {
-        // Exit when the form isn't valid
-        if (!this.checkFormValidity()) {
-          return
-        }
-        // Push the name to submitted names
-        this.subcategorys.push(this.name)
-        // Hide the modal manually
-        this.$nextTick(() => {
-          this.$bvModal.hide('modal-prevent-closing')
-        })
+    checkFormValidity () {
+      const valid = this.$refs.form.checkValidity()
+      this.nameState = valid
+      return valid
+    },
+    resetModal () {
+      this.name = ''
+      this.nameState = null
+    },
+    handleOk (bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault()
+      // Trigger submit handler
+      this.handleSubmit()
+    },
+    handleSubmit () {
+      // Exit when the form isn't valid
+      if (!this.checkFormValidity()) {
+        return
       }
+      // Push the name to submitted names
+      this.subcategorys.push(this.name)
+      // Hide the modal manually
+      this.$nextTick(() => {
+        this.$bvModal.hide('modal-prevent-closing')
+      })
     }
+  }
 }
 </script>
 
