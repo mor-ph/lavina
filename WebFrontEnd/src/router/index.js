@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import CreateEvent from '../views/CreateEvent.vue'
-import Profile from '../views/Profile.vue'
+import Home from '../components/Events/Home.vue'
+import CreateEvent from '../components/CreateEvent/CreateEvent.vue'
+import Profile from '../components/Profile/Profile.vue'
 
 Vue.use(VueRouter)
 
