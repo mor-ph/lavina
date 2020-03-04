@@ -1,11 +1,16 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
 
-abstract class BaseAuth{
+import 'package:lets_play/model/user.dart';
+import 'package:path/path.dart';
+import 'package:http/http.dart' as http;
+
+abstract class BaseAuth {
   Future<String> signIn(String email, String password);
 
-  Future<String> signUp(String email, String password, String name, String imageUrl);
+  Future<String> signUp(
+      String email, String password, String name, String imageUrl);
 
-  Future<FirebaseUser> getCurrentUser();
+  //Future<FirebaseUser> getCurrentUser();
 
   Future<void> sendEmailVerification();
 
@@ -14,43 +19,77 @@ abstract class BaseAuth{
   Future<bool> isEmailVerified();
 }
 
-class Auth implements BaseAuth{
+class Auth {
   static const routeName = '/';
 
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  static User currentUser;
+  static String accessToken;
 
-  Future<String> signIn(String email, String password) async{
-    AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-    FirebaseUser user = result.user;
-    return user.uid;
+  Future<String> signIn(String userName, String password) async {
+    var urlUsers = 'http://10.0.2.2:8081/auth/login';
+    Map<String, String> headers = {'Content-Type': 'application/json'};
+    String json = '{"username": "$userName", "password": "$password"}';
+    var response = await http.post(
+      urlUsers,
+      body: json,
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+    } else {
+      print('A network error occurred');
+    }
+
+    User user = parseUser(response.body);
+    currentUser = user;
+
+    return currentUser.uid.toString();
   }
 
-  Future<String> signUp(String email, String password,String name, String imageUrl) async {
+  Future<String> signUp(
+      String email, String password, String userName, String imageUrl) async {
     print('Create User');
-    AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-
-   // FireBaseAPI.storeNewUser(result.user, name, phoneNumber, imageUrl);
-    FirebaseUser user = result.user;
-
-    return user.uid;
+    var urlUsers = 'http://10.0.2.2:8081/auth/users';
+    Map<String, String> headers = {'Content-Type': 'application/json'};
+    String json =
+        '{"username": "$userName", "password": "$password", "email": "$email"}';
+    var response = await http.post(
+      urlUsers,
+      body: json,
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+    } else {
+      print('A network error occurred');
+    }
+    User user = parseUser(response.body);
+    currentUser = user;
+    print(user);
+    return currentUser.uid.toString();
   }
 
-  Future<FirebaseUser> getCurrentUser() async{
-    FirebaseUser user = await _firebaseAuth.currentUser();
-    return user;
+  User parseUser(String responseBody) {
+    final parsed = json.decode(responseBody);
+
+    return User.fromJson(parsed);
   }
 
-  Future<void> signOut() async {
-    return _firebaseAuth.signOut();
+  Future<User> getCurrentUser() async {
+    return currentUser;
   }
-
-  Future<void> sendEmailVerification() async {
-    FirebaseUser user = await _firebaseAuth.currentUser();
-    user.sendEmailVerification();
-  }
-
-  Future<bool> isEmailVerified() async {
-    FirebaseUser user = await _firebaseAuth.currentUser();
-    return user.isEmailVerified;
-  }
+//
+//  Future<void> signOut() async {
+//    return _firebaseAuth.signOut();
+//  }
+//
+//  Future<void> sendEmailVerification() async {
+//    FirebaseUser user = await _firebaseAuth.currentUser();
+//    user.sendEmailVerification();
+//  }
+//
+//  Future<bool> isEmailVerified() async {
+//    FirebaseUser user = await _firebaseAuth.currentUser();
+//    return user.isEmailVerified;
+//  }
 }

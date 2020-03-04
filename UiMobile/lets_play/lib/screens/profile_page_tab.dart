@@ -28,6 +28,8 @@ class _ProfilePageState extends State<ProfilePage>
             createdAt: DateTime.now(),
             startDate: DateTime.utc(2020, 4, 2),
             peopleNeeded: 12,
+            status: "Active",
+
             createdByUser: User(
                 uid: 1, userName: "Ivan@gmail.com", email: 'Ivan@gmail.com'),
             city: City(id: 1, name: "Plovdiv")),
@@ -40,6 +42,8 @@ class _ProfilePageState extends State<ProfilePage>
             createdAt: DateTime.now(),
             startDate: DateTime.utc(2020, 4, 2),
             peopleNeeded: 12,
+            status: "Active",
+
             createdByUser:
                 User(uid: 3, userName: "Pesho", email: 'Ivan@gmail.com'),
             city: City(id: 1, name: "Plovdiv")),
@@ -54,6 +58,8 @@ class _ProfilePageState extends State<ProfilePage>
         createdAt: DateTime.now(),
         startDate: DateTime.utc(2020, 4, 2),
         peopleNeeded: 12,
+        status: "Active",
+
         createdByUser:
             User(uid: 1, userName: "Ivan@gmail.com", email: 'Ivan@gmail.com'),
         city: City(id: 1, name: "Plovdiv")),
@@ -63,6 +69,8 @@ class _ProfilePageState extends State<ProfilePage>
         createdAt: DateTime.now(),
         startDate: DateTime.now(),
         peopleNeeded: 4,
+        status: "Active",
+
         createdByUser: User(uid: 3, userName: "Gosho@gmail.com"),
         city: City(id: 1, name: "Plovdiv")),
     Event(
@@ -71,6 +79,8 @@ class _ProfilePageState extends State<ProfilePage>
         createdAt: DateTime.now(),
         startDate: DateTime.now(),
         peopleNeeded: 4,
+        status: "Active",
+
         createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
         city: City(id: 1, name: "Plovdiv")),
   ];

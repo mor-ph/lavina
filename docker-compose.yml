@@ -1,12 +1,15 @@
-version: '3'
+version: '3.7'
+
 services:
     eventapi:
-        build: .
-        context: ./EventService
+        build:
+          context: .
+          dockerfile: ./EventService/Dockerfile
         ports: 
             - 5001:80    
     commentapi:
-        build: .
-        context: ./CommentService/CommentService
+        build:
+          context: .
+          dockerfile: ./CommentService/CommentService/Dockerfile
         ports: 
             - 5002:80      
