@@ -7,13 +7,15 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["EventAPI/EventAPI.csproj", "EventAPI/"]
-COPY ["EventAPI.Services/EventAPI.Services.csproj", "EventAPI.Services/"]
-COPY ["EventAPI.Data/EventAPI.Data.csproj", "EventAPI.Data/"]
-COPY ["EventAPI.Models/EventAPI.Models.csproj", "EventAPI.Models/"]
-RUN dotnet restore "EventAPI/EventAPI.csproj"
+COPY "EventService/EventAPI.sln" "EventService/EventAPI.sln"
+COPY ["EventService/EventAPI/EventAPI.csproj", "EventService/EventAPI/EventAPI.csproj"]
+COPY ["EventService/EventAPI.Services/EventAPI.Services.csproj", "EventService/EventAPI.Services/EventAPI.Services.csproj"]
+COPY ["EventService/EventAPI.Data/EventAPI.Data.csproj", "EventService/EventAPI.Data/EventAPI.Data.csproj"]
+COPY ["EventService/EventAPI.Models/EventAPI.Models.csproj", "EventService/EventAPI.Models/EventAPI.Models.csproj"]
+RUN dotnet restore "EventService/EventAPI.sln"
+
 COPY . .
-WORKDIR "/src/EventAPI"
+WORKDIR "/src/EventService/EventAPI"
 RUN dotnet build "EventAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish

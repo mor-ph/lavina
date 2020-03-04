@@ -7,11 +7,17 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk AS build
 WORKDIR /src
-COPY ["CommentService/CommentService.csproj", "CommentService/"]
-RUN dotnet restore "CommentService/CommentService.csproj"
+
+COPY "CommentService/CommentService/CommentService.sln" "CommentService/CommentService/CommentService.sln"
+COPY ["CommentService/CommentService/CommentService/CommentService.csproj", "CommentService/CommentService/CommentService/CommentService.csproj"]
+
+RUN dotnet restore "CommentService/CommentService/CommentService.sln"
+
 COPY . .
-WORKDIR "/src/CommentService"
-RUN dotnet build "CommentService.csproj" -c Release -o /app/build
+
+WORKDIR "/src/CommentService/CommentService"
+
+# RUN dotnet build "CommentService.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "CommentService.csproj" -c Release -o /app/publish
