@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class LoginSignupPage extends StatefulWidget {
-  final BaseAuth auth;
+  final Auth auth;
   final VoidCallback loginCallback;
   final User user;
 
@@ -54,8 +54,9 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
       body: Stack(
         children: <Widget>[
           if (_isLoginForm) _showLoginForm(context),
-          if (!_isLoginForm) _registerForm(context),
-          _showCircularProgress(),
+          if (!_isLoginForm)
+            _registerForm(context),
+          // _showCircularProgress(),
         ],
       ),
     );
@@ -181,7 +182,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: new TextFormField(
         maxLines: 1,
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.text,
         autofocus: false,
         decoration: new InputDecoration(
             hintText: 'Name',
@@ -234,7 +235,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget _showSecondaryButton(BuildContext context) {
     return new FlatButton(
-        onPressed:(){
+        onPressed: () {
           _taggleFormMode(context);
         },
         child: new Text(
@@ -281,7 +282,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
             shrinkWrap: true,
             children: <Widget>[
               _showLogo(),
-              _showEmailInput(),
+              _showNameInput(),
               _showPasswordInput(),
               _showPrimaryButton(),
               _showSecondaryButton(context),
@@ -310,14 +311,13 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
       String userId = "";
       try {
         if (_isLoginForm) {
-          userId = await widget.auth.signIn(_email, _password);
+          userId = await widget.auth.signIn(_name, _password);
           print('Sign in: $userId');
         } else {
-//          String url = await uploadPic();
-//          print(url);
           userId =
               await widget.auth.signUp(_email, _password, _name, _imageUrl);
 
+          _password = null;
           print('Sign up user: $userId');
         }
 
@@ -325,6 +325,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
           _isLoginForm = true;
         });
         if (userId.length > 0 && userId != null && _isLoginForm) {
+          print("Widget callback");
           widget.loginCallback();
         }
       } catch (e) {
@@ -352,10 +353,10 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
       return GestureDetector(
         onTap: () {
           if (_name.isEmpty) {
-            print("Event validation failed!");
+            print("User validation file!");
             return;
           } else {
-//          _createOrder(_email.text,_phoneNumber.text,_name.text,_description.text,_placeLocation);
+//            _createUser(_email.text,_);
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ProfilePage()));
           }

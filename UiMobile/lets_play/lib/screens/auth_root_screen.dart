@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lets_play/model/user.dart';
+import 'package:lets_play/screens/home_page_screen.dart';
 import 'package:lets_play/services/authentication.dart';
 
 import 'login_signup_screen.dart';
@@ -15,14 +16,14 @@ enum AuthStatus {
 class RootPage extends StatefulWidget {
   RootPage({this.auth});
 
-  final BaseAuth auth;
+  final Auth auth;
 
   @override
   _RootPageState createState() => _RootPageState();
 }
 
 class _RootPageState extends State<RootPage> {
-  AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
+  AuthStatus authStatus = AuthStatus.NOT_LOGGED_IN;
   String _userId = "";
   String _userRole = "";
   User currentUser;
@@ -81,16 +82,16 @@ class _RootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
 
     switch (authStatus) {
-      case AuthStatus.NOT_DETERMINED:
-        return _buildWaitingScreen();
-        break;
+//      case AuthStatus.NOT_DETERMINED:
+//        return _buildWaitingScreen();
+//        break;
       case AuthStatus.NOT_LOGGED_IN:
         return new LoginSignupPage(
           auth: new Auth(),
           loginCallback: loginCallback,
         );
       case AuthStatus.LOGGED_IN:
-        //todo
+          return HomePage();
         break;
       default:
         return _buildWaitingScreen();
@@ -102,6 +103,11 @@ class _RootPageState extends State<RootPage> {
       setState(() {
         _userId = user.uid.toString();
       });
+      if(user.accessToken == null){
+        setState(() {
+          authStatus = AuthStatus.NOT_LOGGED_IN;
+        });
+      }
     });
     print('login callback');
     setState(() {
