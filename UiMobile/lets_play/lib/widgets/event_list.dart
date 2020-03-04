@@ -50,7 +50,8 @@ class EventList extends StatelessWidget {
         );
       },
       child: Card(
-        color: isNewEvent ? Colors.greenAccent : Colors.white,
+        color: isNewEvent ? Colors.brown[100]
+            : Colors.white,
         elevation: 5,
         margin: EdgeInsets.symmetric(
           vertical: 6,

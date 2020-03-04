@@ -34,9 +34,10 @@ class MyApp extends StatelessWidget {
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
+            color: Colors.teal[800]
           )),
-     // home: RootPage(auth: new Auth()),
-      home: HomePage(),
+      home: RootPage(auth: new Auth()),
+//      home: HomePage(),
     );
   }
 // This widget is the root of your application.

@@ -126,7 +126,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
                 ? BorderRadius.circular(20)
                 : BorderRadius.circular(50),
             color:
-                widget.category.isSelected ? Color(0xfffeb324) : Colors.white,
+                widget.category.isSelected ? Colors.grey[500]: Colors.white,
             border: Border.all(
                 color: widget.category.isSelected
                     ? Colors.transparent

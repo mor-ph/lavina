@@ -1,6 +1,6 @@
 <template>
 <!-- Navbar -->
-   
+
      <b-navbar toggleable="lg" type="dark" variant="danger">
        <b-navbar-brand href="#">LetsPlay</b-navbar-brand>
 
@@ -8,29 +8,32 @@
 
            <b-collapse id="nav-collapse" is-nav >
 
-    
            <b-button-toolbar class="ml-auto">
              <b-button-group class="ml-auto">
 
+                <router-link to="/">
               <b-button title="Category">
                  <b-icon icon="filter" font-scale="2.5" aria-hidden="true"></b-icon>
               </b-button>
-                
+              </router-link>
+
+            <router-link to="/createEvent">
               <b-button title="CreatEvent">
                  <b-icon icon="plus"  font-scale="2.5" aria-hidden="true"></b-icon>
               </b-button>
+            </router-link>
 
-              <b-button title="Profil">
+               <router-link to="/profile">
+              <b-button title="Profile">
                  <b-icon icon="person-fill" font-scale="2.5" aria-hidden="true"></b-icon>
               </b-button>
-        
+              </router-link>
+
              </b-button-group>
            </b-button-toolbar>
-      
 
-             
                 <!-- Right aligned nav items -->
-                    <b-navbar-nav class="ml-auto">  
+                    <b-navbar-nav class="ml-auto">
                         <b-nav-item-dropdown right>
                          <!-- Using 'button-content' slot -->
                              <template v-slot:button-content>
@@ -44,10 +47,9 @@
         </b-navbar>
 </template>
 
-
 <script>
 export default {
-   name: "Header"
+  name: 'Header'
 }
 </script>
 
