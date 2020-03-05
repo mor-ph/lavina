@@ -39,13 +39,11 @@
                       <strong>Username</strong>
                     </em>
                   </template>
-                  <router-link to="/profile">
-                  <b-dropdown-item>
-                    Profile
-                    <b-icon icon="person-fill"></b-icon>
+                  <b-dropdown-item to="profile">
+                  Profile
+                  <b-icon icon="person-fill"></b-icon>
                   </b-dropdown-item>
-                  </router-link>
-                  <b-dropdown-item href="#">
+                  <b-dropdown-item @click="onLogout">
                     Sign Out
                     <b-icon icon="box-arrow-right"></b-icon>
                   </b-dropdown-item>
@@ -59,8 +57,15 @@
   </b-container>
 </template>
 
-
 <script>
+export default {
+  methods: {
+    onLogout () {
+      // this.$store.dispatch('logout')
+      console.log('logged out')
+    }
+  }
+}
 </script>
 
 <style scoped>
