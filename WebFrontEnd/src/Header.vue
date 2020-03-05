@@ -1,61 +1,65 @@
 <template>
-<!-- Navbar -->
-   <div class="container">
-   <div class="row">
-     <b-navbar toggleable="lg" type="dark" variant="primary" class="fixed-top">
-       <b-navbar-brand href="#">LetsPlay</b-navbar-brand>
+  <!-- Navbar -->
+  <b-container fluid>
+    <b-row>
+      <b-navbar toggleable="lg" type="dark" variant="success" class="fixed-top">
+        <b-col sm="5">
+          <b-navbar-brand href="#">
+            <strong>LetsPlay</strong>
+          </b-navbar-brand>
+        </b-col>
 
-            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-                <b-collapse id="nav-collapse" is-nav >
-
-           <b-button-toolbar class="ml-auto">
-             <b-button-group class="center">
-
-               <router-link to="/">
-              <b-button title="Category">
-                 <b-icon icon="filter" font-scale="2.5" aria-hidden="true"></b-icon>
-              </b-button>
+        <b-col sm="5">
+          <b-button-toolbar>
+            <b-button-group>
+              <router-link to="/">
+                <b-button title="Category" class="colorbutton">
+                  <b-icon icon="filter" font-scale="2.5" aria-hidden="true"></b-icon>
+                </b-button>
               </router-link>
 
-               <router-link to="/createEvent">
-              <b-button title="CreatEvent">
-                 <b-icon icon="plus" font-scale="2.5" aria-hidden="true"></b-icon>
-              </b-button>
+              <router-link to="/createEvent">
+                <b-button title="CreatEvent" class="colorbutton">
+                  <b-icon icon="plus" font-scale="2.5" aria-hidden="true"></b-icon>
+                </b-button>
               </router-link>
 
-               <router-link to="/profile">
-              <b-button title="Profil">
-                 <b-icon icon="person-fill" font-scale="2.5" aria-hidden="true"></b-icon>
-              </b-button>
+              <router-link to="/profile">
+                <b-button title="Profil" class="colorbutton">
+                  <b-icon icon="person-fill" font-scale="2.5" aria-hidden="true"></b-icon>
+                </b-button>
               </router-link>
+            </b-button-group>
+          </b-button-toolbar>
+        </b-col>
 
-             </b-button-group>
-           </b-button-toolbar>
+        <!-- Right aligned nav items -->
 
-                <!-- Right aligned nav items -->
-
-                    <b-navbar-nav class="ml-auto">
-                        <b-navbar-nav>
-                                <div>
-                                   <router-link to="/login">
-                                    <b-button size="lg">Login</b-button>
-                                    </router-link>
-                                    <router-link to="/register">
-                                    <b-button size="lg">Register</b-button>
-                                    </router-link>
-                                 </div>
-                      </b-navbar-nav>
-                    </b-navbar-nav>
-              </b-collapse>
-        </b-navbar>
-        </div>
-   </div>
+        <b-col sm="2">
+          <b-navbar-nav class="ml-auto">
+            <b-navbar-nav>
+              <div>
+                <router-link to="/login">
+                  <b-button class="colorbutton"><strong>Login</strong></b-button>
+                </router-link>
+                <router-link to="/register">
+                  <b-button class="colorbutton"><strong>Register</strong></b-button>
+                </router-link>
+              </div>
+            </b-navbar-nav>
+          </b-navbar-nav>
+        </b-col>
+      </b-navbar>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
-
 </script>
 
-<style lang="scss">
-
+<style>
+.colorbutton{
+ background: rgb(33,62,62);
+background: linear-gradient(180deg, rgba(33,62,62,1) 0%, rgba(0,215,255,1) 100%);
+}
 </style>
