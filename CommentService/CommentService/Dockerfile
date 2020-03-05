@@ -15,9 +15,9 @@ RUN dotnet restore "CommentService/CommentService/CommentService.sln"
 
 COPY . .
 
-WORKDIR "/src/CommentService/CommentService"
+WORKDIR "/src/CommentService/CommentService/CommentService"
 
-# RUN dotnet build "CommentService.csproj" -c Release -o /app/build
+RUN dotnet build "CommentService.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "CommentService.csproj" -c Release -o /app/publish
