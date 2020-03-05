@@ -9,7 +9,8 @@ services:
      ports:
        - "3306:3306"
      volumes:
-      - mysql_db_data_container:/var/lib/mysql
+        - ./mysql-data:/var/lib/mysql
+        - ./mysql-initdb:/docker-entrypoint-initdb.d
       
     phpmyadmin:
       depends_on:
@@ -54,5 +55,6 @@ services:
           
         
 volumes:
-  mysql_db_data_container:
+  mysql-data:
+  mysql-initdb:
         
