@@ -11,6 +11,7 @@
           id="email-input"
           type="email"
           placeholder="Enter email"
+          required
           v-model="email"
           @blur="$v.email.$touch()">
           </b-form-input>
@@ -27,6 +28,7 @@
           id="username-input"
           type="text"
           placeholder="Enter Username"
+          required
           v-model="username"
           @blur="$v.username.$touch()">
           </b-form-input>
@@ -43,6 +45,7 @@
           id="password-input"
           type="password"
           placeholder="Enter Password"
+          required
           v-model="password"
           @blur="$v.password.$touch()"
         ></b-form-input>
@@ -50,7 +53,7 @@
 
       <b-form-group
        id="confirm-password-input-group"
-       label="Password:"
+       label="Confirm Password:"
        label-for="confirm-password-input"
        :class="{invalid: $v.confirmPassword.$error}"
        >
@@ -58,6 +61,7 @@
           id="confirm-password-input"
           type="password"
           placeholder="Confirm Password"
+          required
           v-model="confirmPassword"
           @blur="$v.confirmPassword.$touch()"
         ></b-form-input>
@@ -72,7 +76,7 @@
 </template>
 
 <script>
-import { required, email, sameAs } from 'vuelidate/lib/validators'
+import { email, sameAs } from 'vuelidate/lib/validators'
 // import axios from 'axios'
 
 export default {
@@ -86,7 +90,6 @@ export default {
   },
   validations: {
     email: {
-      required,
       email
       /*
       unique: email => {
@@ -101,7 +104,6 @@ export default {
       } */
     },
     username: {
-      required
       /*
       unique: username => {
         if (username === '') return true
@@ -113,9 +115,6 @@ export default {
           })
 
       } */
-    },
-    password: {
-      required
     },
     confirmPassword: {
       sameAs: sameAs(vm => {
