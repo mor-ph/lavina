@@ -1,92 +1,163 @@
 <template>
   <div>
 
-    <!-- Color fon -->
+   <!-- Color fon -->
     <div class="body">
-    <div class="p-3 bg-dark" style="min-height: 170px;" >
+      <b-container fluid>
+        <!-- Title -->
+        <b-row class="my-3">
+          <b-col sm="4"></b-col>
 
-          <!-- Title -->
-           <div>
-             <b-col sm="5">
-               <label for="example-i18n-picker" class="text-white">   Title:</label>
-                 <b-form-textarea
-                     id="textarea-no-resize"
-                     placeholder="Fixed height textarea"
-                     rows="1"
-                     no-resize
-                 ></b-form-textarea>
-               </b-col>
-           </div>
+          <b-col sm="4">
+            <div class="text-center">
+              <label for="example-i18n-picker" class="text-white">
+                <strong>Title:</strong>
+              </label>
+            </div>
+            <b-form-textarea
+              class="text-center"
+              id="textarea-no-resize"
+              placeholder="Fixed height textarea"
+              rows="1"
+              no-resize
+            ></b-form-textarea>
+          </b-col>
+        </b-row>
 
         <!-- Category -->
-          <b-col sm="5">
-             <label for="example-category" class="text-white">   Category:</label>
-              <b-form-select id="example-category" v-model="category" :options="categorys" class="sm-2"></b-form-select>
+        <b-row class="my-3">
+          <b-col sm="5"></b-col>
+
+          <b-col sm="2">
+            <div class="text-center">
+              <label for="example-category" class="text-white">
+                <strong>Category:</strong>
+              </label>
+            </div>
+            <b-form-select
+              class="text-center"
+              id="example-category"
+              v-model="category"
+              :options="categorys"
+            ></b-form-select>
           </b-col>
+        </b-row>
 
         <!-- Subcategory -->
-          <b-col sm="3">
-             <label for="example-subcategorys" class="text-white">   Subcategories:</label>
-              <b-form-select id="example-subcategorys" v-model="subcategory" :options="subcategorys" class="sm-2"> </b-form-select>
+        <b-row class="my-3">
+          <b-col sm="5"></b-col>
+
+          <b-col sm="2">
+            <div class="text-center">
+              <label for="example-subcategorys" class="text-white">
+                <strong>Subcategories:</strong>
+              </label>
+            </div>
+          </b-col>
+        </b-row>
+
+        <b-row class="my-3">
+          <b-col sm="4"></b-col>
+
+          <b-col sm="4">
+            <b-form-select id="example-subcategorys" v-model="subcategory" :options="subcategorys"></b-form-select>
           </b-col>
 
-            <!-- Add subcategory -->
-                 <div>
-    <b-button v-b-modal.modal-prevent-closing>Add Subcategories</b-button>
+          <!-- Add subcategory -->
+          <div>
+            <b-col>
+              <b-button v-b-modal.modal-prevent-closing>
+                <strong>Add Sub.</strong>
+              </b-button>
+            </b-col>
 
-    <b-modal
-      id="modal-prevent-closing"
-      ref="modal"
-      title="Submit Your Name"
-      @show="resetModal"
-      @hidden="resetModal"
-      @ok="handleOk"
-    >
-      <form ref="form" @submit.stop.prevent="handleSubmit">
-        <b-form-group
-          :state="nameState"
-          label="Name"
-          label-for="name-input"
-          invalid-feedback="Name is required"
-        >
-          <b-form-input
-            id="name-input"
-            v-model="name"
-            :state="nameState"
-            required
-          ></b-form-input>
-        </b-form-group>
-      </form>
-    </b-modal>
-  </div>
+            <b-modal
+              id="modal-prevent-closing"
+              ref="modal"
+              title="Submit Your Name"
+              @show="resetModal"
+              @hidden="resetModal"
+              @ok="handleOk"
+            >
+              <form ref="form" @submit.stop.prevent="handleSubmit">
+                <b-form-group
+                  :state="nameState"
+                  label="Name"
+                  label-for="name-input"
+                  invalid-feedback="Name is required"
+                >
+                  <b-form-input id="name-input" v-model="name" :state="nameState" required></b-form-input>
+                </b-form-group>
+              </form>
+            </b-modal>
+          </div>
+        </b-row>
 
-              <!--  Date & Time picker -->
-                 <b-col sm="2">
-                    <label for="example-i18n-picker" class="text-white">    Date & Time picker:</label>
-                 </b-col>
+        <!--  Date & Time picker -->
+        <b-row class="my-3">
+          <b-col sm="4"></b-col>
 
-                   <b-container fluid>
-                      <b-row class="my-1" v-for="type in types" :key="type">
-                        <b-col sm="3">
-                         <b-form-input v-model="valueDate" :id="`type-${type}`" :type="type"></b-form-input>
-                        </b-col>
-                      </b-row>
-                   </b-container>
+          <b-col sm="4">
+            <div class="text-center">
+              <label for="example-i18n-picker" class="text-white">
+                <strong>Date & Time picker:</strong>
+              </label>
+            </div>
+          </b-col>
+        </b-row>
 
-                  <!--  Details -->
-                     <div>
-                       <b-col sm="5">
-                         <label for="example-i18n-picker" class="text-white">   Details:</label>
-                           <b-form-textarea
-                              id="textarea-no-resize"
-                              placeholder="Fixed height textarea"
-                              rows="4"
-                              no-resize
-                           ></b-form-textarea>
-                       </b-col>
-                     </div>
-      </div>
-  </div>
+        <b-row class="my-2" v-for="type in types" :key="type">
+          <b-col sm="4"></b-col>
+          <b-col sm="4">
+            <b-form-input v-model="valueDate" :id="`type-${type}`" :type="type"></b-form-input>
+          </b-col>
+        </b-row>
+
+        <!-- Location -->
+        <b-row class="my-3">
+          <b-col sm="4"></b-col>
+
+          <b-col sm="4">
+            <div class="text-center">
+              <label for="example-location" class="text-white">
+                <strong>Location:</strong>
+              </label>
+            </div>
+            <b-form-select
+              class="text-center"
+              id="example-location"
+              v-model="location"
+              :options="locations"
+            ></b-form-select>
+          </b-col>
+        </b-row>
+
+        <!--  Details -->
+        <b-row class="my-3">
+          <b-col sm="4"></b-col>
+          <b-col sm="4">
+            <div class="text-center">
+              <label for="example-i18n-picker" class="text-white">
+                <strong>Details:</strong>
+              </label>
+            </div>
+          </b-col>
+        </b-row>
+
+        <b-row class="my-2">
+          <b-col sm="4"></b-col>
+          <b-col sm="4">
+            <b-form-textarea
+              class="text-center"
+              id="textarea-no-resize"
+              placeholder="Fixed height textarea"
+              rows="10"
+              no-resize
+            ></b-form-textarea>
+          </b-col>
+        </b-row>
+      </b-container>
+    </div>
   </div>
 </template>
 
@@ -118,7 +189,12 @@ export default {
       ],
       labels: {
         Two: {}
-      }
+      },
+      location: 'Sofia',
+      locations: [
+        { value: 'Sofia', text: 'Sofia' },
+        { value: 'Plovdiv', text: 'Plovdiv' }
+      ]
 
     }
   },
@@ -154,5 +230,15 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style >
+.body {
+  padding-top: 80px;
+  background: rgb(27, 60, 163);
+  background: linear-gradient(
+    90deg,
+    rgba(27, 60, 163, 1) 0%,
+    rgba(189, 200, 255, 1) 49%,
+    rgba(91, 255, 237, 1) 100%
+  );
+}
 </style>
