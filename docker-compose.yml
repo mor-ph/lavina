@@ -3,25 +3,15 @@ version: '3.7'
 services:
     db:
      image: mysql:latest
+     container_name: letsplay-mysql
+     restart: always
      env_file:
        - variables.env
-     restart: always
-     ports:
-       - "3306:3306"
      volumes:
         - ./mysql-data:/var/lib/mysql
         - ./mysql-initdb:/docker-entrypoint-initdb.d
-      
-    phpmyadmin:
-      depends_on:
-        - db
-      image: phpmyadmin/phpmyadmin
-      restart: always
-      ports:
-        - "8050:80"
-      env_file:
-        - variables.env
-        
+     ports:
+       - 3306:3306         
         
     eventapi:
         depends_on:
@@ -44,17 +34,7 @@ services:
           - variables.env
         ports:
           - "5101:80"
-    authapi: 
-        depends_on:
-          - db
-        build:
-          context: .
-          dockerfile: ./AuthService/authservice/Dockerfile
-        env_file:
-          - variables.env
-          
         
 volumes:
   mysql-data:
   mysql-initdb:
-        
