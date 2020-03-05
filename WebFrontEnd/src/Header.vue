@@ -1,8 +1,8 @@
 <template>
   <!-- Navbar -->
   <b-container fluid>
-    <b-row>
-      <b-navbar toggleable="lg" type="dark" variant="success" class="fixed-top">
+    <b-row  >
+      <b-navbar toggleable="lg" type="dark" class="fixed-top">
         <b-col sm="5">
           <b-navbar-brand href="#">
             <strong>LetsPlay</strong>
@@ -57,9 +57,16 @@
 <script>
 </script>
 
-<style>
-.colorbutton{
+<style scoped>
+
+.fixed-top {
+  background: #7DA2A9;
+}
+.colorbutton {
+  background: rgb(250, 220, 85);
+}
+/*.colorbutton{
  background: rgb(33,62,62);
 background: linear-gradient(180deg, rgba(33,62,62,1) 0%, rgba(0,215,255,1) 100%);
-}
+}*/
 </style>
