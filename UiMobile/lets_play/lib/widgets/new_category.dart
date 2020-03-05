@@ -18,7 +18,7 @@ class _NewCategoryState extends State<NewCategory> {
 
   @override
   void initState() {
-    _parentCategories = this.widget.categories.where((category) => category.parentId == null).toList();
+    _parentCategories = this.widget.categories.where((category) => category.parentId == 1).toList();
     super.initState();
   }
   void _submitData() async {

@@ -233,11 +233,12 @@ export default {
 <style scoped>
 .body {
   padding-top: 80px;
-  background: rgb(63,94,251);
-background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(0,0,0,1) 100%);
+  background: #F7F7F7;
+  /*background: rgb(63,94,251);
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(0,0,0,1) 100%);*/
 }
-.colorbutton{
+/*.colorbutton{
  background: rgb(33,62,62);
 background: linear-gradient(180deg, rgba(33,62,62,1) 0%, rgba(0,215,255,1) 100%);
-}
+}*/
 </style>
