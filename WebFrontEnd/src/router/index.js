@@ -20,7 +20,7 @@ const routes = [
     component: CreateEvent
   },
   {
-    path: '/profle',
+    path: '/profile',
     name: 'Profile',
     component: Profile
   },
