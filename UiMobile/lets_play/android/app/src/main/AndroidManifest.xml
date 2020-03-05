@@ -11,8 +11,8 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="lets_play"
-        android:icon="@mipmap/ic_launcher">
+        android:label="LetsPlay"
+        android:icon="@mipmap/joinus">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
