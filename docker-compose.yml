@@ -43,6 +43,15 @@ services:
           - variables.env
         ports:
           - "5101:80"
+    authapi: 
+        depends_on:
+          - db
+        build:
+          context: .
+          dockerfile: ./AuthService/authservice/Dockerfile
+        env_file:
+          - variables.env
+          
         
 volumes:
   mysql_db_data_container:
