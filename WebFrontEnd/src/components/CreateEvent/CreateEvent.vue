@@ -26,9 +26,9 @@
 
         <!-- Category -->
         <b-row class="my-3">
-          <b-col sm="5"></b-col>
+          <b-col sm="4"></b-col>
 
-          <b-col sm="2">
+          <b-col sm="4">
             <div class="text-center">
               <label for="example-category" class="text-white">
                 <strong>Category:</strong>
@@ -59,14 +59,14 @@
         <b-row class="my-3">
           <b-col sm="4"></b-col>
 
-          <b-col sm="4">
+          <b-col sm="3">
             <b-form-select id="example-subcategorys" v-model="subcategory" :options="subcategorys"></b-form-select>
           </b-col>
 
           <!-- Add subcategory -->
           <div>
             <b-col>
-              <b-button v-b-modal.modal-prevent-closing>
+              <b-button v-b-modal.modal-prevent-closing class="colorbutton">
                 <strong>Add Sub.</strong>
               </b-button>
             </b-col>
@@ -230,15 +230,14 @@ export default {
 }
 </script>
 
-<style >
+<style scoped>
 .body {
   padding-top: 80px;
-  background: rgb(27, 60, 163);
-  background: linear-gradient(
-    90deg,
-    rgba(27, 60, 163, 1) 0%,
-    rgba(189, 200, 255, 1) 49%,
-    rgba(91, 255, 237, 1) 100%
-  );
+  background: rgb(63,94,251);
+background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(0,0,0,1) 100%);
+}
+.colorbutton{
+ background: rgb(33,62,62);
+background: linear-gradient(180deg, rgba(33,62,62,1) 0%, rgba(0,215,255,1) 100%);
 }
 </style>

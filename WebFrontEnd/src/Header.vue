@@ -13,19 +13,19 @@
           <b-button-toolbar>
             <b-button-group>
               <router-link to="/">
-                <b-button title="Category">
+                <b-button title="Category" class="colorbutton">
                   <b-icon icon="filter" font-scale="2.5" aria-hidden="true"></b-icon>
                 </b-button>
               </router-link>
 
               <router-link to="/createEvent">
-                <b-button title="CreatEvent">
+                <b-button title="CreatEvent" class="colorbutton">
                   <b-icon icon="plus" font-scale="2.5" aria-hidden="true"></b-icon>
                 </b-button>
               </router-link>
 
               <router-link to="/profile">
-                <b-button title="Profil">
+                <b-button title="Profil" class="colorbutton">
                   <b-icon icon="person-fill" font-scale="2.5" aria-hidden="true"></b-icon>
                 </b-button>
               </router-link>
@@ -40,10 +40,10 @@
             <b-navbar-nav>
               <div>
                 <router-link to="/login">
-                  <b-button><strong>Login</strong></b-button>
+                  <b-button class="colorbutton"><strong>Login</strong></b-button>
                 </router-link>
                 <router-link to="/register">
-                  <b-button><strong>Register</strong></b-button>
+                  <b-button class="colorbutton"><strong>Register</strong></b-button>
                 </router-link>
               </div>
             </b-navbar-nav>
@@ -57,5 +57,9 @@
 <script>
 </script>
 
-<style lang="scss">
+<style>
+.colorbutton{
+ background: rgb(33,62,62);
+background: linear-gradient(180deg, rgba(33,62,62,1) 0%, rgba(0,215,255,1) 100%);
+}
 </style>
