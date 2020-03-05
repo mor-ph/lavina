@@ -16,7 +16,6 @@
           @blur="$v.email.$touch()">
           </b-form-input>
           <p v-if="!$v.email.email">Please provide a valid email address.</p>
-          <p v-if="!$v.email.required">This field must not be empty.</p>
       </b-form-group>
 
       <b-form-group
@@ -32,14 +31,12 @@
           v-model="username"
           @blur="$v.username.$touch()">
           </b-form-input>
-          <p v-if="!$v.username.required">This field must not be empty.</p>
       </b-form-group>
 
       <b-form-group
        id="password-input-group"
        label="Password:"
        label-for="password-input"
-       :class="{invalid: $v.password.$error}"
        >
         <b-form-input
           id="password-input"
@@ -47,7 +44,6 @@
           placeholder="Enter Password"
           required
           v-model="password"
-          @blur="$v.password.$touch()"
         ></b-form-input>
       </b-form-group>
 
