@@ -34,19 +34,7 @@ services:
           - variables.env
         ports:
           - "5101:80"
-        environment:
-          - JAVA_OPTS=""
           
-    authapi:
-        depends_on:
-          - db
-        build:
-          context: .
-          dockerfile: ./AuthService/authservice/Dockerfile
-        volumes:
-          - /data/authservice
-        ports:
-          - "8081:8081"
         
 volumes:
   mysql-data:
