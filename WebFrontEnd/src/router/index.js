@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../components/Events/Home.vue'
-import CreateEvent from '../components/CreateEvent/CreateEvent.vue'
-import Profile from '../components/Profile/Profile.vue'
-import Login from '../components/Auth/Login.vue'
-import Register from '../components/Auth/Register.vue'
+import Home from '../pages/Events/Home.vue'
+import CreateEvent from '../pages/CreateEvent/CreateEvent.vue'
+import Profile from '../pages/Profile/Profile.vue'
+import Login from '../pages/Auth/Login.vue'
+import Register from '../pages/Auth/Register.vue'
 
 Vue.use(VueRouter)
 
