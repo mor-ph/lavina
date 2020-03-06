@@ -30,7 +30,7 @@ namespace EventAPI.Controllers
         }
         //GET: api/category
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
+        public async Task<IActionResult> GetAllCategories(string location,int? categoryId)
         {
             var allCategories = await _categoryService.GetCategories();
 
