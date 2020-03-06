@@ -30,7 +30,7 @@ CREATE TABLE `categories` (
   UNIQUE KEY `IX_Categories_Name` (`Name`),
   KEY `IX_Categories_ParentCategoryID` (`ParentCategoryID`),
   CONSTRAINT `FK_Categories_Categories_ParentCategoryID` FOREIGN KEY (`ParentCategoryID`) REFERENCES `categories` (`ID`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +39,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (1,'Sports',NULL),(2,'Video Games',NULL),(3,'Music',NULL),(4,'Football',1),(5,'Volleyball',1),(6,'Basketball',1),(7,'Tenis',1),(8,'League of Legends',2),(9,'Dota 2',2),(10,'Fortnite',2),(11,'PUBG',2),(12,'World of Warcraft',2),(13,'Hip-Hop',3),(14,'Pop-Folk',3),(15,'Rock',3),(16,'House',3),(17,'R&B',3),(18,'Games',NULL),(19,'Poker',18);
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,7 +54,7 @@ CREATE TABLE `cities` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `Name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,6 +63,7 @@ CREATE TABLE `cities` (
 
 LOCK TABLES `cities` WRITE;
 /*!40000 ALTER TABLE `cities` DISABLE KEYS */;
+INSERT INTO `cities` VALUES (5,'Sofia'),(6,'Plovdiv'),(7,'Varna'),(8,'Burgas'),(9,'Ruse'),(10,'Stara Zagora'),(11,'Pleven'),(12,'Sliven'),(13,'Dobrich'),(14,'Shumen'),(15,'Pernik'),(16,'Haskovo'),(17,'Vratsa'),(18,'Kyustendil'),(19,'Montana'),(20,'Lovech'),(21,'Razgrad'),(22,'Borino'),(23,'Madan'),(24,'Zlatograd'),(25,'Pazardzhik'),(26,'Smolyan'),(27,'Blagoevgrad'),(28,'Nedelino'),(29,'Rudozem'),(30,'Devin'),(31,'Veliko Tarnovo'),(32,'Vidin'),(33,'Kirkovo'),(34,'Krumovgrad'),(35,'Dzhebel'),(36,'Silistra'),(37,'Sarnitsa'),(38,'Shiroka Laka'),(39,'Yambol'),(40,'Dospat'),(41,'Kardzhali'),(42,'Gabrovo'),(43,'Targovishte');
 /*!40000 ALTER TABLE `cities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,7 +86,7 @@ CREATE TABLE `comments` (
   KEY `IX_Comments_UserId` (`UserId`),
   CONSTRAINT `FK_Comments_Events_EventID` FOREIGN KEY (`EventID`) REFERENCES `events` (`ID`) ON DELETE RESTRICT,
   CONSTRAINT `FK_Comments_Users_UserId` FOREIGN KEY (`UserId`) REFERENCES `users` (`Id`) ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,6 +95,7 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+INSERT INTO `comments` VALUES (1,'Texas or Omaha?',1,2,'2020-03-06 11:27:15.000000','2020-03-06 11:27:15.000000'),(2,'Panikata hvana me',2,3,'2020-03-06 11:27:15.000000','2020-03-06 11:27:15.000000'),(3,'Pozvoleno li e da si vzimam kalevri?',3,1,'2020-03-06 11:27:15.000000','2020-03-06 11:27:15.000000'),(4,'Savata shte bude li tam?',4,5,'2020-03-06 11:27:15.000000','2020-03-06 11:27:15.000000'),(5,'Plat 3 supp sum. Nickname:JclownX',5,4,'2020-03-06 11:27:15.000000','2020-03-06 11:27:15.000000');
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,6 +137,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
+INSERT INTO `events` VALUES (1,'2020-07-06 11:17:21.000000','2020-03-06 11:27:15.000000','2020-03-06 11:27:15.000000',1,2,'of nqma',3,'Poker:Kichuka',1,19,2,'ul.\"Vasil Chekelarov\",2'),(2,'2020-07-06 11:17:21.000000','2020-03-06 11:27:15.000000','2020-03-06 11:27:15.000000',1,3,'Chalga-party-international',6,'Galena',2,14,2,'Club Bushido'),(3,'2020-07-06 11:17:21.000000','2020-03-06 11:27:15.000000','2020-03-06 11:27:15.000000',1,2,'Need 2 people today at Optium Plovdiv to play football.',1,'Football-Optium',3,4,2,'Optium Plovdiv'),(4,'2020-07-06 11:17:21.000000','2020-03-06 11:27:15.000000','2020-03-06 11:27:15.000000',1,3,'Dress code black.',14,'Dope-Zoo',4,13,2,'Club Void'),(5,'2020-07-06 11:17:21.000000','2020-03-06 11:27:15.000000','2020-03-06 11:27:15.000000',1,1,'Need 3 people for clash tournament.',2,'Clash:LOL',5,8,2,'');
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -157,6 +161,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'User'),(2,'Admin');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,6 +188,7 @@ CREATE TABLE `userevents` (
 
 LOCK TABLES `userevents` WRITE;
 /*!40000 ALTER TABLE `userevents` DISABLE KEYS */;
+INSERT INTO `userevents` VALUES (2,1),(3,2),(1,3),(5,4),(4,5);
 /*!40000 ALTER TABLE `userevents` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -251,6 +257,7 @@ CREATE TABLE `userroles` (
 
 LOCK TABLES `userroles` WRITE;
 /*!40000 ALTER TABLE `userroles` DISABLE KEYS */;
+INSERT INTO `userroles` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1);
 /*!40000 ALTER TABLE `userroles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -278,6 +285,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Yovcho','password','ivelinjilov16@gmail.com','2020-03-06 11:14:52.000000','2020-03-06 11:14:52.000000'),(2,'Leppop','password','leppop@abv.bg','2020-03-06 11:17:21.000000','2020-03-06 11:17:21.000000'),(3,'Angel','password','angel.k@yahoo.com','2020-03-06 11:17:21.000000','2020-03-06 11:17:21.000000'),(4,'lilVayne','vaynegod32','vayne.god@mail.bg','2020-03-06 11:17:21.000000','2020-03-06 11:17:21.000000'),(5,'PeteApple','kudeebirata55','pesho.ywna@gmail.com','2020-03-06 11:17:21.000000','2020-03-06 11:17:21.000000'),(6,'Allah','allah','allah@gmail.com','2020-03-06 11:17:21.000000','2020-03-06 11:17:21.000000');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -311,4 +319,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-03 21:53:07
+-- Dump completed on 2020-03-06 13:51:09
