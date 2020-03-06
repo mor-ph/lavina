@@ -1,7 +1,6 @@
 <template>
   <div>
-
-   <!-- Color fon -->
+    <!-- Color fon -->
     <div class="body">
       <b-container fluid>
         <!-- Title -->
@@ -9,7 +8,7 @@
           <b-col sm="4"></b-col>
 
           <b-col sm="4">
-            <div class="text-center">
+            <div class="text-center" style="padding:5%">
               <label for="example-i18n-picker" class="text-white">
                 <strong>Title:</strong>
               </label>
@@ -143,7 +142,7 @@
             </div>
           </b-col>
         </b-row>
-
+      <b-form>
         <b-row class="my-2">
           <b-col sm="4"></b-col>
           <b-col sm="4">
@@ -156,6 +155,13 @@
             ></b-form-textarea>
           </b-col>
         </b-row>
+        <b-row class="my-2">
+          <b-col sm="4"></b-col>
+          <b-col sm="4">
+          <b-button type="submit" size="lg">Submit</b-button>
+          </b-col>
+        </b-row>
+        </b-form>
       </b-container>
     </div>
   </div>
@@ -163,82 +169,88 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      name: '',
+      name: "",
       nameState: null,
 
-      types: ['date', 'time'],
-      valueDate: '',
-      valueTame: '',
-      text: '',
-      category: 'Sport',
+      types: ["date", "time"],
+      valueDate: "",
+      valueTame: "",
+      text: "",
+      category: "Sport",
       categorys: [
-        { value: 'Sport', text: 'Sport' },
-        { value: 'KiberSport', text: 'KiberSport' }
-
+        { value: "Sport", text: "Sport" },
+        { value: "KiberSport", text: "KiberSport" }
       ],
       subcategory: 0,
       subcategorys: [
-        { value: 'Sport', text: 'Football' },
-        { value: 'Sport', text: 'Voleyball' },
-        { value: 'Sport', text: 'Handball' },
-        { value: 'Sport', text: 'Tenis' },
-        { value: 'Sport', text: 'Swim' },
-        { value: 'Sport', text: 'Run' }
+        { value: "Sport", text: "Football" },
+        { value: "Sport", text: "Voleyball" },
+        { value: "Sport", text: "Handball" },
+        { value: "Sport", text: "Tenis" },
+        { value: "Sport", text: "Swim" },
+        { value: "Sport", text: "Run" }
       ],
       labels: {
         Two: {}
       },
-      location: 'Sofia',
+      location: "Sofia",
       locations: [
-        { value: 'Sofia', text: 'Sofia' },
-        { value: 'Plovdiv', text: 'Plovdiv' }
+        { value: "Sofia", text: "Sofia" },
+        { value: "Plovdiv", text: "Plovdiv" }
       ]
-
-    }
+    };
   },
   methods: {
-    checkFormValidity () {
-      const valid = this.$refs.form.checkValidity()
-      this.nameState = valid
-      return valid
+    checkFormValidity() {
+      const valid = this.$refs.form.checkValidity();
+      this.nameState = valid;
+      return valid;
     },
-    resetModal () {
-      this.name = ''
-      this.nameState = null
+    resetModal() {
+      this.name = "";
+      this.nameState = null;
     },
-    handleOk (bvModalEvt) {
+    handleOk(bvModalEvt) {
       // Prevent modal from closing
-      bvModalEvt.preventDefault()
+      bvModalEvt.preventDefault();
       // Trigger submit handler
-      this.handleSubmit()
+      this.handleSubmit();
     },
-    handleSubmit () {
+    handleSubmit() {
       // Exit when the form isn't valid
       if (!this.checkFormValidity()) {
-        return
+        return;
       }
       // Push the name to submitted names
-      this.subcategorys.push(this.name)
+      this.subcategorys.push(this.name);
       // Hide the modal manually
       this.$nextTick(() => {
-        this.$bvModal.hide('modal-prevent-closing')
-      })
+        this.$bvModal.hide("modal-prevent-closing");
+      });
     }
   }
-}
+};
 </script>
 
 <style scoped>
 .body {
   padding-top: 80px;
-  background: #F7F7F7;
-  /*background: rgb(63,94,251);
-    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(0,0,0,1) 100%);*/
+  background: #f7f7f7;
+  background: rgb(63, 94, 251);
+  background: radial-gradient(
+    circle,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
 }
 /*.colorbutton{
  background: rgb(33,62,62);
 background: linear-gradient(180deg, rgba(33,62,62,1) 0%, rgba(0,215,255,1) 100%);
 }*/
+
+.text-center {
+  padding-top: 4%;
+}
 </style>

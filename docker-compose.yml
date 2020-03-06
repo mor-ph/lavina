@@ -34,8 +34,7 @@ services:
           - variables.env
         ports:
           - "5101:80"
-        environment:
-          - JAVA_OPTS=""
+          
         
 volumes:
   mysql-data:
