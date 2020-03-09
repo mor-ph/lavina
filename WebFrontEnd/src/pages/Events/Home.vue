@@ -7,8 +7,8 @@
 
     <b-form-select
     v-if="selectedFilters.category !== null"
-    v-model="filters.subcategory"
-    :options="subcategories"></b-form-select>
+    v-model="selectedFilters.subcategory"
+    :options="filters.subcategories"></b-form-select>
 
     <b-form-select v-model="selectedFilters.location"
     :options="filters.location"></b-form-select>
