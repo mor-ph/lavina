@@ -1,6 +1,6 @@
 <template>
   <div id="signin">
-    <div class="body">
+    <div class="body" style="padding-bottom: 6%">
       <b-container>
         <b-row>
             <b-col sm="5"></b-col>
@@ -14,7 +14,7 @@
           <b-row>
             <b-col sm="3"></b-col>
             <b-col sm="6">
-              <b-form-group id="username-input-group" label="Username:" label-for="username-input" color="white">
+              <b-form-group class="label" id="username-input-group" label="Username:" label-for="username-input" color="white">
                 <b-form-input
                   id="username-input"
                   type="text"
@@ -28,7 +28,7 @@
           <b-row>
             <b-col sm="3"></b-col>
             <b-col sm="6">
-          <b-form-group id="password-input-group" label="Password:" label-for="password-input">
+          <b-form-group class="label" id="password-input-group" label="Password:" label-for="password-input" >
             <b-form-input
               id="password-input"
               type="password"
@@ -38,7 +38,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-button type="submit" variant="primary">Submit</b-button>
+          <b-button type="submit" variant="primary">Login</b-button>
            </b-col>
           </b-row>
         </b-form>
@@ -82,6 +82,10 @@ export default {
 .hhh{
   padding-top: 130px;
   color: white;
+}
+.label.label{
+  color: white;
+
 }
 
 </style>

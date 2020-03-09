@@ -1,74 +1,114 @@
 <template>
   <div id="register">
-    <b-form @submit.prevent="onSubmit" style="padding: 20%">
-      <b-form-group
-          id="email-input-group"
-          label="Email address:"
-          label-for="email-input"
-          description="We'll never share your email with anyone else."
-      >
-        <b-form-input
-          id="email-input"
-          type="email"
-          placeholder="Enter email"
-          required
-          v-model="email"
-          @blur="$v.email.$touch()">
-          </b-form-input>
-          <p v-if="!$v.email.email">Please provide a valid email address.</p>
-      </b-form-group>
+    <div class="body" style="padding-bottom: 10%">
+      <b-container>
+        <b-row>
+          <b-col sm="5"></b-col>
+          <b-col sm="2">
+            <h1 class="hhh">Register</h1>
+            <br />
+            <b-iconstack font-scale="10" variant="white">
+              <b-icon stacked icon="person-fill" variant="light" font-scale="10"></b-icon>
+              <b-icon
+                stacked
+                icon="plus"
+                scale="0.5"
+                shift-v="3.5"
+                shift-h="5"
+              ></b-icon>
 
-      <b-form-group
-        id="username-input-group"
-        label="Username:"
-        label-for="username-input"
-        >
-        <b-form-input
-          id="username-input"
-          type="text"
-          placeholder="Enter Username"
-          required
-          v-model="username"
-          @blur="$v.username.$touch()">
-          </b-form-input>
-      </b-form-group>
+            </b-iconstack>
+          </b-col>
+        </b-row>
+        <b-form @submit.prevent="onSubmit" style="padding: 6%">
+          <b-row>
+            <b-col sm="3"></b-col>
+            <b-col sm="6">
+              <b-form-group
+                class="label"
+                id="email-input-group"
+                label="Email address:"
+                label-for="email-input"
+                description="We'll never share your email with anyone else."
+              >
+                <b-form-input
+                  id="email-input"
+                  type="email"
+                  placeholder="Enter email"
+                  required
+                  v-model="email"
+                  @blur="$v.email.$touch()"
+                ></b-form-input>
+                <p v-if="!$v.email.email">Please provide a valid email address.</p>
+              </b-form-group>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm="3"></b-col>
+            <b-col sm="6">
+              <b-form-group
+                class="label"
+                id="username-input-group"
+                label="Username:"
+                label-for="username-input"
+              >
+                <b-form-input
+                  id="username-input"
+                  type="text"
+                  placeholder="Enter Username"
+                  required
+                  v-model="username"
+                  @blur="$v.username.$touch()"
+                ></b-form-input>
+              </b-form-group>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm="3"></b-col>
+            <b-col sm="6">
+              <b-form-group
+                class="label"
+                id="password-input-group"
+                label="Password:"
+                label-for="password-input"
+              >
+                <b-form-input
+                  id="password-input"
+                  type="password"
+                  placeholder="Enter Password"
+                  required
+                  v-model="password"
+                ></b-form-input>
+              </b-form-group>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm="3"></b-col>
+            <b-col sm="6">
+              <b-form-group
+                class="label"
+                id="confirm-password-input-group"
+                label="Confirm Password:"
+                label-for="confirm-password-input"
+                :class="{invalid: $v.confirmPassword.$error}"
+              >
+                <b-form-input
+                  id="confirm-password-input"
+                  type="password"
+                  placeholder="Confirm Password"
+                  required
+                  v-model="confirmPassword"
+                  @blur="$v.confirmPassword.$touch()"
+                ></b-form-input>
+              </b-form-group>
 
-      <b-form-group
-       id="password-input-group"
-       label="Password:"
-       label-for="password-input"
-       >
-        <b-form-input
-          id="password-input"
-          type="password"
-          placeholder="Enter Password"
-          required
-          v-model="password"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group
-       id="confirm-password-input-group"
-       label="Confirm Password:"
-       label-for="confirm-password-input"
-       :class="{invalid: $v.confirmPassword.$error}"
-       >
-        <b-form-input
-          id="confirm-password-input"
-          type="password"
-          placeholder="Confirm Password"
-          required
-          v-model="confirmPassword"
-          @blur="$v.confirmPassword.$touch()"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-button
-        type="submit"
-        variant="primary"
-        :disabled="$v.$invalid">Submit</b-button>
-  </b-form>
-</div>
+              <b-button type="submit" variant="primary" :disabled="$v.$invalid">Register</b-button>
+            </b-col>
+          </b-row>
+        </b-form>
+      </b-container>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -135,5 +175,21 @@ export default {
 </script>
 
 <style scoped>
+.body {
+  background: #f7f7f7;
+  background: rgb(63, 94, 251);
+  background: radial-gradient(
+    circle,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+.hhh {
+  padding-top: 130px;
+  color: white;
+}
 
+.label.label {
+  color: white;
+}
 </style>
