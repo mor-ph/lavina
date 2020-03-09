@@ -36,8 +36,6 @@
             <b-form-select
               class="text-center"
               id="example-category"
-              v-model="category"
-              :options="categorys"
             ></b-form-select>
           </b-col>
         </b-row>
@@ -59,7 +57,7 @@
           <b-col sm="4"></b-col>
 
           <b-col sm="3">
-            <b-form-select id="example-subcategorys" v-model="subcategory" :options="subcategorys"></b-form-select>
+            <b-form-select id="example-subcategorys"></b-form-select>
           </b-col>
 
           <!-- Add subcategory -->
@@ -105,13 +103,18 @@
           </b-col>
         </b-row>
 
-        <b-row class="my-2" v-for="type in types" :key="type">
+        <b-row class="my-2">
           <b-col sm="4"></b-col>
           <b-col sm="4">
             <b-form-datepicker id="datepicker-valid" :state="true"></b-form-datepicker>
           </b-col>
         </b-row>
-
+        <b-row class="my-2">
+          <b-col sm="4"></b-col>
+          <b-col sm="4">
+          <b-form-timepicker id="datepicker-valid" :state="true"></b-form-timepicker>
+         </b-col>
+        </b-row>
         <!-- Location -->
         <b-row class="my-3">
           <b-col sm="4"></b-col>
@@ -125,8 +128,6 @@
             <b-form-select
               class="text-center"
               id="example-location"
-              v-model="location"
-              :options="locations"
             ></b-form-select>
           </b-col>
         </b-row>
@@ -178,11 +179,6 @@ export default {
       valueDate: '',
       valueTame: '',
       text: '',
-      category: 'Sport',
-      categorys: [
-        { value: 'Sport', text: 'Sport' },
-        { value: 'KiberSport', text: 'KiberSport' }
-      ],
       subcategory: 0,
       subcategorys: [
         { value: 'Sport', text: 'Football' },
@@ -194,12 +190,7 @@ export default {
       ],
       labels: {
         Two: {}
-      },
-      location: 'Sofia',
-      locations: [
-        { value: 'Sofia', text: 'Sofia' },
-        { value: 'Plovdiv', text: 'Plovdiv' }
-      ]
+      }
     }
   },
   methods: {

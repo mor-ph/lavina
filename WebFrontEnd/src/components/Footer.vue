@@ -7,7 +7,7 @@
           <b-row>
             <b-col class="dark-grey-text text-center">
               <h6 class="text-uppercase text-center">
-                <strong>Contact</strong>
+                <strong>CONTACT US</strong>
               </h6>
 
               <p>
