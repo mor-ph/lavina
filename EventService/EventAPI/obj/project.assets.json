@@ -7297,19 +7297,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Decho\\.nuget\\packages\\": {}
+    "C:\\Users\\mitak\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Decho\\Desktop\\test\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
+      "projectUniqueName": "D:\\WorkRepositories\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
       "projectName": "EventAPI",
-      "projectPath": "C:\\Users\\Decho\\Desktop\\test\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
-      "packagesPath": "C:\\Users\\Decho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Decho\\Desktop\\test\\letsplay\\EventService\\EventAPI\\obj\\",
+      "projectPath": "D:\\WorkRepositories\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
+      "packagesPath": "C:\\Users\\mitak\\.nuget\\packages\\",
+      "outputPath": "D:\\WorkRepositories\\letsplay\\EventService\\EventAPI\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Decho\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mitak\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7322,14 +7326,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Decho\\Desktop\\test\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj": {
-              "projectPath": "C:\\Users\\Decho\\Desktop\\test\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj"
+            "D:\\WorkRepositories\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj": {
+              "projectPath": "D:\\WorkRepositories\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj"
             },
-            "C:\\Users\\Decho\\Desktop\\test\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj": {
-              "projectPath": "C:\\Users\\Decho\\Desktop\\test\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj"
+            "D:\\WorkRepositories\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj": {
+              "projectPath": "D:\\WorkRepositories\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj"
             },
-            "C:\\Users\\Decho\\Desktop\\test\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj": {
-              "projectPath": "C:\\Users\\Decho\\Desktop\\test\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj"
+            "D:\\WorkRepositories\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj": {
+              "projectPath": "D:\\WorkRepositories\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj"
             }
           }
         }
