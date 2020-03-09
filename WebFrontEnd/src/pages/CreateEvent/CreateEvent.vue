@@ -1,7 +1,6 @@
 <template>
   <div>
-
-   <!-- Color fon -->
+    <!-- Color fon -->
     <div class="body">
       <b-container fluid>
         <!-- Title -->
@@ -9,7 +8,7 @@
           <b-col sm="4"></b-col>
 
           <b-col sm="4">
-            <div class="text-center">
+            <div class="text-center" style="padding:5%">
               <label for="example-i18n-picker" class="text-white">
                 <strong>Title:</strong>
               </label>
@@ -143,7 +142,7 @@
             </div>
           </b-col>
         </b-row>
-
+      <b-form>
         <b-row class="my-2">
           <b-col sm="4"></b-col>
           <b-col sm="4">
@@ -156,6 +155,13 @@
             ></b-form-textarea>
           </b-col>
         </b-row>
+        <b-row class="my-2">
+          <b-col sm="4"></b-col>
+          <b-col sm="4">
+          <b-button type="submit" size="lg">Submit</b-button>
+          </b-col>
+        </b-row>
+        </b-form>
       </b-container>
     </div>
   </div>
@@ -176,7 +182,6 @@ export default {
       categorys: [
         { value: 'Sport', text: 'Sport' },
         { value: 'KiberSport', text: 'KiberSport' }
-
       ],
       subcategory: 0,
       subcategorys: [
@@ -195,7 +200,6 @@ export default {
         { value: 'Sofia', text: 'Sofia' },
         { value: 'Plovdiv', text: 'Plovdiv' }
       ]
-
     }
   },
   methods: {
@@ -233,12 +237,20 @@ export default {
 <style scoped>
 .body {
   padding-top: 80px;
-  background: #F7F7F7;
-  /*background: rgb(63,94,251);
-    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(0,0,0,1) 100%);*/
+  background: #f7f7f7;
+  background: rgb(63, 94, 251);
+  background: radial-gradient(
+    circle,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
 }
 /*.colorbutton{
  background: rgb(33,62,62);
 background: linear-gradient(180deg, rgba(33,62,62,1) 0%, rgba(0,215,255,1) 100%);
 }*/
+
+.text-center {
+  padding-top: 4%;
+}
 </style>

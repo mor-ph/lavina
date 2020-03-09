@@ -69,4 +69,8 @@ export default {
 </script>
 
 <style scoped>
+.fixed-top justify-content-between{
+background: rgb(33,62,62);
+background: linear-gradient(180deg, rgba(33,62,62,1) 0%, rgba(255,255,255,1) 100%);
+}
 </style>
