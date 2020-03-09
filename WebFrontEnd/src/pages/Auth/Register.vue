@@ -20,7 +20,7 @@
             </b-iconstack>
           </b-col>
         </b-row>
-        <b-form @submit.prevent="onSubmit" style="padding: 6%">
+        <b-form @submit.prevent="onSubmit" style="padding: 2.2%">
           <b-row>
             <b-col sm="3"></b-col>
             <b-col sm="6">

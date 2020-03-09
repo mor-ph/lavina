@@ -2,12 +2,12 @@
   <b-container fluid>
     <div>
       <!-- Footer -->
-      <b-footer color="#F7EBDE" class="fixed-bottom">
+      <footer color="#F7EBDE" class="fixed-bottom">
         <div class="footer">
           <b-row>
             <b-col class="dark-grey-text text-center">
               <h6 class="text-uppercase text-center">
-                <strong>Contact</strong>
+                <strong>CONTACT US</strong>
               </h6>
 
               <p>
@@ -24,7 +24,7 @@
             </b-container>
           </div>
         </div>
-      </b-footer>
+      </footer>
       <!-- Footer -->
     </div>
   </b-container>
