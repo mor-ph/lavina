@@ -14,7 +14,7 @@ Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.use(Vuelidate)
 
-axios.defaults.baseURL = 'https://localhost:'
+axios.defaults.baseURL = 'http://localhost:'
 
 Vue.config.productionTip = false
 
