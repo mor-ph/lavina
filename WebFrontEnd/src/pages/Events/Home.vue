@@ -1,6 +1,6 @@
 
 <template>
-  <div style="padding: 10%">
+  <div style="padding: 20%">
     <b-form-select
     v-model="selectedFilters.category"
     :options="filters.category"></b-form-select>

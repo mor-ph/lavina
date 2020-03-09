@@ -8,7 +8,7 @@
 
           <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-          <b-navbar-nav center>
+          <b-navbar-nav center class="right">
             <router-link to="/createEvent">
             <b-button class="mb-2" size="lg">
               Create Event
@@ -69,8 +69,11 @@ export default {
 </script>
 
 <style scoped>
-.fixed-top justify-content-between{
-background: rgb(33,62,62);
-background: linear-gradient(180deg, rgba(33,62,62,1) 0%, rgba(255,255,255,1) 100%);
+.fixed-top{
+background: rgb(63,167,167);
+background: linear-gradient(180deg, rgba(63,167,167,1) 5%, rgba(194,255,247,1) 100%);
+}
+.right{
+  padding-left:50px;
 }
 </style>
