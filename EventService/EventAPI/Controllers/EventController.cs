@@ -111,7 +111,16 @@ namespace EventAPI.Controllers
                    x.Title == evt.Title &&
                    x.CategoryId == category.Id).ToListAsync();
 
-                var result = dbEvents.Any(x => (evt.EventStartDate - x.EventStartDate).Hours < 1);
+                //foreach (var item in dbEvents)
+                //{
+                //    if (Math.Abs((evt.EventStartDate - item.EventStartDate).TotalHours) < 1)
+                //    {
+                //        var res = (evt.EventStartDate - item.EventStartDate).TotalHours;
+                //    }
+
+                //}
+
+                var result = dbEvents.Any(x => Math.Abs((evt.EventStartDate - x.EventStartDate).TotalHours) < 1);
 
 
                 if (result)
