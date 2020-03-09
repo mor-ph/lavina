@@ -10,7 +10,7 @@ namespace EventAPI.Models.ViewModels.Categories
         public int Id { get; set; }
         public string Name { get; set; }
         public int ParentCategoryId { get; set; }
-        public ICollection<EventInputModel> Events { get; set; }
+        //public ICollection<EventInputModel> Events { get; set; }
 
     }
 }

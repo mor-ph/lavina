@@ -9,7 +9,7 @@ namespace EventAPI.Models.ViewModels.Categories
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public virtual ICollection<EventInputModel> Events { get; set; }
-        public virtual ICollection<SubCategoriesViewModel> SubCategories { get; set; }
+        //public virtual ICollection<EventInputModel> Events { get; set; }
+        //public virtual ICollection<SubCategoriesViewModel> SubCategories { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace EventAPI.Services.Categories
     {
         Task<Category> GetCategory(int id);
         Task<IEnumerable<Category>> GetCategories();
-        Task<IEnumerable<Category>> GetSubCategories(int parentId);
+        Task<IEnumerable<Category>> GetSubCategories(string parentName);
         Task AddCategory(Category category);
         Task<bool> CategoryExists(string name);
     }

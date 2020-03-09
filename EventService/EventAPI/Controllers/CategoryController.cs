@@ -36,8 +36,8 @@ namespace EventAPI.Controllers
 
             var categoriesToReturn = _mapper.Map<IEnumerable<MainCategoriesViewModel>>(allCategories);
             return Ok(categoriesToReturn);
-            //return Ok(allCategories);
         }
+
         //GET: api/category/id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
@@ -46,14 +46,17 @@ namespace EventAPI.Controllers
 
             return Ok(category);
         }
-        // GET: api/category/getsub/id
-        [HttpGet("getsub/{id}")]
-        public async Task<IActionResult> GetSubCategories(int id)
-        {
-            var subCategories = await _categoryService.GetSubCategories(id);
 
-            return Ok(subCategories);
+        // GET: api/category/getsub/id
+        [HttpGet("getsub/{name}")]
+        public async Task<IActionResult> GetSubCategories(string name)
+        {
+            var subCategories = await _categoryService.GetSubCategories(name);
+
+            var subCategoriesToReturn = _mapper.Map<IEnumerable<SubCategoriesViewModel>>(subCategories);
+            return Ok(subCategoriesToReturn);
         }
+
         // POST: api/category
         [HttpPost]
         public async Task<IActionResult> AddCategory([FromBody] CategoriesAddViewModel category)

@@ -37,6 +37,7 @@ namespace CommentService.Controllers
         //{
         //    return "value";
         //}
+        //GET: api/comment/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCommentsByEventId(int id)
         {

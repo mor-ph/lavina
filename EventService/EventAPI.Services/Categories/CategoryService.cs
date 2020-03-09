@@ -26,13 +26,8 @@ namespace EventAPI.Services.Categories
 
         public async Task<IEnumerable<Category>> GetCategories()
         {
-            //var allCategories = await _context.Categories.Include(c => c.Events).ToListAsync();
-            //return allCategories;
 
             var mainCategories = await _context.Categories
-                .Include(c => c.SubCategories)
-                .ThenInclude(c => c.Events)
-                .Include(c => c.Events)
                 .Where(c => c.ParentCategoryId == null)
                 .ToListAsync();
 
@@ -46,10 +41,12 @@ namespace EventAPI.Services.Categories
             return category;
         }
 
-        public async Task<IEnumerable<Category>> GetSubCategories(int parentId)
+        public async Task<IEnumerable<Category>> GetSubCategories(string parentName)
         {
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Name == parentName);
+
             var subCategories = await _context.Categories
-                .Where(c => c.ParentCategoryId == parentId)
+                .Where(c => c.ParentCategoryId == category.Id)
                 .ToListAsync();
 
             return subCategories;
