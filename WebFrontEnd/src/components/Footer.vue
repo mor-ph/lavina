@@ -2,7 +2,7 @@
   <b-container fluid>
     <div>
       <!-- Footer -->
-      <b-footer color="#F7EBDE" class="fixed-bottom">
+      <footer color="#F7EBDE" class="fixed-bottom">
         <div class="footer">
           <b-row>
             <b-col class="dark-grey-text text-center">
@@ -24,13 +24,13 @@
             </b-container>
           </div>
         </div>
-      </b-footer>
+      </footer>
       <!-- Footer -->
     </div>
   </b-container>
 </template>
 <script>
-export default {}
+
 </script>
 
 <style scoped>
