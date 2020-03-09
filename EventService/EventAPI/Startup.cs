@@ -25,9 +25,11 @@ namespace EventAPI
 
         public IConfiguration Configuration { get; }
 
+        readonly string CorsOrigins = "CorsOrigins";
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             var jwtSettingsSection = Configuration.GetSection("JwtSettings");
             services.Configure<JwtSettings>(jwtSettingsSection);
 
@@ -43,27 +45,33 @@ namespace EventAPI
             {
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
-                
+
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false,                   
-                   
+                    ValidateAudience = false,
 
-            };
+
+                };
             });
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddDbContext<LetsPlayDbContext>(options =>
             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<ICategoryService,CategoryService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IEventService, EventService>();
             services.AddAutoMapper(typeof(Startup).Assembly);
 
-
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CorsOrigins,
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,10 +82,11 @@ namespace EventAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseCors(CorsOrigins);
             app.UseAuthentication();
 
             app.UseAuthorization();

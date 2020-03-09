@@ -58,5 +58,18 @@ namespace EventAPI.Services.Categories
 
             return false;
         }
+
+        public async  Task<bool> ParentCategoryExists(int id)
+        {
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            if (category.ParentCategoryId == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

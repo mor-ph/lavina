@@ -63,8 +63,13 @@ namespace EventAPI.Controllers
         {
             if(ModelState.IsValid)
             {
-                if (await _categoryService.CategoryExists(category.Name)) 
+                if (await _categoryService.CategoryExists(category.Name))
                     return BadRequest("Category already exists");
+                
+                if(!(await _categoryService.ParentCategoryExists((int)category.ParentCategoryId)))
+                {
+                    return BadRequest("Parent Category is not a main Category");
+                }
 
                 var addcategory = _mapper.Map<Category>(category);
 

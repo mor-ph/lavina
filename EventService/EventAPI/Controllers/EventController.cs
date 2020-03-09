@@ -60,7 +60,7 @@ namespace EventAPI.Controllers
                 List<Comment> comments;
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.GetAsync("https://localhost:44369/api/comment/" + id))
+                    using (var response = await httpClient.GetAsync("https://localhost:5103/api/comment/" + id))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
                         comments = JsonConvert.DeserializeObject<List<Comment>>(apiResponse);
