@@ -24,8 +24,8 @@ namespace EventAPI
         }
 
         public IConfiguration Configuration { get; }
-
-        readonly string CorsOrigins = "CorsOrigins";
+        
+        readonly string AllowAnyOrigin = "AllowAnyOrigin";
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -66,12 +66,14 @@ namespace EventAPI
 
             services.AddCors(options =>
             {
-                options.AddPolicy(CorsOrigins,
+                options.AddPolicy(AllowAnyOrigin,
                     builder =>
                     {
                         builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                     });
             });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,7 +88,7 @@ namespace EventAPI
 
             app.UseRouting();
 
-            app.UseCors(CorsOrigins);
+            app.UseCors(AllowAnyOrigin);
             app.UseAuthentication();
 
             app.UseAuthorization();

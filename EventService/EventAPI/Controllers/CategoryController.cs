@@ -9,12 +9,14 @@ using EventAPI.Models.Models;
 using EventAPI.Models.ViewModels.Categories;
 using EventAPI.Services.Categories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventAPI.Controllers
 {
+    [EnableCors("AllowAnyOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
