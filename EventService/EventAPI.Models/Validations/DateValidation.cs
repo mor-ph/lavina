@@ -8,6 +8,6 @@ namespace EventAPI.Models.Validations
     public class DateValidation : RangeAttribute
     {
         public DateValidation()
-              : base(typeof(DateTime), DateTime.Now.AddYears(-20).ToShortDateString(), DateTime.Now.AddYears(2).ToShortDateString()) { }
+             : base(typeof(DateTime), DateTime.UtcNow.ToString(), DateTime.UtcNow.AddYears(2).ToString()) { }
     }
 }

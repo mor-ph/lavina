@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace EventAPI.Controllers
 {
@@ -55,6 +57,16 @@ namespace EventAPI.Controllers
 
             if (dbEvent != null)
             {
+                List<Comment> comments;
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync("https://localhost:44369/api/comment/" + id))
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        comments = JsonConvert.DeserializeObject<List<Comment>>(apiResponse);
+                        dbEvent.Comments = comments;
+                    }
+                }
                 return dbEvent;
 
             }
@@ -71,7 +83,7 @@ namespace EventAPI.Controllers
                 var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Name == model.Category);
                 var city = await _dbContext.Cities.FirstOrDefaultAsync(c => c.Name == model.City);
                 if (category == null || city == null)
-                    return BadRequest("City or Category is null");
+                    return BadRequest("City or Category is incorrect!");
 
                 int userId;
                 if (!int.TryParse(User.Claims.FirstOrDefault(x => x.Type == "userId").Value.ToString(), out userId))
@@ -91,13 +103,21 @@ namespace EventAPI.Controllers
                     Address = model.Address,
                     CreatedOn = DateTime.UtcNow,
                     UpdatedOn = DateTime.UtcNow,
-                
+
                 };
+
+                if (await _dbContext.Events.FirstOrDefaultAsync(
+                    x => x.UserCreatedById == evt.UserCreatedById &&
+                    x.Title == evt.Title &&
+                    x.CategoryId == category.Id) != null)
+                {
+                    return BadRequest("Event already exists");
+                }
                 if (model.Recurring == null)
                 {
                     evt.Recurring = null;
                 }
-                else 
+                else
                     evt.Recurring = (int)model.Recurring;
 
 
@@ -108,6 +128,7 @@ namespace EventAPI.Controllers
             }
             else
                 return this.BadRequest("Invalid data");
+
 
         }
 

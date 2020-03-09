@@ -23,14 +23,14 @@ namespace EventAPI.Models.ViewModels
         [DataType(DataType.DateTime, ErrorMessage = "Invalid Date")]
         public DateTime UpdatedOn { get; set; }
 
-        [Required]
+
         [DataType(DataType.Text)]
         [MaxLength(100, ErrorMessage = "Description cannot be greater than {0}")]
         public string Description { get; set; }
-        public string Location { get; set; }
+
         [Required]
         [DataType(DataType.Text)]
-        [MaxLength(50,ErrorMessage = "City cannot be longer that {0} symbols")]
+        [MaxLength(50, ErrorMessage = "City cannot be longer that {0} symbols")]
         public string City { get; set; }
 
         [Required]
