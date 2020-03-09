@@ -37,7 +37,12 @@ namespace CommentService.Controllers
         //{
         //    return "value";
         //}
-
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCommentsByEventId(int id)
+        {
+            var comments = await CommentRepo.GetCommentsForEvent(id);
+            return Ok(comments);
+        }
 
         [HttpPost]
         [Authorize] //use jwt token

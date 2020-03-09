@@ -28,5 +28,6 @@ namespace EventAPI.Models.Models
         public virtual Category Category { get; set; }
         public virtual City City { get; set; }
         public virtual ICollection<Userevent> Userevent { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

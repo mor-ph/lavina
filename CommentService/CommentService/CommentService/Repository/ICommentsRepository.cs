@@ -11,5 +11,7 @@ namespace CommentService.Repository
         Task Add(Comment item);
 
         Task<IEnumerable<Comment>> GetAll();
+
+        Task<IEnumerable<Comment>> GetCommentsForEvent(int id);
     }
 }

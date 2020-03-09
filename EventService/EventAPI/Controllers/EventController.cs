@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace EventAPI.Controllers
 {
@@ -55,6 +57,16 @@ namespace EventAPI.Controllers
 
             if (dbEvent != null)
             {
+                List<Comment> comments;
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync("https://localhost:44369/api/comment/" + id))
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        comments = JsonConvert.DeserializeObject<List<Comment>>(apiResponse);
+                        dbEvent.Comments = comments;
+                    }
+                }
                 return dbEvent;
 
             }

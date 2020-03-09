@@ -27,5 +27,11 @@ namespace CommentService.Repository
         {
             return await _context.Comments.ToListAsync();
         }
+        public async Task<IEnumerable<Comment>> GetCommentsForEvent(int id)
+        {
+            var commentsList = await _context.Comments.Where(c => c.EventId == id).ToListAsync();
+
+            return commentsList;
+        }
     }
 }
