@@ -29,7 +29,14 @@ namespace EventAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy(AllowAnyOrigin,
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    });
+            });
             var jwtSettingsSection = Configuration.GetSection("JwtSettings");
             services.Configure<JwtSettings>(jwtSettingsSection);
 
@@ -63,15 +70,8 @@ namespace EventAPI
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IEventService, EventService>();
             services.AddAutoMapper(typeof(Startup).Assembly);
+            //services.AddCors();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(AllowAnyOrigin,
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-                    });
-            });
 
 
         }
