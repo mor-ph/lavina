@@ -14,8 +14,7 @@ Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.use(Vuelidate)
 
-// TODO: Waiting for docker to add DB directory
-axios.defaults.baseURL = ''
+axios.defaults.baseURL = 'https://localhost:'
 
 Vue.config.productionTip = false
 
