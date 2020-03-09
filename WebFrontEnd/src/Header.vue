@@ -9,12 +9,14 @@
           <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
           <b-navbar-nav center>
+            <div class="Pad">
             <router-link to="/createEvent">
             <b-button class="mb-2" size="lg">
               Create Event
               <b-icon icon="plus"></b-icon>
             </b-button>
             </router-link>
+            </div>
           </b-navbar-nav>
 
           <div>
@@ -72,5 +74,8 @@ export default {
 .fixed-top justify-content-between{
 background: rgb(33,62,62);
 background: linear-gradient(180deg, rgba(33,62,62,1) 0%, rgba(255,255,255,1) 100%);
+}
+.Pad{
+  padding-left: 40px;
 }
 </style>
