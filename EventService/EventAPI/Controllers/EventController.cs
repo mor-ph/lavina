@@ -106,10 +106,15 @@ namespace EventAPI.Controllers
 
                 };
 
-                if (await _dbContext.Events.FirstOrDefaultAsync(
-                    x => x.UserCreatedById == evt.UserCreatedById &&
-                    x.Title == evt.Title &&
-                    x.CategoryId == category.Id) != null)
+                var dbEvents = await _dbContext.Events.Where(
+                   x => x.UserCreatedById == evt.UserCreatedById &&
+                   x.Title == evt.Title &&
+                   x.CategoryId == category.Id).ToListAsync();
+
+                var result = dbEvents.Any(x => (evt.EventStartDate - x.EventStartDate).Hours < 1);
+
+
+                if (result)
                 {
                     return BadRequest("Event already exists");
                 }
