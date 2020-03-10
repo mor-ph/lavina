@@ -3,10 +3,10 @@
     <!-- Color fon -->
     <div class="body" style="padding-bottom:10%">
       <b-container fluid>
+        <b-form @submit.prevent="onSubmit">
         <!-- Title -->
         <b-row class="my-3">
           <b-col sm="4"></b-col>
-
           <b-col sm="4">
             <div class="text-center" style="padding:5%">
               <label for="example-i18n-picker" class="text-black">
@@ -19,6 +19,8 @@
               placeholder="Fixed height textarea"
               rows="1"
               no-resize
+              required
+              v-model="title"
             ></b-form-textarea>
           </b-col>
         </b-row>
@@ -36,12 +38,17 @@
             <b-form-select
               class="text-center"
               id="example-category"
+              v-model="category"
+              :options= filters.category
+              @change= "fetchSubCategories"
+              required
             ></b-form-select>
           </b-col>
         </b-row>
 
         <!-- Subcategory -->
-        <b-row class="my-3">
+        <b-row class="my-3"
+        v-if="category !== ''">
           <b-col sm="5"></b-col>
 
           <b-col sm="2">
@@ -57,11 +64,16 @@
           <b-col sm="4"></b-col>
 
           <b-col sm="3">
-            <b-form-select id="example-subcategorys"></b-form-select>
+            <b-form-select
+            id="example-subcategorys"
+            v-if="category !== ''"
+            v-model="subcategory"
+            required
+            :options="filters.subcategories"></b-form-select>
           </b-col>
 
           <!-- Add subcategory -->
-          <div>
+          <div v-if="category !== ''">
             <b-col>
               <b-button v-b-modal.modal-prevent-closing class="colorbutton">
                 <strong>Add Sub.</strong>
@@ -76,14 +88,14 @@
               @hidden="resetModal"
               @ok="handleOk"
             >
-              <form ref="form" @submit.stop.prevent="handleSubmit">
+              <form ref="form" @submit.stop.prevent="handleAddSubSubmit">
                 <b-form-group
                   :state="nameState"
                   label="Name"
                   label-for="name-input"
                   invalid-feedback="Name is required"
                 >
-                  <b-form-input id="name-input" v-model="name" :state="nameState" required></b-form-input>
+                  <b-form-input id="name-input" v-model="subCategoryName" :state="nameState" required></b-form-input>
                 </b-form-group>
               </form>
             </b-modal>
@@ -106,13 +118,15 @@
         <b-row class="my-2">
           <b-col sm="4"></b-col>
           <b-col sm="4">
-            <b-form-datepicker id="datepicker-valid" :state="true"></b-form-datepicker>
+            <b-form-datepicker id="datepicker-valid"
+                               v-model="valueDate"></b-form-datepicker>
           </b-col>
         </b-row>
         <b-row class="my-2">
           <b-col sm="4"></b-col>
           <b-col sm="4">
-          <b-form-timepicker id="datepicker-valid" :state="true"></b-form-timepicker>
+          <b-form-timepicker id="datepicker-valid"
+                             v-model="valueTime"></b-form-timepicker>
          </b-col>
         </b-row>
         <!-- Location -->
@@ -128,6 +142,9 @@
             <b-form-select
               class="text-center"
               id="example-location"
+              required
+              v-model="location"
+              :options="filters.location"
             ></b-form-select>
           </b-col>
         </b-row>
@@ -143,7 +160,6 @@
             </div>
           </b-col>
         </b-row>
-        <b-form>
           <b-row class="my-2">
             <b-col sm="4"></b-col>
             <b-col sm="4">
@@ -153,6 +169,8 @@
                 placeholder="Fixed height textarea"
                 rows="10"
                 no-resize
+                required
+                v-model="description"
               ></b-form-textarea>
             </b-col>
           </b-row>
@@ -169,31 +187,47 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
+  created () {
+    this.$store.dispatch('fetchFilters')
+  },
   data () {
     return {
-      name: '',
+      // Form data
+      title: '',
+      category: '',
+      subcategory: '',
+      location: '',
+      description: '',
+
+      // Template data
+      subCategoryName: '',
       nameState: null,
 
       types: ['date', 'time'],
       valueDate: '',
-      valueTame: '',
-      text: '',
-      subcategory: 0,
-      subcategorys: [
-        { value: 'Sport', text: 'Football' },
-        { value: 'Sport', text: 'Voleyball' },
-        { value: 'Sport', text: 'Handball' },
-        { value: 'Sport', text: 'Tenis' },
-        { value: 'Sport', text: 'Swim' },
-        { value: 'Sport', text: 'Run' }
-      ],
-      labels: {
-        Two: {}
-      }
+      valueTime: ''
     }
   },
   methods: {
+    onSubmit () {
+      // Add token etc.
+      const formData = {
+        title: this.title,
+        category: this.category,
+        subcategory: this.subcategory,
+        datetime: this.valueDate + ' ' + this.valueTime,
+        location: this.location,
+        description: this.description
+      }
+      console.log(formData)
+      // this.$store.dispatch('createEvent', formData)
+    },
+    fetchSubCategories () {
+      this.$store.dispatch('fetchSubcategories', this.category)
+    },
+    // Template Methods
     checkFormValidity () {
       const valid = this.$refs.form.checkValidity()
       this.nameState = valid
@@ -207,20 +241,26 @@ export default {
       // Prevent modal from closing
       bvModalEvt.preventDefault()
       // Trigger submit handler
-      this.handleSubmit()
+      this.handleAddSubSubmit()
     },
-    handleSubmit () {
+    handleAddSubSubmit () {
       // Exit when the form isn't valid
       if (!this.checkFormValidity()) {
         return
       }
+
+      this.$store.dispatch('addSubCategory', this.category, this.subCategoryName)
       // Push the name to submitted names
-      this.subcategorys.push(this.name)
+      this.$store.state.filters.subcategory
+        .push(this.subCategoryName)
       // Hide the modal manually
       this.$nextTick(() => {
         this.$bvModal.hide('modal-prevent-closing')
       })
     }
+  },
+  computed: {
+    ...mapGetters(['filters'])
   }
 }
 </script>
