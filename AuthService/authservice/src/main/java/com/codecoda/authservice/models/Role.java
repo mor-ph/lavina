@@ -19,7 +19,7 @@ public class Role {
     @ManyToMany
     @JoinTable(
             schema = "letsplay",
-            name = "USERROLES",
+            name = "userroles",
             joinColumns = @JoinColumn(name = "Roleid"),
             inverseJoinColumns = @JoinColumn(name = "Userid")
     )
