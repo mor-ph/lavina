@@ -3,7 +3,8 @@
   <div style="padding: 20%">
     <b-form-select
     v-model="selectedFilters.category"
-    :options="filters.category"></b-form-select>
+    :options= filters.category
+    @change= "fetchSubCategories"></b-form-select>
 
     <b-form-select
     v-if="selectedFilters.category !== null"
@@ -13,7 +14,7 @@
     <b-form-select v-model="selectedFilters.location"
     :options="filters.location"></b-form-select>
     <!-- add datepicker -->
-    <app-events-grid v-if="events !== null" :events="events"></app-events-grid>
+    <app-events-grid v-if="events !== null" :events="events.data"></app-events-grid>
     <p v-else>No events match your search!</p>
   </div>
 </template>
@@ -41,9 +42,9 @@ export default {
       'filters'
     ])
   },
-  watch: {
-    selectedFilters: filters => {
-      this.$store.dispach('fetchFilteredEvents', filters)
+  methods: {
+    fetchSubCategories () {
+      this.$store.dispatch('fetchSubcategories', this.selectedFilters.category)
     }
   }
 }
