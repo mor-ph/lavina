@@ -8,10 +8,13 @@ services:
      env_file:
        - variables.env
      volumes:
-        - ./mysql-data:/var/lib/mysql
-        - ./mysql-initdb:/docker-entrypoint-initdb.d
+        - mysql-data:/var/lib/mysql
+        - mysql-initdb:/docker-entrypoint-initdb.d
      ports:
-       - 3306:3306         
+       - 3306:3306
+     networks:
+       - app
+          # - default
         
     eventapi:
         depends_on:
@@ -23,6 +26,9 @@ services:
           - variables.env
         ports:
           - "5103:80"
+        networks:
+          - app
+          - default  
             
     commentapi:
         depends_on:
@@ -34,8 +40,31 @@ services:
           - variables.env
         ports:
           - "5101:80"
+        networks:
+          - app
+          - default  
+          
+    authapi:
+        restart: on-failure
+        environment:
+          SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/letsplay?useSSL=false&autoReconnect=true&failOverReadOnly=false&maxReconnects=10&allowPublicKeyRetrieval=true
+        depends_on:
+          - db
+        build:
+          context: .
+          dockerfile: ./AuthService/authservice/Dockerfile
+        volumes:
+          - /data/authservice
+        ports:
+          - "8081:8081"
+        networks:
+          - app
+          - default
           
         
 volumes:
-  mysql-data:
-  mysql-initdb:
+  mysql-data: {}
+  mysql-initdb: {}
+networks:
+  app:
+    driver: bridge
