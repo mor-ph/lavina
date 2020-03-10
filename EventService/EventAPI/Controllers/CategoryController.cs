@@ -16,7 +16,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventAPI.Controllers
 {
-    [EnableCors("AllowAnyOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]

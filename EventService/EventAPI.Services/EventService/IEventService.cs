@@ -1,4 +1,5 @@
 ﻿using EventAPI.Models.Models;
+using EventAPI.Models.QueryParameters;
 using EventAPI.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace EventAPI.Services.EventService
 {
     public interface IEventService
     {
-        Task<IEnumerable<Event>> GetAllEvents();
+        Task<IEnumerable<Event>> GetAllEvents(EventsQueryParameters parameters);
         Task CreateEvent(Event ev);
         Task<bool> UpdateEvent(int id, EventInputModel model);
         Task DeleteEvent(Event evt);

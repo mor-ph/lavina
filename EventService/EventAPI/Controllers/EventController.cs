@@ -11,6 +11,7 @@ using EventAPI.Models;
 using EventAPI.Models.Models;
 using EventAPI.Models.QueryParameters;
 using EventAPI.Models.ViewModels;
+using EventAPI.Models.ViewModels.Events;
 using EventAPI.Services.Categories;
 using EventAPI.Services.EventService;
 using Microsoft.AspNetCore.Authorization;
@@ -23,7 +24,6 @@ using Newtonsoft.Json;
 namespace EventAPI.Controllers
 {
 
-    [EnableCors("AllowAnyOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -46,12 +46,12 @@ namespace EventAPI.Controllers
 
         //returns events in json format
         [HttpGet("getall")]
-        public async Task<IEnumerable<Event>> GetAll([FromQuery] EventsQueryParameters eventsQueryParameters)
+        public async Task<IActionResult> GetAll([FromQuery] EventsQueryParameters eventsQueryParameters)
         {
-            var eventsToReturn = await _eventService.GetAllEvents();
+            var events = await _eventService.GetAllEvents(eventsQueryParameters);
+            var eventsToReturn = _mapper.Map<IEnumerable<EventsForListViewModel>>(events);
 
-
-            return eventsToReturn;
+            return Ok(eventsToReturn);
             
         }
         //Get event/get/id
@@ -65,7 +65,7 @@ namespace EventAPI.Controllers
                 List<Comment> comments;
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.GetAsync("https://localhost:5103/api/comment/" + id))
+                    using (var response = await httpClient.GetAsync("https://localhost:44369/api/comment/" + id))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
                         comments = JsonConvert.DeserializeObject<List<Comment>>(apiResponse);

@@ -1,11 +1,15 @@
 ﻿using EventAPI.Data.Context;
 using EventAPI.Models.Models;
+using EventAPI.Models.QueryParameters;
 using EventAPI.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,10 +36,51 @@ namespace EventAPI.Services.EventService
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Event>> GetAllEvents()
+        public async Task<IEnumerable<Event>> GetAllEvents(EventsQueryParameters parameters)
         {
-            return await _dbContext.Events.OrderByDescending(x=>x.CreatedOn).ToListAsync();
+            //if(parameters.Date.HasValue)
+            //{
+            //    string s = parameters.Date.Value.Date.ToString("dd/MM/yyyy");
+            //    parameters.Date = DateTime.ParseExact(s, "d",CultureInfo.CurrentCulture);
+            //}
+            List<Event> events;
+            if(IsAnyNullOrEmpty(parameters) == false)
+            {
+                            events = await _dbContext.Events
+                .Include(e => e.City)
+                .Include(e => e.Category)
+                .Where(e => ((e.Category.Name == parameters.Category && parameters.SubCategory==null) ||
+                            (e.Category.Name == parameters.SubCategory)) &&
+                            (parameters.Location == null || e.City.Name == parameters.Location) &&
+                            (parameters.Date == null || e.EventStartDate.Date == parameters.Date.Value.Date)) 
+                .AsNoTracking()
+                .ToListAsync();
+                return events;
+            }  
+
+            events = await _dbContext.Events
+                .Include(e => e.City)
+                .OrderByDescending(x => x.CreatedOn)
+                .Take(48)
+                .AsNoTracking()
+                .ToListAsync();
+            return events;
             
+        }
+        private bool IsAnyNullOrEmpty(object myObject)
+        {
+            foreach (PropertyInfo pi in myObject.GetType().GetProperties())
+            {
+                if (pi.PropertyType == typeof(string))
+                {
+                    string value = (string)pi.GetValue(myObject);
+                    if (string.IsNullOrEmpty(value))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
         public async Task<Event> GetEventByID(int id)
         {
