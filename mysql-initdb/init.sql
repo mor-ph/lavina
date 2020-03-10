@@ -235,30 +235,30 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
--- Table structure for table `userroles`
+-- Table structure for table `USERROLES`
 --
 
-DROP TABLE IF EXISTS `userroles`;
+DROP TABLE IF EXISTS `USERROLES`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `userroles` (
+CREATE TABLE `USERROLES` (
   `UserId` int NOT NULL,
   `RoleId` int NOT NULL,
   PRIMARY KEY (`UserId`,`RoleId`),
-  KEY `IX_UserRoles_RoleId` (`RoleId`),
-  CONSTRAINT `FK_UserRoles_Roles_RoleId` FOREIGN KEY (`RoleId`) REFERENCES `roles` (`Id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_UserRoles_Users_UserId` FOREIGN KEY (`UserId`) REFERENCES `users` (`Id`) ON DELETE CASCADE
+  KEY `IX_USERROLES_RoleId` (`RoleId`),
+  CONSTRAINT `FK_USERROLES_Roles_RoleId` FOREIGN KEY (`RoleId`) REFERENCES `roles` (`Id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_USERROLES_Users_UserId` FOREIGN KEY (`UserId`) REFERENCES `users` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `userroles`
+-- Dumping data for table `USERROLES`
 --
 
-LOCK TABLES `userroles` WRITE;
-/*!40000 ALTER TABLE `userroles` DISABLE KEYS */;
-INSERT INTO `userroles` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1);
-/*!40000 ALTER TABLE `userroles` ENABLE KEYS */;
+LOCK TABLES `USERROLES` WRITE;
+/*!40000 ALTER TABLE `USERROLES` DISABLE KEYS */;
+INSERT INTO `USERROLES` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1);
+/*!40000 ALTER TABLE `USERROLES` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
