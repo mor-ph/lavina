@@ -9,13 +9,11 @@ using AutoMapper;
 using EventAPI.Data.Context;
 using EventAPI.Models;
 using EventAPI.Models.Models;
-using EventAPI.Models.QueryParameters;
 using EventAPI.Models.ViewModels;
 using EventAPI.Models.ViewModels.Events;
 using EventAPI.Services.Categories;
 using EventAPI.Services.EventService;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,10 +21,11 @@ using Newtonsoft.Json;
 
 namespace EventAPI.Controllers
 {
+     
 
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    // [Authorize]
     
     public class EventController : ControllerBase
     {
@@ -65,7 +64,7 @@ namespace EventAPI.Controllers
                 List<Comment> comments;
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.GetAsync("https://localhost:44369/api/comment/" + id))
+                    using (var response = await httpClient.GetAsync("https://localhost:5103/api/comment/" + id))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
                         comments = JsonConvert.DeserializeObject<List<Comment>>(apiResponse);
@@ -116,6 +115,14 @@ namespace EventAPI.Controllers
                    x.Title == evt.Title &&
                    x.CategoryId == category.Id).ToListAsync();
 
+                //foreach (var item in dbEvents)
+                //{
+                //    if (Math.Abs((evt.EventStartDate - item.EventStartDate).TotalHours) < 1)
+                //    {
+                //        var res = (evt.EventStartDate - item.EventStartDate).TotalHours;
+                //    }
+
+                //}
 
                 var result = dbEvents.Any(x => Math.Abs((evt.EventStartDate - x.EventStartDate).TotalHours) < 1);
 

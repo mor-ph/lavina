@@ -2,9 +2,8 @@
   <div id="register">
     <div class="body" style="padding-bottom: 10%">
       <b-container>
-        <b-row>
-          <b-col sm="5"></b-col>
-          <b-col sm="2">
+        <b-row class="text-center">
+          <b-col>
             <h1 class="hhh">Register</h1>
             <br />
             <b-iconstack font-scale="10" variant="white">
@@ -22,8 +21,7 @@
         </b-row>
         <b-form @submit.prevent="onSubmit" style="padding: 2.2%">
           <b-row>
-            <b-col sm="3"></b-col>
-            <b-col sm="6">
+            <b-col sm="6" offset-sm="3">
               <b-form-group
                 class="label"
                 id="email-input-group"
@@ -44,8 +42,7 @@
             </b-col>
           </b-row>
           <b-row>
-            <b-col sm="3"></b-col>
-            <b-col sm="6">
+            <b-col sm="6" offset-sm="3">
               <b-form-group
                 class="label"
                 id="username-input-group"
@@ -64,8 +61,7 @@
             </b-col>
           </b-row>
           <b-row>
-            <b-col sm="3"></b-col>
-            <b-col sm="6">
+            <b-col sm="6" offset-sm="3">
               <b-form-group
                 class="label"
                 id="password-input-group"
@@ -82,9 +78,8 @@
               </b-form-group>
             </b-col>
           </b-row>
-          <b-row>
-            <b-col sm="3"></b-col>
-            <b-col sm="6">
+          <b-row >
+            <b-col sm="6" offset-sm="3">
               <b-form-group
                 class="label"
                 id="confirm-password-input-group"

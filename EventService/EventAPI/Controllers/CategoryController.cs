@@ -9,7 +9,6 @@ using EventAPI.Models.Models;
 using EventAPI.Models.ViewModels.Categories;
 using EventAPI.Services.Categories;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +17,7 @@ namespace EventAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    // [Authorize]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
