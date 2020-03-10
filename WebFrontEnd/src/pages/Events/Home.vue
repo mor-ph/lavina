@@ -1,14 +1,14 @@
 
 <template>
-  <div style="padding: 10%">
+  <div style="padding: 20%">
     <b-form-select
     v-model="selectedFilters.category"
     :options="filters.category"></b-form-select>
 
     <b-form-select
     v-if="selectedFilters.category !== null"
-    v-model="filters.subcategory"
-    :options="subcategories"></b-form-select>
+    v-model="selectedFilters.subcategory"
+    :options="filters.subcategories"></b-form-select>
 
     <b-form-select v-model="selectedFilters.location"
     :options="filters.location"></b-form-select>
