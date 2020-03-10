@@ -32,7 +32,7 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             schema = "letsplay",
-            name = "USERROLES",
+            name = "userroles",
             joinColumns = @JoinColumn(name = "Userid"),
             inverseJoinColumns = @JoinColumn(name = "Roleid")
     )
