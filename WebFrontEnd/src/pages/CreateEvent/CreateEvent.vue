@@ -1,15 +1,14 @@
 <template>
   <div>
     <!-- Color fon -->
-    <div class="body" style="padding-bottom:10%">
+    <div class="body">
       <b-container fluid>
         <b-form @submit.prevent="onSubmit">
         <!-- Title -->
-        <b-row class="my-3">
-          <b-col sm="4"></b-col>
-          <b-col sm="4">
-            <div class="text-center" style="padding:5%">
-              <label for="example-i18n-picker" class="text-black">
+        <b-row class="text-center my-2">
+          <b-col sm="4" offset-sm="4">
+            <div class="text-center  my-2">
+              <label for="example-i18n-picker" class="text-white">
                 <strong>Title:</strong>
               </label>
             </div>
@@ -26,12 +25,11 @@
         </b-row>
 
         <!-- Category -->
-        <b-row class="my-3">
-          <b-col sm="4"></b-col>
+        <b-row class="text-center my-2">
 
-          <b-col sm="4">
+          <b-col sm="4" offset-sm="4">
             <div class="text-center">
-              <label for="example-category" class="text-black">
+              <label for="example-category" class="text-white">
                 <strong>Category:</strong>
               </label>
             </div>
@@ -47,25 +45,20 @@
         </b-row>
 
         <!-- Subcategory -->
-        <b-row class="my-3"
-        v-if="category !== ''">
-          <b-col sm="5"></b-col>
-
-          <b-col sm="2">
+        <b-row class="text-center my-2"
+         v-if="category !== ''">
+          <b-col sm="2" offset-sm="5">
             <div class="text-center">
-              <label for="example-subcategorys" class="text-black">
+              <label for="example-subcategorys" class="text-white">
                 <strong>Subcategories:</strong>
               </label>
             </div>
           </b-col>
         </b-row>
 
-        <b-row class="my-3">
-          <b-col sm="4"></b-col>
-
-          <b-col sm="3">
-            <b-form-select
-            id="example-subcategorys"
+        <b-row class="text-center my-2">
+          <b-col sm="3" offset-sm="4">
+            <b-form-select id="example-subcategorys"
             v-if="category !== ''"
             v-model="subcategory"
             required
@@ -103,44 +96,39 @@
         </b-row>
 
         <!--  Date & Time picker -->
-        <b-row class="my-3">
-          <b-col sm="4"></b-col>
-
-          <b-col sm="4">
-            <div class="text-center">
-              <label for="example-i18n-picker" class="text-black">
+        <b-row class="text-center my-2">
+          <b-col sm="4" offset-sm="4">
+            <div class="text-center my-2">
+              <label for="example-i18n-picker" class="text-white">
                 <strong>Date & Time picker:</strong>
               </label>
             </div>
           </b-col>
         </b-row>
 
-        <b-row class="my-2">
-          <b-col sm="4"></b-col>
-          <b-col sm="4">
+        <b-row class=" text-center my-2">
+          <b-col sm="4" offset-sm="4">
             <b-form-datepicker id="datepicker-valid"
                                v-model="valueDate"></b-form-datepicker>
           </b-col>
         </b-row>
-        <b-row class="my-2">
-          <b-col sm="4"></b-col>
-          <b-col sm="4">
-          <b-form-timepicker id="datepicker-valid"
+        <b-row class=" text-center my-2">
+          <b-col sm="4" offset-sm="4">
+          <b-form-timepicker id="timepicker-valid"
                              v-model="valueTime"></b-form-timepicker>
          </b-col>
         </b-row>
         <!-- Location -->
-        <b-row class="my-3">
-          <b-col sm="4"></b-col>
+        <b-row class="text-center my-2">
 
-          <b-col sm="4">
-            <div class="text-center">
-              <label for="example-location" class="text-black">
+          <b-col sm="4" offset-sm="4">
+            <div class="text-center my-2">
+              <label for="example-location" class="text-white">
                 <strong>Location:</strong>
               </label>
             </div>
             <b-form-select
-              class="text-center"
+              class="text-center "
               id="example-location"
               required
               v-model="location"
@@ -150,33 +138,29 @@
         </b-row>
 
         <!--  Details -->
-        <b-row class="my-3">
-          <b-col sm="4"></b-col>
-          <b-col sm="4">
+        <b-row class="text-center my-2">
+          <b-col sm="4" offset-sm="4">
             <div class="text-center">
-              <label for="example-i18n-picker" class="text-black">
+              <label for="example-i18n-picker" class="text-white">
                 <strong>Details:</strong>
               </label>
             </div>
           </b-col>
         </b-row>
-          <b-row class="my-2">
-            <b-col sm="4"></b-col>
-            <b-col sm="4">
+          <b-row class="text-center my-2">
+            <b-col sm="4" offset-sm="4">
               <b-form-textarea
-                class="text-center"
                 id="textarea-no-resize"
                 placeholder="Fixed height textarea"
-                rows="10"
+                rows="7"
                 no-resize
                 required
                 v-model="description"
               ></b-form-textarea>
             </b-col>
           </b-row>
-          <b-row class="my-2">
-            <b-col sm="4"></b-col>
-            <b-col sm="4">
+          <b-row class="text-center my-2">
+            <b-col sm="4" offset-sm="4">
               <b-button type="submit" size="lg">Create</b-button>
             </b-col>
           </b-row>
@@ -267,9 +251,15 @@ export default {
 
 <style scoped>
 .body {
-  padding-top: 80px;
-  background: rgb(255,255,255);
-background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,190,113,1) 100%);
+  padding-top: 120px;
+  padding-bottom: 150px;
+   background: #f7f7f7;
+  background: rgb(63, 94, 251);
+  background: radial-gradient(
+    circle,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
 }
 /*.colorbutton{
  background: rgb(33,62,62);
