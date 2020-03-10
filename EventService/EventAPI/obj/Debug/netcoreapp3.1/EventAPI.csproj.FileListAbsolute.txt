@@ -610,3 +610,11 @@ D:\WorkRepositories\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\Event
 D:\WorkRepositories\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.csproj.CopyComplete
 D:\WorkRepositories\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.dll
 D:\WorkRepositories\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.pdb
+C:\Users\Decho\Desktop\New folder\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.csprojAssemblyReference.cache
+C:\Users\Decho\Desktop\New folder\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\staticwebassets\EventAPI.StaticWebAssets.Manifest.cache
+C:\Users\Decho\Desktop\New folder\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\staticwebassets\EventAPI.StaticWebAssets.xml
+C:\Users\Decho\Desktop\New folder\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Decho\Desktop\New folder\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.AssemblyInfoInputs.cache
+C:\Users\Decho\Desktop\New folder\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.AssemblyInfo.cs
+C:\Users\Decho\Desktop\New folder\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.dll
+C:\Users\Decho\Desktop\New folder\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.pdb

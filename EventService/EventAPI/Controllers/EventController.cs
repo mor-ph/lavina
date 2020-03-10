@@ -9,6 +9,7 @@ using AutoMapper;
 using EventAPI.Data.Context;
 using EventAPI.Models;
 using EventAPI.Models.Models;
+using EventAPI.Models.QueryParameters;
 using EventAPI.Models.ViewModels;
 using EventAPI.Models.ViewModels.Events;
 using EventAPI.Services.Categories;
@@ -64,7 +65,7 @@ namespace EventAPI.Controllers
                 List<Comment> comments;
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.GetAsync("https://localhost:5103/api/comment/" + id))
+                    using (var response = await httpClient.GetAsync("http://localhost:5103/api/comment/" + id))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
                         comments = JsonConvert.DeserializeObject<List<Comment>>(apiResponse);
