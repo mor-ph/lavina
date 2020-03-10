@@ -26,7 +26,7 @@ namespace EventAPI.Controllers
     [EnableCors("AllowAnyOrigin")]
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    // [Authorize]
     
     public class EventController : ControllerBase
     {
