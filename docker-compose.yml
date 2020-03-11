@@ -8,8 +8,8 @@ services:
      env_file:
        - variables.env
      volumes:
-        - mysql-data:/var/lib/mysql
-        - mysql-initdb:/docker-entrypoint-initdb.d
+        - ./mysql-data:/var/lib/mysql
+        - ./mysql-initdb:/docker-entrypoint-initdb.d
      ports:
        - 3306:3306
      networks:
@@ -47,7 +47,7 @@ services:
     authapi:
         restart: on-failure
         environment:
-          SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/letsplay?useSSL=false&autoReconnect=true&failOverReadOnly=false&maxReconnects=10&allowPublicKeyRetrieval=true
+          SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/letsplay?useSSL=false&autoReconnect=true&failOverReadOnly=false&maxReconnects=10&allowPublicKeyRetrieval=true&user=root&password=password
         depends_on:
           - db
         build:
@@ -63,8 +63,8 @@ services:
           
         
 volumes:
-  mysql-data: {}
-  mysql-initdb: {}
+  mysql-data: 
+  mysql-initdb: 
 networks:
   app:
     driver: bridge
