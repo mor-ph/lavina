@@ -39,7 +39,9 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (1,'Sports',NULL),(2,'Video Games',NULL),(3,'Music',NULL),(4,'Football',1),(5,'Volleyball',1),(6,'Basketball',1),(7,'Tenis',1),(8,'League of Legends',2),(9,'Dota 2',2),(10,'Fortnite',2),(11,'PUBG',2),(12,'World of Warcraft',2),(13,'Hip-Hop',3),(14,'Pop-Folk',3),(15,'Rock',3),(16,'House',3),(17,'R&B',3),(18,'Games',NULL),(19,'Poker',18);
+INSERT INTO `categories` VALUES (1,'Root',-1),(2,'Sports',1),(3,'Video Games',1),(4,'Music',1),
+(5,'Football',2),(6,'Volleyball',2),(7,'Basketball',2),(8,'Tenis',2),(9,'League of Legends',2),
+(10,'Dota 2',3),(11,'Fortnite',3),(12,'PUBG',3),(13,'World of Warcraft',3);
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
