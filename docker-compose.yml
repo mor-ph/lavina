@@ -14,7 +14,7 @@ services:
        - 3306:3306
      networks:
        - app
-          # - default
+       - default
         
     eventapi:
         depends_on:
@@ -28,7 +28,7 @@ services:
           - "5103:80"
         networks:
           - app
-          - default  
+          #- default  
             
     commentapi:
         depends_on:

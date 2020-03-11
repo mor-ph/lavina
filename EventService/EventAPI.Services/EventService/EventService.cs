@@ -38,13 +38,8 @@ namespace EventAPI.Services.EventService
 
         public async Task<IEnumerable<Event>> GetAllEvents(EventsQueryParameters parameters)
         {
-            //if(parameters.Date.HasValue)
-            //{
-            //    string s = parameters.Date.Value.Date.ToString("dd/MM/yyyy");
-            //    parameters.Date = DateTime.ParseExact(s, "d",CultureInfo.CurrentCulture);
-            //}
             List<Event> events;
-            if(IsAnyNullOrEmpty(parameters) == false)
+            if(AreAllNullOrEmpty(parameters) == false)
             {
                             events = await _dbContext.Events
                 .Include(e => e.City)
@@ -67,18 +62,20 @@ namespace EventAPI.Services.EventService
             return events;
             
         }
-        private bool IsAnyNullOrEmpty(object myObject)
+        private bool AreAllNullOrEmpty(object myObject)
         {
+            int count = 0;
             foreach (PropertyInfo pi in myObject.GetType().GetProperties())
             {
-                if (pi.PropertyType == typeof(string))
+
+                if(pi.GetValue(myObject) == null)
                 {
-                    string value = (string)pi.GetValue(myObject);
-                    if (string.IsNullOrEmpty(value))
-                    {
-                        return true;
-                    }
+                    count++;
                 }
+            }
+            if(count==myObject.GetType().GetProperties().Count())
+            {
+                return true;
             }
             return false;
         }

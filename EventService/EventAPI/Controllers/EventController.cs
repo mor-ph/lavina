@@ -48,6 +48,7 @@ namespace EventAPI.Controllers
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll([FromQuery] EventsQueryParameters eventsQueryParameters)
         {
+            
             var events = await _eventService.GetAllEvents(eventsQueryParameters);
             var eventsToReturn = _mapper.Map<IEnumerable<EventsForListViewModel>>(events);
 
@@ -65,7 +66,7 @@ namespace EventAPI.Controllers
                 List<Comment> comments;
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.GetAsync("http://localhost:5103/api/comment/" + id))
+                    using (var response = await httpClient.GetAsync("http://localhost:5101/api/comment/" + id))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
                         comments = JsonConvert.DeserializeObject<List<Comment>>(apiResponse);
