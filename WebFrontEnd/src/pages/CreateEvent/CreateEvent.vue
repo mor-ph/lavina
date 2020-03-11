@@ -157,19 +157,20 @@
           </b-col>
         </b-row>
 
-        <!--RadioButton-->
+        <!--Repeating-->
          <b-row class="my-2 text-center">
-          <b-col sm="4" offset-sm="4">
+          <b-col sm="2" offset-sm="5">
             <div class="text-center">
               <label for="example-i18n-picker" class="text-white">
                 <strong>Your event will occur?</strong>
               </label><br>
-             <b-dropdown id="dropdown-offset" variant="primary" text="Variant Repeating" class="m-2" disabled>
-           </b-dropdown>
+             <b-form-select v-model="selected" :options="options" class="mb-3">
+    </b-form-select>
             </div>
           </b-col>
         </b-row>
 
+      <!--People Needed-->
         <b-row class="my-2 text-center">
           <b-col sm="4" offset-sm="4">
             <div class="text-center">
@@ -235,7 +236,16 @@ export default {
 
       types: ['date', 'time'],
       valueDate: '',
-      valueTime: ''
+      valueTime: '',
+
+      selected: 'Once',
+      options: [
+        { value: 'Once', text: 'Once' },
+        { value: 'Everyday', text: 'Everyday' },
+        { value: 'Every week', text: 'Every week' },
+        { value: 'Every month', text: 'Every month' }
+      ]
+
     }
   },
   methods: {
