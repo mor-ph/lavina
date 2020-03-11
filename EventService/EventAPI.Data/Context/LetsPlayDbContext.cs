@@ -21,7 +21,7 @@ namespace EventAPI.Data.Context
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Userevent> Userevent { get; set; }
-
+        public virtual DbSet<User> Users { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -68,6 +68,11 @@ namespace EventAPI.Data.Context
                     .HasCollation("utf8mb4_0900_ai_ci");
             });
 
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("users");
+
+            });
             modelBuilder.Entity<Event>(entity =>
             {
                 entity.ToTable("events");
@@ -115,6 +120,8 @@ namespace EventAPI.Data.Context
                     .WithMany(p => p.Events)
                     .HasForeignKey(d => d.CityId)
                     .HasConstraintName("FK_Events_Cities_CityID");
+                entity.HasOne(d => d.User).WithMany(p => p.Events).HasForeignKey(d => d.UserCreatedById).HasConstraintName("IX_Events_UserCreatedByID");
+
             });
 
             modelBuilder.Entity<Userevent>(entity =>
@@ -122,7 +129,7 @@ namespace EventAPI.Data.Context
                 entity.HasKey(e => new { e.UserId, e.EventId })
                     .HasName("PRIMARY");
 
-                entity.ToTable("userevent");
+                entity.ToTable("userevents");
 
                 entity.HasIndex(e => e.EventId)
                     .HasName("IX_UserEvent_EventID");

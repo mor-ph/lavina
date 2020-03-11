@@ -1,4 +1,5 @@
 ﻿using EventAPI.Data.Context;
+using EventAPI.Models.Enums;
 using EventAPI.Models.Models;
 using EventAPI.Models.QueryParameters;
 using EventAPI.Models.ViewModels;
@@ -50,15 +51,18 @@ namespace EventAPI.Services.EventService
                             (parameters.Date == null || e.EventStartDate.Date == parameters.Date.Value.Date)) 
                 .AsNoTracking()
                 .ToListAsync();
-                return events;
             }  
-
+            else { 
             events = await _dbContext.Events
                 .Include(e => e.City)
+                .Include(e => e.User)
+                .Include(e => e.Category)
+                .Include(e => e.Userevent)
                 .OrderByDescending(x => x.CreatedOn)
                 .Take(48)
                 .AsNoTracking()
                 .ToListAsync();
+                }
             return events;
             
         }

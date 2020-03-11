@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EventAPI.Data.Context;
 using EventAPI.Models;
+using EventAPI.Models.Enums;
 using EventAPI.Models.Models;
 using EventAPI.Models.QueryParameters;
 using EventAPI.Models.ViewModels;
@@ -50,8 +51,9 @@ namespace EventAPI.Controllers
         {
             
             var events = await _eventService.GetAllEvents(eventsQueryParameters);
-            var eventsToReturn = _mapper.Map<IEnumerable<EventsForListViewModel>>(events);
+            var eventsToReturn = _mapper.Map<List<EventsForListViewModel>>(events);
 
+            //eventsToReturn.ForEach(e => e.EventStatus = (Status)Enum.Parse(typeof(Status), e.EventStatus.ToString()));
             return Ok(eventsToReturn);
             
         }
