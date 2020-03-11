@@ -25,6 +25,7 @@ namespace EventAPI.Models.Models
         public int CityId { get; set; }
         public string Address { get; set; }
 
+        public virtual User User { get; set; }
         public virtual Category Category { get; set; }
         public virtual City City { get; set; }
         public virtual ICollection<Userevent> Userevent { get; set; }
