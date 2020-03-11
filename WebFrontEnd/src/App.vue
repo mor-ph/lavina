@@ -19,5 +19,10 @@ export default {
 </script>
 
 <style>
-
+body, .body{
+  /* width: 100%; */
+  position: relative;
+  background: rgb(74, 83, 92);
+  color:ivory;
+}
 </style>
