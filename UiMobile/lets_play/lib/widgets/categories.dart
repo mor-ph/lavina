@@ -6,6 +6,7 @@ import 'package:lets_play/bloc/category/category_bloc.dart';
 import 'package:lets_play/bloc/category/category_event.dart';
 import 'package:lets_play/model/category.dart';
 import 'package:lets_play/screens/subcategory_screen.dart';
+import 'package:lets_play/services/category_service.dart';
 import 'package:lets_play/widgets/event_list.dart';
 import 'package:provider/provider.dart';
 
@@ -16,40 +17,10 @@ class CategoryWidget extends StatefulWidget {
 
 class _CategoryWidgetState extends State<CategoryWidget> {
   Category category;
-  List<Category> categories = [
-    Category(id: 1, name: 'Root', parentId: -1, categoryIcon: Icons.settings),
-    Category(
-        id: 2, name: 'Sport', categoryIcon: Icons.directions_run, parentId: 1),
-    Category(
-        id: 6,
-        name: 'Handball',
-        categoryIcon: Icons.directions_run,
-        parentId: 2),
-    Category(
-        id: 3,
-        name: 'Video Games',
-        categoryIcon: Icons.videogame_asset,
-        parentId: 1),
-    Category(
-        id: 7,
-        name: 'Monopolia',
-        categoryIcon: Icons.directions_run,
-        parentId: 4),
-    Category(
-        id: 8,
-        name: 'Football',
-        categoryIcon: Icons.directions_run,
-        parentId: 2),
-    Category(
-        id: 4,
-        name: 'Board Games',
-        categoryIcon: Icons.table_chart,
-        parentId: 1),
-    Category(
-        id: 5, name: 'Tourism', categoryIcon: Icons.card_travel, parentId: 1),
-  ];
+  List<Category> categories ;
   @override
   void initState() {
+    categories = CategoryService.getCategories() as List<Category>;
     categories.forEach((category) => category.isSelected = false);
     super.initState();
   }

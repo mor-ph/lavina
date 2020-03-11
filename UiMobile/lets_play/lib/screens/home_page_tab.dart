@@ -8,10 +8,24 @@ import 'package:lets_play/model/city.dart';
 import 'package:lets_play/model/event.dart';
 import 'package:lets_play/model/user.dart';
 import 'package:lets_play/screens/subcategory_screen.dart';
+import 'package:lets_play/services/event_service.dart';
 import 'package:lets_play/widgets/categories.dart';
 import 'package:lets_play/widgets/event_list.dart';
 
-class HomePageTab extends StatelessWidget {
+class HomePageTab extends StatefulWidget {
+  
+  
+  @override
+  _HomePageTabState createState() => _HomePageTabState();
+}
+
+class _HomePageTabState extends State<HomePageTab> {
+  List<Event> _events;
+  @override
+  void initState() {
+    _events = EventService.getEvents() as List<Event>;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
@@ -52,70 +66,7 @@ class HomePageTab extends StatelessWidget {
       );
     } else if (state is EventCategoryEmptyState) {
       print("emptyState!");
-
-      // dummy data
-      List<Event> eventsList = [
-        Event(
-            title: "Play football",
-            category: Category(id: 1, name: "Sport"),
-            createdAt: DateTime.now(),
-            startDate: DateTime.utc(2020, 4, 2),
-            peopleNeeded: 12,
-            status: "Active",
-            exactAddress: 'Kichuk',
-            createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
-            city: City(id: 1, name: "Plovdiv")),
-        Event(
-            title: "Play football",
-            category: Category(id: 1, name: "Sport"),
-            createdAt: DateTime.now(),
-            startDate: DateTime.now(),
-            status: "Active",
-            peopleNeeded: 4,
-            createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
-            city: City(id: 1, name: "Plovdiv")),
-        Event(
-            title: "Play handball",
-            category: Category(
-                id: 5,
-                name: 'Handball',
-                categoryIcon: Icons.category,
-                parentId: 1),
-            createdAt: DateTime.now(),
-            startDate: DateTime.now(),
-            peopleNeeded: 2,
-            status: "Active",
-            createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
-            city: City(id: 1, name: "Banq")),
-        Event(
-            title: "Play monopolia",
-            category: Category(
-                id: 3,
-                name: 'Monopolia',
-                categoryIcon: Icons.directions_run,
-                parentId: 1),
-            createdAt: DateTime.now(),
-            startDate: DateTime.now(),
-            status: "Active",
-            peopleNeeded: 3,
-            createdByUser: User(uid: 2, userName: "GOsho@gmail.com"),
-            city: City(id: 1, name: "Plovdiv")),
-        Event(
-            title: "Play monopolia",
-            category: Category(
-                id: 3,
-                name: 'Monopolia',
-                categoryIcon: Icons.directions_run,
-                parentId: 1),
-            createdAt: DateTime.now(),
-            startDate: DateTime.now(),
-            status: "Active",
-            peopleNeeded: 3,
-            createdByUser: User(uid: 2, userName: "GOsho@gmail.com"),
-            city: City(id: 1, name: "Plovdiv")),
-      ];
-
-      return Column(children: <Widget>[EventList(events: eventsList)]);
+      return Column(children: <Widget>[EventList(events: _events)]);
     }
   }
 }
