@@ -68,13 +68,8 @@ export default {
 
 <style scoped>
 .body {
-  background: #f7f7f7;
-  background: rgb(63, 94, 251);
-  background: radial-gradient(
-    circle,
-    rgba(63, 94, 251, 1) 0%,
-    rgba(0, 0, 0, 1) 100%
-  );
+  background: rgb(0,0,0);
+background: radial-gradient(circle, rgba(0,0,0,0.6615021008403361) 0%, rgba(0,0,0,0.7595413165266106) 100%);
 }
 .hhh{
   padding-top: 130px;

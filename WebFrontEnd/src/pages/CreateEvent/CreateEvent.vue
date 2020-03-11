@@ -4,194 +4,197 @@
     <div class="body">
       <b-container fluid>
         <b-form @submit.prevent="onSubmit">
-        <!-- Title -->
-        <b-row class="text-center my-2">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center  my-2">
-              <label for="example-i18n-picker" class="text-white">
-                <strong>Title:</strong>
-              </label>
-            </div>
-            <b-form-textarea
-              class="text-center"
-              id="textarea-no-resize"
-              placeholder="Fixed height textarea"
-              rows="1"
-              no-resize
-              required
-              v-model="title"
-            ></b-form-textarea>
-          </b-col>
-        </b-row>
+          <!-- Title -->
+          <b-row class="text-center my-2">
+            <b-col sm="4" offset-sm="4">
+              <div class="text-center my-2">
+                <label for="example-i18n-picker" class="text-white">
+                  <strong>Title:</strong>
+                </label>
+              </div>
+              <b-form-textarea
+                class="text-center"
+                id="textarea-no-resize"
+                placeholder="Fixed height textarea"
+                rows="1"
+                no-resize
+                required
+                v-model="title"
+              ></b-form-textarea>
+            </b-col>
+          </b-row>
 
-        <!-- Category -->
-        <b-row class="text-center my-2">
+          <!-- Category -->
+          <b-row class="text-center my-2">
+            <b-col sm="4" offset-sm="4">
+              <div class="text-center">
+                <label for="example-category" class="text-white">
+                  <strong>Category:</strong>
+                </label>
+              </div>
+              <b-form-select
+                class="text-center"
+                id="example-category"
+                v-model="category"
+                :options="filters.category"
+                @change="fetchSubCategories"
+                required
+              ></b-form-select>
+            </b-col>
+          </b-row>
 
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center">
-              <label for="example-category" class="text-white">
-                <strong>Category:</strong>
-              </label>
-            </div>
-            <b-form-select
-              class="text-center"
-              id="example-category"
-              v-model="category"
-              :options= filters.category
-              @change= "fetchSubCategories"
-              required
-            ></b-form-select>
-          </b-col>
-        </b-row>
+          <!-- Subcategory -->
+          <b-row class="text-center my-2" v-if="category !== ''">
+            <b-col sm="2" offset-sm="5">
+              <div class="text-center">
+                <label for="example-subcategorys" class="text-white">
+                  <strong>Subcategories:</strong>
+                </label>
+              </div>
+            </b-col>
+          </b-row>
 
-        <!-- Subcategory -->
-        <b-row class="text-center my-2"
-         v-if="category !== ''">
-          <b-col sm="2" offset-sm="5">
-            <div class="text-center">
-              <label for="example-subcategorys" class="text-white">
-                <strong>Subcategories:</strong>
-              </label>
-            </div>
-          </b-col>
-        </b-row>
-
-        <b-row class="text-center my-2">
-          <b-col sm="3" offset-sm="4">
-            <b-form-select id="example-subcategorys"
-            v-if="category !== ''"
-            v-model="subcategory"
-            required
-            :options="filters.subcategories"></b-form-select>
-          </b-col>
-
-          <!-- Add subcategory -->
-          <div v-if="category !== ''">
-            <b-col>
-              <b-button v-b-modal.modal-prevent-closing class="colorbutton">
-                <strong>Add Sub.</strong>
-              </b-button>
+          <b-row class="text-center my-2">
+            <b-col sm="3" offset-sm="4">
+              <b-form-select
+                id="example-subcategorys"
+                v-if="category !== ''"
+                v-model="subcategory"
+                required
+                :options="filters.subcategories"
+              ></b-form-select>
             </b-col>
 
-            <b-modal
-              id="modal-prevent-closing"
-              ref="modal"
-              title="Submit Your Name"
-              @show="resetModal"
-              @hidden="resetModal"
-              @ok="handleOk"
-            >
-              <form ref="form" @submit.stop.prevent="handleAddSubSubmit">
-                <b-form-group
-                  :state="nameState"
-                  label="Name"
-                  label-for="name-input"
-                  invalid-feedback="Name is required"
-                >
-                  <b-form-input id="name-input" v-model="subCategoryName" :state="nameState" required></b-form-input>
-                </b-form-group>
-              </form>
-            </b-modal>
-          </div>
-        </b-row>
+            <!-- Add subcategory -->
+            <div v-if="category !== ''">
+              <b-col>
+                <b-button v-b-modal.modal-prevent-closing class="colorbutton">
+                  <strong>Add Sub.</strong>
+                </b-button>
+              </b-col>
 
-        <!--  Date & Time picker -->
-        <b-row class="text-center my-2">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center my-2">
-              <label for="example-i18n-picker" class="text-white">
-                <strong>Date & Time picker:</strong>
-              </label>
+              <b-modal
+                id="modal-prevent-closing"
+                ref="modal"
+                title="Submit Your Name"
+                @show="resetModal"
+                @hidden="resetModal"
+                @ok="handleOk"
+              >
+                <form ref="form" @submit.stop.prevent="handleAddSubSubmit">
+                  <b-form-group
+                    :state="nameState"
+                    label="Name"
+                    label-for="name-input"
+                    invalid-feedback="Name is required"
+                  >
+                    <b-form-input
+                      id="name-input"
+                      v-model="subCategoryName"
+                      :state="nameState"
+                      required
+                    ></b-form-input>
+                  </b-form-group>
+                </form>
+              </b-modal>
             </div>
-          </b-col>
-        </b-row>
+          </b-row>
 
-        <b-row class=" text-center my-2">
-          <b-col sm="4" offset-sm="4">
-            <b-form-datepicker id="datepicker-valid"
-                               v-model="valueDate"></b-form-datepicker>
-          </b-col>
-        </b-row>
-        <b-row class=" text-center my-2">
-          <b-col sm="4" offset-sm="4">
-          <b-form-timepicker id="timepicker-valid"
-                             v-model="valueTime"></b-form-timepicker>
-         </b-col>
-        </b-row>
-        <!-- Location -->
-        <b-row class="text-center my-2">
+          <!--  Date & Time picker -->
+          <b-row class="text-center my-2">
+            <b-col sm="4" offset-sm="4">
+              <div class="text-center my-2">
+                <label for="example-i18n-picker" class="text-white">
+                  <strong>Date & Time:</strong>
+                </label>
+              </div>
+            </b-col>
+          </b-row>
 
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center my-2">
-              <label for="example-location" class="text-white">
-                <strong>Location:</strong>
-              </label>
-            </div>
-            <b-form-select
-              class="text-center "
-              id="example-location"
-              required
-              v-model="location"
-              :options="filters.location"
-            ></b-form-select>
-          </b-col>
-        </b-row>
+          <b-row class="text-center my-2">
+            <b-col sm="4" offset-sm="4">
+              <b-form-datepicker id="datepicker-valid" v-model="valueDate"></b-form-datepicker>
+            </b-col>
+          </b-row>
+          <b-row class="text-center my-2">
+            <b-col sm="4" offset-sm="4">
+              <b-form-timepicker id="timepicker-valid" v-model="valueTime"></b-form-timepicker>
+            </b-col>
+          </b-row>
+          <!-- Location -->
+          <b-row class="text-center my-2">
+            <b-col sm="4" offset-sm="4">
+              <div class="text-center my-2">
+                <label for="example-location" class="text-white">
+                  <strong>Location:</strong>
+                </label>
+              </div>
+              <b-form-select
+                class="text-center"
+                id="example-location"
+                required
+                v-model="location"
+                :options="filters.location"
+              ></b-form-select>
+            </b-col>
+          </b-row>
 
-        <!-- Address -->
-        <b-row class="text-center my-2">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center  my-2">
-              <label for="example-i18n-picker" class="text-white">
-                <strong>Address:</strong>
-              </label>
-            </div>
-            <b-form-textarea
-              class=""
-              id="textarea-no-resize"
-              placeholder="Please enter an address"
-              rows="1"
-              no-resize
-              required
-              v-model="address"
-            ></b-form-textarea>
-          </b-col>
-        </b-row>
+          <!-- Address -->
+          <b-row class="text-center my-2">
+            <b-col sm="4" offset-sm="4">
+              <div class="text-center my-2">
+                <label for="example-i18n-picker" class="text-white">
+                  <strong>Address:</strong>
+                </label>
+              </div>
+              <b-form-textarea
+                class
+                id="textarea-no-resize"
+                placeholder="Please enter an address"
+                rows="1"
+                no-resize
+                required
+                v-model="address"
+              ></b-form-textarea>
+            </b-col>
+          </b-row>
 
-        <!--Repeating-->
-         <b-row class="my-2 text-center">
-          <b-col sm="2" offset-sm="5">
-            <div class="text-center">
-              <label for="example-i18n-picker" class="text-white">
-                <strong>Your event will occur?</strong>
-              </label><br>
-             <b-form-select v-model="selected" :options="options" class="mb-3">
-    </b-form-select>
-            </div>
-          </b-col>
-        </b-row>
+          <!--Repeating-->
+          <b-row class="my-2 text-center">
+            <b-col sm="2" offset-sm="5">
+              <div class="text-center">
+                <label for="example-i18n-picker" class="text-white">
+                  <strong>How often will your event occur?</strong>
+                </label>
+                <br />
+                <b-form-select v-model="selected" :options="options" class="mb-3"></b-form-select>
+              </div>
+            </b-col>
+          </b-row>
 
-      <!--People Needed-->
-        <b-row class="my-2 text-center">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center">
-              <label for="example-i18n-picker" class="text-white">
-                <strong>People Needed:</strong>
-              </label><br>
-              <b-form-spinbutton id="sb-vertical" v-model="value" vertical></b-form-spinbutton>
-            </div>
-          </b-col>
-        </b-row>
+          <!--People Needed-->
+          <b-row class="my-2 text-center">
+            <b-col sm="4" offset-sm="4">
+              <div class="text-center">
+                <label for="example-i18n-picker" class="text-white">
+                  <strong>How many people do you need to come?</strong>
+                </label>
+                <br />
+                <b-form-spinbutton id="sb-vertical" v-model="value" vertical></b-form-spinbutton>
+              </div>
+            </b-col>
+          </b-row>
 
-        <!--  Details -->
-        <b-row class="text-center my-2">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center">
-              <label for="example-i18n-picker" class="text-white">
-                <strong>Details:</strong>
-              </label>
-            </div>
-          </b-col>
-        </b-row>
+          <!--  Details -->
+          <b-row class="text-center my-2">
+            <b-col sm="4" offset-sm="4">
+              <div class="text-center">
+                <label for="example-i18n-picker" class="text-white">
+                  <strong>Details:</strong>
+                </label>
+              </div>
+            </b-col>
+          </b-row>
           <b-row class="text-center my-2">
             <b-col sm="4" offset-sm="4">
               <b-form-textarea
@@ -238,6 +241,7 @@ export default {
       valueDate: '',
       valueTime: '',
 
+      // Reapeating
       selected: 'Once',
       options: [
         { value: 'Once', text: 'Once' },
@@ -245,7 +249,7 @@ export default {
         { value: 'Every week', text: 'Every week' },
         { value: 'Every month', text: 'Every month' }
       ]
-
+      // Need Peaple
     }
   },
   methods: {
@@ -287,10 +291,13 @@ export default {
         return
       }
 
-      this.$store.dispatch('addSubCategory', this.category, this.subCategoryName)
+      this.$store.dispatch(
+        'addSubCategory',
+        this.category,
+        this.subCategoryName
+      )
       // Push the name to submitted names
-      this.$store.state.filters.subcategory
-        .push(this.subCategoryName)
+      this.$store.state.filters.subcategory.push(this.subCategoryName)
       // Hide the modal manually
       this.$nextTick(() => {
         this.$bvModal.hide('modal-prevent-closing')
@@ -307,17 +314,11 @@ export default {
 .body {
   padding-top: 120px;
   padding-bottom: 150px;
-   background: #f7f7f7;
-  background: rgb(63, 94, 251);
-  background: radial-gradient(
-    circle,
-    rgba(63, 94, 251, 1) 0%,
-    rgba(0, 0, 0, 1) 100%
-  );
+background: rgb(0,0,0);
+background: radial-gradient(circle, rgba(0,0,0,0.6615021008403361) 0%, rgba(0,0,0,0.7595413165266106) 100%);
 }
 /*.colorbutton{
  background: rgb(33,62,62);
 background: linear-gradient(180deg, rgba(33,62,62,1) 0%, rgba(0,215,255,1) 100%);
 }*/
-
 </style>

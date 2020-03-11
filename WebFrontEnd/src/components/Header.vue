@@ -68,8 +68,8 @@ export default {
 
 <style scoped>
 .fixed-top{
-background: rgb(63,167,167);
-background: linear-gradient(180deg, rgba(63,167,167,1) 5%, rgba(194,255,247,1) 100%);
+background: rgb(0,0,0);
+background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(238,255,17,0.4598214285714286) 49%, rgba(0,0,0,1) 100%);
 }
 .right{
   padding-left:50px;
