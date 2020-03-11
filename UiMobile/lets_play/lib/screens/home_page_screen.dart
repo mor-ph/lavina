@@ -10,6 +10,7 @@ import 'package:lets_play/model/city.dart';
 import 'package:lets_play/model/event.dart';
 import 'package:lets_play/model/user.dart';
 import 'package:lets_play/screens/profile_page_tab.dart';
+import 'package:lets_play/services/event_service.dart';
 import 'package:lets_play/widgets/categories.dart';
 import 'package:lets_play/widgets/event_list.dart';
 
@@ -26,71 +27,72 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   CategoryBloc _categoryBloc;
 
   TabController _controller;
-
+  List<Event> _events;
   //dummy data
-  List<Event> eventsList = [
-    Event(
-        title: "Play football",
-        category: Category(id: 1, name: "Sport"),
-        createdAt: DateTime.now(),
-        startDate: DateTime.utc(2020, 4, 2),
-        status: "Active",
-        peopleNeeded: 12,
-        exactAddress: 'Kichuk',
-        createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
-        city: City(id: 1, name: "Plovdiv")),
-    Event(
-        title: "Play football",
-        category: Category(id: 1, name: "Sport"),
-        createdAt: DateTime.now(),
-        startDate: DateTime.now(),
-        status: "Active",
-        peopleNeeded: 4,
-        createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
-        city: City(id: 1, name: "Plovdiv")),
-    Event(
-        title: "Play handball",
-        category: Category(
-            id: 5, name: 'Handball', categoryIcon: Icons.category, parentId: 1),
-        createdAt: DateTime.now(),
-        startDate: DateTime.now(),
-        status: "Active",
-        peopleNeeded: 2,
-        createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
-        city: City(id: 1, name: "Banq")),
-    Event(
-        title: "Play monopolia",
-        category: Category(
-            id: 3,
-            name: 'Monopolia',
-            categoryIcon: Icons.directions_run,
-            parentId: 1),
-        createdAt: DateTime.now(),
-        startDate: DateTime.now(),
-        status: "Active",
-        peopleNeeded: 3,
-        createdByUser: User(uid: 2, userName: "GOsho@gmail.com"),
-        city: City(id: 1, name: "Plovdiv")),
-    Event(
-        title: "Play monopolia",
-        category: Category(
-            id: 3,
-            name: 'Monopolia',
-            categoryIcon: Icons.directions_run,
-            parentId: 3),
-        createdAt: DateTime.now(),
-        startDate: DateTime.now(),
-        status: "Active",
-        peopleNeeded: 3,
-        createdByUser: User(uid: 2, userName: "GOsho@gmail.com"),
-        city: City(id: 1, name: "Plovdiv")),
-  ];
+//  List<Event> eventsList = [
+//    Event(
+//        title: "Play football",
+//        category: Category(id: 1, name: "Sport"),
+//        createdAt: DateTime.now(),
+//        startDate: DateTime.utc(2020, 4, 2),
+//        status: "Active",
+//        peopleNeeded: 12,
+//        exactAddress: 'Kichuk',
+//        createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
+//        city: City(id: 1, name: "Plovdiv")),
+//    Event(
+//        title: "Play football",
+//        category: Category(id: 1, name: "Sport"),
+//        createdAt: DateTime.now(),
+//        startDate: DateTime.now(),
+//        status: "Active",
+//        peopleNeeded: 4,
+//        createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
+//        city: City(id: 1, name: "Plovdiv")),
+//    Event(
+//        title: "Play handball",
+//        category: Category(
+//            id: 5, name: 'Handball', categoryIcon: Icons.category, parentId: 1),
+//        createdAt: DateTime.now(),
+//        startDate: DateTime.now(),
+//        status: "Active",
+//        peopleNeeded: 2,
+//        createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
+//        city: City(id: 1, name: "Banq")),
+//    Event(
+//        title: "Play monopolia",
+//        category: Category(
+//            id: 3,
+//            name: 'Monopolia',
+//            categoryIcon: Icons.directions_run,
+//            parentId: 1),
+//        createdAt: DateTime.now(),
+//        startDate: DateTime.now(),
+//        status: "Active",
+//        peopleNeeded: 3,
+//        createdByUser: User(uid: 2, userName: "GOsho@gmail.com"),
+//        city: City(id: 1, name: "Plovdiv")),
+//    Event(
+//        title: "Play monopolia",
+//        category: Category(
+//            id: 3,
+//            name: 'Monopolia',
+//            categoryIcon: Icons.directions_run,
+//            parentId: 3),
+//        createdAt: DateTime.now(),
+//        startDate: DateTime.now(),
+//        status: "Active",
+//        peopleNeeded: 3,
+//        createdByUser: User(uid: 2, userName: "GOsho@gmail.com"),
+//        city: City(id: 1, name: "Plovdiv")),
+//  ];
 
   @override
   void initState() {
+    _events = EventService.getEvents() as List<Event>;
     _controller = TabController(length: 3, vsync: this);
     super.initState();
-    _categoryBloc = CategoryBloc(events: eventsList);
+    _categoryBloc = CategoryBloc(events: _events);
   }
 
   @override

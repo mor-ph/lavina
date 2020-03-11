@@ -6,6 +6,7 @@ import 'package:lets_play/model/city.dart';
 import 'package:lets_play/model/event.dart';
 import 'package:lets_play/model/user.dart';
 import 'package:lets_play/model/user_event.dart';
+import 'package:lets_play/services/event_service.dart';
 import 'package:lets_play/widgets/event_list.dart';
 
 import 'login_signup_screen.dart';
@@ -18,77 +19,78 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage>
     with TickerProviderStateMixin {
   TabController _controller;
-
+  List<UserEvent> allUserEvents;
   //dummy data
-  List<UserEvent> allUserEvents = [
-    UserEvent(
-        event: Event(
-            title: "Play football",
-            category: Category(id: 1, name: "Sport"),
-            createdAt: DateTime.now(),
-            startDate: DateTime.utc(2020, 4, 2),
-            peopleNeeded: 12,
-            status: "Active",
+//  List<UserEvent> allUserEvents = [
+//    UserEvent(
+//        event: Event(
+//            title: "Play football",
+//            category: Category(id: 1, name: "Sport"),
+//            createdAt: DateTime.now(),
+//            startDate: DateTime.utc(2020, 4, 2),
+//            peopleNeeded: 12,
+//            status: "Active",
+//
+//            createdByUser: User(
+//                uid: 1, userName: "Ivan@gmail.com", email: 'Ivan@gmail.com'),
+//            city: City(id: 1, name: "Plovdiv")),
+//        user:
+//            User(uid: 1, userName: "Ivan@gmail.com", email: 'Ivan@gmail.com')),
+//    UserEvent(
+//        event: Event(
+//            title: "Play football",
+//            category: Category(id: 1, name: "Sport"),
+//            createdAt: DateTime.now(),
+//            startDate: DateTime.utc(2020, 4, 2),
+//            peopleNeeded: 12,
+//            status: "Active",
+//
+//            createdByUser:
+//                User(uid: 3, userName: "Pesho", email: 'Ivan@gmail.com'),
+//            city: City(id: 1, name: "Plovdiv")),
+//        user:
+//            User(uid: 1, userName: "Ivan@gmail.com", email: 'Ivan@gmail.com')),
+//  ];
 
-            createdByUser: User(
-                uid: 1, userName: "Ivan@gmail.com", email: 'Ivan@gmail.com'),
-            city: City(id: 1, name: "Plovdiv")),
-        user:
-            User(uid: 1, userName: "Ivan@gmail.com", email: 'Ivan@gmail.com')),
-    UserEvent(
-        event: Event(
-            title: "Play football",
-            category: Category(id: 1, name: "Sport"),
-            createdAt: DateTime.now(),
-            startDate: DateTime.utc(2020, 4, 2),
-            peopleNeeded: 12,
-            status: "Active",
-
-            createdByUser:
-                User(uid: 3, userName: "Pesho", email: 'Ivan@gmail.com'),
-            city: City(id: 1, name: "Plovdiv")),
-        user:
-            User(uid: 1, userName: "Ivan@gmail.com", email: 'Ivan@gmail.com')),
-  ];
-
-  List<Event> eventsList = [
-    Event(
-        title: "Play football",
-        category: Category(id: 1, name: "Sport"),
-        createdAt: DateTime.now(),
-        startDate: DateTime.utc(2020, 4, 2),
-        peopleNeeded: 12,
-        status: "Active",
-
-        createdByUser:
-            User(uid: 1, userName: "Ivan@gmail.com", email: 'Ivan@gmail.com'),
-        city: City(id: 1, name: "Plovdiv")),
-    Event(
-        title: "Play monopolia",
-        category: Category(id: 2, name: "Board Game"),
-        createdAt: DateTime.now(),
-        startDate: DateTime.now(),
-        peopleNeeded: 4,
-        status: "Active",
-
-        createdByUser: User(uid: 3, userName: "Gosho@gmail.com"),
-        city: City(id: 1, name: "Plovdiv")),
-    Event(
-        title: "Play handball",
-        category: Category(id: 1, name: "Sport"),
-        createdAt: DateTime.now(),
-        startDate: DateTime.now(),
-        peopleNeeded: 4,
-        status: "Active",
-
-        createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
-        city: City(id: 1, name: "Plovdiv")),
-  ];
+  List<Event> _eventsList;
+//    Event(
+//        title: "Play football",
+//        category: Category(id: 1, name: "Sport"),
+//        createdAt: DateTime.now(),
+//        startDate: DateTime.utc(2020, 4, 2),
+//        peopleNeeded: 12,
+//        status: "Active",
+//
+//        createdByUser:
+//            User(uid: 1, userName: "Ivan@gmail.com", email: 'Ivan@gmail.com'),
+//        city: City(id: 1, name: "Plovdiv")),
+//    Event(
+//        title: "Play monopolia",
+//        category: Category(id: 2, name: "Board Game"),
+//        createdAt: DateTime.now(),
+//        startDate: DateTime.now(),
+//        peopleNeeded: 4,
+//        status: "Active",
+//
+//        createdByUser: User(uid: 3, userName: "Gosho@gmail.com"),
+//        city: City(id: 1, name: "Plovdiv")),
+//    Event(
+//        title: "Play handball",
+//        category: Category(id: 1, name: "Sport"),
+//        createdAt: DateTime.now(),
+//        startDate: DateTime.now(),
+//        peopleNeeded: 4,
+//        status: "Active",
+//
+//        createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
+//        city: City(id: 1, name: "Plovdiv")),
+//  ];
 
   User user = User(uid: 1, userName: "Vankata", email: 'Ivan@gmail.com');
 
   @override
   void initState() {
+    _eventsList = EventService.getEvents() as List<Event>;
     _controller = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -101,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    List<Event> createdEvents = eventsList
+    List<Event> createdEvents = _eventsList
         .where((event) => event.createdByUser.uid == user.uid)
         .toList();
     List<UserEvent> userEvents = allUserEvents

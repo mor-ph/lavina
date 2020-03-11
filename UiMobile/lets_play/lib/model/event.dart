@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:lets_play/model/category.dart';
 import 'package:lets_play/model/city.dart';
@@ -32,4 +34,18 @@ class Event {
       @required this.isActive,
       @required this.category,
       @required this.exactAddress});
+
+  Event.fromJson(Map<String, dynamic> json)
+      : title = json['title'] as String,
+        startDate = json['eventStartDate'] as DateTime,
+        id = json['id'] as int,
+        createdByUser = User.fromJson(json['userCreatedBy']),
+        createdAt = json['createdOn'] as DateTime,
+        description = json['description'] as String,
+        city = City.fromJson(json['city']),
+        peopleNeeded = json['peopleNeeded'] as int,
+        status = json['status'] as String,
+        isActive = json['isactive'] as bool,
+        category = Category.fromJson(json['category']),
+        exactAddress = json['address'] as String;
 }

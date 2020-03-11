@@ -29,4 +29,9 @@ class Category extends BaseData {
   String getTitle() {
     return this.name;
   }
+
+  Category.fromJson(Map<String, dynamic> json)
+      : name = json['name'] as String,
+        parentId = json['parentId'] as int,
+        id = json['id'] as int;
 }
