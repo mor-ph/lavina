@@ -7,11 +7,7 @@ using System.Text;
 namespace EventAPI.Data.Context
 {
     public partial class LetsPlayDbContext : DbContext
-    {
-        public LetsPlayDbContext()
-        {
-        }
-
+    { 
         public LetsPlayDbContext(DbContextOptions<LetsPlayDbContext> options)
             : base(options)
         {
@@ -24,10 +20,7 @@ namespace EventAPI.Data.Context
         public virtual DbSet<User> Users { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseMySql("server=localhost;database=letsplay;uid=root;pwd=password", x => x.ServerVersion("8.0.19-mysql"));
-            }
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

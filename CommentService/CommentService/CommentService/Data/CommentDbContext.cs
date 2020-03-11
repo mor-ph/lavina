@@ -6,10 +6,6 @@ namespace CommentService.Models
 {
     public partial class CommentDBContext : DbContext
     {
-        public CommentDBContext()
-        {
-        }
-
         public CommentDBContext(DbContextOptions<CommentDBContext> options)
             : base(options)
         {
@@ -19,11 +15,7 @@ namespace CommentService.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-
-                optionsBuilder.UseMySql("server=localhost;database=letsplay;uid=root;pwd=root", x => x.ServerVersion("8.0.11-mysql"));
-            }
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
