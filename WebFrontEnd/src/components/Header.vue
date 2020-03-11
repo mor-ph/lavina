@@ -8,7 +8,7 @@
 
           <b-navbar-nav center class="right">
             <router-link to="/createEvent">
-            <b-button class="mb-2" size="lg">
+            <b-button class="mb-2 colorbutton" size="lg">
               Create Event
               <b-icon icon="plus"></b-icon>
             </b-button>
@@ -68,10 +68,12 @@ export default {
 
 <style scoped>
 .fixed-top{
-background: rgb(0,0,0);
-background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(238,255,17,0.4598214285714286) 49%, rgba(0,0,0,1) 100%);
+background: #7DA2A9;
 }
 .right{
   padding-left:50px;
+}
+.colorbutton{
+  background: rgb(250, 220, 85);
 }
 </style>

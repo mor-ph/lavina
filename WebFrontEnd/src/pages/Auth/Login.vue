@@ -1,6 +1,6 @@
 <template>
   <div id="signin">
-    <div class="body" style="padding-bottom: 6%">
+    <div class="body" style="padding-bottom: 234px">
       <b-container>
         <b-row class="text-center">
             <b-col>
@@ -67,10 +67,6 @@ export default {
 </script>
 
 <style scoped>
-.body {
-  background: rgb(0,0,0);
-background: radial-gradient(circle, rgba(0,0,0,0.6615021008403361) 0%, rgba(0,0,0,0.7595413165266106) 100%);
-}
 .hhh{
   padding-top: 130px;
   color: white;

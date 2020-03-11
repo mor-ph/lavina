@@ -314,9 +314,7 @@ export default {
 .body {
   padding-top: 120px;
   padding-bottom: 150px;
-background: rgb(0,0,0);
-background: radial-gradient(circle, rgba(0,0,0,0.6615021008403361) 0%, rgba(0,0,0,0.7595413165266106) 100%);
-}
+  }
 /*.colorbutton{
  background: rgb(33,62,62);
 background: linear-gradient(180deg, rgba(33,62,62,1) 0%, rgba(0,215,255,1) 100%);

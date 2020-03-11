@@ -2,25 +2,18 @@
   <b-container fluid>
     <div>
       <!-- Footer -->
-      <footer color="#F7EBDE" class="fixed-bottom">
-        <div class="footer">
-          <b-row>
-            <b-col class="dark-grey-text text-center">
-              <h6 class="text-uppercase text-center">
-                <strong>CONTACT US</strong>
-              </h6>
-
-              <p>
-                <b-icon icon="house-fill"></b-icon>9 Exchange Place, IFSC, Dublin 1, Ireland ,
-                <b-icon icon="envelope-fill"></b-icon>info@codecoda.com ,
-                <b-icon icon="phone"></b-icon>+44 203 290 9900
-              </p>
-            </b-col>
-          </b-row>
-          <div class="footer-copyright text-center py-3">
+      <footer class="fixed-bottom">
+        <div class="footer p-2 d-flex justify-content-between">
+            <b-container fluid>
+              <span><b-icon class="icon" icon="envelope-fill"></b-icon></span>
+              <span>info@codecoda.com</span>
+            </b-container>
+          <div class="text-center">
             <b-container fluid>
               &copy; 2020 Copyright:
-              <a href="https://codecoda.com/en" style="color:white">Codecoda.com</a>
+              <span>
+                <a href="https://codecoda.com/en" style="color:white">Codecoda.com</a>
+              </span>
             </b-container>
           </div>
         </div>
@@ -30,14 +23,30 @@
   </b-container>
 </template>
 <script>
-
 </script>
-
 <style scoped>
-.text-center {
+.text-center,
+.text-left {
   padding-top: 0.5%;
 }
 .footer {
-  background-color: #1ea896;
+  background-color: #7da2a9;
+  padding-top: 0.7%;
+  padding-left: 0.7%;
+  padding-right: 0.7%;
+  padding-bottom: 0%;
+  width: 100%;
+}
+.icon {
+  margin: 0.3%;
+  margin-left: 1.3%;
+  outline-style: inset;
+  outline-color: rgb(250, 220, 85);
+}
+.link {
+  color: rgb(250, 220, 85);
+}
+footer {
+  position: absolute;
 }
 </style>

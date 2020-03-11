@@ -1,6 +1,6 @@
 
 <template>
-  <div style="padding: 20%" class="body">
+  <div style="padding: 25%" class="body">
     <b-container fluid>
     <b-row class="text-center my-2">
     <b-col sm="4" offset-sm="4">
@@ -62,10 +62,4 @@ export default {
 </script>
 
 <style scoped>
-.body {
-  padding-top: 120px;
-  padding-bottom: 150px;
-background: rgb(0,0,0);
-background: radial-gradient(circle, rgba(0,0,0,0.6615021008403361) 0%, rgba(0,0,0,0.7595413165266106) 100%);
-}
 </style>
