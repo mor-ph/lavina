@@ -11,10 +11,11 @@ services:
         - ./mysql-data:/var/lib/mysql
         - ./mysql-initdb:/docker-entrypoint-initdb.d
      ports:
+      # need to hide ports for prod
        - 3306:3306
      networks:
        - app
-       - default
+       # - default
         
     eventapi:
         depends_on:
