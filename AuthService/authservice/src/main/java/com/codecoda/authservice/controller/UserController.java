@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -104,13 +105,20 @@ public class UserController {
                 roles));
     }
 
-    @PutMapping("/users")
-    public User updateUser(@RequestBody User theUser) {
+    @PutMapping("/users/{id}")
+    public ResponseEntity<?> updateUser(@RequestBody User theUser, @PathVariable int id) {
 
-        theUser.setUpdatedAt(LocalDateTime.now());
-        userService.save(theUser);
+         User tempUser = userService.findById(id);
 
-        return theUser;
+         if (tempUser == null){
+             return ResponseEntity.notFound().build();
+         }
+
+         theUser.setId(id);
+         theUser.setUpdatedAt(LocalDateTime.now());
+         userService.save(theUser);
+
+         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/users/{userId}")
