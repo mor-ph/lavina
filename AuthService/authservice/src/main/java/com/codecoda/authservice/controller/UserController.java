@@ -10,6 +10,7 @@ import com.codecoda.authservice.service.UserDetailsImpl;
 import com.codecoda.authservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -54,6 +56,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}")
+    @PreAuthorize("userId == authentication.principal.id")
     public User getUser(@PathVariable int userId) {
 
         User user = userService.findById(userId);
@@ -104,13 +107,23 @@ public class UserController {
                 roles));
     }
 
-    @PutMapping("/users")
-    public User updateUser(@RequestBody User theUser) {
+    @PutMapping("/users/{id}")
+    public ResponseEntity<?> updateUser(@RequestBody User theUser, @PathVariable int id) {
 
-        theUser.setUpdatedAt(LocalDateTime.now());
-        userService.save(theUser);
+         User updatedUser = userService.findById(id);
 
-        return theUser;
+         if (updatedUser == null){
+             return ResponseEntity.notFound().build();
+         }
+
+         updatedUser.setUsername(theUser.getUsername());
+         updatedUser.setPassword(theUser.getPassword());
+         updatedUser.setCreatedAt(theUser.getCreatedAt());
+         updatedUser.setUpdatedAt(LocalDateTime.now());
+
+         userService.save(updatedUser);
+
+         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/users/{userId}")
