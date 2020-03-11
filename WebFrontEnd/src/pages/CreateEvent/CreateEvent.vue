@@ -137,6 +137,50 @@
           </b-col>
         </b-row>
 
+        <!-- Address -->
+        <b-row class="text-center my-2">
+          <b-col sm="4" offset-sm="4">
+            <div class="text-center  my-2">
+              <label for="example-i18n-picker" class="text-white">
+                <strong>Address:</strong>
+              </label>
+            </div>
+            <b-form-textarea
+              class=""
+              id="textarea-no-resize"
+              placeholder="Please enter an address"
+              rows="1"
+              no-resize
+              required
+              v-model="address"
+            ></b-form-textarea>
+          </b-col>
+        </b-row>
+
+        <!--RadioButton-->
+         <b-row class="my-2 text-center">
+          <b-col sm="4" offset-sm="4">
+            <div class="text-center">
+              <label for="example-i18n-picker" class="text-white">
+                <strong>Your event will occur?</strong>
+              </label><br>
+             <b-dropdown id="dropdown-offset" variant="primary" text="Variant Repeating" class="m-2" disabled>
+           </b-dropdown>
+            </div>
+          </b-col>
+        </b-row>
+
+        <b-row class="my-2 text-center">
+          <b-col sm="4" offset-sm="4">
+            <div class="text-center">
+              <label for="example-i18n-picker" class="text-white">
+                <strong>People Needed:</strong>
+              </label><br>
+              <b-form-spinbutton id="sb-vertical" v-model="value" vertical></b-form-spinbutton>
+            </div>
+          </b-col>
+        </b-row>
+
         <!--  Details -->
         <b-row class="text-center my-2">
           <b-col sm="4" offset-sm="4">
@@ -161,7 +205,7 @@
           </b-row>
           <b-row class="text-center my-2">
             <b-col sm="4" offset-sm="4">
-              <b-button type="submit" size="lg">Create</b-button>
+              <b-button type="submit" variant="primary" size="lg">Create</b-button>
             </b-col>
           </b-row>
         </b-form>
