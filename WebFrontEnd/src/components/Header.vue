@@ -6,8 +6,6 @@
         <b-navbar toggleable="lg" type="dark" variant="info" class="fixed-top justify-content-between">
           <router-link to="/"><b-navbar-brand>Let's Play</b-navbar-brand></router-link>
 
-          <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
           <b-navbar-nav center class="right">
             <router-link to="/createEvent">
             <b-button class="mb-2" size="lg">
@@ -16,7 +14,7 @@
             </b-button>
             </router-link>
           </b-navbar-nav>
-
+<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
           <div>
             <router-link to="/login">
               <b-button class="colorbutton">

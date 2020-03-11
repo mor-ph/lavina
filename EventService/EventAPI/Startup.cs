@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text;
 using AutoMapper;
 using EventAPI.Configuration;
@@ -24,19 +25,12 @@ namespace EventAPI
         }
 
         public IConfiguration Configuration { get; }
-        
-        readonly string AllowAnyOrigin = "AllowAnyOrigin";
+
+        readonly string CorsOrigins = "CorsOrigins";
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy(AllowAnyOrigin,
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-                    });
-            });
+
             var jwtSettingsSection = Configuration.GetSection("JwtSettings");
             services.Configure<JwtSettings>(jwtSettingsSection);
 
@@ -70,10 +64,15 @@ namespace EventAPI
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IEventService, EventService>();
             services.AddAutoMapper(typeof(Startup).Assembly);
-            //services.AddCors();
 
-
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CorsOrigins,
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,7 +87,7 @@ namespace EventAPI
 
             app.UseRouting();
 
-            app.UseCors(AllowAnyOrigin);
+            app.UseCors(CorsOrigins);
             app.UseAuthentication();
 
             app.UseAuthorization();
