@@ -14,11 +14,10 @@
       </b-row>
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
-          <b-form-select
-            v-model="selectedFilters.category"
-            :options="filters.category"
-            @change="fetchSubCategories"
-          ></b-form-select>
+         <b-form-select
+    v-model="selectedFilters.category"
+    :options= filters.category
+    @change= "fetchSubCategories(); fetchEvents();"></b-form-select>
         </b-col>
       </b-row>
       <!-- SubCategory -->
@@ -33,11 +32,11 @@
       </b-row>
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
-          <b-form-select
-            v-if="selectedFilters.category !== null"
-            v-model="selectedFilters.subcategory"
-            :options="filters.subcategories"
-          ></b-form-select>
+           <b-form-select
+    v-if="selectedFilters.category !== null"
+    v-model="selectedFilters.subcategory"
+    :options="filters.subcategories"
+    @change= "fetchEvents"></b-form-select>
         </b-col>
       </b-row>
       <!-- Location -->
@@ -52,7 +51,9 @@
       </b-row>
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
-          <b-form-select v-model="selectedFilters.location" :options="filters.location"></b-form-select>
+           <b-form-select v-model="selectedFilters.location"
+    :options="filters.location"
+    @change= "fetchEvents"></b-form-select>
         </b-col>
       </b-row>
       <!-- Datepicker -->
@@ -73,7 +74,7 @@
      <!-- No event -->
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
-          <app-events-grid v-if="events !== null" :events="events.data"></app-events-grid>
+          <app-events-grid v-if="eventsFound" :events="events.data"></app-events-grid>
           <p v-else>No events match your search!</p>
         </b-col>
       </b-row>
@@ -87,7 +88,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   created () {
-    this.$store.dispatch('fetchEvents')
+    this.$store.dispatch('fetchRecentEvents')
     this.$store.dispatch('fetchFilters')
   },
   data () {
@@ -107,15 +108,24 @@ export default {
     appEventsGrid: EventsGrid
   },
   computed: {
-    ...mapGetters(['events', 'filters'])
+    ...mapGetters([
+      'events',
+      'filters'
+    ]),
+    eventsFound () {
+      return this.events.data.length > 0
+    }
   },
   methods: {
     fetchSubCategories () {
       this.$store.dispatch('fetchSubcategories', this.selectedFilters.category)
+    },
+    fetchEvents () {
+      this.$store.dispatch('fetchEvents')
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
 </style>

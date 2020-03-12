@@ -21,10 +21,11 @@
   </b-container>
 </template>
 <script>
+
 </script>
+
 <style scoped>
-.text-center,
-.text-left {
+.text-center {
   padding-top: 0.5%;
 }
 .footer {

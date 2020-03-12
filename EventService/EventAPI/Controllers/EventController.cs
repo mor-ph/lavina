@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EventAPI.Data.Context;
 using EventAPI.Models;
+using EventAPI.Models.Enums;
 using EventAPI.Models.Models;
 using EventAPI.Models.QueryParameters;
 using EventAPI.Models.ViewModels;
@@ -50,8 +51,9 @@ namespace EventAPI.Controllers
         {
             
             var events = await _eventService.GetAllEvents(eventsQueryParameters);
-            var eventsToReturn = _mapper.Map<IEnumerable<EventsForListViewModel>>(events);
+            var eventsToReturn = _mapper.Map<List<EventsForListViewModel>>(events);
 
+            //eventsToReturn.ForEach(e => e.EventStatus = (Status)Enum.Parse(typeof(Status), e.EventStatus.ToString()));
             return Ok(eventsToReturn);
             
         }
@@ -66,7 +68,7 @@ namespace EventAPI.Controllers
                 List<Comment> comments;
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.GetAsync("http://localhost:5101/api/comment/" + id))
+                    using (var response = await httpClient.GetAsync("http://172.25.0.1:5101/api/comment/" + id))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
                         comments = JsonConvert.DeserializeObject<List<Comment>>(apiResponse);

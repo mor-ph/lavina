@@ -1,6 +1,8 @@
 package com.codecoda.authservice.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 import java.util.List;
@@ -15,12 +17,15 @@ public class User {
     private int id;
 
     @Column(name = "Username")
+    @NotEmpty
     private String username;
 
     @Column(name = "Password")
+    @NotEmpty
     private String password;
 
     @Column(name = "Email")
+    @NotEmpty
     private String email;
 
     @Column(name = "Createdat")

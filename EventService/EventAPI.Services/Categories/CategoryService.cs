@@ -28,7 +28,6 @@ namespace EventAPI.Services.Categories
         {
 
             var mainCategories = await _context.Categories
-                .Where(c => c.ParentCategoryId == null)
                 .ToListAsync();
 
             return mainCategories;

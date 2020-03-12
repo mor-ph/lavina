@@ -1,5 +1,4 @@
 version: '3.7'
-
 services:
     db:
      image: mysql:latest
@@ -14,8 +13,8 @@ services:
        - 3306:3306
      networks:
        - app
-       - default
-        
+          # - default
+    
     eventapi:
         depends_on:
           - db
@@ -28,8 +27,10 @@ services:
           - "5103:80"
         networks:
           - app
-          #- default  
-            
+        links:
+          - commentapi
+        volumes:
+          - /etc/hosts:/etc/hosts
     commentapi:
         depends_on:
           - db
@@ -42,29 +43,11 @@ services:
           - "5101:80"
         networks:
           - app
-          - default  
-          
-    authapi:
-        restart: on-failure
-        environment:
-          SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/letsplay?useSSL=false&autoReconnect=true&failOverReadOnly=false&maxReconnects=10&allowPublicKeyRetrieval=true&user=root&password=password
-        depends_on:
-          - db
-        build:
-          context: .
-          dockerfile: ./AuthService/authservice/Dockerfile
         volumes:
-          - /data/authservice
-        ports:
-          - "8081:8081"
-        networks:
-          - app
-          - default
-          
-        
+          - /etc/hosts:/etc/hosts
 volumes:
-  mysql-data: 
-  mysql-initdb: 
+  mysql-data:
+  mysql-initdb:
 networks:
   app:
     driver: bridge

@@ -78,7 +78,7 @@
 
 <script>
 
-import { email, sameAs } from 'vuelidate/lib/validators'
+import { email } from 'vuelidate/lib/validators'
 // import axios from 'axios'
 
 export default {
@@ -86,8 +86,7 @@ export default {
     return {
       email: '',
       username: '',
-      password: '',
-      confirmPassword: ''
+      password: ''
     }
   },
   validations: {
@@ -117,11 +116,6 @@ export default {
           })
 
       } */
-    },
-    confirmPassword: {
-      sameAs: sameAs(vm => {
-        return vm.password
-      })
     }
   },
   methods: {
@@ -129,12 +123,10 @@ export default {
       const formData = {
         email: this.email,
         username: this.username,
-        password: this.password,
-        confirmPassword: this.confirmPassword
+        password: this.password
       }
       console.log(formData)
-      // TODO: Waiting for DB
-      // this.$store.dispatch('signup', formData)
+      // this.$store.dispatch('updateProfileSettings', formData)
     }
   }
 }
@@ -156,7 +148,6 @@ export default {
   color: white;
 }
 .text-center {
-  color: white;
   text-align: center;
 }
 </style>
