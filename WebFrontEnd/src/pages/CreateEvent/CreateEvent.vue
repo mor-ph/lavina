@@ -109,12 +109,14 @@
         <b-row class=" text-center my-2">
           <b-col sm="4" offset-sm="4">
             <b-form-datepicker id="datepicker-valid"
+                              :state ="valueDate ? true : false"
                                v-model="valueDate"></b-form-datepicker>
           </b-col>
         </b-row>
         <b-row class=" text-center my-2">
           <b-col sm="4" offset-sm="4">
           <b-form-timepicker id="timepicker-valid"
+                            :state="valueTime ? true : false"
                              v-model="valueTime"></b-form-timepicker>
          </b-col>
         </b-row>
@@ -131,7 +133,7 @@
               class="text-center "
               id="example-location"
               required
-              v-model="location"
+              v-model="city"
               :options="filters.location"
             ></b-form-select>
           </b-col>
@@ -164,7 +166,7 @@
               <label for="example-i18n-picker" class="text-white">
                 <strong>Your event will occur?</strong>
               </label><br>
-             <b-form-select v-model="selected" :options="options" class="mb-3">
+             <b-form-select v-model="recurring" :options="options" class="mb-3">
     </b-form-select>
             </div>
           </b-col>
@@ -177,7 +179,7 @@
               <label for="example-i18n-picker" class="text-white">
                 <strong>People Needed:</strong>
               </label><br>
-              <b-form-spinbutton id="sb-vertical" v-model="value" vertical></b-form-spinbutton>
+              <b-form-spinbutton id="sb-vertical" v-model="peopleNeeded" vertical></b-form-spinbutton>
             </div>
           </b-col>
         </b-row>
@@ -227,7 +229,10 @@ export default {
       title: '',
       category: '',
       subcategory: '',
-      location: '',
+      city: '',
+      address: '',
+      recurring: null,
+      peopleNeeded: 1,
       description: '',
 
       // Template data
@@ -238,29 +243,33 @@ export default {
       valueDate: '',
       valueTime: '',
 
-      selected: 'Once',
       options: [
-        { value: 'Once', text: 'Once' },
-        { value: 'Everyday', text: 'Everyday' },
-        { value: 'Every week', text: 'Every week' },
-        { value: 'Every month', text: 'Every month' }
+        { value: null, text: 'Once' },
+        { value: '1', text: 'Everyday' },
+        { value: '2', text: 'Every week' },
+        { value: '3', text: 'Every month' }
       ]
 
     }
   },
   methods: {
     onSubmit () {
-      // Add token etc.
+      if (this.valueDate === '' || this.valueTime === '') return
+
       const formData = {
         title: this.title,
         category: this.category,
         subcategory: this.subcategory,
-        datetime: this.valueDate + ' ' + this.valueTime,
-        location: this.location,
+        eventStartDate: new Date(this.valueDate + ' ' + this.valueTime),
+        city: this.city,
+        address: this.address,
+        recurring: this.recurring,
+        peopleNeeded: this.peopleNeeded,
         description: this.description
       }
       console.log(formData)
-      // this.$store.dispatch('createEvent', formData)
+      console.log(new Date(`${formData.valueDate}${formData.valueTime}Z`))
+      this.$store.dispatch('createEvent', formData)
     },
     fetchSubCategories () {
       this.$store.dispatch('fetchSubcategories', this.category)
