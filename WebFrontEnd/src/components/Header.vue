@@ -16,12 +16,14 @@
           </b-navbar-nav>
 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
           <div>
-            <router-link to="/login">
+            <router-link to="/login"
+                         v-if="!auth">
               <b-button class="colorbutton">
                 <strong>Login</strong>
               </b-button>
             </router-link>
-            <router-link to="/register">
+            <router-link to="/register"
+                         v-if="!auth">
               <b-button class="colorbutton">
                 <strong>Register</strong>
               </b-button>
@@ -30,7 +32,8 @@
             <b-collapse id="nav-collapse" is-nav>
               <!-- Right aligned nav items -->
               <b-navbar-nav class="mr-auto">
-                <b-nav-item-dropdown right>
+                <b-nav-item-dropdown right
+                                     v-if="auth">
                   <!-- Using 'button-content' slot -->
                   <template v-slot:button-content>
                     <em>
@@ -59,8 +62,13 @@
 export default {
   methods: {
     onLogout () {
-      // this.$store.dispatch('logout')
+      this.$store.dispatch('logout')
       console.log('logged out')
+    }
+  },
+  computed: {
+    auth () {
+      return this.$store.getters.isAuthenticated
     }
   }
 }
