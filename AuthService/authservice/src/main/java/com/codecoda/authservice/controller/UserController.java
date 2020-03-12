@@ -28,6 +28,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+//@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("/auth")
 public class UserController {
 
@@ -56,7 +57,6 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}")
-    @PreAuthorize("userId == authentication.principal.id")
     public User getUser(@PathVariable int userId) {
 
         User user = userService.findById(userId);
@@ -118,6 +118,7 @@ public class UserController {
 
          updatedUser.setUsername(theUser.getUsername());
          updatedUser.setPassword(theUser.getPassword());
+         updatedUser.setEmail(theUser.getEmail());
          updatedUser.setCreatedAt(theUser.getCreatedAt());
          updatedUser.setUpdatedAt(LocalDateTime.now());
 
@@ -126,12 +127,12 @@ public class UserController {
          return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/users/{userId}")
-    public String deleteUser(@PathVariable int userId) {
-
-        userService.deleteById(userId);
-
-        return "Deleted user id - " + userId;
-    }
+//    @DeleteMapping("/users/{userId}")
+//    public String deleteUser(@PathVariable int userId) {
+//
+//        userService.deleteById(userId);
+//
+//        return "Deleted user id - " + userId;
+//    }
 
 }

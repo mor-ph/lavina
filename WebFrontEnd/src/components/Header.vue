@@ -3,26 +3,29 @@
   <b-container fluid>
     <div>
       <b-row>
-        <b-navbar toggleable="lg" type="dark" variant="info" class="fixed-top justify-content-between">
+        <b-navbar toggleable="lg" type="dark" class="fixed-top justify-content-between">
           <router-link to="/"><b-navbar-brand>Let's Play</b-navbar-brand></router-link>
-
+          <hide-at breakpoint="medium">
           <b-navbar-nav center class="right">
             <router-link to="/createEvent">
-            <b-button class="mb-2" size="lg">
+            <b-button class=" yellowbtn mb-2" size="lg">
               Create Event
               <b-icon icon="plus"></b-icon>
             </b-button>
             </router-link>
           </b-navbar-nav>
+          </hide-at>
 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
           <div>
-            <router-link to="/login">
-              <b-button class="colorbutton">
+            <router-link to="/login"
+                         v-if="!auth">
+              <b-button class="yellowbtn">
                 <strong>Login</strong>
               </b-button>
             </router-link>
-            <router-link to="/register">
-              <b-button class="colorbutton">
+            <router-link to="/register"
+                         v-if="!auth">
+              <b-button class="yellowbtn">
                 <strong>Register</strong>
               </b-button>
             </router-link>
@@ -30,7 +33,8 @@
             <b-collapse id="nav-collapse" is-nav>
               <!-- Right aligned nav items -->
               <b-navbar-nav class="mr-auto">
-                <b-nav-item-dropdown right>
+                <b-nav-item-dropdown right
+                                     v-if="auth">
                   <!-- Using 'button-content' slot -->
                   <template v-slot:button-content>
                     <em>
@@ -59,8 +63,13 @@
 export default {
   methods: {
     onLogout () {
-      // this.$store.dispatch('logout')
+      this.$store.dispatch('logout')
       console.log('logged out')
+    }
+  },
+  computed: {
+    auth () {
+      return this.$store.getters.isAuthenticated
     }
   }
 }
@@ -68,10 +77,14 @@ export default {
 
 <style scoped>
 .fixed-top{
-background: rgb(63,167,167);
-background: linear-gradient(180deg, rgba(63,167,167,1) 5%, rgba(194,255,247,1) 100%);
+background: #7DA2A9;
 }
 .right{
   padding-left:50px;
+}
+.yellowbtn{
+  background: rgb(250, 220, 85);
+  padding: 3%;
+  color:rgb(60, 71, 78);
 }
 </style>

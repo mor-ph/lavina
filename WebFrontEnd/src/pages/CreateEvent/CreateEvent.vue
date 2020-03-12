@@ -5,15 +5,15 @@
       <b-container fluid>
         <b-form @submit.prevent="onSubmit">
         <!-- Title -->
-        <b-row class="text-center my-2">
+        <b-row class="text-left my-2">
           <b-col sm="4" offset-sm="4">
-            <div class="text-center  my-2">
-              <label for="example-i18n-picker" class="text-white">
+            <div class="text-left  my-2">
+              <label for="example-i18n-picker">
                 <strong>Title:</strong>
               </label>
             </div>
             <b-form-textarea
-              class="text-center"
+              class="text-left"
               id="textarea-no-resize"
               placeholder="Fixed height textarea"
               rows="1"
@@ -25,16 +25,16 @@
         </b-row>
 
         <!-- Category -->
-        <b-row class="text-center my-2">
+        <b-row class="text-left my-2">
 
           <b-col sm="4" offset-sm="4">
-            <div class="text-center">
-              <label for="example-category" class="text-white">
+            <div class="text-left">
+              <label for="example-category">
                 <strong>Category:</strong>
               </label>
             </div>
             <b-form-select
-              class="text-center"
+              class="text-left"
               id="example-category"
               v-model="category"
               :options= filters.category
@@ -45,18 +45,18 @@
         </b-row>
 
         <!-- Subcategory -->
-        <b-row class="text-center my-2"
+        <b-row class="text-left my-2"
          v-if="category !== ''">
           <b-col sm="2" offset-sm="5">
-            <div class="text-center">
-              <label for="example-subcategorys" class="text-white">
+            <div class="text-left">
+              <label for="example-subcategorys">
                 <strong>Subcategories:</strong>
               </label>
             </div>
           </b-col>
         </b-row>
 
-        <b-row class="text-center my-2">
+        <b-row class="text-left my-2">
           <b-col sm="3" offset-sm="4">
             <b-form-select id="example-subcategorys"
             v-if="category !== ''"
@@ -96,54 +96,53 @@
         </b-row>
 
         <!--  Date & Time picker -->
-        <b-row class="text-center my-2">
+        <b-row class="text-left my-2">
           <b-col sm="4" offset-sm="4">
-            <div class="text-center my-2">
-              <label for="example-i18n-picker" class="text-white">
+            <div class="text-left my-2">
+              <label for="example-i18n-picker">
                 <strong>Date & Time picker:</strong>
               </label>
             </div>
           </b-col>
         </b-row>
 
-        <b-row class=" text-center my-2">
+        <b-row class=" text-left my-2">
           <b-col sm="4" offset-sm="4">
             <b-form-datepicker id="datepicker-valid"
                               :state ="valueDate ? true : false"
-                               v-model="valueDate"></b-form-datepicker>
+                               v-model="valueDate" :min="mind"></b-form-datepicker>
           </b-col>
         </b-row>
-        <b-row class=" text-center my-2">
+        <b-row class=" text-left my-2">
           <b-col sm="4" offset-sm="4">
           <b-form-timepicker id="timepicker-valid"
                             :state="valueTime ? true : false"
-                             v-model="valueTime"></b-form-timepicker>
+                             v-model="valueTime" :min="mint"></b-form-timepicker>
          </b-col>
         </b-row>
-        <!-- Location -->
-        <b-row class="text-center my-2">
-
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center my-2">
-              <label for="example-location" class="text-white">
-                <strong>Location:</strong>
-              </label>
-            </div>
-            <b-form-select
-              class="text-center "
-              id="example-location"
-              required
-              v-model="city"
-              :options="filters.location"
-            ></b-form-select>
-          </b-col>
-        </b-row>
+          <!-- Location -->
+          <b-row class="text-left my-2">
+            <b-col sm="4" offset-sm="4">
+              <div class="text-left my-2">
+                <label for="example-location">
+                  <strong>Location:</strong>
+                </label>
+              </div>
+              <b-form-select
+                class="text-left"
+                id="example-location"
+                required
+                v-model="location"
+                :options="filters.location"
+              ></b-form-select>
+            </b-col>
+          </b-row>
 
         <!-- Address -->
-        <b-row class="text-center my-2">
+        <b-row class="text-left my-2">
           <b-col sm="4" offset-sm="4">
-            <div class="text-center  my-2">
-              <label for="example-i18n-picker" class="text-white">
+            <div class="text-left  my-2">
+              <label for="example-i18n-picker">
                 <strong>Address:</strong>
               </label>
             </div>
@@ -160,10 +159,10 @@
         </b-row>
 
         <!--Repeating-->
-         <b-row class="my-2 text-center">
+         <b-row class="my-2 text-left">
           <b-col sm="2" offset-sm="5">
-            <div class="text-center">
-              <label for="example-i18n-picker" class="text-white">
+            <div class="text-left">
+              <label for="example-i18n-picker">
                 <strong>Your event will occur?</strong>
               </label><br>
              <b-form-select v-model="recurring" :options="options" class="mb-3">
@@ -176,7 +175,7 @@
         <b-row class="my-2 text-center">
           <b-col sm="4" offset-sm="4">
             <div class="text-center">
-              <label for="example-i18n-picker" class="text-white">
+              <label for="example-i18n-picker">
                 <strong>People Needed:</strong>
               </label><br>
               <b-form-spinbutton id="sb-vertical" v-model="peopleNeeded" vertical></b-form-spinbutton>
@@ -185,16 +184,16 @@
         </b-row>
 
         <!--  Details -->
-        <b-row class="text-center my-2">
+        <b-row class="text-left my-2">
           <b-col sm="4" offset-sm="4">
-            <div class="text-center">
-              <label for="example-i18n-picker" class="text-white">
-                <strong>Details:</strong>
+            <div class="text-left">
+              <label for="example-i18n-picker">
+                <strong>Description:</strong>
               </label>
             </div>
           </b-col>
         </b-row>
-          <b-row class="text-center my-2">
+          <b-row class="text-left my-2">
             <b-col sm="4" offset-sm="4">
               <b-form-textarea
                 id="textarea-no-resize"
@@ -206,9 +205,9 @@
               ></b-form-textarea>
             </b-col>
           </b-row>
-          <b-row class="text-center my-2">
+          <b-row class="text-left my-2">
             <b-col sm="4" offset-sm="4">
-              <b-button type="submit" variant="primary" size="lg">Create</b-button>
+              <b-button class="yellowbtn" type="submit" size="lg">Create</b-button>
             </b-col>
           </b-row>
         </b-form>
@@ -224,6 +223,11 @@ export default {
     this.$store.dispatch('fetchFilters')
   },
   data () {
+    const now = new Date()
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    // 15th two months prior
+    const minDate = new Date(today)
+    minDate.setDate(minDate.getDate())
     return {
       // Form data
       title: '',
@@ -241,6 +245,7 @@ export default {
 
       types: ['date', 'time'],
       valueDate: '',
+      mind: minDate,
       valueTime: '',
 
       options: [
@@ -253,6 +258,11 @@ export default {
     }
   },
   methods: {
+    dateDisabled (ymd, date) {
+      if (date.getDate() > Date()) {
+        return true
+      }
+    },
     onSubmit () {
       if (this.valueDate === '' || this.valueTime === '') return
 
@@ -316,17 +326,5 @@ export default {
 .body {
   padding-top: 120px;
   padding-bottom: 150px;
-   background: #f7f7f7;
-  background: rgb(63, 94, 251);
-  background: radial-gradient(
-    circle,
-    rgba(63, 94, 251, 1) 0%,
-    rgba(0, 0, 0, 1) 100%
-  );
 }
-/*.colorbutton{
- background: rgb(33,62,62);
-background: linear-gradient(180deg, rgba(33,62,62,1) 0%, rgba(0,215,255,1) 100%);
-}*/
-
 </style>
