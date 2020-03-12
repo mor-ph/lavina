@@ -20,7 +20,7 @@
                 <b-form-input class="text-center"
                   id="username-input"
                   type="text"
-                  placeholder="Enter Username"
+                  :placeholder="getUser.username"
                   required
                   v-model="username"
                   @blur="$v.username.$touch()"
@@ -41,7 +41,7 @@
                 <b-form-input class="text-center"
                   id="email-input"
                   type="email"
-                  placeholder="Enter email"
+                  :placeholder="getUser.email"
                   required
                   v-model="email"
                   @blur="$v.email.$touch()"
@@ -80,6 +80,7 @@
 
 import { email } from 'vuelidate/lib/validators'
 // import axios from 'axios'
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -88,6 +89,11 @@ export default {
       username: '',
       password: ''
     }
+  },
+  computed: {
+    ...mapGetters([
+      'getUser'
+    ])
   },
   validations: {
     email: {
