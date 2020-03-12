@@ -193,8 +193,6 @@ namespace EventAPI.Controllers
         public async Task<IActionResult> GetUserEvents()
         {
             List<UserEventViewModel> userEvent = new List<UserEventViewModel>();
-            //var userevents = _dbContext.Users.SelectMany(u => u.Events);
-            //var userevents = await _dbContext.Userevent.ToListAsync();
             foreach (var item in await _dbContext.Userevent.ToListAsync())
             {
                 var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id==item.UserId);

@@ -68,12 +68,16 @@
       </b-row>
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
-          <b-form-datepicker id="datepicker-valid" v-model="valueDate" :min="mind"></b-form-datepicker>
+          <b-form-datepicker
+          id="datepicker-valid"
+          v-model="selectedFilters.date"
+          :min="minDate"
+          @input= "fetchEvents"></b-form-datepicker>
         </b-col>
       </b-row>
      <!-- No event -->
       <b-row class="text-center my-2">
-        <b-col sm="6" offset-sm="3">
+        <b-col>
           <app-events-grid v-if="eventsFound" :events="events.data"></app-events-grid>
           <p v-else>No events match your search!</p>
         </b-col>
@@ -88,19 +92,18 @@ import { mapGetters } from 'vuex'
 
 export default {
   created () {
-    this.$store.dispatch('fetchRecentEvents')
-    this.$store.dispatch('fetchFilters')
+    this.$store.dispatch('loadInitalState')
   },
   data () {
     const now = new Date()
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
     // 15th two months prior
-    const minDate = new Date(today)
+    const minDate = today
     minDate.setDate(minDate.getDate())
     return {
       types: ['date'],
       valueDate: '',
-      mind: minDate,
+      minDate: minDate,
       selectedFilters: this.$store.getters.selectedFilters
     }
   },
