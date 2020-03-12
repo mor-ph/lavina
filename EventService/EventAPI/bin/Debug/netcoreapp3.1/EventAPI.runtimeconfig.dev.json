@@ -1,8 +1,9 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "/home/mitak/.dotnet/store/|arch|/|tfm|",
-      "/home/mitak/.nuget/packages"
+      "/home/probook/.dotnet/store/|arch|/|tfm|",
+      "/home/probook/.nuget/packages",
+      "/usr/share/dotnet/sdk/NuGetFallbackFolder"
     ]
   }
 }

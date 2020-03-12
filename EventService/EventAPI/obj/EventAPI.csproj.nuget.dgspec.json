@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "/home/mitak/GithubRepos/letsplay/EventService/EventAPI/EventAPI.csproj": {}
+    "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI/EventAPI.csproj": {}
   },
   "projects": {
-    "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj": {
+    "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj",
+        "projectUniqueName": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj",
         "projectName": "EventAPI.Data",
-        "projectPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj",
-        "packagesPath": "/home/mitak/.nuget/packages/",
-        "outputPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Data/obj/",
+        "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj",
+        "packagesPath": "/home/probook/.nuget/packages/",
+        "outputPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/obj/",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "/home/mitak/.config/NuGet/NuGet.Config"
+          "/home/probook/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -25,8 +28,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj": {
-                "projectPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj"
+              "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj": {
+                "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj"
               }
             }
           }
@@ -83,21 +86,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.102/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj": {
+    "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj",
+        "projectUniqueName": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj",
         "projectName": "EventAPI.Models",
-        "projectPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj",
-        "packagesPath": "/home/mitak/.nuget/packages/",
-        "outputPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Models/obj/",
+        "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj",
+        "packagesPath": "/home/probook/.nuget/packages/",
+        "outputPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/obj/",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "/home/mitak/.config/NuGet/NuGet.Config"
+          "/home/probook/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -162,21 +168,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.102/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj": {
+    "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj",
+        "projectUniqueName": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj",
         "projectName": "EventAPI.Services",
-        "projectPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj",
-        "packagesPath": "/home/mitak/.nuget/packages/",
-        "outputPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Services/obj/",
+        "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj",
+        "packagesPath": "/home/probook/.nuget/packages/",
+        "outputPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Services/obj/",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "/home/mitak/.config/NuGet/NuGet.Config"
+          "/home/probook/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -187,8 +196,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj": {
-                "projectPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj"
+              "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj": {
+                "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj"
               }
             }
           }
@@ -245,21 +254,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.102/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/mitak/GithubRepos/letsplay/EventService/EventAPI/EventAPI.csproj": {
+    "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI/EventAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI/EventAPI.csproj",
+        "projectUniqueName": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI/EventAPI.csproj",
         "projectName": "EventAPI",
-        "projectPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI/EventAPI.csproj",
-        "packagesPath": "/home/mitak/.nuget/packages/",
-        "outputPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI/obj/",
+        "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI/EventAPI.csproj",
+        "packagesPath": "/home/probook/.nuget/packages/",
+        "outputPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI/obj/",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "/home/mitak/.config/NuGet/NuGet.Config"
+          "/home/probook/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -270,14 +282,14 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj": {
-                "projectPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj"
+              "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj": {
+                "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj"
               },
-              "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj": {
-                "projectPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj"
+              "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj": {
+                "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj"
               },
-              "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj": {
-                "projectPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj"
+              "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj": {
+                "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj"
               }
             }
           }
@@ -350,7 +362,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.102/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,5 +1,4 @@
 version: '3.7'
-
 services:
     db:
      image: mysql:latest
@@ -11,12 +10,11 @@ services:
         - ./mysql-data:/var/lib/mysql
         - ./mysql-initdb:/docker-entrypoint-initdb.d
      ports:
-      # need to hide ports for prod
        - 3306:3306
      networks:
        - app
-       # - default
-        
+          # - default
+    
     eventapi:
         depends_on:
           - db
@@ -29,8 +27,10 @@ services:
           - "5103:80"
         networks:
           - app
-          #- default  
-            
+        links:
+          - commentapi
+        volumes:
+          - /etc/hosts:/etc/hosts
     commentapi:
         depends_on:
           - db
@@ -43,8 +43,9 @@ services:
           - "5101:80"
         networks:
           - app
-          - default  
-          
+        volumes:
+          - /etc/hosts:/etc/hosts
+
     authapi:
         restart: on-failure
         environment:
@@ -61,11 +62,10 @@ services:
         networks:
           - app
           - default
-          
-        
+                    
 volumes:
-  mysql-data: 
-  mysql-initdb: 
+  mysql-data:
+  mysql-initdb:
 networks:
   app:
     driver: bridge
