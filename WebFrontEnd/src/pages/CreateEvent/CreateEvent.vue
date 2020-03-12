@@ -109,14 +109,14 @@
           <b-col sm="4" offset-sm="4">
             <b-form-datepicker id="datepicker-valid"
                               :state ="valueDate ? true : false"
-                               v-model="valueDate" :min="mind"></b-form-datepicker>
+                               v-model="valueDate" :min="minDate"></b-form-datepicker>
           </b-col>
         </b-row>
         <b-row class=" text-left my-2">
           <b-col sm="4" offset-sm="4">
           <b-form-timepicker id="timepicker-valid"
                             :state="valueTime ? true : false"
-                             v-model="valueTime" :min="mint"></b-form-timepicker>
+                             v-model="valueTime"></b-form-timepicker>
          </b-col>
         </b-row>
           <!-- Location -->
@@ -244,7 +244,8 @@ export default {
 
       types: ['date', 'time'],
       valueDate: '',
-      mind: minDate,
+      minDate: null,
+
       valueTime: '',
 
       options: [
