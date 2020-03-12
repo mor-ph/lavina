@@ -45,6 +45,24 @@ services:
           - app
         volumes:
           - /etc/hosts:/etc/hosts
+
+    authapi:
+        restart: on-failure
+        environment:
+          SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/letsplay?useSSL=false&autoReconnect=true&failOverReadOnly=false&maxReconnects=10&allowPublicKeyRetrieval=true&user=root&password=password
+        depends_on:
+          - db
+        build:
+          context: .
+          dockerfile: ./AuthService/authservice/Dockerfile
+        volumes:
+          - /data/authservice
+        ports:
+          - "8081:8081"
+        networks:
+          - app
+          - default
+                    
 volumes:
   mysql-data:
   mysql-initdb:

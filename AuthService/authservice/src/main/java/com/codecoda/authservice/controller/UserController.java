@@ -28,6 +28,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+//@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("/auth")
 public class UserController {
 
@@ -118,6 +119,7 @@ public class UserController {
 
          updatedUser.setUsername(theUser.getUsername());
          updatedUser.setPassword(theUser.getPassword());
+         updatedUser.setEmail(theUser.getEmail());
          updatedUser.setCreatedAt(theUser.getCreatedAt());
          updatedUser.setUpdatedAt(LocalDateTime.now());
 
