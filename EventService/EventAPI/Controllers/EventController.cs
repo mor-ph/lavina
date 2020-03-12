@@ -189,6 +189,28 @@ namespace EventAPI.Controllers
 
             }
         }
+        [HttpGet("userevents")]
+        public async Task<IActionResult> GetUserEvents()
+        {
+            List<UserEventViewModel> userEvent = new List<UserEventViewModel>();
+            foreach (var item in await _dbContext.Userevent.ToListAsync())
+            {
+                var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id==item.UserId);
+
+                var userToReturn = _mapper.Map<UserViewModel>(user);
+
+                var Event = await _dbContext.Events
+                    .Include(e => e.City)
+                    .Include(e => e.Category)
+                    .Include(e => e.User)
+                    .FirstOrDefaultAsync(e => e.Id == item.EventId);
+                var eventToReturn = _mapper.Map<EventsForListViewModel>(Event);
+
+                userEvent.Add(new UserEventViewModel(userToReturn,eventToReturn));
+            }
+
+            return Ok(userEvent);
+        }
 
     }
 }

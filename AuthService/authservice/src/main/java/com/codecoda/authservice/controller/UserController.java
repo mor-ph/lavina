@@ -57,7 +57,6 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}")
-    @PreAuthorize("userId == authentication.principal.id")
     public User getUser(@PathVariable int userId) {
 
         User user = userService.findById(userId);
@@ -128,12 +127,12 @@ public class UserController {
          return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/users/{userId}")
-    public String deleteUser(@PathVariable int userId) {
-
-        userService.deleteById(userId);
-
-        return "Deleted user id - " + userId;
-    }
+//    @DeleteMapping("/users/{userId}")
+//    public String deleteUser(@PathVariable int userId) {
+//
+//        userService.deleteById(userId);
+//
+//        return "Deleted user id - " + userId;
+//    }
 
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CommentService.Data;
 using CommentService.Models;
 using CommentService.Repository;
+using CommentService.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -48,20 +49,25 @@ namespace CommentService.Controllers
         [HttpPost]
         [Authorize] //use jwt token
         [Route("/Comments")]
-        public async Task<IActionResult> Create([FromBody] Comment item)
-            {           
+        public async Task<IActionResult> Create([FromBody] CommentViewModel item)
+        {           
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
+            int userId;
+            if (!int.TryParse(User.Claims.FirstOrDefault(x => x.Type == "userId").Value.ToString(), out userId))
+            {
+                return this.BadRequest("Invalid UserId");
+            }
 
-            // check if this comment already exist
-            //var commentExist = comments.FirstOrDefault(c => c.Id == item.Id);
-            //return RedirectToAction("/Comments");
+            Comment cm = item;
+            cm.UserId = userId;
+            cm.PostedOn = DateTime.Now;
 
             // // Real solution
-            await CommentRepo.Add(item);
+            await CommentRepo.Add(cm);
             return Ok(await CommentRepo.GetAll());
         }
 

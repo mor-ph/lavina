@@ -61,7 +61,7 @@ namespace EventAPI.Services.Categories
         public async  Task<bool> ParentCategoryExists(int id)
         {
             var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
-            if (category.ParentCategoryId == null)
+            if (category.ParentCategoryId == 1)
             {
                 return true;
             }
