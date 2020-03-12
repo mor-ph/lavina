@@ -9,8 +9,8 @@
         </b-col>
          </b-row>
 
-        <b-form @submit.prevent="onSubmit" style="padding: 6%">
-          <b-row class="text-center">
+        <b-form @submit.prevent="onSubmit" style="padding: 2.2%">
+          <b-row class="text-left">
             <b-col sm="6" offset-sm="3">
               <b-form-group class="label" id="username-input-group" label="Username:" label-for="username-input" color="white">
                 <b-form-input
@@ -23,7 +23,7 @@
               </b-form-group>
             </b-col>
           </b-row>
-          <b-row class="text-center">
+          <b-row class="text-left">
             <b-col sm="6" offset-sm="3">
           <b-form-group class="label" id="password-input-group" label="Password:" label-for="password-input" >
             <b-form-input
@@ -67,15 +67,6 @@ export default {
 </script>
 
 <style scoped>
-.body {
-  background: #f7f7f7;
-  background: rgb(63, 94, 251);
-  background: radial-gradient(
-    circle,
-    rgba(63, 94, 251, 1) 0%,
-    rgba(0, 0, 0, 1) 100%
-  );
-}
 .hhh{
   padding-top: 130px;
   color: white;
