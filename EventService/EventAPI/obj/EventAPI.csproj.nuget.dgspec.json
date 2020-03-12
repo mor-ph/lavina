@@ -1,35 +1,39 @@
 {
   "format": 1,
   "restore": {
-    "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI/EventAPI.csproj": {}
+    "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI\\EventAPI.csproj": {}
   },
   "projects": {
-    "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj": {
+    "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj",
+        "projectUniqueName": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj",
         "projectName": "EventAPI.Data",
-        "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj",
-        "packagesPath": "/home/probook/.nuget/packages/",
-        "outputPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/obj/",
+        "projectPath": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj",
+        "packagesPath": "C:\\Users\\nikol\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/home/probook/.config/NuGet/NuGet.Config"
+          "C:\\Users\\nikol\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj": {
-                "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj"
+              "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj": {
+                "projectPath": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj"
               }
             }
           }
@@ -86,29 +90,33 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj": {
+    "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj",
+        "projectUniqueName": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj",
         "projectName": "EventAPI.Models",
-        "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj",
-        "packagesPath": "/home/probook/.nuget/packages/",
-        "outputPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/obj/",
+        "projectPath": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj",
+        "packagesPath": "C:\\Users\\nikol\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/home/probook/.config/NuGet/NuGet.Config"
+          "C:\\Users\\nikol\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -168,36 +176,40 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj": {
+    "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj",
+        "projectUniqueName": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj",
         "projectName": "EventAPI.Services",
-        "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj",
-        "packagesPath": "/home/probook/.nuget/packages/",
-        "outputPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Services/obj/",
+        "projectPath": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj",
+        "packagesPath": "C:\\Users\\nikol\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Services\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/home/probook/.config/NuGet/NuGet.Config"
+          "C:\\Users\\nikol\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj": {
-                "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj"
+              "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj": {
+                "projectPath": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj"
               }
             }
           }
@@ -254,42 +266,46 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI/EventAPI.csproj": {
+    "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI\\EventAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI/EventAPI.csproj",
+        "projectUniqueName": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
         "projectName": "EventAPI",
-        "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI/EventAPI.csproj",
-        "packagesPath": "/home/probook/.nuget/packages/",
-        "outputPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI/obj/",
+        "projectPath": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
+        "packagesPath": "C:\\Users\\nikol\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/home/probook/.config/NuGet/NuGet.Config"
+          "C:\\Users\\nikol\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj": {
-                "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj"
+              "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj": {
+                "projectPath": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj"
               },
-              "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj": {
-                "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj"
+              "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj": {
+                "projectPath": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj"
               },
-              "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj": {
-                "projectPath": "/home/probook/Documents/letsplay/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj"
+              "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj": {
+                "projectPath": "C:\\Users\\nikol\\source\\repos\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj"
               }
             }
           }
@@ -362,7 +378,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -21,9 +21,13 @@ namespace EventAPI.Helpers
             CreateMap<Event, EventInputModel>();
             CreateMap<Event, EventsForListViewModel>()
                 .ForMember(dest => dest.IsActive,
-                 opt => opt.MapFrom(src => src.EventStartDate.IsEventActive()));
+                 opt => opt.MapFrom(src => src.EventStartDate.IsEventActive()))
+                .ForMember(dest => dest.EventStatus,
+                 opt => opt.MapFrom(src => src.EventStatus.EventStatusConvert()));
             CreateMap<City, CityViewModel>();
             CreateMap<User, UserViewModel>();
+            CreateMap<Task<User>, UserViewModel>();
+            CreateMap<Task<Event>, EventsForListViewModel>();
         }
     }
 }

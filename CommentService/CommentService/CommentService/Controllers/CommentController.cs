@@ -56,7 +56,8 @@ namespace CommentService.Controllers
                 return BadRequest();
             }
 
-            Comment cm = item;           
+            Comment cm = item;
+            cm.PostedOn = DateTime.Now;
 
             // // Real solution
             await CommentRepo.Add(cm);
