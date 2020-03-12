@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import axios from '../axios-auth'
-// import globalAxios from 'axios'
+// import axios from 'axios' if we make fetchUser
+import axiosAuth from '../../axios-auth'
 
 import router from '../../router'
 
@@ -11,7 +11,10 @@ export default {
   state: {
     idToken: null,
     userId: null,
-    user: null
+    user: {
+      username: null,
+      email: null
+    }
   },
   mutations: {
     authUser (state, userData) {
@@ -27,60 +30,64 @@ export default {
     }
   },
   actions: {
-    setLogoutTimer ({ commit }, expirationTime) {
+    setLogoutTimer ({ commit }) {
       setTimeout(() => {
         commit('clearAuthData')
-      }, expirationTime * 1000)
+      }, 3600 * 1000)
     },
-    // TODO: Waiting for DB
-    /*
     signup ({ commit, dispatch }, authData) {
-      axios.post('', {
+      console.log(authData)
+      axiosAuth.post('users', {
         email: authData.email,
         username: authData.username,
         password: authData.password,
-        returnSecureToken: true
+        crossdomain: true
       })
         .then(res => {
           console.log(res)
           commit('authUser', {
-            token: res.data.idToken,
-            userId: res.data.localId
+            token: res.data.accessToken,
+            userId: res.data.id
           })
           const now = new Date()
-          const expirationDate = new Date(now.getTime() + res.data.expiresIn * 1000)
-          localStorage.setItem('token', res.data.idToken)
-          localStorage.setItem('userId', res.data.localId)
+          const expirationDate = new Date(now.getTime() + 3600 * 1000)
+          localStorage.setItem('token', res.data.accessToken)
+          localStorage.setItem('userId', res.data.id)
           localStorage.setItem('expirationDate', expirationDate)
-          dispatch('storeUser', authData)
-          dispatch('setLogoutTimer', res.data.expiresIn)
-        })
-        .catch(error => console.log(error))
-    }, */
-    /*
-    login ({ commit, dispatch }, authData) {
-      // TODO: Waiting for DB
-      axios.post('', {
-        username: authData.username,
-        password: authData.password,
-        returnSecureToken: true
-      })
-        .then(res => {
-          console.log(res)
-          const now = new Date()
-          const expirationDate = new Date(now.getTime() + res.data.expiresIn * 1000)
-          localStorage.setItem('token', res.data.idToken)
-          localStorage.setItem('userId', res.data.localId)
-          localStorage.setItem('expirationDate', expirationDate)
-          commit('authUser', {
-            token: res.data.idToken,
-            userId: res.data.localId
-          })
-          dispatch('setLogoutTimer', res.data.expiresIn)
+          dispatch('setLogoutTimer')
+          router.replace('/')
         })
         .catch(error => console.log(error))
     },
-    */
+
+    login ({ commit, dispatch }, authData) {
+      axiosAuth.post('login', {
+        username: authData.username,
+        password: authData.password
+      })
+        .then(res => {
+          const now = new Date()
+          const expirationDate = new Date(now.getTime() + 3600 * 1000)
+          localStorage.setItem('token', res.data.accessToken)
+          localStorage.setItem('userId', res.data.id)
+          localStorage.setItem('expirationDate', expirationDate)
+          console.log('USERDATA', {
+            token: res.data.accessToken,
+            id: res.data.id
+          })
+          commit('authUser', {
+            token: res.data.accessToken,
+            userId: res.data.id
+          })
+          commit('storeUser', {
+            username: res.data.username,
+            email: res.data.email
+          })
+          dispatch('setLogoutTimer')
+          router.replace('/')
+        })
+        .catch(error => console.log(error))
+    },
     tryAutoLogin ({ commit }) {
       const token = localStorage.getItem('token')
       if (!token) {
@@ -92,6 +99,7 @@ export default {
         return
       }
       const userId = localStorage.getItem('userId')
+      // dispatch fetchUser by ID
       commit('authUser', {
         token: token,
         userId: userId
@@ -104,45 +112,9 @@ export default {
       localStorage.removeItem('userId')
       router.replace('/')
     }
-
-    // TODO: Waiting for DB
-    /*
-    storeUser ({ commit, state }, userData) {
-      if (!state.idToken) {
-        return
-      }
-      //THIS IS FOR FIREBASE
-      globalAxios.post('/users.json' + '?auth=' + state.idToken, userData)
-        .then(res => console.log(res))
-        .catch(error => console.log(error))
-    },
-    */
-
-    // TODO: Waiting for DB
-    /*
-    fetchUser ({ commit, state }) {
-      if (!state.idToken) {
-        return
-      }
-      globalAxios.get('/users.json' + '?auth=' + state.idToken)
-        .then(res => {
-          console.log(res)
-          const data = res.data
-          const users = []
-          for (const key in data) {
-            const user = data[key]
-            user.id = key
-            users.push(user)
-          }
-          console.log(users)
-          commit('storeUser', users[0])
-        })
-        .catch(error => console.log(error))
-    }
-    */
   },
   getters: {
-    user: (state) => {
+    getUser: (state) => {
       return state.user
     },
     isAuthenticated: (state) => {
