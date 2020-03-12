@@ -37,6 +37,7 @@ const routes = [
     name: 'CreateEvent',
     component: CreateEvent,
     beforeEnter (to, from, next) {
+      console.log(store.state.auth.idToken)
       if (store.state.auth.idToken) {
         next()
       } else {
@@ -65,6 +66,10 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
 ]
 
