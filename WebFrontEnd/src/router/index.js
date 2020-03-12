@@ -1,10 +1,28 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 import Home from '../pages/Events/Home.vue'
-import CreateEvent from '../pages/CreateEvent/CreateEvent.vue'
-import Profile from '../pages/Profile/Profile.vue'
-import Login from '../pages/Auth/Login.vue'
-import Register from '../pages/Auth/Register.vue'
+
+const CreateEvent = resolve => {
+  require.ensure(['../pages/CreateEvent/CreateEvent.vue'], () => {
+    resolve(require('../pages/CreateEvent/CreateEvent.vue'))
+  })
+}
+const Profile = resolve => {
+  require.ensure(['../pages/Profile/Profile.vue'], () => {
+    resolve(require('../pages/Profile/Profile.vue'))
+  })
+}
+const Login = resolve => {
+  require.ensure(['../pages/Auth/Login.vue'], () => {
+    resolve(require('../pages/Auth/Login.vue'))
+  })
+}
+const Register = resolve => {
+  require.ensure(['../pages/Auth/Register.vue'], () => {
+    resolve(require('../pages/Auth/Register.vue'))
+  })
+}
 
 Vue.use(VueRouter)
 
@@ -17,12 +35,26 @@ const routes = [
   {
     path: '/createEvent',
     name: 'CreateEvent',
-    component: CreateEvent
+    component: CreateEvent,
+    beforeEnter (to, from, next) {
+      if (store.state.auth.idToken) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
   },
   {
     path: '/profile',
     name: 'Profile',
-    component: Profile
+    component: Profile,
+    beforeEnter (to, from, next) {
+      if (store.state.auth.idToken) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
   },
   {
     path: '/login',
