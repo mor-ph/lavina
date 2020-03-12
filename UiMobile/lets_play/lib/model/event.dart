@@ -19,6 +19,7 @@ class Event {
   String status;
   bool isActive;
   Category category;
+  int recurring;
 
   Event(
       {@required this.id,
@@ -33,19 +34,21 @@ class Event {
       @required this.status,
       @required this.isActive,
       @required this.category,
-      @required this.exactAddress});
+      @required this.exactAddress,
+      @required this.recurring});
 
   Event.fromJson(Map<String, dynamic> json)
       : title = json['title'] as String,
-        startDate = json['eventStartDate'] as DateTime,
+        startDate = DateTime.parse(json['eventStartDate']),
         id = json['id'] as int,
-        createdByUser = User.fromJson(json['userCreatedBy']),
-        createdAt = json['createdOn'] as DateTime,
+        createdByUser = User.fromJson(json['user']),
+        createdAt = DateTime.parse(json['createdOn']),
         description = json['description'] as String,
         city = City.fromJson(json['city']),
         peopleNeeded = json['peopleNeeded'] as int,
         status = json['status'] as String,
         isActive = json['isactive'] as bool,
         category = Category.fromJson(json['category']),
-        exactAddress = json['address'] as String;
+        exactAddress = json['address'] as String,
+        recurring = json['recurrnig'] as int;
 }

@@ -13,6 +13,7 @@ import 'package:lets_play/screens/profile_page_tab.dart';
 import 'package:lets_play/services/event_service.dart';
 import 'package:lets_play/widgets/categories.dart';
 import 'package:lets_play/widgets/event_list.dart';
+import 'package:lets_play/widgets/progress_indicator.dart';
 
 import 'home_page_tab.dart';
 import 'new_event_tab.dart';
@@ -28,6 +29,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   TabController _controller;
   List<Event> _events;
+
   //dummy data
 //  List<Event> eventsList = [
 //    Event(
@@ -87,12 +89,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 //        city: City(id: 1, name: "Plovdiv")),
 //  ];
 
+  getEvents() async {
+    List<Event> events = await EventService.getEvents();
+    if(events != null){
+      setState(() {
+        _events = events;
+        _categoryBloc = CategoryBloc(events: _events);
+      });
+    }
+  }
+
   @override
   void initState() {
-    _events = EventService.getEvents() as List<Event>;
     _controller = TabController(length: 3, vsync: this);
     super.initState();
-    _categoryBloc = CategoryBloc(events: _events);
+    print("s");
   }
 
   @override
@@ -103,6 +114,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    if(_events == null){
+      getEvents();
+      return ProgressIndicatorWidget();
+    }
     return BlocProvider(
       create: (BuildContext context) => _categoryBloc,
       child: Scaffold(
