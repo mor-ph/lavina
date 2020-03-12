@@ -88,13 +88,13 @@ namespace EventAPI.Services.EventService
             return await _dbContext.Events.FindAsync(id);
         }
 
-        public async Task<bool> UpdateEvent(int id, EventInputModel model)
+        public async Task<Event> UpdateEvent(int id, EventInputModel model)
         {
             var dbEvent = await _dbContext.Events.FirstOrDefaultAsync(x => x.Id == id);
             var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Name == model.Category);
             var city = await _dbContext.Cities.FirstOrDefaultAsync(c => c.Name == model.City);
             if (dbEvent == null || category == null || city == null)
-                return false;
+                return null;
 
             dbEvent.Title = model.Title;
             dbEvent.Description = model.Description;
@@ -107,7 +107,7 @@ namespace EventAPI.Services.EventService
             dbEvent.City = city;
             dbEvent.Recurring = (int)model.Recurring;
             await _dbContext.SaveChangesAsync();
-            return true;
+            return dbEvent;
 
         }
     }
