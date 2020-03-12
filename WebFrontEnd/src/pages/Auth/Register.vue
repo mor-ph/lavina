@@ -158,12 +158,11 @@ export default {
       const formData = {
         email: this.email,
         username: this.username,
-        password: this.password,
-        confirmPassword: this.confirmPassword
+        password: this.password
       }
       console.log(formData)
       // TODO: Waiting for DB
-      // this.$store.dispatch('signup', formData)
+      this.$store.dispatch('signup', formData)
     }
   }
 }
@@ -186,5 +185,9 @@ export default {
 
 .label.label {
   color: white;
+}
+
+.text-center {
+  text-align: center;
 }
 </style>
