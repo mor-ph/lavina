@@ -4,13 +4,13 @@
       <b-container>
         <b-row class="text-center">
             <b-col>
-        <h1 class="hhh">Login-in</h1>
-        <br> <b-icon icon="person-fill" variant="light" font-scale="10"></b-icon>
+        <h1 class="hhh">Login</h1>
+        <br> <b-icon icon="person-fill"  font-scale="10"></b-icon>
         </b-col>
          </b-row>
 
-        <b-form @submit.prevent="onSubmit" style="padding: 6%">
-          <b-row class="text-center">
+        <b-form @submit.prevent="onSubmit" style="padding: 2.2%">
+          <b-row class="text-left">
             <b-col sm="6" offset-sm="3">
               <b-form-group class="label" id="username-input-group" label="Username:" label-for="username-input" color="white">
                 <b-form-input
@@ -23,7 +23,7 @@
               </b-form-group>
             </b-col>
           </b-row>
-          <b-row class="text-center">
+          <b-row class="text-left">
             <b-col sm="6" offset-sm="3">
           <b-form-group class="label" id="password-input-group" label="Password:" label-for="password-input" >
             <b-form-input
@@ -35,7 +35,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-button type="submit" variant="primary">Login</b-button>
+          <b-button type="submit">Login</b-button>
            </b-col>
           </b-row>
         </b-form>
@@ -59,26 +59,16 @@ export default {
         password: this.password
       }
       console.log(formData)
-      // TODO: Waiting for DB
-      //  this.$store.dispatch('login', { username: formData.username, password: formData.password })
+      this.$store.dispatch('login', { username: formData.username, password: formData.password })
     }
   }
 }
 </script>
 
 <style scoped>
-.body {
-  background: #f7f7f7;
-  background: rgb(63, 94, 251);
-  background: radial-gradient(
-    circle,
-    rgba(63, 94, 251, 1) 0%,
-    rgba(0, 0, 0, 1) 100%
-  );
-}
 .hhh{
   padding-top: 130px;
-  color: white;
+  color:rgb(65, 72, 77);
 }
 .label.label{
   color: white;
