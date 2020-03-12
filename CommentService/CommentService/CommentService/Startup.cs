@@ -19,6 +19,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using CommentService.Models;
+using AutoMapper;
 
 namespace CommentService
 {
@@ -62,6 +63,7 @@ namespace CommentService
                     });
 
             services.AddScoped<ICommentsRepository, CommentsRepository>();
+            services.AddAutoMapper(typeof(Startup).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

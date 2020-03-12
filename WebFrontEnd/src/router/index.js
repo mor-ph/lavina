@@ -8,6 +8,12 @@ const CreateEvent = resolve => {
     resolve(require('../pages/CreateEvent/CreateEvent.vue'))
   })
 }
+const CurrentEvent = resolve => {
+  require.ensure(['../pages/Events/CurrentEvent.vue'], () => {
+    resolve(require('../pages/Events/CurrentEvent.vue'))
+  })
+}
+
 const Profile = resolve => {
   require.ensure(['../pages/Profile/Profile.vue'], () => {
     resolve(require('../pages/Profile/Profile.vue'))
@@ -38,6 +44,18 @@ const routes = [
     component: CreateEvent,
     beforeEnter (to, from, next) {
       console.log(store.state.auth.idToken)
+      if (store.state.auth.idToken) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
+    path: '/currentEvent',
+    name: 'CurrentEvent',
+    component: CurrentEvent,
+    beforeEnter (to, from, next) {
       if (store.state.auth.idToken) {
         next()
       } else {

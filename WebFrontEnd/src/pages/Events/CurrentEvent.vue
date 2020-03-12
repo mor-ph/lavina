@@ -59,7 +59,7 @@
           <b-col sm="2" offset-sm="5">
             <div class="text-center">
               <label for="example-i18n-picker" class="text-white">
-                <strong>Hosted dy:</strong>
+                <strong>Hosted by:</strong>
               </label><br>
              <p><b>'{{ value }}'</b></p>
             </div>
@@ -69,9 +69,8 @@
         <!--  Details -->
         <b-row class="text-center my-2">
           <b-col sm="4" offset-sm="4">
-            <div class="text-center">
               <label for="example-i18n-picker" class="text-white">
-                <strong>Details:</strong>
+                <strong>Description:</strong>
               </label><br>
              <p><b>'{{ value }}'</b></p>
             </b-col>

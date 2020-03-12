@@ -11,23 +11,38 @@ import 'package:lets_play/screens/subcategory_screen.dart';
 import 'package:lets_play/services/event_service.dart';
 import 'package:lets_play/widgets/categories.dart';
 import 'package:lets_play/widgets/event_list.dart';
+import 'package:lets_play/widgets/progress_indicator.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class HomePageTab extends StatefulWidget {
-  
-  
   @override
   _HomePageTabState createState() => _HomePageTabState();
 }
 
 class _HomePageTabState extends State<HomePageTab> {
   List<Event> _events;
+
+  getEvents() async {
+    List<Event> events = await EventService.getEvents();
+    if(events != null){
+      setState(() {
+        _events = events;
+      });
+    }
+  }
+
   @override
   void initState() {
-    _events = EventService.getEvents() as List<Event>;
+    //getEvents();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
+    if(_events == null){
+      getEvents();
+      return ProgressIndicatorWidget();
+    }
     return BlocBuilder(
         bloc: BlocProvider.of<CategoryBloc>(context),
         builder: (context, state) {
@@ -35,7 +50,7 @@ class _HomePageTabState extends State<HomePageTab> {
             appBar: AppBar(
               title: Text("Home page"),
             ),
-            body: Stack(
+            body:  Stack(
               children: <Widget>[
                 SingleChildScrollView(
                   child: Column(

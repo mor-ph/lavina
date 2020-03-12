@@ -28,7 +28,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("/auth")
 public class UserController {
 
@@ -103,7 +102,7 @@ public class UserController {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getPassword(),
+                userDetails.getEmail(),
                 roles));
     }
 
@@ -117,7 +116,7 @@ public class UserController {
          }
 
          updatedUser.setUsername(theUser.getUsername());
-         updatedUser.setPassword(theUser.getPassword());
+         updatedUser.setPassword(encoder.encode(theUser.getPassword()));
          updatedUser.setEmail(theUser.getEmail());
          updatedUser.setCreatedAt(theUser.getCreatedAt());
          updatedUser.setUpdatedAt(LocalDateTime.now());
@@ -125,6 +124,7 @@ public class UserController {
          userService.save(updatedUser);
 
          return ResponseEntity.noContent().build();
+
     }
 
 //    @DeleteMapping("/users/{userId}")

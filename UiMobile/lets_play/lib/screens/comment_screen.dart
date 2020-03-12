@@ -1,28 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lets_play/model/comment.dart';
+import 'package:lets_play/model/user.dart';
 import "dart:async";
 
+import 'package:lets_play/services/comment_service.dart';
+import 'package:lets_play/widgets/progress_indicator.dart';
+
 class CommentScreen extends StatefulWidget {
-  final String postId;
-  final String postOwner;
+  final int postId;
+  final User postUserOwner;
   final String postMediaUrl;
 
-  const CommentScreen({this.postId, this.postOwner, this.postMediaUrl});
+  const CommentScreen({this.postId, this.postUserOwner, this.postMediaUrl});
+
   @override
   _CommentScreenState createState() => _CommentScreenState(
       postId: this.postId,
-      postOwner: this.postOwner,
+      postOwner: this.postUserOwner,
       postMediaUrl: this.postMediaUrl);
 }
 
 class _CommentScreenState extends State<CommentScreen> {
-  final String postId;
-  final String postOwner;
+  final int postId;
+  final User postOwner;
   final String postMediaUrl;
+  List<Comment> _comments;
 
   final TextEditingController _commentController = TextEditingController();
 
   _CommentScreenState({this.postId, this.postOwner, this.postMediaUrl});
+
+  @override
+  void initState() {
+    setState(() {
+      getComments();
+    });
+    super.initState();
+  }
+
+  Future<List<Comment>> getComments() async {
+    List<Comment> comments = await CommentService.getComments();
+
+    if (comments != null) {
+      setState(() {
+        _comments = comments;
+      });
+    }
+    return comments;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +66,7 @@ class _CommentScreenState extends State<CommentScreen> {
     return Column(
       children: [
         Expanded(
-          child:
-          buildComments(),
+          child: buildComments(),
         ),
         Divider(),
         ListTile(
@@ -50,47 +75,54 @@ class _CommentScreenState extends State<CommentScreen> {
             decoration: InputDecoration(labelText: 'Write a comment...'),
             onFieldSubmitted: addComment,
           ),
-          trailing: OutlineButton(onPressed: (){addComment(_commentController.text);}, borderSide: BorderSide.none, child: Text("Post"),),
+          trailing: OutlineButton(
+            onPressed: () {
+              addComment(_commentController.text);
+            },
+            borderSide: BorderSide.none,
+            child: Text("Post"),
+          ),
         ),
-
       ],
     );
-
   }
-
 
   Widget buildComments() {
-    return FutureBuilder<List<Comment>>(
-        future: getComments(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData)
-            return Container(
-                alignment: FractionalOffset.center,
-                child: CircularProgressIndicator());
-
-          return ListView(
-            children: snapshot.data,
-          );
-        });
-  }
-
-  Future<List<Comment>> getComments() async {
-    List<Comment> comments = [];
-
-    QuerySnapshot data = await Firestore.instance
-        .collection("insta_comments")
-        .document(postId)
-        .collection("comments")
-        .getDocuments();
-    data.documents.forEach((DocumentSnapshot doc) {
-      comments.add(Comment.fromDocument(doc));
-    });
-
-    return comments;
+    if (_comments == null) {
+      getComments();
+      return Column(
+        children: <Widget>[
+          Text(
+            'No events comments yet!',
+            style: Theme.of(context).textTheme.title,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+              height: 200,
+              child: Image.asset(
+                'assets/images/waiting.png',
+                fit: BoxFit.cover,
+              )),
+        ],
+      );
+    } else {
+      return ListView(
+          children: _comments
+              .where((element) => element.eventId == postId)
+              .map((data) => CommentWidget(comment: data))
+              .toList());
+    }
   }
 
   addComment(String comment) {
     _commentController.clear();
+    Comment newComment = Comment(eventId: postId, id: widget.postUserOwner.uid,message: comment );
+    setState(() {
+      _comments.add(newComment);
+    });
+    CommentService.addComment(newComment);
 //    Firestore.instance
 //        .collection("insta_comments")
 //        .document(postId)
@@ -121,40 +153,27 @@ class _CommentScreenState extends State<CommentScreen> {
   }
 }
 
-class Comment extends StatelessWidget {
-  final String username;
-  final String userId;
-  final String avatarUrl;
-  final String comment;
-  final String timestamp;
+class CommentWidget extends StatelessWidget {
+  final Comment comment;
 
-  Comment(
-      {this.username,
-        this.userId,
-        this.avatarUrl,
-        this.comment,
-        this.timestamp});
-
-  factory Comment.fromDocument(DocumentSnapshot document) {
-    return Comment(
-      username: document['username'],
-      userId: document['userId'],
-      comment: document["comment"],
-      timestamp: document["timestamp"],
-      avatarUrl: document["avatarUrl"],
-    );
-  }
+  CommentWidget({
+    this.comment,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        Divider(),
         ListTile(
-
-          title: Text(comment),
-          leading: CircleAvatar(
-
-            backgroundImage: NetworkImage(avatarUrl),
+          title: Text(comment.message),
+          leading: ClipOval(
+            child: Image.asset(
+              'assets/images/profile_image.png',
+              width: 70,
+              height: 70,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         Divider(),

@@ -8,7 +8,11 @@ import 'package:lets_play/model/category.dart';
 import 'package:lets_play/model/city.dart';
 import 'package:lets_play/model/event.dart';
 import 'package:lets_play/screens/home_page_tab.dart';
+import 'package:lets_play/services/category_service.dart';
+import 'package:lets_play/services/city_service.dart';
+import 'package:lets_play/services/event_service.dart';
 import 'package:lets_play/widgets/new_category.dart';
+import 'package:lets_play/widgets/progress_indicator.dart';
 
 class NewEventPage extends StatefulWidget {
   final Event event;
@@ -31,44 +35,34 @@ class _NewOrderScreenState extends State<NewEventPage> {
   final _exactAddress = TextEditingController();
   bool _isRepeating = false;
   int _repeatingPeriod;
+  final _formKey = new GlobalKey<FormState>();
 
-  List<City> _cities = [
-    City(id: 1, name: 'Plovdiv'),
-    City(id: 2, name: 'Sofia')
-  ];
+  List<City> _cities;
 
-  List<Category> _categories = [
-    Category(id: 1, name: 'Root', parentId: -1),
-    Category(
-        id: 2, name: 'Sport', categoryIcon: Icons.directions_run, parentId: 1),
-    Category(
-        id: 6,
-        name: 'Handball',
-        categoryIcon: Icons.directions_run,
-        parentId: 2),
-    Category(
-        id: 3,
-        name: 'Video Games',
-        categoryIcon: Icons.videogame_asset,
-        parentId: 1),
-    Category(
-        id: 7,
-        name: 'Monopolia',
-        categoryIcon: Icons.directions_run,
-        parentId: 4),
-    Category(
-        id: 8,
-        name: 'Football',
-        categoryIcon: Icons.directions_run,
-        parentId: 2),
-    Category(
-        id: 4,
-        name: 'Board Games',
-        categoryIcon: Icons.table_chart,
-        parentId: 1),
-    Category(
-        id: 5, name: 'Tourism', categoryIcon: Icons.card_travel, parentId: 1),
-  ];
+  List<Category> _categories;
+
+  getCities() async {
+    List<City> cities = await CityService.getCities();
+    if (cities != null) {
+      setState(() {
+        _cities = cities;
+      });
+    }
+  }
+
+  getCategories() async {
+    List<Category> category = await CategoryService.getCategories();
+    if (category != null) {
+      setState(() {
+        _categories = category;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -80,7 +74,8 @@ class _NewOrderScreenState extends State<NewEventPage> {
       _description.text = widget.event.description;
       _peopleNeeded.text = widget.event.peopleNeeded.toString();
     }
-
+    getCities();
+    getCategories();
     super.initState();
   }
 
@@ -92,16 +87,17 @@ class _NewOrderScreenState extends State<NewEventPage> {
       ),
       body: Stack(
         children: <Widget>[
-          _showForm(),
+          _showForm(context),
         ],
       ),
     );
   }
 
-  Widget _showForm() {
+  Widget _showForm(context) {
     return new Container(
 //      padding: EdgeInsets.all(16.0),
       child: new Form(
+        key: _formKey,
         child: new ListView(
           shrinkWrap: true,
           children: <Widget>[
@@ -128,15 +124,43 @@ class _NewOrderScreenState extends State<NewEventPage> {
 
   GestureDetector _saveButtonBar(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if (_name.text.isEmpty) {
-          print("Event validation failed!");
-          return;
+      onTap: () async {
+        if (!validateAndSave() ||
+            _name.text.isEmpty ||
+            _peopleNeeded.text.isEmpty) {
+          final snackbar = SnackBar(
+            content: Text("Event validation failed!"),
+            duration: Duration(milliseconds: 900),
+          );
+          Scaffold.of(context).showSnackBar(snackbar);
+          return Text("Event validation failed!");
         } else {
-          //create Event and UserEvent
-//          _createOrder(_email.text,_phoneNumber.text,_name.text,_description.text,_placeLocation);
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomePageTab()));
+          bool isSuccess = await EventService.createEvent(new Event(
+            exactAddress: _exactAddress.text,
+            category: _selectedCategory,
+            city: _selectCity,
+            description: _description.text,
+            peopleNeeded: int.parse(_peopleNeeded.text),
+            recurring: _repeatingPeriod,
+            startDate: _dateTime,
+            title: _name.text,
+          ));
+          SnackBar snackbar;
+          if(isSuccess) {
+             snackbar = SnackBar(
+              content: Text("Event successfully created!"),
+              duration: Duration(milliseconds: 900),
+            );
+            _resetForm();
+          }else{
+             snackbar = SnackBar(
+              content: Text("Event didn't created!"),
+              duration: Duration(milliseconds: 900),
+            );
+          }
+          Scaffold.of(context).showSnackBar(snackbar);
+
+          return HomePageTab();
         }
       },
       child: Container(
@@ -163,48 +187,54 @@ class _NewOrderScreenState extends State<NewEventPage> {
   }
 
   Widget _showCategory() {
-    return FlatButton(
-      padding: EdgeInsets.only(top: 35),
-      onPressed: () => _categoriesTree(),
-      child: _selectedCategory == null
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Please choose a category",
-                  style: TextStyle(color: Colors.blue),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Icon(
-                  Icons.category,
-                  size: 35,
-                ),
-              ],
-            )
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "You category is: ",
-                  style: TextStyle(color: Colors.blue),
-                ),
-                Text(
-                  _selectedCategory.name,
-                  style: TextStyle(color: Colors.black),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Icon(
-                  Icons.category,
-                  size: 35,
-                ),
-              ],
-            ),
+    if (_categories == null) {
+      getCategories();
+      return ProgressIndicatorWidget();
+    }
+    return Form(
+      child: FlatButton(
+        padding: EdgeInsets.only(top: 35),
+        onPressed: () => _categoriesTree(),
+        child: _selectedCategory == null
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Please choose a category",
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Icon(
+                    Icons.category,
+                    size: 35,
+                  ),
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "You category is: ",
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                  Text(
+                    _selectedCategory.name,
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Icon(
+                    Icons.category,
+                    size: 35,
+                  ),
+                ],
+              ),
+      ),
     );
   }
 
@@ -238,7 +268,8 @@ class _NewOrderScreenState extends State<NewEventPage> {
                   category = m['extra']['key'];
                 } catch (e) {
                   print(e);
-                  category = _categories.firstWhere((c) => c.id == int.parse(m['id']));
+                  category =
+                      _categories.firstWhere((c) => c.id == int.parse(m['id']));
                 }
 
                 setState(() {
@@ -263,15 +294,17 @@ class _NewOrderScreenState extends State<NewEventPage> {
         });
   }
 
-  void _addNewCategory(Category selectCategory, String name) {
+  void _addNewCategory(Category selectCategory) {
     final category = Category(
         id: _categories.length + 1,
         categoryIcon: Icons.category,
-        name: name,
-        parentId: selectCategory.id);
+        name: selectCategory.name,
+        parentId: selectCategory.parentId);
     setState(() {
       _categories.add(category);
     });
+    CategoryService.createCategory(category);
+
   }
 
   void _startAddNewCategory(BuildContext context) {
@@ -292,6 +325,10 @@ class _NewOrderScreenState extends State<NewEventPage> {
   }
 
   Widget _showCitiesDropDown() {
+    if (_cities == null) {
+      getCities();
+      return ProgressIndicatorWidget();
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
@@ -345,6 +382,26 @@ class _NewOrderScreenState extends State<NewEventPage> {
     );
   }
 
+  bool validateAndSave() {
+    final form = _formKey.currentState;
+    if (_selectCity == null) {
+      return false;
+    }
+
+    if (_selectedCategory == null) {
+      return false;
+    }
+
+    if (_dateTime == null) {
+      return false;
+    }
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
   Widget _showPeopleInput() {
     return Padding(
       padding: const EdgeInsets.only(top: 40),
@@ -374,6 +431,8 @@ class _NewOrderScreenState extends State<NewEventPage> {
         keyboardType: TextInputType.text,
         autofocus: false,
         controller: _description,
+        validator: (value) =>
+            value.isEmpty ? 'People needed can\'t be empty' : null,
         decoration: new InputDecoration(
             hintText: 'Description',
             icon: new Icon(
@@ -498,6 +557,11 @@ class _NewOrderScreenState extends State<NewEventPage> {
         )
       ],
     );
+  }
+
+  void _resetForm() {
+    _formKey.currentState.reset();
+//    _errorMessage = "";
   }
 
   Widget _showErrorMessage() {
