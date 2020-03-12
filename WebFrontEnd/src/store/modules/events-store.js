@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 export default {
   state: {
+    initialState: true,
     events: [],
     filters: {
       category: [],
@@ -30,9 +31,24 @@ export default {
     emptySubcategoriesArray (state) {
       state.filters.subcategories = []
       state.selectedFilters.subcategory = null
+    },
+    changeInitialState (state) {
+      state.initialState = !state.initialState
+    },
+    emptyCategoryAndLocationArray (state) {
+      state.filters.category = []
+      state.filters.location = []
     }
   },
   actions: {
+    loadInitalState ({ dispatch, commit, state }) {
+      if (state.initialState) {
+        commit('changeInitialState')
+        const recentEvents = dispatch('fetchRecentEvents')
+        const filters = dispatch('fetchFilters')
+        return Promise.all([recentEvents, filters])
+      }
+    },
     fetchRecentEvents ({ commit }) {
       // fix this query when the endpoint is ready
       axios.get('http://localhost:5103/api/event/getall')
@@ -73,7 +89,8 @@ export default {
         }).catch(err => console.log(err))
     },
 
-    fetchFilters ({ dispatch }) {
+    fetchFilters ({ dispatch, commit }) {
+      commit('emptyCategoryAndLocationArray')
       const categories = dispatch('fetchCategories')
       const locations = dispatch('fetchLocations')
 

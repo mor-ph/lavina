@@ -211,6 +211,27 @@ namespace EventAPI.Controllers
 
             return Ok(userEvent);
         }
+        [HttpPost("userevents")]
+        public async Task<IActionResult> PostUserEvents([FromBody] UserEventAddViewModel userEvent)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(c => c.Id == userEvent.UserId);
+            var Event = await _dbContext.Events.FirstOrDefaultAsync(c => c.Id == userEvent.EventId);
+            if(user == null || Event == null)
+            {
+                return BadRequest("No such user or event");
+            }
+            Userevent userevent = new Userevent();
+            userevent.EventId = userEvent.EventId;
+            userevent.UserId = userEvent.UserId;
+            if(await _dbContext.Userevent.FindAsync(userevent.UserId,userevent.EventId) != null)
+            {
+                return BadRequest("Already joined event");
+            }
+            _dbContext.Userevent.Add(userevent);
+            await _dbContext.SaveChangesAsync();
+
+            return StatusCode(201, "Successfully joined event");
+        }
 
     }
 }
