@@ -12,6 +12,7 @@ namespace CommentService.Models
         }
 
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -44,7 +45,17 @@ namespace CommentService.Models
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
 
+                entity.HasOne(d => d.User).
+                WithMany(p => p.Comments).
+                HasForeignKey(d => d.UserId)
+                .HasConstraintName("IX_Comments_UserId");
+
                 entity.Property(e => e.UserId).HasColumnType("int(11)");
+            });
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("users");
+
             });
 
             OnModelCreatingPartial(modelBuilder);
