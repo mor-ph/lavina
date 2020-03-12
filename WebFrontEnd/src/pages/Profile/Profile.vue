@@ -69,7 +69,14 @@
                <b-button type="submit" variant="primary" :disabled="$v.$invalid">Update</b-button>
             </b-col>
           </b-row>
-
+           <b-row class="text-center">
+            <b-col sm="6" offset-sm="3">
+<b-button-group>
+      <b-button>My Events</b-button>
+      <b-button>Join Events</b-button>
+    </b-button-group>
+     </b-col>
+          </b-row>
         </b-form>
       </b-container>
          </div>
