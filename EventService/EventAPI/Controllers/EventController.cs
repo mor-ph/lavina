@@ -118,16 +118,7 @@ namespace EventAPI.Controllers
                    x => x.UserCreatedById == evt.UserCreatedById &&
                    x.Title == evt.Title &&
                    x.CategoryId == category.Id).ToListAsync();
-
-                //foreach (var item in dbEvents)
-                //{
-                //    if (Math.Abs((evt.EventStartDate - item.EventStartDate).TotalHours) < 1)
-                //    {
-                //        var res = (evt.EventStartDate - item.EventStartDate).TotalHours;
-                //    }
-
-                //}
-
+                
                 var result = dbEvents.Any(x => Math.Abs((evt.EventStartDate - x.EventStartDate).TotalHours) < 1);
 
 
@@ -146,7 +137,7 @@ namespace EventAPI.Controllers
 
                 //Add event to database and save context
                 await _eventService.CreateEvent(evt);
-                return this.Ok("Event successfuly created");
+                return this.Ok(evt);
             }
             else
                 return this.BadRequest("Invalid data");
@@ -161,9 +152,9 @@ namespace EventAPI.Controllers
             
             if (ModelState.IsValid)
             {
-                bool result = await _eventService.UpdateEvent(id, model);
-                if(result)
-                     return this.Ok("Event successully updated!");
+                var updatedEvent = await _eventService.UpdateEvent(id, model);
+                if(updatedEvent != null)
+                     return this.Ok(updatedEvent);
                 else
                      return this.BadRequest();
 

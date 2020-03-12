@@ -13,6 +13,7 @@ namespace CommentService.Models
         public int? UserId { get; set; }
         public  DateTime PostedOn { get; set; }
         public  DateTime UpdatedOn { get; set; }
+        public User User { get; set; }
 
         public static implicit operator Comment(CommentViewModel vm)
         {

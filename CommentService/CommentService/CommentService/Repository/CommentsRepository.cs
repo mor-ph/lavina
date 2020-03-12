@@ -25,7 +25,10 @@ namespace CommentService.Repository
 
         public async Task<IEnumerable<Comment>> GetAll()
         {
-            return await _context.Comments.ToListAsync();
+            var comments = await _context.Comments
+                .Include(c => c.User)
+                .ToListAsync();
+            return comments;
         }
         public async Task<IEnumerable<Comment>> GetCommentsForEvent(int id)
         {
