@@ -110,34 +110,33 @@
           <b-col sm="4" offset-sm="4">
             <b-form-datepicker id="datepicker-valid"
                               :state ="valueDate ? true : false"
-                               v-model="valueDate"></b-form-datepicker>
+                               v-model="valueDate" :min="mind"></b-form-datepicker>
           </b-col>
         </b-row>
         <b-row class=" text-center my-2">
           <b-col sm="4" offset-sm="4">
           <b-form-timepicker id="timepicker-valid"
                             :state="valueTime ? true : false"
-                             v-model="valueTime"></b-form-timepicker>
+                             v-model="valueTime" :min="mint"></b-form-timepicker>
          </b-col>
         </b-row>
-        <!-- Location -->
-        <b-row class="text-center my-2">
-
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center my-2">
-              <label for="example-location" class="text-white">
-                <strong>Location:</strong>
-              </label>
-            </div>
-            <b-form-select
-              class="text-center "
-              id="example-location"
-              required
-              v-model="city"
-              :options="filters.location"
-            ></b-form-select>
-          </b-col>
-        </b-row>
+          <!-- Location -->
+          <b-row class="text-center my-2">
+            <b-col sm="4" offset-sm="4">
+              <div class="text-center my-2">
+                <label for="example-location" class="text-white">
+                  <strong>Location:</strong>
+                </label>
+              </div>
+              <b-form-select
+                class="text-center"
+                id="example-location"
+                required
+                v-model="location"
+                :options="filters.location"
+              ></b-form-select>
+            </b-col>
+          </b-row>
 
         <!-- Address -->
         <b-row class="text-center my-2">
@@ -224,6 +223,11 @@ export default {
     this.$store.dispatch('fetchFilters')
   },
   data () {
+    const now = new Date()
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    // 15th two months prior
+    const minDate = new Date(today)
+    minDate.setDate(minDate.getDate())
     return {
       // Form data
       title: '',
@@ -241,6 +245,7 @@ export default {
 
       types: ['date', 'time'],
       valueDate: '',
+      mind: minDate,
       valueTime: '',
 
       options: [
@@ -253,6 +258,11 @@ export default {
     }
   },
   methods: {
+    dateDisabled (ymd, date) {
+      if (date.getDate() > Date()) {
+        return true
+      }
+    },
     onSubmit () {
       if (this.valueDate === '' || this.valueTime === '') return
 
