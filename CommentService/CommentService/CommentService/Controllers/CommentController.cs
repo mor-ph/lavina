@@ -58,7 +58,6 @@ namespace CommentService.Controllers
 
             int userId;
             if (!int.TryParse(User.Claims.FirstOrDefault(x => x.Type == "userId").Value.ToString(), out userId))
-
             {
                 return this.BadRequest("Invalid UserId");
             }
