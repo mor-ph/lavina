@@ -5,7 +5,7 @@
       <b-row>
         <b-navbar toggleable="lg" type="dark" class="fixed-top justify-content-between">
           <router-link to="/"><b-navbar-brand>Let's Play</b-navbar-brand></router-link>
-
+          <hide-at breakpoint="medium">
           <b-navbar-nav center class="right">
             <router-link to="/createEvent">
             <b-button class=" yellowbtn mb-2" size="lg">
@@ -14,6 +14,7 @@
             </b-button>
             </router-link>
           </b-navbar-nav>
+          </hide-at>
 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
           <div>
             <router-link to="/login"
@@ -83,6 +84,7 @@ background: #7DA2A9;
 }
 .yellowbtn{
   background: rgb(250, 220, 85);
-  padding-left: 3%;
+  padding: 3%;
+  color:rgb(60, 71, 78);
 }
 </style>

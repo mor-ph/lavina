@@ -4,8 +4,8 @@
       <b-container>
         <b-row class="text-center">
             <b-col>
-        <h1 class="hhh">Login-in</h1>
-        <br> <b-icon icon="person-fill" variant="light" font-scale="10"></b-icon>
+        <h1 class="hhh">Login</h1>
+        <br> <b-icon icon="person-fill"  font-scale="10"></b-icon>
         </b-col>
          </b-row>
 
@@ -35,7 +35,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-button type="submit" variant="primary">Login</b-button>
+          <b-button type="submit">Login</b-button>
            </b-col>
           </b-row>
         </b-form>
@@ -69,7 +69,7 @@ export default {
 <style scoped>
 .hhh{
   padding-top: 130px;
-  color: white;
+  color:rgb(65, 72, 77);
 }
 .label.label{
   color: white;
