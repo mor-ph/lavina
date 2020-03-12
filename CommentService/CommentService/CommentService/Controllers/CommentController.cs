@@ -56,7 +56,15 @@ namespace CommentService.Controllers
                 return BadRequest();
             }
 
+            int userId;
+            if (!int.TryParse(User.Claims.FirstOrDefault(x => x.Type == "userId").Value.ToString(), out userId))
+
+            {
+                return this.BadRequest("Invalid UserId");
+            }
+
             Comment cm = item;
+            cm.UserId = userId;
             cm.PostedOn = DateTime.Now;
 
             // // Real solution
