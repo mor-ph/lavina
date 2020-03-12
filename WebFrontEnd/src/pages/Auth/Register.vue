@@ -6,8 +6,8 @@
           <b-col>
             <h1 class="hhh">Register</h1>
             <br />
-            <b-iconstack font-scale="10" variant="white">
-              <b-icon stacked icon="person-fill" variant="light" font-scale="10"></b-icon>
+            <b-iconstack font-scale="10">
+              <b-icon stacked icon="person-fill" font-scale="10"></b-icon>
               <b-icon
                 stacked
                 icon="plus"
@@ -97,7 +97,7 @@
                 ></b-form-input>
               </b-form-group>
 
-              <b-button type="submit" variant="primary" :disabled="$v.$invalid">Register</b-button>
+              <b-button type="submit" :disabled="$v.$invalid">Register</b-button>
             </b-col>
           </b-row>
         </b-form>
@@ -169,18 +169,10 @@ export default {
 </script>
 
 <style scoped>
-.body {
-  background: #f7f7f7;
-  background: rgb(63, 94, 251);
-  background: radial-gradient(
-    circle,
-    rgba(63, 94, 251, 1) 0%,
-    rgba(0, 0, 0, 1) 100%
-  );
-}
+
 .hhh {
   padding-top: 130px;
-  color: white;
+  color:rgb(65, 72, 77);
 }
 
 .label.label {
