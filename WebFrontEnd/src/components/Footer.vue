@@ -6,16 +6,14 @@
         <div class="footer p-2 d-flex justify-content-between">
             <b-container fluid>
               <span><b-icon class="icon" icon="envelope-fill"></b-icon></span>
-              <span>info@codecoda.com</span>
+              <span> info@codecoda.com</span>
             </b-container>
-          <div class="text-center">
-            <b-container fluid>
+            <b-container fluid class="text-right">
               &copy; 2020 Copyright:
               <span>
-                <a href="https://codecoda.com/en" style="color:white">Codecoda.com</a>
+                <a href="https://codecoda.com/en" class="link"><span>Codecoda.com</span></a>
               </span>
             </b-container>
-          </div>
         </div>
       </footer>
       <!-- Footer -->
@@ -39,7 +37,6 @@
 }
 .icon {
   margin: 0.3%;
-  margin-left: 1.3%;
   outline-style: inset;
   outline-color: rgb(250, 220, 85);
 }

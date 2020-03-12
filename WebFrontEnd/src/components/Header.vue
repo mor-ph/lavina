@@ -3,7 +3,7 @@
   <b-container fluid>
     <div>
       <b-row>
-        <b-navbar toggleable="lg" type="dark" variant="info" class="fixed-top justify-content-between">
+        <b-navbar toggleable="lg" type="dark" class="fixed-top justify-content-between">
           <router-link to="/"><b-navbar-brand>Let's Play</b-navbar-brand></router-link>
 
           <b-navbar-nav center class="right">

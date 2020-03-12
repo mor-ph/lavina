@@ -113,12 +113,12 @@
 
           <b-row class="text-center my-2">
             <b-col sm="4" offset-sm="4">
-              <b-form-datepicker id="datepicker-valid" v-model="valueDate"></b-form-datepicker>
+              <b-form-datepicker id="datepicker-valid" v-model="valueDate" :min="mind"></b-form-datepicker>
             </b-col>
           </b-row>
           <b-row class="text-center my-2">
             <b-col sm="4" offset-sm="4">
-              <b-form-timepicker id="timepicker-valid" v-model="valueTime"></b-form-timepicker>
+              <b-form-timepicker id="timepicker-valid" v-model="valueTime" :min="mint"></b-form-timepicker>
             </b-col>
           </b-row>
           <!-- Location -->
@@ -225,6 +225,11 @@ export default {
     this.$store.dispatch('fetchFilters')
   },
   data () {
+    const now = new Date()
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    // 15th two months prior
+    const minDate = new Date(today)
+    minDate.setDate(minDate.getDate())
     return {
       // Form data
       title: '',
@@ -239,6 +244,7 @@ export default {
 
       types: ['date', 'time'],
       valueDate: '',
+      mind: minDate,
       valueTime: '',
 
       // Reapeating
@@ -253,6 +259,11 @@ export default {
     }
   },
   methods: {
+    dateDisabled (ymd, date) {
+      if (date.getDate() > Date()) {
+        return true
+      }
+    },
     onSubmit () {
       // Add token etc.
       const formData = {
