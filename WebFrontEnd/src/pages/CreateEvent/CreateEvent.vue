@@ -15,7 +15,6 @@
             <b-form-textarea
               class="text-left"
               id="textarea-no-resize"
-              placeholder="Fixed height textarea"
               rows="1"
               no-resize
               required
