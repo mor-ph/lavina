@@ -92,21 +92,58 @@
               <b-button type="submit" variant="primary" size="lg">Join</b-button>
             </b-col>
           </b-row>
-          <h1>Comments:</h1>
         </b-form>
+
+         <!-- No comment -->
+         <h1>Comments:</h1>
+      <b-row class="text-center my-2">
+        <b-col sm="6" offset-sm="3">
+          <app-comments-grid v-if="commentsFound" :comments="comments.data"></app-comments-grid>
+          <p v-else>No comment match your search!</p>
+        </b-col>
+      </b-row>
+
+      <b-row class="text-left my-2">
+          <b-col sm="4" offset-sm="4">
+            <b-form-textarea
+              class="text-left"
+              id="textarea-no-resize"
+              placeholder="Fixed height textarea"
+              rows="1"
+              no-resize
+              required
+              v-model="comments"
+            ></b-form-textarea>
+          </b-col>
+        </b-row>
       </b-container>
     </div>
   </div>
 </template>
 
 <script>
+import CommentsGrid from '../../components/Comment/CommentsGrid'
 import { mapGetters } from 'vuex'
 export default {
   created () {
+    this.$store.dispatch('fetchRecentComments')
     this.$store.dispatch('fetchFilters')
   },
   data () {
     return {
+      components: {
+        appCommentsGrid: CommentsGrid
+      },
+      computed: {
+        ...mapGetters([
+          'comments',
+          'filters'
+        ]),
+        commentsFound () {
+          return this.comments.data.length > 0
+        }
+      },
+
       // Form data
       title: '',
       category: '',
