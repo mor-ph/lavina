@@ -59,8 +59,7 @@ export default {
         password: this.password
       }
       console.log(formData)
-      // TODO: Waiting for DB
-      //  this.$store.dispatch('login', { username: formData.username, password: formData.password })
+      this.$store.dispatch('login', { username: formData.username, password: formData.password })
     }
   }
 }
