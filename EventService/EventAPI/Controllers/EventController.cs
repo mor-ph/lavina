@@ -46,7 +46,7 @@ namespace EventAPI.Controllers
 
 
         //returns events in json format
-        [HttpGet("getall")]
+        [HttpGet()]
         public async Task<IActionResult> GetAll([FromQuery] EventsQueryParameters eventsQueryParameters)
         {
             
@@ -57,8 +57,8 @@ namespace EventAPI.Controllers
             return Ok(eventsToReturn);
             
         }
-        //Get event/get/id
-        [HttpGet("get/{id}")]
+        //Get event/id
+        [HttpGet("{id}")]
         public async Task<ActionResult<Event>> GetEventById(int id)
         {
             var dbEvent = await _eventService.GetEventByID(id);
@@ -82,8 +82,8 @@ namespace EventAPI.Controllers
         }
 
 
-        // POST: api/event/create
-        [HttpPost("create")]
+        // POST: api/event
+        [HttpPost()]
         public async Task<ActionResult<Event>> CreateEvent([FromBody] EventInputModel model)     
         {
             if (ModelState.IsValid)
@@ -145,9 +145,9 @@ namespace EventAPI.Controllers
 
         }
 
-        // PUT: api/event/update/id
-        [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateEventById(int id, [FromBody]EventInputModel model)
+        // PUT: api/event/id
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateEventById(int id, [FromBody]EventUpdateModel model)
         {
             
             if (ModelState.IsValid)
@@ -156,7 +156,7 @@ namespace EventAPI.Controllers
                 if(updatedEvent != null)
                      return this.Ok(updatedEvent);
                 else
-                     return this.BadRequest();
+                     return this.BadRequest("Invalid ID");
 
             }
             else return this.BadRequest();
@@ -164,7 +164,7 @@ namespace EventAPI.Controllers
         }
 
         // DELETE: api/event/delete/id
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var evt = await _dbContext.Events.FindAsync(id);
