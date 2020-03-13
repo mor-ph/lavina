@@ -232,6 +232,7 @@ export default {
       title: '',
       category: '',
       subcategory: '',
+      location: '',
       city: '',
       address: '',
       recurring: null,
@@ -270,7 +271,7 @@ export default {
         title: this.title,
         category: this.category,
         subcategory: this.subcategory,
-        eventStartDate: new Date(this.valueDate + ' ' + this.valueTime),
+        eventStartDate: new Date(this.valueDate + 'T' + this.valueTime),
         city: this.city,
         address: this.address,
         recurring: this.recurring,
@@ -278,7 +279,6 @@ export default {
         description: this.description
       }
       console.log(formData)
-      console.log(new Date(`${formData.valueDate}${formData.valueTime}Z`))
       this.$store.dispatch('createEvent', formData)
     },
     fetchSubCategories () {
