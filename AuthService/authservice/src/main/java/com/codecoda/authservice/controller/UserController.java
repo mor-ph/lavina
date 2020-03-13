@@ -139,7 +139,7 @@ public class UserController {
          updatedUser.setUsername(theUser.getUsername());
          updatedUser.setPassword(encoder.encode(theUser.getPassword()));
          updatedUser.setEmail(theUser.getEmail());
-         updatedUser.setCreatedAt(theUser.getCreatedAt());
+         updatedUser.setCreatedAt(updatedUser.getCreatedAt());
          updatedUser.setUpdatedAt(LocalDateTime.now());
 
          userService.save(updatedUser);
