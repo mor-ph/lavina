@@ -114,37 +114,45 @@ public class UserController {
     @PutMapping("/users/{id}")
     public ResponseEntity<?> updateUser(@RequestBody @Valid User theUser, @PathVariable int id) {
 
-         User updatedUser = userService.findById(id);
-         User userByName = userService.findByUsername(theUser.getUsername());
-         User userByEmail = userService.findByEmail(theUser.getEmail());
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int loggedUserId = userDetails.getId();
 
-         if (updatedUser != null && userByName != null){
+        if (id == loggedUserId) {
 
-             if (updatedUser.getId() != userByName.getId()){
-                  throw new ValidationException("The username exists");
-             }
-         }
+            User updatedUser = userService.findById(id);
+            User userByName = userService.findByUsername(theUser.getUsername());
+            User userByEmail = userService.findByEmail(theUser.getEmail());
 
-         if (updatedUser != null && userByEmail != null){
+            if (updatedUser != null && userByName != null) {
 
-             if (updatedUser.getId() != userByEmail.getId()){
-                 throw new ValidationException("The email exists");
-             }
-         }
+                if (updatedUser.getId() != userByName.getId()) {
+                    throw new ValidationException("The username exists");
+                }
+            }
 
-         if (updatedUser == null){
-             return ResponseEntity.notFound().build();
-         }
+            if (updatedUser != null && userByEmail != null) {
 
-         updatedUser.setUsername(theUser.getUsername());
-         updatedUser.setPassword(encoder.encode(theUser.getPassword()));
-         updatedUser.setEmail(theUser.getEmail());
-         updatedUser.setCreatedAt(updatedUser.getCreatedAt());
-         updatedUser.setUpdatedAt(LocalDateTime.now());
+                if (updatedUser.getId() != userByEmail.getId()) {
+                    throw new ValidationException("The email exists");
+                }
+            }
 
-         userService.save(updatedUser);
+            if (updatedUser == null) {
+                return ResponseEntity.notFound().build();
+            }
 
-         return ResponseEntity.noContent().build();
+            updatedUser.setUsername(theUser.getUsername());
+            updatedUser.setPassword(encoder.encode(theUser.getPassword()));
+            updatedUser.setEmail(theUser.getEmail());
+            updatedUser.setCreatedAt(updatedUser.getCreatedAt());
+            updatedUser.setUpdatedAt(LocalDateTime.now());
+
+            userService.save(updatedUser);
+
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.badRequest().build();
 
     }
 
