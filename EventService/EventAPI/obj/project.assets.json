@@ -2218,7 +2218,10 @@
         },
         "runtime": {
           "bin/placeholder/EventAPI.Data.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "EventAPI.Models/1.0.0": {
         "type": "project",
@@ -2233,7 +2236,10 @@
         },
         "runtime": {
           "bin/placeholder/EventAPI.Models.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "EventAPI.Services/1.0.0": {
         "type": "project",
@@ -2250,7 +2256,10 @@
         },
         "runtime": {
           "bin/placeholder/EventAPI.Services.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
