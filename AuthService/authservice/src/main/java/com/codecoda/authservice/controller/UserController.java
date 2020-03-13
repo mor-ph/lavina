@@ -69,7 +69,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public User addUser(@RequestBody User theUser) {
+    public User addUser(@RequestBody @Valid User theUser) {
 
         if (userService.existsByUsername(theUser.getUsername())) {
             throw new ValidationException("The username exists");
@@ -112,7 +112,7 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<?> updateUser(@RequestBody User theUser, @PathVariable int id) {
+    public ResponseEntity<?> updateUser(@RequestBody @Valid User theUser, @PathVariable int id) {
 
          User updatedUser = userService.findById(id);
          User userByName = userService.findByUsername(theUser.getUsername());
@@ -139,7 +139,7 @@ public class UserController {
          updatedUser.setUsername(theUser.getUsername());
          updatedUser.setPassword(encoder.encode(theUser.getPassword()));
          updatedUser.setEmail(theUser.getEmail());
-         updatedUser.setCreatedAt(theUser.getCreatedAt());
+         updatedUser.setCreatedAt(updatedUser.getCreatedAt());
          updatedUser.setUpdatedAt(LocalDateTime.now());
 
          userService.save(updatedUser);

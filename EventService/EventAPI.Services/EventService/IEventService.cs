@@ -12,7 +12,7 @@ namespace EventAPI.Services.EventService
     {
         Task<IEnumerable<Event>> GetAllEvents(EventsQueryParameters parameters);
         Task CreateEvent(Event ev);
-        Task<Event> UpdateEvent(int id, EventInputModel model);
+        Task<Event> UpdateEvent(int id,EventUpdateModel model);
         Task DeleteEvent(Event evt);
         Task<Event> GetEventByID(int id);
     }

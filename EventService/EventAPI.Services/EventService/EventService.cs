@@ -13,16 +13,19 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace EventAPI.Services.EventService
 {
     public class EventService : IEventService
     {
         private readonly LetsPlayDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public EventService (LetsPlayDbContext dbContext)
+        public EventService (LetsPlayDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task CreateEvent(Event ev)
@@ -107,26 +110,33 @@ namespace EventAPI.Services.EventService
                 .FirstOrDefaultAsync(e => e.Id==id);
         }
 
-        public async Task<Event> UpdateEvent(int id, EventInputModel model)
+        public async Task<Event> UpdateEvent(int id, EventUpdateModel model)
         {
             var dbEvent = await _dbContext.Events.FirstOrDefaultAsync(x => x.Id == id);
-            var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Name == model.Category);
-            var city = await _dbContext.Cities.FirstOrDefaultAsync(c => c.Name == model.City);
-            if (dbEvent == null || category == null || city == null)
-                return null;
-
-            dbEvent.Title = model.Title;
-            dbEvent.Description = model.Description;
-            dbEvent.EventStartDate = model.EventStartDate;
+            // var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Name == model.Category);
+            // var city = await _dbContext.Cities.FirstOrDefaultAsync(c => c.Name == model.City);
+            // if (dbEvent == null || category == null || city == null)
+            //     return null;
+            //
+            // dbEvent.Title = model.Title;
+            // dbEvent.Description = model.Description;
+            // dbEvent.EventStartDate = model.EventStartDate;
+            // dbEvent.PeopleNeeded = model.PeopleNeeded;
+            // dbEvent.UpdatedOn = DateTime.UtcNow;
+            // dbEvent.EventStatus = (int)model.EventStatus;
+            // dbEvent.Address = model.Address;
+            // dbEvent.Category = category;
+            // dbEvent.City = city;
+            // dbEvent.Recurring = (int)model.Recurring;
             dbEvent.PeopleNeeded = model.PeopleNeeded;
-            dbEvent.UpdatedOn = DateTime.UtcNow;
             dbEvent.EventStatus = (int)model.EventStatus;
-            dbEvent.Address = model.Address;
-            dbEvent.Category = category;
-            dbEvent.City = city;
-            dbEvent.Recurring = (int)model.Recurring;
+            dbEvent.UpdatedOn = DateTime.UtcNow;
+            
             await _dbContext.SaveChangesAsync();
             return dbEvent;
+
+
+
 
         }
     }

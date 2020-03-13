@@ -3,14 +3,15 @@ import VueRouter from 'vue-router'
 import store from '../store'
 import Home from '../pages/Events/Home.vue'
 
-const CreateEvent = resolve => {
-  require.ensure(['../pages/CreateEvent/CreateEvent.vue'], () => {
-    resolve(require('../pages/CreateEvent/CreateEvent.vue'))
-  })
-}
 const CurrentEvent = resolve => {
   require.ensure(['../pages/Events/CurrentEvent.vue'], () => {
     resolve(require('../pages/Events/CurrentEvent.vue'))
+  })
+}
+
+const CreateEvent = resolve => {
+  require.ensure(['../pages/CreateEvent/CreateEvent.vue'], () => {
+    resolve(require('../pages/CreateEvent/CreateEvent.vue'))
   })
 }
 
@@ -39,23 +40,16 @@ const routes = [
     component: Home
   },
   {
+    path: '/event/:title&:id',
+    name: 'CurrentEvent',
+    component: CurrentEvent
+  },
+  {
     path: '/createEvent',
     name: 'CreateEvent',
     component: CreateEvent,
     beforeEnter (to, from, next) {
       console.log(store.state.auth.idToken)
-      if (store.state.auth.idToken) {
-        next()
-      } else {
-        next('/login')
-      }
-    }
-  },
-  {
-    path: '/currentEvent',
-    name: 'CurrentEvent',
-    component: CurrentEvent,
-    beforeEnter (to, from, next) {
       if (store.state.auth.idToken) {
         next()
       } else {

@@ -19,12 +19,14 @@ export default {
       subcategory: null,
       location: null,
       date: null
-    }
+    },
+    currentEvent: []
   },
   mutations: {
     setEvents (state, events) {
       state.events = events
-    },
+    }, // Check later if u can combine setSelectedFilters
+    // with emptyCategoryAndLocationArrays
     setSelectedFilters (state, filters) {
       state.selectedFilters = filters
     },
@@ -38,6 +40,10 @@ export default {
     emptyCategoryAndLocationArray (state) {
       state.filters.category = []
       state.filters.location = []
+    },
+    setCurrentEvent (state, currentEvent) {
+      state.currentEvent = []
+      state.currentEvent = currentEvent
     }
   },
   actions: {
@@ -74,7 +80,9 @@ export default {
     fetchCategories ({ state }) {
       axios.get('http://localhost:5103/api/category')
         .then(categories => {
+          console.log(categories)
           categories.data.map(category => {
+            if (category.name === 'Root') return
             state.filters.category.push(category.name)
           })
         }).catch(err => console.log(err))
@@ -127,6 +135,16 @@ export default {
         }).catch(error => {
           console.log(error)
         })
+    },
+
+    fetchEventById ({ commit }, eventId) {
+      axios.get('http://localhost:5103/api/event/id', { params: { id: eventId } })
+        .then(currentEvent => {
+          commit('setCurrentEvent', currentEvent)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   getters: {
@@ -138,6 +156,9 @@ export default {
     },
     selectedFilters: (state) => {
       return state.selectedFilters
+    },
+    currentEvent: (state) => {
+      return state.currentEvent
     }
   }
 }

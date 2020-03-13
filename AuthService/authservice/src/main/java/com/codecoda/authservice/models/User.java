@@ -1,8 +1,13 @@
 package com.codecoda.authservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 import java.util.List;
@@ -17,15 +22,17 @@ public class User {
     private int id;
 
     @Column(name = "Username")
-    @NotEmpty
+    @NotBlank(message = "Username is a required field")
     private String username;
 
     @Column(name = "Password")
-    @NotEmpty
+    @NotBlank(message = "Password is a required field")
+    @JsonIgnore
+    @JsonProperty(value = "password")
     private String password;
 
     @Column(name = "Email")
-    @NotEmpty
+    @NotBlank(message = "Email is a required field")
     private String email;
 
     @Column(name = "Createdat")
@@ -73,6 +80,8 @@ public class User {
         this.username = username;
     }
 
+    @JsonIgnore
+    @JsonProperty(value = "password")
     public String getPassword() {
         return password;
     }
