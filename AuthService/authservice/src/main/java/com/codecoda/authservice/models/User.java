@@ -1,5 +1,8 @@
 package com.codecoda.authservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -24,6 +27,8 @@ public class User {
 
     @Column(name = "Password")
     @NotBlank(message = "Password is a required field")
+    @JsonIgnore
+    @JsonProperty(value = "password")
     private String password;
 
     @Column(name = "Email")
@@ -75,6 +80,8 @@ public class User {
         this.username = username;
     }
 
+    @JsonIgnore
+    @JsonProperty(value = "password")
     public String getPassword() {
         return password;
     }
