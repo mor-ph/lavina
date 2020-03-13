@@ -115,32 +115,30 @@ public class UserController {
     public ResponseEntity<?> updateUser(@RequestBody User theUser, @PathVariable int id) {
 
          User updatedUser = userService.findById(id);
+         User userByName = userService.findByUsername(theUser.getUsername());
+         User userByEmail = userService.findByEmail(theUser.getEmail());
+
+         if (updatedUser != null && userByName != null){
+
+             if (updatedUser.getId() != userByName.getId()){
+                  throw new ValidationException("The username exists");
+             }
+         }
+
+         if (updatedUser != null && userByEmail != null){
+
+             if (updatedUser.getId() != userByEmail.getId()){
+                 throw new ValidationException("The email exists");
+             }
+         }
 
          if (updatedUser == null){
              return ResponseEntity.notFound().build();
          }
 
          updatedUser.setUsername(theUser.getUsername());
-//
-//        if (userService.existsByUsername(updatedUser.getUsername()) &&
-//                theUser.getUsername() != updatedUser.getUsername()) {
-//            throw new ValidationException("The username exists");
-//        }
-//        else if (userService.existsByUsername(updatedUser.getUsername())){
-//            throw new ValidationException("The username exists");
-//        }
-
          updatedUser.setPassword(encoder.encode(theUser.getPassword()));
          updatedUser.setEmail(theUser.getEmail());
-
-//        if (userService.existsByEmail(updatedUser.getEmail()) &&
-//                theUser.getEmail() != updatedUser.getEmail()) {
-//            throw new ValidationException("The email exists");
-//        }
-//        else if (userService.existsByEmail(updatedUser.getEmail())){
-//            throw new ValidationException("The email exists");
-//        }
-
          updatedUser.setCreatedAt(theUser.getCreatedAt());
          updatedUser.setUpdatedAt(LocalDateTime.now());
 
