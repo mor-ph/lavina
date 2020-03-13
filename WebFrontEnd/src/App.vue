@@ -19,7 +19,6 @@ export default {
 
 <style>
 body, .body{
-  /* width: 100%; */
   position: relative;
   background: rgb(227, 227, 228);
   color:rgb(65, 72, 77);
