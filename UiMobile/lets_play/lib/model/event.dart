@@ -46,7 +46,7 @@ class Event {
         description = json['description'] as String,
         city = City.fromJson(json['city']),
         peopleNeeded = json['peopleNeeded'] as int,
-        status = json['status'] as String,
+        status = json['status'],
         isActive = json['isactive'] as bool,
         category = Category.fromJson(json['category']),
         exactAddress = json['address'] as String,

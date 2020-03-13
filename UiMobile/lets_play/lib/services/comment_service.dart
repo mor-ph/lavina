@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:lets_play/model/city.dart';
 
 import 'package:lets_play/model/comment.dart';
+import 'package:lets_play/services/authentication.dart';
 
 class CommentService {
   static Future<List<Comment>> getComments() async {
@@ -30,13 +31,14 @@ class CommentService {
   }
 
   static void addComment(Comment comment) async {
+    String token = Auth.currentUser.accessToken;
     List<Comment> list = List();
-    var url = 'http://10.0.2.2:5101/comments/';
-    Map<String, String> headers = {'Content-Type': 'application/json'};
+    var url = 'http://10.0.2.2:5101/comments';
+    Map<String, String> headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'};
     final waitList = <Future<void>>[];
 
     String json =
-        '{"id": ${comment.id},"message":${comment.message} ,"eventId": ${comment.eventId},"userId": ${comment.user.uid}}';
+        '{"message":"${comment.message}" ,"eventId": ${comment.eventId},"userId": ${comment.user.uid}}';
     final response = await http.post(url, body: json, headers: headers);
     waitList.add(http.post(url, body: json, headers: headers));
     if (response.statusCode == 200) {

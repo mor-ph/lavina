@@ -12,5 +12,5 @@ class UserEvent {
   UserEvent.fromJson(Map<String, dynamic> json)
       : id = json['id'] as int,
         user = User.fromJson(json['user']),
-        event = json['event'] == null ? Event.fromJson(json['event']) : null;
+        event = json['event'] != null ? Event.fromJson(json['event']) : null;
 }

@@ -14,7 +14,7 @@ class EventList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return events.isEmpty
+    return events.isEmpty || events==null
         ? Column(
             children: <Widget>[
               Text(

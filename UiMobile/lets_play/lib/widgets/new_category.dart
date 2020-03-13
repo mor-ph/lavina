@@ -34,13 +34,13 @@ class _NewCategoryState extends State<NewCategory> {
     if (enteredName.isEmpty) {
       return;
     }
-    final category = Category(
+    final newSubcategory = Category(
         categoryIcon: Icons.category,
         name: enteredName,
         parentId: enteredCategory.id);
-    widget.addCategory(category);
+    widget.addCategory(newSubcategory);
     setState(() {
-      widget.categories.add(category);
+      widget.categories.add(newSubcategory);
     });
     Navigator.of(context).pop();
   }

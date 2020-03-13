@@ -33,9 +33,9 @@ class CategoryService {
     final waitList = <Future<void>>[];
 
     String json =
-        '{"id": ${category.id},"name": "${category.name}","parentCategoryId": ${category.parentId}}';
+        '{"name": "${category.name}","parentCategoryId": ${category.parentId}}';
     final response = await http.post(url, body: json, headers: headers);
-    waitList.add(http.get(url));
+    waitList.add(http.post(url, body: json, headers: headers));
     if (response.statusCode == 200 || response.statusCode == 201) {
       print(response.body);
     } else {

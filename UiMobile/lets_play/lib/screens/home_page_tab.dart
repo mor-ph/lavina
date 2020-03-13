@@ -29,6 +29,7 @@ class _HomePageTabState extends State<HomePageTab> {
         _events = events;
       });
     }
+    _events = events.where((element) => element.isActive != null && element.isActive==true).toList();
   }
 
   @override

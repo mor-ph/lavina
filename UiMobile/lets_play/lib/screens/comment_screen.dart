@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lets_play/model/comment.dart';
 import 'package:lets_play/model/user.dart';
+import 'package:lets_play/services/authentication.dart';
 import "dart:async";
 
 import 'package:lets_play/services/comment_service.dart';
@@ -117,39 +118,14 @@ class _CommentScreenState extends State<CommentScreen> {
   }
 
   addComment(String comment) {
-    _commentController.clear();
-    Comment newComment = Comment(eventId: postId, id: widget.postUserOwner.uid,message: comment );
+    User postOwner = Auth.currentUser;
+    Comment newComment =
+        Comment(eventId: postId, user: postOwner, message: comment);
     setState(() {
       _comments.add(newComment);
     });
     CommentService.addComment(newComment);
-//    Firestore.instance
-//        .collection("insta_comments")
-//        .document(postId)
-//        .collection("comments")
-//        .add({
-//      "username": currentUserModel.username,
-//      "comment": comment,
-//      "timestamp": DateTime.now(),
-//      "avatarUrl": currentUserModel.photoUrl,
-//      "userId": currentUserModel.id
-//    });
-//
-//    //adds to postOwner's activity feed
-//    Firestore.instance
-//        .collection("insta_a_feed")
-//        .document(postOwner)
-//        .collection("items")
-//        .add({
-//      "username": currentUserModel.username,
-//      "userId": currentUserModel.id,
-//      "type": "comment",
-//      "userProfileImg": currentUserModel.photoUrl,
-//      "commentData": comment,
-//      "timestamp": DateTime.now(),
-//      "postId": postId,
-//      "mediaUrl": postMediaUrl,
-//    });
+    _commentController.clear();
   }
 }
 
@@ -166,7 +142,7 @@ class CommentWidget extends StatelessWidget {
       children: <Widget>[
         Divider(),
         ListTile(
-          title: Text(comment.message),
+          title: Text(comment.user.userName+":  "+comment.message),
           leading: ClipOval(
             child: Image.asset(
               'assets/images/profile_image.png',

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:lets_play/model/user.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
@@ -79,10 +80,40 @@ class Auth {
   Future<User> getCurrentUser() async {
     return currentUser;
   }
+
 //
-//  Future<void> signOut() async {
-//    return _firebaseAuth.signOut();
-//  }
+  Future<void> signOut() async {
+    currentUser = null;
+    accessToken = null;
+  }
+
+  static Future<bool> updateProfile(
+      {@required String userName,
+      @required String password,
+      @required String email}) async {
+     Auth.currentUser.userName = userName;
+     Auth.currentUser.email = email;
+
+     var urlUsers = 'http://10.0.2.2:8081/auth/users/${currentUser.uid}';
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${Auth.currentUser.accessToken}'
+    };
+    String json =
+        '{"username": "$userName", "password": "$password", "email": "$email"}';
+    var response = await http.put(
+      urlUsers,
+      body: json,
+      headers: headers,
+    );
+    if (response.statusCode == 200 && response.statusCode == 204) {
+      print(response.body);
+      return true;
+    } else {
+      print('A network error occurred');
+      return false;
+    }
+  }
 //
 //  Future<void> sendEmailVerification() async {
 //    FirebaseUser user = await _firebaseAuth.currentUser();

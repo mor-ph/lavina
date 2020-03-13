@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flushbar/flushbar.dart';
 import 'package:lets_play/model/user.dart';
 import 'package:lets_play/screens/profile_page_tab.dart';
 import 'package:lets_play/services/authentication.dart';
@@ -23,6 +24,10 @@ class LoginSignupPage extends StatefulWidget {
 class __LoginSignupPageState extends State<LoginSignupPage> {
   final _formKey = new GlobalKey<FormState>();
 
+  final _emailController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   String _email;
   String _password;
   String _errorMessage;
@@ -41,6 +46,13 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
     _isLoading = false;
     _isLoginForm = widget.user != null ? false : true;
     _isUpdatePage = widget.user != null ? true : false;
+
+    if (_isUpdatePage) {
+      setState(() {
+        _nameController.text = widget.user.userName;
+        _emailController.text = widget.user.email;
+      });
+    }
     super.initState();
   }
 
@@ -165,6 +177,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
         autofocus: false,
+        controller: _emailController,
         decoration: new InputDecoration(
             hintText: 'Email',
             icon: new Icon(
@@ -172,7 +185,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
               color: Colors.grey,
             )),
         validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
-        onSaved: (value) => _email = value.trim(),
+        onSaved: (value) => _emailController.text = value.trim(),
       ),
     );
   }
@@ -184,6 +197,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
         maxLines: 1,
         keyboardType: TextInputType.text,
         autofocus: false,
+        controller: _nameController,
         decoration: new InputDecoration(
             hintText: 'Name',
             icon: new Icon(
@@ -192,7 +206,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
             )),
         validator: (value) =>
             value.isEmpty ? 'Your name can\'t be empty' : null,
-        onSaved: (value) => _name = value.trim(),
+        onSaved: (value) => _nameController.text = value.trim(),
       ),
     );
   }
@@ -203,6 +217,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
       child: new TextFormField(
         maxLines: 1,
         obscureText: true,
+        controller: _passwordController,
         autofocus: false,
         decoration: new InputDecoration(
             hintText: 'Password',
@@ -311,11 +326,11 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
       String userId = "";
       try {
         if (_isLoginForm) {
-          userId = await widget.auth.signIn(_name, _password);
+          userId = await widget.auth.signIn(_nameController.text, _password);
           print('Sign in: $userId');
         } else {
-          userId =
-              await widget.auth.signUp(_email, _password, _name, _imageUrl);
+          userId = await widget.auth.signUp(_emailController.text, _password,
+              _nameController.text, _imageUrl);
 
           _password = null;
           print('Sign up user: $userId');
@@ -342,6 +357,7 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
   }
 
   Widget _registerFormButtons(BuildContext context) {
+    SnackBar snackBar;
     if (!_isUpdatePage) {
       return Column(
         children: <Widget>[
@@ -350,15 +366,26 @@ class __LoginSignupPageState extends State<LoginSignupPage> {
         ],
       );
     } else if (_isUpdatePage) {
+      Flushbar flushbar;
+
       return GestureDetector(
         onTap: () {
-          if (_name.isEmpty) {
-            print("User validation file!");
+          if (_nameController.text.isEmpty ||
+              _emailController.text.isEmpty ||
+              _passwordController.text.isEmpty) {
+            flushbar = Flushbar(
+              duration: Duration(seconds: 30),
+              message: 'Validation fail, please fill all fields',
+            )..show(context);
+            
             return;
           } else {
 //            _createUser(_email.text,_);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ProfilePage()));
+            Auth.updateProfile(userName: _nameController.text, password: _passwordController.text, email: _emailController.text);
+            flushbar = Flushbar(
+              duration: Duration(seconds: 30),
+              message: 'User profile updated successfully',
+            )..show(context);
           }
         },
         child: Container(

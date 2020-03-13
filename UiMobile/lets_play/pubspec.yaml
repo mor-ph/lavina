@@ -47,7 +47,9 @@ dependencies:
   dynamic_treeview: ^1.0.0+2
   font_awesome_flutter: ^8.7.0
   progress_dialog: ^1.2.0
-
+  flushbar:
+    git:
+      url: https://github.com/valterh4ck3r/flushbar.git
 
 
 dev_dependencies:

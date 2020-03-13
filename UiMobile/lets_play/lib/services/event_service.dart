@@ -11,7 +11,7 @@ class EventService {
     List<Event> list = List();
     final waitList = <Future<void>>[];
 
-    var url = 'http://10.0.2.2:5103/api/event/getall';
+    var url = 'http://10.0.2.2:5103/api/event';
     Map<String, String> headers = {'Content-Type': 'application/json'};
     final response = await http.get(url);
     waitList.add(http.get(url));
@@ -35,13 +35,7 @@ class EventService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token'
     };
-    String json = '{"id": ${event.id}, "eventStartDate": ${event.startDate},'
-        ' "recurring": ${event.recurring},'
-        ' "eventStatus": ${event.status}, "description": ${event.description},'
-        ' "peopleNeeded": ${event.peopleNeeded}, "title": ${event.title},'
-        ' "address": ${event.exactAddress},"category":${event.category.name},'
-        ' "parentCategoryId": ${event.category.parentId}},'
-        ' "city": ${event.city.name}, }';
+    String json = '{"eventStatus": ${event.status == null ? 3 : event.status},"peopleNeeded": ${event.peopleNeeded}}';
     final response = await http.put(url, headers: headers, body: json);
     if (response.statusCode == 200) {
       print(response.body);
@@ -53,7 +47,7 @@ class EventService {
 
   static Future<bool> createEvent(Event event) async {
     final String token = Auth.currentUser.accessToken;
-    var url = 'http://10.0.2.2:5103/api/event/create';
+    var url = 'http://10.0.2.2:5103/api/event';
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token'

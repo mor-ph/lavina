@@ -74,8 +74,8 @@ class _NewOrderScreenState extends State<NewEventPage> {
       _description.text = widget.event.description;
       _peopleNeeded.text = widget.event.peopleNeeded.toString();
     }
-    getCities();
-    getCategories();
+//    getCities();
+//    getCategories();
     super.initState();
   }
 
@@ -146,14 +146,14 @@ class _NewOrderScreenState extends State<NewEventPage> {
             title: _name.text,
           ));
           SnackBar snackbar;
-          if(isSuccess) {
-             snackbar = SnackBar(
+          if (isSuccess) {
+            snackbar = SnackBar(
               content: Text("Event successfully created!"),
               duration: Duration(milliseconds: 900),
             );
             _resetForm();
-          }else{
-             snackbar = SnackBar(
+          } else {
+            snackbar = SnackBar(
               content: Text("Event didn't created!"),
               duration: Duration(milliseconds: 900),
             );
@@ -295,16 +295,10 @@ class _NewOrderScreenState extends State<NewEventPage> {
   }
 
   void _addNewCategory(Category selectCategory) {
-    final category = Category(
-        id: _categories.length + 1,
-        categoryIcon: Icons.category,
-        name: selectCategory.name,
-        parentId: selectCategory.parentId);
     setState(() {
-      _categories.add(category);
+      _categories.add(selectCategory);
     });
-    CategoryService.createCategory(category);
-
+    CategoryService.createCategory(selectCategory);
   }
 
   void _startAddNewCategory(BuildContext context) {

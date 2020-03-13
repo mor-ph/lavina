@@ -28,12 +28,12 @@ class UserEventService {
   }
 
   static void createUserEvent(UserEvent userEvent) async {
-    var url = 'http://10.0.2.2:5103/api/event/userevent';
+    var url = 'http://10.0.2.2:5103/api/event/userevents';
     Map<String, String> headers = {'Content-Type': 'application/json'};
     String json =
-        '{"userid":${userEvent.user.uid} ,"eventid": ${userEvent.event.id}';
+        '{"userid":${userEvent.user.uid} ,"eventid": ${userEvent.event.id}}';
     final response = await http.post(url, headers: headers, body: json);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       print(response.body);
     } else {
       print('A network error occurred');

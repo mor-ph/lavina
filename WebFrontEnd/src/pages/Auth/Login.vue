@@ -1,6 +1,6 @@
 <template>
   <div id="signin">
-    <div class="body" style="padding-bottom: 6%">
+    <div class="body" style="padding-bottom: 234px">
       <b-container>
         <b-row class="text-center">
             <b-col>

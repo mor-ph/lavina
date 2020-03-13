@@ -16,7 +16,7 @@ import 'comment_screen.dart';
 
 class EventDetails extends StatefulWidget {
   final Event event;
-  final User user;
+  User user;
 
   EventDetails({@required this.event, @required this.user});
 
@@ -29,9 +29,10 @@ class _EventDetailsState extends State<EventDetails> {
   List<UserEvent> userEvents;
 
   joinToEvent(User user, context) {
+    User currentUser = Auth.currentUser;
     bool userAlreadyExist =
-        userEvents.any((userEvent) => userEvent.user.userName == user.userName);
-    if (!userAlreadyExist) {
+        userEvents.any((userEvent) => userEvent.user.userName == currentUser.userName);
+    if (!userAlreadyExist && user.uid != widget.event.createdByUser.uid ) {
       setState(() {
         widget.event.peopleNeeded--;
       });
@@ -54,19 +55,25 @@ class _EventDetailsState extends State<EventDetails> {
   @override
   void initState() {
     userEvents = [];
+    widget.user = Auth.currentUser;
     super.initState();
   }
 
+  void createUser(User user, Event event){
+    UserEvent userEvent = UserEvent(user: user, event: event);
+    UserEventService.createUserEvent(userEvent);
+
+  }
   @override
   Widget build(BuildContext context) {
-    User user = Auth.currentUser;
+    User currentUser = Auth.currentUser;
     return Scaffold(
       appBar: AppBar(
           title: Text(
             widget.event.title,
             textAlign: TextAlign.center,
           ),
-          actions: user.uid == widget.event.createdByUser.uid
+          actions: currentUser.uid == widget.event.createdByUser.uid
               ? <Widget>[
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -80,6 +87,7 @@ class _EventDetailsState extends State<EventDetails> {
                             widget.event.isActive = false;
                           });
                           EventService.updateEvent(widget.event);
+                          createUser(widget.user, widget.event);
                           //update request to BE
                         },
                         child: Column(
