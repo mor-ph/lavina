@@ -11,8 +11,10 @@ namespace CommentService.Models
         {
         }
 
-        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }  
         public virtual DbSet<User> Users { get; set; }
+
+        public virtual DbSet<Event> Events { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -50,11 +52,22 @@ namespace CommentService.Models
                 HasForeignKey(d => d.UserId)
                 .HasConstraintName("IX_Comments_UserId");
 
+                entity.HasOne(d => d.Event).
+                WithMany(p => p.Comments).
+                HasForeignKey(d => d.EventId)
+                .HasConstraintName("IX_Comments_UserId");
+
                 entity.Property(e => e.UserId).HasColumnType("int(11)");
             });
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("users");
+
+            });
+
+            modelBuilder.Entity<Event>(entity =>
+            {
+                entity.ToTable("events");
 
             });
 
