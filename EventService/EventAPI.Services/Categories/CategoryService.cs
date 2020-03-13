@@ -40,6 +40,12 @@ namespace EventAPI.Services.Categories
             return category;
         }
 
+        public async Task<IEnumerable<Category>> GetMainCategories()
+        {
+            var categories = await _context.Categories.Where(c => c.ParentCategoryId == 1).ToListAsync();
+
+            return categories;
+        }
         public async Task<IEnumerable<Category>> GetSubCategories(string parentName)
         {
             var category = await _context.Categories.FirstOrDefaultAsync(c => c.Name == parentName);

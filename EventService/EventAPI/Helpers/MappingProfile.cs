@@ -19,6 +19,8 @@ namespace EventAPI.Helpers
             CreateMap<Category, SubCategoriesViewModel>();
             CreateMap<CategoriesAddViewModel, Category>();
             CreateMap<Event, EventInputModel>();
+            CreateMap<EventInputModel, Event>();
+            CreateMap<EventUpdateModel, Event>();
             CreateMap<Event, EventsForListViewModel>()
                 .ForMember(dest => dest.IsActive,
                  opt => opt.MapFrom(src => src.EventStartDate.IsEventActive()))

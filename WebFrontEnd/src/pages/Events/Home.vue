@@ -78,8 +78,8 @@
      <!-- No event -->
       <b-row class="text-center my-2">
         <b-col>
-          <app-events-grid v-if="eventsFound" :events="events.data"></app-events-grid>
-          <p v-else>No events match your search!</p>
+          <app-events-grid :events="events.data" v-if="events.data != 0"></app-events-grid>
+          <p v-else>No Events match your search!</p>
         </b-col>
       </b-row>
     </b-container>
@@ -114,10 +114,7 @@ export default {
     ...mapGetters([
       'events',
       'filters'
-    ]),
-    eventsFound () {
-      return this.events.data.length > 0
-    }
+    ])
   },
   methods: {
     fetchSubCategories () {

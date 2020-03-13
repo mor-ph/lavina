@@ -23,10 +23,13 @@ namespace CommentService.Repository
             await _context.SaveChangesAsync();
         }
 
+       
+
         public async Task<IEnumerable<Comment>> GetAll()
         {
             var comments = await _context.Comments
                 .Include(c => c.User)
+                .Include(e => e.Event)
                 .ToListAsync();
             return comments;
         }
@@ -36,5 +39,7 @@ namespace CommentService.Repository
 
             return commentsList;
         }
+
+
     }
 }

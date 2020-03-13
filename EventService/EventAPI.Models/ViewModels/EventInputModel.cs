@@ -48,7 +48,7 @@ namespace EventAPI.Models.ViewModels
         public string Title { get; set; }
 
         [Required]
-        [Range(1, 4, ErrorMessage = "Invalid Status, availible status is 1-4")]
+        [Range(1, 3, ErrorMessage = "Invalid Status, availible status is 1-3")]
         public Status EventStatus { get; set; }
         [Required]
         [DataType(DataType.Text)]
@@ -58,7 +58,7 @@ namespace EventAPI.Models.ViewModels
         public int CreatedBy { get; set; }
 
 
-        [Range(1, int.MaxValue, ErrorMessage = "Invalid Reccuring data")]
+        [Range(1, 3, ErrorMessage = "Invalid Reccuring data")]
         public Recurring? Recurring { get; set; }
     }
 }

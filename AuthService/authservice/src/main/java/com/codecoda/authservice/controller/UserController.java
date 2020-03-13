@@ -69,7 +69,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public User addUser(@RequestBody User theUser) {
+    public User addUser(@RequestBody @Valid User theUser) {
 
         if (userService.existsByUsername(theUser.getUsername())) {
             throw new ValidationException("The username exists");
@@ -112,41 +112,47 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<?> updateUser(@RequestBody User theUser, @PathVariable int id) {
+    public ResponseEntity<?> updateUser(@RequestBody @Valid User theUser, @PathVariable int id) {
 
-         User updatedUser = userService.findById(id);
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int loggedUserId = userDetails.getId();
 
-         if (updatedUser == null){
-             return ResponseEntity.notFound().build();
-         }
+        if (id == loggedUserId) {
 
-         updatedUser.setUsername(theUser.getUsername());
-//
-//        if (userService.existsByUsername(updatedUser.getUsername()) &&
-//                theUser.getUsername() != updatedUser.getUsername()) {
-//            throw new ValidationException("The username exists");
-//        }
-//        else if (userService.existsByUsername(updatedUser.getUsername())){
-//            throw new ValidationException("The username exists");
-//        }
+            User updatedUser = userService.findById(id);
+            User userByName = userService.findByUsername(theUser.getUsername());
+            User userByEmail = userService.findByEmail(theUser.getEmail());
 
-         updatedUser.setPassword(encoder.encode(theUser.getPassword()));
-         updatedUser.setEmail(theUser.getEmail());
+            if (updatedUser != null && userByName != null) {
 
-//        if (userService.existsByEmail(updatedUser.getEmail()) &&
-//                theUser.getEmail() != updatedUser.getEmail()) {
-//            throw new ValidationException("The email exists");
-//        }
-//        else if (userService.existsByEmail(updatedUser.getEmail())){
-//            throw new ValidationException("The email exists");
-//        }
+                if (updatedUser.getId() != userByName.getId()) {
+                    throw new ValidationException("The username exists");
+                }
+            }
 
-         updatedUser.setCreatedAt(theUser.getCreatedAt());
-         updatedUser.setUpdatedAt(LocalDateTime.now());
+            if (updatedUser != null && userByEmail != null) {
 
-         userService.save(updatedUser);
+                if (updatedUser.getId() != userByEmail.getId()) {
+                    throw new ValidationException("The email exists");
+                }
+            }
 
-         return ResponseEntity.noContent().build();
+            if (updatedUser == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            updatedUser.setUsername(theUser.getUsername());
+            updatedUser.setPassword(encoder.encode(theUser.getPassword()));
+            updatedUser.setEmail(theUser.getEmail());
+            updatedUser.setCreatedAt(updatedUser.getCreatedAt());
+            updatedUser.setUpdatedAt(LocalDateTime.now());
+
+            userService.save(updatedUser);
+
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.badRequest().build();
 
     }
 

@@ -16,7 +16,7 @@ namespace CommentService.ViewModels
         [Required]
         public int EventId { get; set; }
 
-        [Required]
+        
         public int UserId { get; set; }
 
         [Required]

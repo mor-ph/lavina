@@ -12,7 +12,7 @@ services:
      ports:
        - 3306:3306
      networks:
-       - app
+       - default
           # - default
     
     eventapi:
@@ -26,7 +26,7 @@ services:
         ports:
           - "5103:80"
         networks:
-          - app
+          - default
         links:
           - commentapi
         volumes:
@@ -42,7 +42,7 @@ services:
         ports:
           - "5101:80"
         networks:
-          - app
+          - default
         volumes:
           - /etc/hosts:/etc/hosts
 
@@ -60,12 +60,11 @@ services:
         ports:
           - "8081:8081"
         networks:
-          - app
           - default
                     
 volumes:
   mysql-data:
   mysql-initdb:
 networks:
-  app:
+  default:
     driver: bridge

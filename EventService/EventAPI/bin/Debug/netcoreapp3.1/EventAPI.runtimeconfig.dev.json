@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "/home/mitak/.dotnet/store/|arch|/|tfm|",
-      "/home/mitak/.nuget/packages"
+      "C:\\Users\\Decho\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\Decho\\.nuget\\packages"
     ]
   }
 }

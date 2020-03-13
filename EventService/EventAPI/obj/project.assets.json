@@ -2245,6 +2245,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
           "EventAPI.Data": "1.0.0",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.1.2",
           "Microsoft.EntityFrameworkCore": "3.1.2",
@@ -7308,37 +7309,39 @@
     ]
   },
   "packageFolders": {
-    "/home/mitak/.nuget/packages/": {}
+    "C:\\Users\\Decho\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI/EventAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
       "projectName": "EventAPI",
-      "projectPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI/EventAPI.csproj",
-      "packagesPath": "/home/mitak/.nuget/packages/",
-      "outputPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI/obj/",
+      "projectPath": "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
+      "packagesPath": "C:\\Users\\Decho\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/mitak/.config/NuGet/NuGet.Config"
+        "C:\\Users\\Decho\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj": {
-              "projectPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Data/EventAPI.Data.csproj"
+            "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj": {
+              "projectPath": "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj"
             },
-            "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj": {
-              "projectPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Models/EventAPI.Models.csproj"
+            "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj": {
+              "projectPath": "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj"
             },
-            "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj": {
-              "projectPath": "/home/mitak/GithubRepos/letsplay/EventService/EventAPI.Services/EventAPI.Services.csproj"
+            "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj": {
+              "projectPath": "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj"
             }
           }
         }
@@ -7411,7 +7414,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.102/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
