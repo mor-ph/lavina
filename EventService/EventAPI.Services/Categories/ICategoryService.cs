@@ -15,5 +15,6 @@ namespace EventAPI.Services.Categories
         Task<bool> CategoryExists(string name);
 
         Task<bool> ParentCategoryExists(int id);
+        Task<IEnumerable<Category>> GetMainCategories();
     }
 }

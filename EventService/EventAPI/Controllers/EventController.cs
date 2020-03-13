@@ -89,6 +89,7 @@ namespace EventAPI.Controllers
             if (ModelState.IsValid)
             {
                 var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Name == model.Category);
+                
                 var city = await _dbContext.Cities.FirstOrDefaultAsync(c => c.Name == model.City);
                 if (category == null || city == null)
                     return BadRequest("City or Category is incorrect!");

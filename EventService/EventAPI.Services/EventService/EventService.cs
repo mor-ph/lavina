@@ -44,15 +44,29 @@ namespace EventAPI.Services.EventService
             {
                             events = await _dbContext.Events
                 .Include(e => e.City)
-                .Include(e => e.Category)
-                .Where(e => ((e.Category.Name == parameters.Category && parameters.SubCategory==null) ||
-                            (e.Category.Name == parameters.SubCategory)) &&
-                            (parameters.Location == null || e.City.Name == parameters.Location) &&
-                            (parameters.Date == null || e.EventStartDate.Date == parameters.Date.Value.Date)) 
-                .AsNoTracking()
-                .ToListAsync();
+                .Include(e => e.Category).ToListAsync();
+                if(parameters.Category != null)
+                {
+                    var category = _dbContext.Categories.FirstOrDefault(c => c.Name == parameters.Category);
+                    events = events.Where(e => e.Category.Id == category.Id || e.Category.ParentCategoryId == category.Id).ToList();
+                }
+                if(parameters.SubCategory!= null)
+                {
+                    events = events.Where(e => e.Category.Name == parameters.SubCategory).ToList();
+                }
+                if(parameters.Location != null)
+                {
+                    events = events.Where(e => e.City.Name == parameters.Location).ToList();
+                }
+                if (parameters.Date != null)
+                {
+                    events = events.Where(e => e.EventStartDate.Date == parameters.Date.Value.Date).ToList();
+                }
+
+
+
+                return events;
             }  
-            else { 
             events = await _dbContext.Events
                 .Include(e => e.City)
                 .Include(e => e.User)
@@ -62,7 +76,8 @@ namespace EventAPI.Services.EventService
                 .Take(48)
                 .AsNoTracking()
                 .ToListAsync();
-                }
+
+
             return events;
             
         }
@@ -85,7 +100,11 @@ namespace EventAPI.Services.EventService
         }
         public async Task<Event> GetEventByID(int id)
         {
-            return await _dbContext.Events.FindAsync(id);
+            return await _dbContext.Events
+                .Include(e => e.Category)
+                .Include(e => e.City)
+                .Include(e => e.User)
+                .FirstOrDefaultAsync(e => e.Id==id);
         }
 
         public async Task<Event> UpdateEvent(int id, EventInputModel model)

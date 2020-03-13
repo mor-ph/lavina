@@ -37,7 +37,15 @@ namespace EventAPI.Controllers
             var categoriesToReturn = _mapper.Map<IEnumerable<MainCategoriesViewModel>>(allCategories);
             return Ok(categoriesToReturn);
         }
+        //GET: api/category/main
+        [HttpGet("main")]
+        public async Task<IActionResult> GetMainCategories()
+        {
+            var mainCategories = await _categoryService.GetMainCategories();
 
+            var categoriesToReturn = _mapper.Map<IEnumerable<MainCategoriesViewModel>>(mainCategories);
+            return Ok(categoriesToReturn);
+        }
         //GET: api/category/id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
