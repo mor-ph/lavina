@@ -8,20 +8,23 @@ import 'package:lets_play/model/event.dart';
 import 'package:lets_play/model/user.dart';
 import 'package:lets_play/model/user_event.dart';
 import 'package:lets_play/screens/new_event_tab.dart';
+import 'package:lets_play/services/authentication.dart';
+import 'package:lets_play/services/event_service.dart';
+import 'package:lets_play/services/userevents_service.dart';
 
 import 'comment_screen.dart';
 
 class EventDetails extends StatefulWidget {
   final Event event;
+  final User user;
 
-  EventDetails({@required this.event});
+  EventDetails({@required this.event, @required this.user});
 
   @override
   _EventDetailsState createState() => _EventDetailsState();
 }
 
 class _EventDetailsState extends State<EventDetails> {
-  User user = User(uid: 1, userName: "Vankata", email: 'Ivan@gmail.com');
 
   List<UserEvent> userEvents;
 
@@ -32,7 +35,12 @@ class _EventDetailsState extends State<EventDetails> {
       setState(() {
         widget.event.peopleNeeded--;
       });
-      userEvents.add(new UserEvent(event: this.widget.event, user: this.user));
+      EventService.updateEvent(widget.event);
+      UserEvent userEvent = new UserEvent(event: this.widget.event, user: this.widget.user);
+      UserEventService.createUserEvent(userEvent);
+      setState(() {
+        userEvents.add(userEvent);
+      });
     } else {
       final snackbar = SnackBar(
         content: Text("You have already joined this event!"),
@@ -51,6 +59,7 @@ class _EventDetailsState extends State<EventDetails> {
 
   @override
   Widget build(BuildContext context) {
+    User user = Auth.currentUser;
     return Scaffold(
       appBar: AppBar(
           title: Text(
@@ -70,7 +79,7 @@ class _EventDetailsState extends State<EventDetails> {
                           setState(() {
                             widget.event.isActive = false;
                           });
-
+                          EventService.updateEvent(widget.event);
                           //update request to BE
                         },
                         child: Column(
@@ -133,11 +142,11 @@ class _EventDetailsState extends State<EventDetails> {
                 SizedBox(
                   width: 20,
                 ),
-                Container(
+                widget.event.status == null ? SizedBox() : Container(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: Text(
+                    child :Text(
                       widget.event.status,
                       style: TextStyle(
                         color: Colors.white,
@@ -234,7 +243,7 @@ class _EventDetailsState extends State<EventDetails> {
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)),
                     textColor: Colors.white,
-                    onPressed: () => joinToEvent(user, context),
+                    onPressed: () => joinToEvent(widget.user, context),
                   ),
                   _descriptionBox(widget.event),
                   OutlineButton(
@@ -259,7 +268,7 @@ class _EventDetailsState extends State<EventDetails> {
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)),
                     textColor: Colors.white,
-                    onPressed: () { goToComments(context: context, mediaUrl: null, ownerId: 1.toString(),postId: 1.toString() ); },
+                    onPressed: () { goToComments(context: context, mediaUrl: null, owner: widget.user,postId: widget.event.id ); },
                   ),
                 ],
               ),
@@ -296,12 +305,12 @@ class _EventDetailsState extends State<EventDetails> {
   }
 
   void goToComments(
-      {BuildContext context, String postId, String ownerId, String mediaUrl}) {
+      {BuildContext context, int postId, User owner, String mediaUrl}) {
     Navigator.of(context)
         .push(MaterialPageRoute<bool>(builder: (BuildContext context) {
       return CommentScreen(
         postId: postId,
-        postOwner: ownerId,
+        postUserOwner: owner,
         postMediaUrl: mediaUrl,
       );
     }));

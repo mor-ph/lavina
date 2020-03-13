@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using CommentService.Data;
 using CommentService.Models;
 using CommentService.Repository;
@@ -16,11 +17,14 @@ namespace CommentService.Controllers
     [ApiController]
     public class CommentController : ControllerBase
     {
+        private readonly IMapper _mapper;
+
         private ICommentsRepository CommentRepo { get; set; }
 
-        public CommentController(ICommentsRepository _repo)
+        public CommentController(ICommentsRepository _repo,IMapper mapper)
         {
             CommentRepo = _repo;
+            _mapper = mapper;
         }
 
         // GET: /Comment
@@ -29,7 +33,8 @@ namespace CommentService.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var commentsList = await CommentRepo.GetAll();
-            return Ok(commentsList);
+            var commentsToReturn = _mapper.Map <IEnumerable<CommentDto>>(commentsList);
+            return Ok(commentsToReturn);
         }
 
         //GET: api/Comment/5

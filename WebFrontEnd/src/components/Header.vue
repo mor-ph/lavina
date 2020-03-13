@@ -26,6 +26,7 @@
           <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         </show-at>
         <hide-at breakpoint="small">
+          <div>
           <b-col class="loginreg">
             <router-link to="/login" v-if="!auth">
               <b-button class="yellowbtn">
@@ -47,7 +48,7 @@
                   <!-- Using 'button-content' slot -->
                   <!-- <template v-slot:button-content>
                     <em>
-                      <strong>Username</strong>
+                      <strong>{{getUser.username}}</strong>
                     </em>
                   </template> -->
                   <b-dropdown-item to="profile"  v-if="auth">Profile
@@ -70,6 +71,8 @@
 
 <script>
 import { showAt, hideAt } from 'vue-breakpoints'
+import { mapGetters } from 'vuex'
+
 export default {
   methods: {
     onLogout () {
@@ -80,7 +83,10 @@ export default {
   computed: {
     auth () {
       return this.$store.getters.isAuthenticated
-    }
+    },
+    ...mapGetters([
+      'getUser'
+    ])
   },
   components: { hideAt, showAt }
 }

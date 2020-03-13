@@ -6,8 +6,11 @@ import 'package:lets_play/model/city.dart';
 import 'package:lets_play/model/event.dart';
 import 'package:lets_play/model/user.dart';
 import 'package:lets_play/model/user_event.dart';
+import 'package:lets_play/services/authentication.dart';
 import 'package:lets_play/services/event_service.dart';
+import 'package:lets_play/services/userevents_service.dart';
 import 'package:lets_play/widgets/event_list.dart';
+import 'package:lets_play/widgets/progress_indicator.dart';
 
 import 'login_signup_screen.dart';
 
@@ -19,79 +22,37 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage>
     with TickerProviderStateMixin {
   TabController _controller;
-  List<UserEvent> allUserEvents;
-  //dummy data
-//  List<UserEvent> allUserEvents = [
-//    UserEvent(
-//        event: Event(
-//            title: "Play football",
-//            category: Category(id: 1, name: "Sport"),
-//            createdAt: DateTime.now(),
-//            startDate: DateTime.utc(2020, 4, 2),
-//            peopleNeeded: 12,
-//            status: "Active",
-//
-//            createdByUser: User(
-//                uid: 1, userName: "Ivan@gmail.com", email: 'Ivan@gmail.com'),
-//            city: City(id: 1, name: "Plovdiv")),
-//        user:
-//            User(uid: 1, userName: "Ivan@gmail.com", email: 'Ivan@gmail.com')),
-//    UserEvent(
-//        event: Event(
-//            title: "Play football",
-//            category: Category(id: 1, name: "Sport"),
-//            createdAt: DateTime.now(),
-//            startDate: DateTime.utc(2020, 4, 2),
-//            peopleNeeded: 12,
-//            status: "Active",
-//
-//            createdByUser:
-//                User(uid: 3, userName: "Pesho", email: 'Ivan@gmail.com'),
-//            city: City(id: 1, name: "Plovdiv")),
-//        user:
-//            User(uid: 1, userName: "Ivan@gmail.com", email: 'Ivan@gmail.com')),
-//  ];
+  List<UserEvent> _allUserEvents;
+
 
   List<Event> _eventsList;
-//    Event(
-//        title: "Play football",
-//        category: Category(id: 1, name: "Sport"),
-//        createdAt: DateTime.now(),
-//        startDate: DateTime.utc(2020, 4, 2),
-//        peopleNeeded: 12,
-//        status: "Active",
-//
-//        createdByUser:
-//            User(uid: 1, userName: "Ivan@gmail.com", email: 'Ivan@gmail.com'),
-//        city: City(id: 1, name: "Plovdiv")),
-//    Event(
-//        title: "Play monopolia",
-//        category: Category(id: 2, name: "Board Game"),
-//        createdAt: DateTime.now(),
-//        startDate: DateTime.now(),
-//        peopleNeeded: 4,
-//        status: "Active",
-//
-//        createdByUser: User(uid: 3, userName: "Gosho@gmail.com"),
-//        city: City(id: 1, name: "Plovdiv")),
-//    Event(
-//        title: "Play handball",
-//        category: Category(id: 1, name: "Sport"),
-//        createdAt: DateTime.now(),
-//        startDate: DateTime.now(),
-//        peopleNeeded: 4,
-//        status: "Active",
-//
-//        createdByUser: User(uid: 1, userName: "Ivan@gmail.com"),
-//        city: City(id: 1, name: "Plovdiv")),
-//  ];
 
-  User user = User(uid: 1, userName: "Vankata", email: 'Ivan@gmail.com');
+  getEvents() async {
+    List<Event> events = await EventService.getEvents();
+    if (events != null) {
+      setState(() {
+        _eventsList = events;
+      });
+    }
+  }
+
+  getUserEvents() async {
+    List<UserEvent> userEvents = await UserEventService.getUserEvents();
+    if (userEvents != null) {
+      setState(() {
+        _allUserEvents = userEvents;
+      });
+    }
+  }
+
+  User _user;
 
   @override
   void initState() {
-    _eventsList = EventService.getEvents() as List<Event>;
     _controller = TabController(length: 2, vsync: this);
+    setState(() {
+      _user = Auth.currentUser;
+    });
     super.initState();
   }
 
@@ -103,16 +64,26 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
+    if(_allUserEvents == null) {
+      getUserEvents();
+      getEvents();
+      return ProgressIndicatorWidget();
+    }
     List<Event> createdEvents = _eventsList
-        .where((event) => event.createdByUser.uid == user.uid)
+        .where((event) => event.createdByUser.uid == _user.uid)
         .toList();
-    List<UserEvent> userEvents = allUserEvents
+    List<UserEvent> userEvents = _allUserEvents
         .where((userEvent) =>
-            userEvent.user.uid == user.uid &&
-            user.uid != userEvent.event.createdByUser.uid)
+    userEvent.user.uid == _user.uid &&
+        _user.uid != userEvent.event.createdByUser.uid)
         .toList();
     List<Event> joinedEvents =
-        userEvents.map((userEvents) => userEvents.event).toList();
+    userEvents.map((userEvents) => userEvents.event).toList();
+    if (_eventsList == null) {
+      getEvents();
+
+      return ProgressIndicatorWidget();
+    }
     return Scaffold(
         appBar: AppBar(
           title: Text("My profile"),
@@ -128,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => LoginSignupPage(user: user)),
+                          builder: (context) => LoginSignupPage(user: _user)),
                     );
                   },
                   child: Column(
@@ -146,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage>
                     ],
                   ),
                   shape:
-                      CircleBorder(side: BorderSide(color: Colors.transparent)),
+                  CircleBorder(side: BorderSide(color: Colors.transparent)),
                 ),
               ],
             ),
@@ -198,7 +169,7 @@ class _ProfilePageState extends State<ProfilePage>
                   Column(
                     children: <Widget>[
                       Text(
-                        user.userName,
+                        _user.userName,
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -206,7 +177,7 @@ class _ProfilePageState extends State<ProfilePage>
                         textAlign: TextAlign.start,
                       ),
                       Text(
-                        user.email,
+                        _user.email,
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -220,7 +191,8 @@ class _ProfilePageState extends State<ProfilePage>
             ]));
   }
 
-  Widget _profileTabs() => TabBar(
+  Widget _profileTabs() =>
+      TabBar(
         unselectedLabelColor: Colors.white,
         labelColor: Colors.white,
         indicatorColor: Colors.white,

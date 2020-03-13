@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lets_play/model/category.dart';
+import 'package:lets_play/services/category_service.dart';
 
 class NewCategory extends StatefulWidget {
   final Function addCategory;
@@ -33,21 +34,14 @@ class _NewCategoryState extends State<NewCategory> {
     if (enteredName.isEmpty) {
       return;
     }
-
-    widget.addCategory(enteredCategory, enteredName);
-
-//    String documentId = await FireBaseAPI.addProductDocument(
-//        enteredTitle,
-//        enteredDescription,
-//        enteredPrice,
-//        enteredQuantity,
-//        enteredCategory,
-//        _uploadedFileURL,
-//        isSwitched);
-
-//    setState(() => id = documentId);
-//    print(documentId);
-
+    final category = Category(
+        categoryIcon: Icons.category,
+        name: enteredName,
+        parentId: enteredCategory.id);
+    widget.addCategory(category);
+    setState(() {
+      widget.categories.add(category);
+    });
     Navigator.of(context).pop();
   }
 
