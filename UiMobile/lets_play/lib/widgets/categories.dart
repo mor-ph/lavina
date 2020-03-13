@@ -8,6 +8,7 @@ import 'package:lets_play/model/category.dart';
 import 'package:lets_play/screens/subcategory_screen.dart';
 import 'package:lets_play/services/category_service.dart';
 import 'package:lets_play/widgets/event_list.dart';
+import 'package:lets_play/widgets/progress_indicator.dart';
 import 'package:provider/provider.dart';
 
 class CategoryWidget extends StatefulWidget {
@@ -17,25 +18,49 @@ class CategoryWidget extends StatefulWidget {
 
 class _CategoryWidgetState extends State<CategoryWidget> {
   Category category;
-  List<Category> categories ;
+  List<Category> _categories;
+
+  void getCategoies() async {
+    List<Category> categories = await CategoryService.getCategories();
+    if (categories != null) {
+      setState(() {
+        _categories = categories;
+      });
+    }
+  }
+
   @override
   void initState() {
-    categories = CategoryService.getCategories() as List<Category>;
-    categories.forEach((category) => category.isSelected = false);
+    getCategoies();
+    if (_categories != null && _categories.isNotEmpty) {
+      setState(() {
+        _categories.forEach((category) => category.isSelected = false);
+      });
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_categories == null) {
+      getCategoies();
+      if (_categories != null && _categories.isNotEmpty) {
+        setState(() {
+          _categories.forEach((category) => category.isSelected = false);
+        });
+      }
+
+      return ProgressIndicatorWidget();
+    }
     return Column(
       children: <Widget>[
         Container(
           height: 120,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            children: categories
+            children: _categories
                 .where((data) => data.parentId == 1)
-                .map((data) => _buildCategoryItem(data, categories))
+                .map((data) => _buildCategoryItem(data, _categories))
                 .toList(),
           ),
         ),
@@ -93,7 +118,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
                   .forEach((cat) => cat.isSelected = false);
             }
 
-            if(widget.subCategories != null){
+            if (widget.subCategories != null) {
               widget.subCategories
                   .where((cat) => cat.isSelected != null && cat.isSelected)
                   .forEach((cat) => cat.isSelected = false);
@@ -113,8 +138,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
             borderRadius: widget.category.parentId != 1
                 ? BorderRadius.circular(20)
                 : BorderRadius.circular(50),
-            color:
-                widget.category.isSelected ? Colors.grey[500]: Colors.white,
+            color: widget.category.isSelected ? Colors.grey[500] : Colors.white,
             border: Border.all(
                 color: widget.category.isSelected
                     ? Colors.transparent

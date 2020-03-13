@@ -20,7 +20,7 @@
                 <b-form-input class="text-center"
                   id="username-input"
                   type="text"
-                  placeholder="Enter Username"
+                  :placeholder="getUser.username"
                   required
                   v-model="username"
                   @blur="$v.username.$touch()"
@@ -41,7 +41,7 @@
                 <b-form-input class="text-center"
                   id="email-input"
                   type="email"
-                  placeholder="Enter email"
+                  :placeholder="getUser.email"
                   required
                   v-model="email"
                   @blur="$v.email.$touch()"
@@ -69,7 +69,14 @@
                <b-button type="submit" variant="primary" :disabled="$v.$invalid">Update</b-button>
             </b-col>
           </b-row>
-
+           <b-row class="text-center">
+            <b-col sm="6" offset-sm="3">
+<b-button-group>
+      <b-button>My Events</b-button>
+      <b-button>Join Events</b-button>
+    </b-button-group>
+     </b-col>
+          </b-row>
         </b-form>
       </b-container>
          </div>
@@ -80,6 +87,7 @@
 
 import { email } from 'vuelidate/lib/validators'
 // import axios from 'axios'
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -88,6 +96,11 @@ export default {
       username: '',
       password: ''
     }
+  },
+  computed: {
+    ...mapGetters([
+      'getUser'
+    ])
   },
   validations: {
     email: {

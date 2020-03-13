@@ -22,6 +22,7 @@ abstract class BaseAuth {
 class Auth {
   static const routeName = '/';
 
+  //todo need to put in local store like sqllite
   static User currentUser;
   static String accessToken;
 

@@ -7,7 +7,10 @@ class UserEvent {
   User user;
   Event event;
 
-  UserEvent({@required this.id,@required this.user,@required this.event});
+  UserEvent({@required this.id, @required this.user, @required this.event});
 
-
+  UserEvent.fromJson(Map<String, dynamic> json)
+      : id = json['id'] as int,
+        user = User.fromJson(json['user']),
+        event = json['event'] == null ? Event.fromJson(json['event']) : null;
 }

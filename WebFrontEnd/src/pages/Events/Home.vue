@@ -93,11 +93,11 @@ import { mapGetters } from 'vuex'
 export default {
   created () {
     this.$store.dispatch('loadInitalState')
+    this.$store.dispatch('tryAutoLogin')
   },
   data () {
     const now = new Date()
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-    // 15th two months prior
     const minDate = today
     minDate.setDate(minDate.getDate())
     return {
