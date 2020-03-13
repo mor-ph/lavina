@@ -5,7 +5,7 @@
       <b-navbar toggleable="lg" type="dark" class="fixed-top justify-content-between">
         <b-col>
           <router-link to="/">
-            <b-navbar-brand>Let's Play</b-navbar-brand>
+            <b-navbar-brand>LAVINA</b-navbar-brand>
           </router-link>
         </b-col>
         <hide-at  breakpoint="small">
@@ -13,7 +13,7 @@
             <b-navbar-nav>
               <div class="cr">
                 <router-link to="/createEvent">
-                  <b-button class="yellowbtn cr mb-2" size="lg"> <!--size="lg"-->
+                  <b-button class="yellowbtn mb-2" size="lg"> <!--size="lg"-->
                     Create Event
                     <b-icon icon="plus"></b-icon>
                   </b-button>
@@ -38,30 +38,31 @@
               </b-button>
             </router-link>
           </b-col>
-          <show-at :breakpoints="{small: 666, medium: 1000, large: 1600}" breakpoint="mediumAndAbove">
-            <b-collapse id="nav-collapse" is-nav>
+        </hide-at>
+          <show-at :breakpoints="{small: 666, medium: 1000, large: 1600}" breakpoint="small">
+            <b-collapse id="nav-collapse" is-nav right>
               <!-- Right aligned nav items -->
               <b-navbar-nav class="mr-auto">
-                <b-nav-item-dropdown right><!-- v-if="auth">-->
+                <!-- <b-nav-item-dropdown right> -->
                   <!-- Using 'button-content' slot -->
                   <!-- <template v-slot:button-content>
                     <em>
                       <strong>Username</strong>
                     </em>
                   </template> -->
-                  <b-dropdown-item to="profile">
-                    Profile
+                  <b-dropdown-item to="profile"  v-if="auth">Profile
                     <b-icon icon="person-fill"></b-icon>
                   </b-dropdown-item>
-                  <b-dropdown-item @click="onLogout">
-                    Sign Out
+                  <b-dropdown-item @click="onLogout"  v-if="auth">Sign Out
                     <b-icon icon="box-arrow-right"></b-icon>
                   </b-dropdown-item>
-                </b-nav-item-dropdown>
+                  <b-dropdown-item to="home">All Events</b-dropdown-item>
+                  <b-dropdown-item to="CreateEvent">Create Event</b-dropdown-item>
+                <!-- </b-nav-item-dropdown> -->
+
               </b-navbar-nav>
             </b-collapse>
             </show-at>
-        </hide-at>
       </b-navbar>
     </b-row>
   </b-container>
@@ -103,5 +104,8 @@ export default {
 }
  .cr{
   align-self: center;
+}
+b-dropdown-item{
+  text-align: end;
 }
 </style>
