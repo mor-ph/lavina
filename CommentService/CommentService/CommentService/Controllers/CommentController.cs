@@ -60,15 +60,6 @@ namespace CommentService.Controllers
             {
                 return BadRequest();
             }
-
-            try
-            {
-                var eventExist = (item.EventId == CommentRepo.GetAll().Result.FirstOrDefault(x => x.Id == item.Id).Event.Id);
-            }
-            catch (Exception)
-            {
-                return BadRequest("Invalid EventId, check event exist");
-            }
            
 
             int userId;
