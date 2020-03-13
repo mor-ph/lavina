@@ -8,6 +8,7 @@ import com.codecoda.authservice.models.User;
 import com.codecoda.authservice.service.RoleService;
 import com.codecoda.authservice.service.UserDetailsImpl;
 import com.codecoda.authservice.service.UserService;
+import com.codecoda.authservice.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,9 @@ public class UserController {
 
     private UserService userService;
     private RoleService roleService;
+
+    @Autowired
+    private UserServiceImpl userDetailsService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -116,8 +121,26 @@ public class UserController {
          }
 
          updatedUser.setUsername(theUser.getUsername());
+//
+//        if (userService.existsByUsername(updatedUser.getUsername()) &&
+//                theUser.getUsername() != updatedUser.getUsername()) {
+//            throw new ValidationException("The username exists");
+//        }
+//        else if (userService.existsByUsername(updatedUser.getUsername())){
+//            throw new ValidationException("The username exists");
+//        }
+
          updatedUser.setPassword(encoder.encode(theUser.getPassword()));
          updatedUser.setEmail(theUser.getEmail());
+
+//        if (userService.existsByEmail(updatedUser.getEmail()) &&
+//                theUser.getEmail() != updatedUser.getEmail()) {
+//            throw new ValidationException("The email exists");
+//        }
+//        else if (userService.existsByEmail(updatedUser.getEmail())){
+//            throw new ValidationException("The email exists");
+//        }
+
          updatedUser.setCreatedAt(theUser.getCreatedAt());
          updatedUser.setUpdatedAt(LocalDateTime.now());
 
