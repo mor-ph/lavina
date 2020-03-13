@@ -9,11 +9,11 @@
     :sub-title= "subTitleString"
     tag="article"
     >
-    <b-card-text>
-      {{ event.description }}
-    </b-card-text>
-
-    <b-button href="#" variant="primary">Details</b-button>
+    <router-link tag="button"
+                 class="primary"
+                 :to="{ name: 'CurrentEvent', params: { title: event.title,
+                                                        id: event.id}
+                 }">Details</router-link>
   </b-card>
 
     </div>
@@ -24,8 +24,8 @@ export default {
   data () {
     return {
       subTitleString:
-        'Location: ' + this.event.location +
-         ' | Date: ' + this.event.date
+        'Location: ' + this.event.city.name +
+        ' Date: ' + new Date(this.event.eventStartDate).toUTCString()
     }
   },
   props: ['event']
