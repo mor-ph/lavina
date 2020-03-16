@@ -20,9 +20,8 @@
                 <b-form-input class="text-center"
                   id="username-input"
                   type="text"
-                  :placeholder="getUser.username"
                   required
-                  v-model="username"
+                  v-model="getUser.username"
                   @blur="$v.username.$touch()"
                 ></b-form-input>
               </b-form-group>
@@ -40,9 +39,8 @@
                 <b-form-input class="text-center"
                   id="email-input"
                   type="email"
-                  :placeholder="getUser.email"
                   required
-                  v-model="email"
+                  v-model="getUser.email"
                   @blur="$v.email.$touch()"
                 ></b-form-input>
                 <p v-if="!$v.email.email">Please provide a valid email address.</p>
@@ -141,8 +139,6 @@ export default {
   },
   data () {
     return {
-      email: '',
-      username: '',
       newPassword: null,
       confirmNewPassword: null,
       password: '',
@@ -193,8 +189,8 @@ export default {
   methods: {
     onSubmit () {
       const formData = {
-        email: this.email,
-        username: this.username,
+        email: this.getUser.email,
+        username: this.getUser.username,
         password: this.password,
         newPassword: this.newPassword
       }
