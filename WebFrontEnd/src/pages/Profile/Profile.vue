@@ -29,7 +29,6 @@
             </b-col>
           </b-row>
            <b-row>
-
             <b-col sm="6" offset-sm="3">
               <b-form-group
                 class="text-center"
@@ -50,18 +49,54 @@
               </b-form-group>
             </b-col>
           </b-row>
+          <b-row>
+            <b-col sm="6" offset-sm="3">
+              <b-form-group
+                class="label"
+                id="password-input-group"
+                label="New Password:"
+                label-for="password-input"
+              >
+                <b-form-input
+                  id="password-input"
+                  type="password"
+                  placeholder="Enter New Password"
+                  v-model="newPassword"
+                ></b-form-input>
+              </b-form-group>
+            </b-col>
+          </b-row>
+          <b-row >
+            <b-col sm="6" offset-sm="3">
+              <b-form-group
+                class="label"
+                id="confirm-password-input-group"
+                label="Confirm New Password:"
+                label-for="confirm-password-input"
+                :class="{invalid: $v.confirmNewPassword.$error}"
+              >
+                <b-form-input
+                  id="confirm-password-input"
+                  type="password"
+                  placeholder="Confirm New Password"
+                  v-model="confirmNewPassword"
+                  @blur="$v.confirmNewPassword.$touch()"
+                ></b-form-input>
+              </b-form-group>
+              </b-col>
+          </b-row>
           <b-row class="text-center">
             <b-col sm="6" offset-sm="3">
               <b-form-group
                 class="text-center"
                 id="password-input-group"
-                label="Password:"
+                label="Enter Current Password:"
                 label-for="password-input"
               >
                 <b-form-input class="text-center"
                   id="password-input"
                   type="password"
-                  placeholder="Enter Password"
+                  placeholder="Current Password"
                   required
                   v-model="password"
                 ></b-form-input>
@@ -92,7 +127,7 @@
 
 <script>
 import EventsGrid from '../../components/Event/EventsGrid.vue'
-import { email } from 'vuelidate/lib/validators'
+import { email, sameAs } from 'vuelidate/lib/validators'
 // import axios from 'axios'
 import { mapGetters } from 'vuex'
 
@@ -108,6 +143,8 @@ export default {
     return {
       email: '',
       username: '',
+      newPassword: null,
+      confirmNewPassword: null,
       password: '',
       showMyEvents: true
     }
@@ -146,6 +183,11 @@ export default {
           })
 
       } */
+    },
+    confirmNewPassword: {
+      sameAs: sameAs(vm => {
+        return vm.newPassword
+      })
     }
   },
   methods: {
@@ -153,10 +195,11 @@ export default {
       const formData = {
         email: this.email,
         username: this.username,
-        password: this.password
+        password: this.password,
+        newPassword: this.newPassword
       }
       console.log(formData)
-      // this.$store.dispatch('updateProfileSettings', formData)
+      this.$store.dispatch('updateProfileSettings', formData)
     },
     btnClick () {
       this.showMyEvents = !this.showMyEvents
