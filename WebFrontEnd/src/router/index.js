@@ -47,15 +47,15 @@ const routes = [
   {
     path: '/createEvent',
     name: 'CreateEvent',
-    component: CreateEvent/*,*/
-    // beforeEnter (to, from, next) {
-    //   console.log(store.state.auth.idToken)
-    //   if (store.state.auth.idToken) {
-    //     next()
-    //   } else {
-    //     next('/login')
-    //   }
-    // }
+    component: CreateEvent,
+    beforeEnter (to, from, next) {
+      console.log(store.state.auth.idToken)
+      if (store.state.auth.idToken) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
   },
   {
     path: '/profile',
