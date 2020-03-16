@@ -69,37 +69,54 @@
                <b-button type="submit" variant="primary" :disabled="$v.$invalid">Update</b-button>
             </b-col>
           </b-row>
+ </b-form>
            <b-row class="text-center">
             <b-col sm="6" offset-sm="3">
-<b-button-group>
-      <b-button>My Events</b-button>
-      <b-button>Join Events</b-button>
+      <b-button-group>
+      <b-button @click="btnClick"
+                :pressed="showMyEvents"
+                :disabled="showMyEvents">My Events</b-button>
+
+      <b-button @click="btnClick"
+                :pressed="!showMyEvents"
+                :disabled="!showMyEvents">Join Events</b-button>
     </b-button-group>
      </b-col>
           </b-row>
-        </b-form>
+          <app-event-grid v-if="showMyEvents" :events="createdEvents.data"></app-event-grid>
+          <app-event-grid v-else :events="joinedEvents.data"></app-event-grid>
       </b-container>
          </div>
     </div>
 </template>
 
 <script>
-
+import EventsGrid from '../../components/Event/EventsGrid.vue'
 import { email } from 'vuelidate/lib/validators'
 // import axios from 'axios'
 import { mapGetters } from 'vuex'
 
 export default {
+  created () {
+    this.$store.dispatch('fetchCreatedEvents')
+    this.$store.dispatch('fetchJoinedEvents')
+  },
+  components: {
+    appEventGrid: EventsGrid
+  },
   data () {
     return {
       email: '',
       username: '',
-      password: ''
+      password: '',
+      showMyEvents: true
     }
   },
   computed: {
     ...mapGetters([
-      'getUser'
+      'getUser',
+      'createdEvents',
+      'joinedEvents'
     ])
   },
   validations: {
@@ -140,6 +157,9 @@ export default {
       }
       console.log(formData)
       // this.$store.dispatch('updateProfileSettings', formData)
+    },
+    btnClick () {
+      this.showMyEvents = !this.showMyEvents
     }
   }
 }
