@@ -68,6 +68,23 @@ public class UserController {
         return user;
     }
 
+    @GetMapping("/email/{email}")
+    public String getEmail(@PathVariable String email){
+
+        User userByEmail = userService.findByEmail(email);
+
+        return userByEmail.getEmail();
+    }
+
+    @GetMapping("/username/{username}")
+    public String getUsername(@PathVariable String username){
+
+        User userByUsername = userService.findByUsername(username);
+
+        return userByUsername.getEmail();
+    }
+
+
     @PostMapping("/users")
     public User addUser(@RequestBody @Valid User theUser) {
 
