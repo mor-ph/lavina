@@ -2,7 +2,7 @@
   <b-container fluid class="ftr">
     <div>
       <!-- Footer -->
-      <footer class="fixed-bottom">
+      <footer class="fixed-bottom" style="position:absolute">
         <div class="footer p-2 d-flex justify-content-between">
             <b-container fluid>
               <span><b-icon class="icon" icon="envelope-fill"></b-icon></span>
