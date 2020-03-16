@@ -35,7 +35,7 @@ export default {
         commit('clearAuthData')
       }, 3600 * 1000)
     },
-    signup ({ commit, dispatch }, authData) {
+    register ({ dispatch }, authData) {
       console.log(authData)
       axiosAuth.post('users', {
         email: authData.email,
@@ -44,18 +44,7 @@ export default {
         crossdomain: true
       })
         .then(res => {
-          console.log(res)
-          commit('authUser', {
-            token: res.data.accessToken,
-            userId: res.data.id
-          })
-          const now = new Date()
-          const expirationDate = new Date(now.getTime() + 3600 * 1000)
-          localStorage.setItem('token', res.data.accessToken)
-          localStorage.setItem('userId', res.data.id)
-          localStorage.setItem('expirationDate', expirationDate)
-          dispatch('setLogoutTimer')
-          router.replace('/')
+          dispatch('login', authData)
         })
         .catch(error => console.log(error))
     },
@@ -124,7 +113,8 @@ export default {
         username: formData.username,
         email: formData.email,
         password: password
-      })
+      }).then(res => console.log(res))
+        .catch(res => console.log(res))
     }
   },
   getters: {
