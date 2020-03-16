@@ -158,27 +158,26 @@
         </b-row>
 
         <!--Repeating-->
-         <b-row class="my-2 text-left">
-          <b-col sm="2" offset-sm="5">
+         <b-row class="my-2 text-left" sm="4" offset-sm="4">
+          <b-col sm="4" offset-sm="4">
             <div class="text-left">
               <label for="example-i18n-picker">
-                <strong>Your event will occur?</strong>
-              </label><br>
-             <b-form-select v-model="recurring" :options="options" class="mb-3">
-    </b-form-select>
+                <strong>Your event will occur</strong>
+              </label>
+             <b-form-select v-model="recurring" :options="options" class="mb-2"></b-form-select>
             </div>
           </b-col>
         </b-row>
 
       <!--People Needed-->
-        <b-row class="my-2 text-center">
+        <b-row class="my-2 text-left">
           <b-col sm="4" offset-sm="4">
             <div class="text-center">
               <label for="example-i18n-picker">
                 <strong>People Needed:</strong>
               </label><br>
-              <b-form-spinbutton id="sb-vertical" v-model="peopleNeeded" vertical></b-form-spinbutton>
-            </div>
+              <b-form-input v-model="peopleNeeded" type="number" placeholder="How many people do you need?"></b-form-input>
+              </div>
           </b-col>
         </b-row>
 
@@ -236,7 +235,7 @@ export default {
       city: '',
       address: '',
       recurring: null,
-      peopleNeeded: 1,
+      peopleNeeded: null,
       description: '',
 
       // Template data
