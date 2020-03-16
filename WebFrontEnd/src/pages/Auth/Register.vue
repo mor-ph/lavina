@@ -162,7 +162,7 @@ export default {
       }
       console.log(formData)
       // TODO: Waiting for DB
-      this.$store.dispatch('signup', formData)
+      this.$store.dispatch('register', formData)
     }
   }
 }
