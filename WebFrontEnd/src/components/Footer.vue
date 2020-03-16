@@ -42,7 +42,4 @@
   outline-color: white;
   padding-right: 0.3%;
 }
-footer {
-  position: absolute;
-}
 </style>
