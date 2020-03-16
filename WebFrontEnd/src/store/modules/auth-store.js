@@ -61,6 +61,7 @@ export default {
     },
 
     login ({ commit, dispatch }, authData) {
+      console.log(authData)
       axiosAuth.post('login', {
         username: authData.username,
         password: authData.password
@@ -111,6 +112,19 @@ export default {
       localStorage.removeItem('token')
       localStorage.removeItem('userId')
       router.replace('/')
+    },
+    updateProfileSettings ({ state }, formData) {
+      let password
+      if (formData.newPassword === null) {
+        password = formData.password
+      } else {
+        password = formData.newPassword
+      }
+      axiosAuth.put('users/' + state.userId, {
+        username: formData.username,
+        email: formData.email,
+        password: password
+      })
     }
   },
   getters: {
