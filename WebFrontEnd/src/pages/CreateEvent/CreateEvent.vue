@@ -6,7 +6,7 @@
         <b-form @submit.prevent="onSubmit">
         <!-- Title -->
         <b-row class="text-left my-2">
-          <b-col sm="4" offset-sm="4">
+          <b-col sm="6" offset-sm="3">
             <div class="text-left  my-2">
               <label for="example-i18n-picker">
                 <strong>Title:</strong>
@@ -26,7 +26,7 @@
         <!-- Category -->
         <b-row class="text-left my-2">
 
-          <b-col sm="4" offset-sm="4">
+          <b-col sm="6" offset-sm="3">
             <div class="text-left">
               <label for="example-category">
                 <strong>Category:</strong>
@@ -46,7 +46,7 @@
         <!-- Subcategory -->
         <b-row class="text-left my-2"
          v-if="category !== ''">
-          <b-col sm="2" offset-sm="5">
+          <b-col sm="6" offset-sm="3">
             <div class="text-left">
               <label for="example-subcategorys">
                 <strong>Subcategories:</strong>
@@ -56,7 +56,7 @@
         </b-row>
 
         <b-row class="text-left my-2">
-          <b-col sm="3" offset-sm="4">
+          <b-col sm="6" offset-sm="3">
             <b-form-select id="example-subcategorys"
             v-if="category !== ''"
             v-model="subcategory"
@@ -95,38 +95,44 @@
         </b-row>
 
         <!--  Date & Time picker -->
-        <b-row class="text-left my-2">
-          <b-col sm="4" offset-sm="4">
+        <b-row class="text-left my-2" style="padding-left:8px">
+          <b-col sm="6" offset-sm="3">
             <div class="text-left my-2">
+              <b-form-row >
               <label for="example-i18n-picker">
-                <strong>Date & Time picker:</strong>
+                <strong>Date:</strong>
               </label>
+              <b-col style="padding-left:35px">
+                <b-form-datepicker id="datepicker-valid"
+                              :state ="valueDate ? true : false"
+                               v-model="valueDate" :min="minDate"></b-form-datepicker>
+              </b-col>
+              </b-form-row>
             </div>
           </b-col>
         </b-row>
-
-        <b-row class=" text-left my-2">
-          <b-col sm="4" offset-sm="4">
-            <b-form-datepicker id="datepicker-valid"
-                              :state ="valueDate ? true : false"
-                               v-model="valueDate" :min="minDate"></b-form-datepicker>
-          </b-col>
-        </b-row>
-        <b-row class=" text-left my-2">
-          <b-col sm="4" offset-sm="4">
-          <b-form-timepicker id="timepicker-valid"
+        <b-row class="text-left my-2" style="padding-left:8px">
+          <b-col sm="6" offset-sm="3">
+            <b-form-row >
+              <label for="example-i18n-picker">
+              <strong>Time:</strong></label>
+              <b-col style="padding-left:35px">
+               <b-form-timepicker id="timepicker-valid"
                             :state="valueTime ? true : false"
                              v-model="valueTime"></b-form-timepicker>
-         </b-col>
+              </b-col>
+            </b-form-row>
+          </b-col>
         </b-row>
+
           <!-- Location -->
-          <b-row class="text-left my-2">
-            <b-col sm="4" offset-sm="4">
-              <div class="text-left my-2">
+          <b-row class="text-left my-2" style="padding-left:8px">
+            <b-col sm="6" offset-sm="3">
+            <b-form-row >
                 <label for="example-location">
                   <strong>Location:</strong>
                 </label>
-              </div>
+              <b-col>
               <b-form-select
                 class="text-left"
                 id="example-location"
@@ -134,12 +140,14 @@
                 v-model="city"
                 :options="filters.location"
               ></b-form-select>
+              </b-col>
+            </b-form-row>
             </b-col>
           </b-row>
 
         <!-- Address -->
         <b-row class="text-left my-2">
-          <b-col sm="4" offset-sm="4">
+          <b-col sm="6" offset-sm="3">
             <div class="text-left  my-2">
               <label for="example-i18n-picker">
                 <strong>Address:</strong>
@@ -158,32 +166,36 @@
         </b-row>
 
         <!--Repeating-->
-         <b-row class="my-2 text-left" sm="4" offset-sm="4">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-left">
+        <b-row class="text-left my-2" style="padding-left:8px">
+          <b-col sm="6" offset-sm="3">
+            <b-form-row >
               <label for="example-i18n-picker">
-                <strong>Your event will occur</strong>
+                <strong>Your event will occur </strong>
               </label>
-             <b-form-select v-model="recurring" :options="options" class="mb-2"></b-form-select>
-            </div>
+              <b-col class="rec float-right">
+                <b-form-select v-model="recurring" :options="options"></b-form-select>
+              </b-col>
+            </b-form-row>
           </b-col>
         </b-row>
 
       <!--People Needed-->
-        <b-row class="my-2 text-left">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center">
+      <b-row class="my-2 text-left" style="padding-left:8px">
+          <b-col sm="6" offset-sm="3">
+            <b-form-row >
               <label for="example-i18n-picker">
-                <strong>People Needed:</strong>
-              </label><br>
-              <b-form-input v-model="peopleNeeded" type="number" placeholder="How many people do you need?"></b-form-input>
-              </div>
+                <strong>People Needed: </strong>
+              </label>
+              <b-col class="rec float-right">
+                <b-form-input  v-model="peopleNeeded"  type="number" min="0" title="How many people do you need?" ></b-form-input>
+              </b-col>
+            </b-form-row>
           </b-col>
-        </b-row>
+      </b-row>
 
         <!--  Details -->
         <b-row class="text-left my-2">
-          <b-col sm="4" offset-sm="4">
+          <b-col sm="6" offset-sm="3">
             <div class="text-left">
               <label for="example-i18n-picker">
                 <strong>Description:</strong>
@@ -192,7 +204,7 @@
           </b-col>
         </b-row>
           <b-row class="text-left my-2">
-            <b-col sm="4" offset-sm="4">
+            <b-col sm="6" offset-sm="3">
               <b-form-textarea
                 id="textarea-no-resize"
                 placeholder="Fixed height textarea"
@@ -204,7 +216,7 @@
             </b-col>
           </b-row>
           <b-row class="text-left my-2">
-            <b-col sm="4" offset-sm="4">
+            <b-col  offset-sm="3">
               <b-button class="yellowbtn" type="submit" size="lg">Create</b-button>
             </b-col>
           </b-row>
@@ -325,5 +337,11 @@ export default {
 .body {
   padding-top: 120px;
   padding-bottom: 150px;
+}
+.rec{
+  margin-left: 10px;
+}
+label{
+  margin-top: 8px;
 }
 </style>

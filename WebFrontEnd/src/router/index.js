@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from '../store'
+// import store from '../store'
 import Home from '../pages/Events/Home.vue'
 
 const CurrentEvent = resolve => {
@@ -60,14 +60,14 @@ const routes = [
   {
     path: '/profile',
     name: 'Profile',
-    component: Profile,
-    beforeEnter (to, from, next) {
-      if (store.state.auth.idToken) {
-        next()
-      } else {
-        next('/login')
-      }
-    }
+    component: Profile//,
+    // beforeEnter (to, from, next) {
+    //   if (store.state.auth.idToken) {
+    //     next()
+    //   } else {
+    //     next('/login')
+    //   }
+    // }
   },
   {
     path: '/login',
