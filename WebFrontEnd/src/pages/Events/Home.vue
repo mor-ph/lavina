@@ -21,6 +21,7 @@
         </b-col>
       </b-row>
       <!-- SubCategory -->
+      <div v-if="selectedFilters.category !== null">
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
           <div class="text-center my-2">
@@ -33,12 +34,12 @@
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
            <b-form-select
-    v-if="selectedFilters.category !== null"
     v-model="selectedFilters.subcategory"
     :options="filters.subcategories"
     @change= "fetchEvents"></b-form-select>
         </b-col>
       </b-row>
+      </div>
       <!-- Location -->
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
@@ -93,7 +94,6 @@ import { mapGetters } from 'vuex'
 export default {
   created () {
     this.$store.dispatch('loadInitalState')
-    this.$store.dispatch('tryAutoLogin')
   },
   data () {
     const now = new Date()

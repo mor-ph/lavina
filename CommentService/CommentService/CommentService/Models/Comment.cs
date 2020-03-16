@@ -14,7 +14,6 @@ namespace CommentService.Models
         public  DateTime PostedOn { get; set; }
         public  DateTime UpdatedOn { get; set; }
         public User User { get; set; }
-        public Event Event { get; set; }
 
         public static implicit operator Comment(CommentViewModel vm)
         {
