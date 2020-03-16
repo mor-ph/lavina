@@ -6,13 +6,10 @@
     header-tag="header"
     header-bg-variant="dark"
     style="max-width: 50rem;"
-    :title = "comment.title"
-    :header = "user.header"
-    :sub-title= "subTitleString"
     tag="article"
     >
     <b-card-text>
-      {{ comment.description }}
+      {{ comment.message }}
     </b-card-text>
 
   </b-card>
@@ -22,13 +19,6 @@
 
 <script>
 export default {
-  data () {
-    return {
-      subTitleString:
-        'Location: ' + this.comment.location +
-         ' | Date: ' + this.comment.date
-    }
-  },
   props: ['comment']
 }
 </script>
