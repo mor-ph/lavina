@@ -37,14 +37,14 @@
         <b-navbar-toggle target="nav-collapse" v-if="$mq === 'mobile'"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav v-if="$mq === 'mobile'" style="padding-top:3px">
           <b-navbar-nav class="mr-auto dropNav" v-if="$mq === 'mobile'" >
-            <b-dropdown-item class="dItem" to="profile" v-if="auth"  variant="light">Profile
-              <b-icon icon="person-fill"></b-icon>
+            <b-dropdown-item class="dItem" to="profile" v-if="auth"  variant="light">
+              <b-icon icon="person-fill"></b-icon> Profile
             </b-dropdown-item>
             <b-dropdown-item class="text-white" to="home" variant="light">All Events</b-dropdown-item>
             <b-dropdown-item to="CreateEvent"  variant="light">Create Event</b-dropdown-item>
             <div class="dropdown-divider"></div>
-            <b-dropdown-item class="dItem" @click="onLogout"  v-if="auth" variant="light">Log out
-              <b-icon icon="box-arrow-right"></b-icon>
+            <b-dropdown-item class="dItem" @click="onLogout"  v-if="auth" variant="light">
+              <b-icon icon="box-arrow-right"></b-icon> Log out
             </b-dropdown-item>
             <b-dropdown-item class="dItem" to="/login" v-if="!auth" variant="light">Log in</b-dropdown-item>
             <b-dropdown-item class="dItem" to="/register" v-if="!auth" variant="light">Register</b-dropdown-item>
