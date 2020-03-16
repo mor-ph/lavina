@@ -31,7 +31,7 @@
                 <span style="color:white"> | </span>
                 <router-link v-if="!auth" to="/register"  class="hLink">Register</router-link>
                 <b-icon v-if="auth" icon="box-arrow-right" ></b-icon>
-                <router-link v-if="auth" to="/home" class="hLink">Log out</router-link>
+                <router-link v-if="auth" @click.native="onLogout" to="/" class="hLink">Log out</router-link>
             </div>
         </b-col>
         <b-navbar-toggle target="nav-collapse" v-if="$mq === 'mobile'"></b-navbar-toggle>
