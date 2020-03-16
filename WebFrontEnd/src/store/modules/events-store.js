@@ -57,14 +57,14 @@ export default {
     },
     fetchRecentEvents ({ commit }) {
       // fix this query when the endpoint is ready
-      axios.get('http://localhost:5103/api/event/getall')
+      axios.get('http://localhost:5103/api/event')
         .then(events => {
           commit('setEvents', events)
         }).catch(err => console.log(err))
     },
     // fix this query when the endpoint is ready
     fetchEvents ({ commit, state }) {
-      axios.get('http://localhost:5103/api/event/getall', {
+      axios.get('http://localhost:5103/api/event', {
         params: {
           category: state.selectedFilters.category,
           subCategory: state.selectedFilters.subcategory,
@@ -78,11 +78,10 @@ export default {
     },
 
     fetchCategories ({ state }) {
-      axios.get('http://localhost:5103/api/category')
+      axios.get('http://localhost:5103/api/category/main')
         .then(categories => {
           console.log(categories)
           categories.data.map(category => {
-            if (category.name === 'Root') return
             state.filters.category.push(category.name)
           })
         }).catch(err => console.log(err))
@@ -118,7 +117,7 @@ export default {
 
     createEvent (formData) {
       console.log(formData)
-      axios.post('http://localhost:5103/api/event/create', {
+      axios.post('http://localhost:5103/api/event', {
         title: formData.title,
         category: formData.category,
         subcategory: formData.subcategory,
@@ -131,6 +130,7 @@ export default {
         eventStatus: 1
       })
         .then(response => {
+          console.log(formData)
           console.log(response)
         }).catch(error => {
           console.log(error)
@@ -138,13 +138,30 @@ export default {
     },
 
     fetchEventById ({ commit }, eventId) {
-      axios.get('http://localhost:5103/api/event/id', { params: { id: eventId } })
+      axios.get('http://localhost:5103/api/event/' + eventId)
         .then(currentEvent => {
           commit('setCurrentEvent', currentEvent)
         })
         .catch(error => {
           console.log(error)
         })
+    },
+
+    joinToEvent ({ state }) {
+      // TODO: add this event
+    },
+
+    addComment (data) {
+      console.log(data)
+      axios.post('http://localhost:5101/comments', {
+        headers: {
+          Authorization: localStorage.getItem('token')
+        },
+        eventId: data.eventId,
+        message: data.message
+      }).then(response => {
+        console.log(response)
+      }).catch(error => console.log(error))
     }
   },
   getters: {
