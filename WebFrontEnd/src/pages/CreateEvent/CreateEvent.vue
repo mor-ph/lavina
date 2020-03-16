@@ -131,7 +131,7 @@
                 class="text-left"
                 id="example-location"
                 required
-                v-model="location"
+                v-model="city"
                 :options="filters.location"
               ></b-form-select>
             </b-col>
@@ -271,7 +271,7 @@ export default {
         title: this.title,
         category: this.category,
         subcategory: this.subcategory,
-        eventStartDate: new Date(this.valueDate + 'T' + this.valueTime),
+        eventStartDate: this.valueDate + 'T' + this.valueTime,
         city: this.city,
         address: this.address,
         recurring: this.recurring,
