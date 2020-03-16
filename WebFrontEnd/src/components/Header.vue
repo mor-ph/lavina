@@ -25,12 +25,13 @@
         </b-col>
         <b-col class="loginreg" v-if="$mq === 'tablet' || $mq === 'desktop'">
             <div >
-                <router-link to="/login" v-if="!auth" class="hLink">Login</router-link>
-                <router-link to="/register" v-if="!auth" class="hLink">Register</router-link>
-                <router-link to="/profile" v-if="auth" class="hLink">Profile</router-link>
-                  <b-icon icon="person-fill"></b-icon>
-                <router-link to="/home" v-if="auth" class="hLink">Log out</router-link>
-                  <b-icon icon="box-arrow-right"></b-icon>
+                <b-icon v-if="auth" icon="person-fill" ></b-icon>
+                <router-link v-if="auth" to="/profile" class="hLink">Profile</router-link>
+                <router-link v-if="!auth" to="/login" class="hLink">Login</router-link>
+                <span style="color:white"> | </span>
+                <router-link v-if="!auth" to="/register"  class="hLink">Register</router-link>
+                <b-icon v-if="auth" icon="box-arrow-right" ></b-icon>
+                <router-link v-if="auth" to="/home" class="hLink">Log out</router-link>
             </div>
         </b-col>
         <b-navbar-toggle target="nav-collapse" v-if="$mq === 'mobile'"></b-navbar-toggle>
@@ -121,5 +122,8 @@ export default {
 }
 .dropdown-item:hover{
   color:rgb(60, 71, 78);
+}
+.b-icon{
+  color: ivory;
 }
 </style>
