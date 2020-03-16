@@ -16,7 +16,7 @@
                     <router-link to="/createEvent" class="aCr">
                       <b-button class="yellowbtn mb-2" size="lg">
                         Create Event
-                        <b-icon icon="plus"></b-icon>
+                        <b-icon icon="plus" style="color:rgb(60, 71, 78)"></b-icon>
                       </b-button>
                     </router-link>
                   </div>
