@@ -1,6 +1,6 @@
 <template>
-  <div id="register">
-    <div class="body" style="padding-bottom: 10%">
+  <div id="register" class="body innerDiv">
+    <div style="padding-bottom: 10%">
       <b-container>
         <b-row class="text-center">
           <b-col>
@@ -171,7 +171,6 @@ export default {
 <style scoped>
 
 .hhh {
-  padding-top: 130px;
   color:rgb(65, 72, 77);
 }
 

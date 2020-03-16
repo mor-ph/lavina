@@ -8,7 +8,7 @@
         <b-row class="text-center my-2">
           <b-col sm="4" offset-sm="4">
             <div class="text-center  my-2">
-              <label for="example-i18n-picker" class="text-white">
+              <label for="example-i18n-picker">
                 <strong>Title:</strong>
               </label>
               <p><b>'{{ value }}'</b></p>
@@ -20,7 +20,7 @@
         <b-row class="text-center my-2">
           <b-col sm="4" offset-sm="4">
             <div class="text-center my-2">
-              <label for="example-i18n-picker" class="text-white">
+              <label for="example-i18n-picker">
                 <strong>Date & Time:</strong>
               </label><br>
               <p><b>'{{ value }}'</b></p><br>
@@ -34,7 +34,7 @@
 
           <b-col sm="4" offset-sm="4">
             <div class="text-center my-2">
-              <label for="example-location" class="text-white">
+              <label for="example-location">
                 <strong>Location:</strong>
               </label> <br>
             </div>
@@ -46,7 +46,7 @@
         <b-row class="text-center my-2">
           <b-col sm="4" offset-sm="4">
             <div class="text-center  my-2">
-              <label for="example-i18n-picker" class="text-white">
+              <label for="example-i18n-picker">
                 <strong>Address:</strong>
               </label> <br>
             </div>
@@ -58,7 +58,7 @@
          <b-row class="my-2 text-center">
           <b-col sm="2" offset-sm="5">
             <div class="text-center">
-              <label for="example-i18n-picker" class="text-white">
+              <label for="example-i18n-picker">
                 <strong>Hosted by:</strong>
               </label><br>
              <p><b>'{{ value }}'</b></p>
@@ -69,7 +69,7 @@
         <!--  Details -->
         <b-row class="text-center my-2">
           <b-col sm="4" offset-sm="4">
-              <label for="example-i18n-picker" class="text-white">
+              <label for="example-i18n-picker">
                 <strong>Description:</strong>
               </label><br>
              <p><b>'{{ value }}'</b></p>
@@ -79,7 +79,7 @@
         <b-row class="my-2 text-center">
           <b-col sm="4" offset-sm="4">
             <div class="text-center">
-              <label for="example-i18n-picker" class="text-white">
+              <label for="example-i18n-picker">
                 <strong>People Needed:</strong>
               </label><br>
              <p><b>'{{ value }}'</b></p>
@@ -227,13 +227,13 @@ export default {
 .body {
   padding-top: 120px;
   padding-bottom: 150px;
-   background: #f7f7f7;
+   /* background: #f7f7f7;
   background: rgb(63, 94, 251);
   background: radial-gradient(
     circle,
     rgba(63, 94, 251, 1) 0%,
     rgba(0, 0, 0, 1) 100%
-  );
+  ); */
 }
 /*.colorbutton{
  background: rgb(33,62,62);

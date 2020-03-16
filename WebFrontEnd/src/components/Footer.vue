@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid>
+  <b-container fluid class="ftr">
     <div>
       <!-- Footer -->
       <footer class="fixed-bottom">
@@ -11,7 +11,7 @@
             <b-container fluid class="text-right">
               &copy; 2020 Copyright:
               <span>
-                <a href="https://codecoda.com/en" class="link"><span>Codecoda.com</span></a>
+                <a href="https://codecoda.com/en" style="color:white"><span>Codecoda.com</span></a>
               </span>
             </b-container>
         </div>
@@ -39,10 +39,8 @@
 .icon {
   margin: 0.3%;
   outline-style: inset;
-  outline-color: rgb(250, 220, 85);
-}
-.link {
-  color: rgb(250, 220, 85);
+  outline-color: white;
+  padding-right: 0.3%;
 }
 footer {
   position: absolute;
