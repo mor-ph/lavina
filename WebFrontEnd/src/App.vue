@@ -22,6 +22,8 @@ body, .body{
   position: relative;
   background: rgb(227, 227, 228);
   color:rgb(65, 72, 77);
+  padding: auto;
+  height: auto;
 }
 .yellowbtn{
   background: rgb(250, 220, 85);
@@ -29,5 +31,8 @@ body, .body{
 }
 label{
   color:rgb(65, 72, 77);
+}
+.innerDiv{
+  padding-bottom:20%;
 }
 </style>

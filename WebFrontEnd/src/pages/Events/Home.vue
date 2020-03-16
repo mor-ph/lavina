@@ -1,12 +1,12 @@
 
 <template>
-  <div style="padding: 20%" class="body">
+  <div class="body innerDiv">
     <b-container fluid>
       <!-- Category -->
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
           <div class="text-center my-2">
-            <label for="example-i18n-picker" class="text-white">
+            <label for="example-i18n-picker">
               <strong>Category:</strong>
             </label>
           </div>
@@ -25,7 +25,7 @@
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
           <div class="text-center my-2">
-            <label for="example-i18n-picker" class="text-white">
+            <label for="example-i18n-picker">
               <strong>Subcategories:</strong>
             </label>
           </div>
@@ -44,7 +44,7 @@
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
           <div class="text-center my-2">
-            <label for="example-i18n-picker" class="text-white">
+            <label for="example-i18n-picker">
               <strong>Location:</strong>
             </label>
           </div>
@@ -61,7 +61,7 @@
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
           <div class="text-center my-2">
-            <label for="example-i18n-picker" class="text-white">
+            <label for="example-i18n-picker">
               <strong>Date:</strong>
             </label>
           </div>
@@ -77,7 +77,7 @@
         </b-col>
       </b-row>
      <!-- No event -->
-      <b-row class="text-center my-2">
+      <b-row class="text-center my-2 ">
         <b-col>
           <app-events-grid :events="events.data" v-if="events.data != 0"></app-events-grid>
           <p v-else>No Events match your search!</p>
@@ -128,4 +128,8 @@ export default {
 </script>
 
 <style>
+.innerDiv{
+  padding-bottom: 120px;
+  padding-top: 150px;
+}
 </style>

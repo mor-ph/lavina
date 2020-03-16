@@ -3,61 +3,50 @@
   <b-container fluid>
     <b-row>
       <b-navbar toggleable="lg" type="dark" class="fixed-top justify-content-between">
-        <b-col>
+        <b-col style="padding-left:0">
           <router-link to="/">
-            <b-navbar-brand>LAVINA</b-navbar-brand>
+            <img src="./lavina-logo.png" alt="logo" width="50px" height="50px" style="padding-right:3px">
+            <b-navbar-brand id="lavina">LAVINA</b-navbar-brand>
           </router-link>
         </b-col>
         <b-col class="create cr" v-if="$mq === 'tablet' || $mq === 'desktop'">
-            <div ><!-- class="cr">-->
-              <!-- <b-col class="create"> -->
+            <div >
                 <b-navbar-nav>
                   <div class="cr">
                     <router-link to="/createEvent" class="aCr">
-                      <b-button class="yellowbtn mb-2" size="lg"> <!--size="lg"-->
+                      <b-button class="yellowbtn mb-2" size="lg">
                         Create Event
                         <b-icon icon="plus"></b-icon>
                       </b-button>
                     </router-link>
                   </div>
                 </b-navbar-nav>
-              <!-- </b-col> -->
             </div>
         </b-col>
         <b-col class="loginreg" v-if="$mq === 'tablet' || $mq === 'desktop'">
             <div >
-                <router-link to="/login" v-if="!auth">
-                  <b-button class="yellowbtn">
-                    <strong>Login</strong>
-                  </b-button>
+                <router-link to="/login" v-if="!auth" class="hLink">Login
                 </router-link>
-                <router-link to="/register" v-if="!auth">
-                  <b-button class="yellowbtn">
-                    <strong>Register</strong>
-                  </b-button>
+                <router-link to="/register" v-if="!auth" class="hLink">Register
                 </router-link>
             </div>
         </b-col>
         <b-navbar-toggle target="nav-collapse" v-if="$mq === 'mobile'"></b-navbar-toggle>
-        <!-- <div v-if="$mq === 'mobile'"> --><b-collapse id="nav-collapse" is-nav v-if="$mq === 'mobile'">
-                <!-- Right aligned nav items -->
-                <b-navbar-nav class="mr-auto dropNav" v-if="$mq === 'mobile'">
-                  <!-- <b-nav-item-dropdown target="nav-collapse"  right> -->
-                    <b-dropdown-item class="dItem" to="profile"  v-if="auth">Profile
-                      <b-icon icon="person-fill"></b-icon>
-                    </b-dropdown-item>
-                    <b-dropdown-item class="dItem" to="home">All Events</b-dropdown-item>
-                    <b-dropdown-item class="dItem" to="CreateEvent">Create Event</b-dropdown-item>
-                    <div class="dropdown-divider"></div>
-                    <b-dropdown-item class="dItem" @click="onLogout"  v-if="auth">Sign Out
-                      <b-icon icon="box-arrow-right"></b-icon>
-                    </b-dropdown-item>
-                    <b-dropdown-item class="dItem" to="/login" v-if="!auth">Log in</b-dropdown-item>
-                    <b-dropdown-item class="dItem" to="/register" v-if="!auth">Register</b-dropdown-item>
-                </b-navbar-nav>
-              </b-collapse>
-            <!-- </div> -->
-            <!-- </show-at> -->
+        <b-collapse id="nav-collapse" is-nav v-if="$mq === 'mobile'" style="padding-top:3px">
+          <b-navbar-nav class="mr-auto dropNav" v-if="$mq === 'mobile'" >
+            <b-dropdown-item class="dItem" to="profile" v-if="auth"  variant="light">Profile
+              <b-icon icon="person-fill"></b-icon>
+            </b-dropdown-item>
+            <b-dropdown-item class="text-white" to="home" variant="light">All Events</b-dropdown-item>
+            <b-dropdown-item to="CreateEvent"  variant="light">Create Event</b-dropdown-item>
+            <div class="dropdown-divider"></div>
+            <b-dropdown-item class="dItem" @click="onLogout"  v-if="auth" variant="light">Sign Out
+              <b-icon icon="box-arrow-right"></b-icon>
+            </b-dropdown-item>
+            <b-dropdown-item class="dItem" to="/login" v-if="!auth" variant="light">Log in</b-dropdown-item>
+            <b-dropdown-item class="dItem" to="/register" v-if="!auth" variant="light">Register</b-dropdown-item>
+          </b-navbar-nav>
+        </b-collapse>
       </b-navbar>
     </b-row>
   </b-container>
@@ -97,14 +86,11 @@ export default {
 .fixed-top {
   background: #7da2a9;
    }
-/*.right {
-  padding-left: 50px;
-} */
-.yellowbtn {
-  background: rgb(250, 220, 85);
-  /* padding: 3%; */
+ .yellowbtn {
+  background: white;
   color: rgb(60, 71, 78);
-  align-self: center;
+  /* align-self: center; */
+  border-color: darkgray;
 }
 .loginreg{
   text-align: end;
@@ -115,17 +101,23 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.dropdown-item{
-   text-align: end;
-  color:ivory;
-}
 .aCr{
   align-self: center;
 }
 #nav-collapse{
   text-align: end;
 }
-.dItem{
-  color:ivory;
+.hLink{
+  color: white;
+  padding: 1%;
+}
+#lavina{
+    font-size: small;
+    position: absolute;
+    padding-top: 0;
+    padding-top: 35px;
+}
+.dropdown-item:hover{
+  color:rgb(60, 71, 78);
 }
 </style>

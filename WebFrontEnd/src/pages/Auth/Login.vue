@@ -1,6 +1,6 @@
 <template>
-  <div id="signin">
-    <div class="body" style="padding-bottom: 6%">
+  <div id="signin" class="innerDiv body">
+    <div  style="padding-bottom: 6%">
       <b-container>
         <b-row class="text-center">
             <b-col>
@@ -67,7 +67,6 @@ export default {
 
 <style scoped>
 .hhh{
-  padding-top: 130px;
   color:rgb(65, 72, 77);
 }
 .label.label{
