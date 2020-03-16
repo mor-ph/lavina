@@ -25,10 +25,12 @@
         </b-col>
         <b-col class="loginreg" v-if="$mq === 'tablet' || $mq === 'desktop'">
             <div >
-                <router-link to="/login" v-if="!auth" class="hLink">Login
-                </router-link>
-                <router-link to="/register" v-if="!auth" class="hLink">Register
-                </router-link>
+                <router-link to="/login" v-if="!auth" class="hLink">Login</router-link>
+                <router-link to="/register" v-if="!auth" class="hLink">Register</router-link>
+                <router-link to="/profile" v-if="auth" class="hLink">Profile</router-link>
+                  <b-icon icon="person-fill"></b-icon>
+                <router-link to="/home" v-if="auth" class="hLink">Log out</router-link>
+                  <b-icon icon="box-arrow-right"></b-icon>
             </div>
         </b-col>
         <b-navbar-toggle target="nav-collapse" v-if="$mq === 'mobile'"></b-navbar-toggle>
@@ -40,7 +42,7 @@
             <b-dropdown-item class="text-white" to="home" variant="light">All Events</b-dropdown-item>
             <b-dropdown-item to="CreateEvent"  variant="light">Create Event</b-dropdown-item>
             <div class="dropdown-divider"></div>
-            <b-dropdown-item class="dItem" @click="onLogout"  v-if="auth" variant="light">Sign Out
+            <b-dropdown-item class="dItem" @click="onLogout"  v-if="auth" variant="light">Log out
               <b-icon icon="box-arrow-right"></b-icon>
             </b-dropdown-item>
             <b-dropdown-item class="dItem" to="/login" v-if="!auth" variant="light">Log in</b-dropdown-item>
