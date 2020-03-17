@@ -1,5 +1,4 @@
-﻿using EventAPI.Models.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace EventAPI.Models.Models

@@ -4,9 +4,8 @@ using EventAPI.Models.ViewModels;
 using EventAPI.Models.ViewModels.Categories;
 using EventAPI.Models.ViewModels.Cities;
 using EventAPI.Models.ViewModels.Events;
-using System.Threading.Tasks;
 
-namespace EventAPI.Helpers
+namespace EventAPI.Models.Helpers
 {
     public class MappingProfile : Profile
     {
@@ -25,8 +24,6 @@ namespace EventAPI.Helpers
                  opt => opt.MapFrom(src => src.EventStatus.EventStatusConvert()));
             CreateMap<City, CityViewModel>();
             CreateMap<User, UserViewModel>();
-            CreateMap<Task<User>, UserViewModel>();
-            CreateMap<Task<Event>, EventsForListViewModel>();
         }
     }
 }

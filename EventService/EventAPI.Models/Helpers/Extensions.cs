@@ -1,7 +1,7 @@
 ﻿using EventAPI.Models.Enums;
 using System;
 
-namespace EventAPI.Helpers
+namespace EventAPI.Models.Helpers
 {
     public static class Extensions
     {

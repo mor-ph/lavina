@@ -1,13 +1,10 @@
 ﻿using EventAPI.Models.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EventAPI.Data.Context
 {
     public partial class LetsPlayDbContext : DbContext
-    { 
+    {
         public LetsPlayDbContext(DbContextOptions<LetsPlayDbContext> options)
             : base(options)
         {
@@ -20,7 +17,7 @@ namespace EventAPI.Data.Context
         public virtual DbSet<User> Users { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
