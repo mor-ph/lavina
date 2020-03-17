@@ -2218,10 +2218,7 @@
         },
         "runtime": {
           "bin/placeholder/EventAPI.Data.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       },
       "EventAPI.Models/1.0.0": {
         "type": "project",
@@ -2236,10 +2233,7 @@
         },
         "runtime": {
           "bin/placeholder/EventAPI.Models.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       },
       "EventAPI.Services/1.0.0": {
         "type": "project",
@@ -2256,10 +2250,7 @@
         },
         "runtime": {
           "bin/placeholder/EventAPI.Services.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       }
     }
   },
@@ -7309,19 +7300,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Decho\\.nuget\\packages\\": {}
+    "C:\\Users\\User\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
       "projectName": "EventAPI",
-      "projectPath": "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
-      "packagesPath": "C:\\Users\\Decho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI\\obj\\",
+      "projectPath": "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Decho\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7334,14 +7329,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj": {
-              "projectPath": "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj"
+            "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj": {
+              "projectPath": "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj"
             },
-            "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj": {
-              "projectPath": "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj"
+            "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj": {
+              "projectPath": "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj"
             },
-            "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj": {
-              "projectPath": "C:\\Users\\Decho\\Desktop\\New folder\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj"
+            "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj": {
+              "projectPath": "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj"
             }
           }
         }
@@ -7414,7 +7409,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
       }
     }
   }
