@@ -41,7 +41,7 @@ export default {
         password: authData.password,
         crossdomain: true
       })
-        .then(res => {
+        .then(() => {
           dispatch('login', authData)
         })
         .catch(error => console.log(error))
@@ -94,21 +94,28 @@ export default {
       localStorage.removeItem('userId')
       router.replace('/')
     },
-    updateProfileSettings ({ state }, formData) {
+    updateProfileSettings ({ state, dispatch }, formData) {
       let password
       if (formData.newPassword === null) {
         password = formData.password
       } else {
         password = formData.newPassword
       }
-      axiosAuth.put('users/' + state.userId, {
+      const headers = {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token')
-        },
-        username: formData.username,
-        email: formData.email,
-        password: password
-      }).then(res => console.log(res))
+          Authorization: 'Bearer ' + state.idToken
+        }
+      }
+      axiosAuth.put('users/' + state.userId,
+                  {
+                    username: formData.username,
+                    email: formData.email,
+                    password: password
+                  },
+                   headers)
+        .then(() => {
+          dispatch('logout')
+        })
         .catch(res => console.log(res))
     }
   },
