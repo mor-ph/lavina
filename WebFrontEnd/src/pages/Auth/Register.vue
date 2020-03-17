@@ -37,7 +37,9 @@
                   v-model="email"
                   @blur="$v.email.$touch()"
                 ></b-form-input>
+                {{$v.email}}
                 <p v-if="!$v.email.email">Please provide a valid email address.</p>
+                <p v-if="!$v.email.unique">Email already taken.</p>
               </b-form-group>
             </b-col>
           </b-row>
@@ -108,7 +110,7 @@
 
 <script>
 import { email, sameAs } from 'vuelidate/lib/validators'
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   data () {
@@ -121,31 +123,31 @@ export default {
   },
   validations: {
     email: {
-      email
-      /*
+      email,
       unique: email => {
         if (email === '') return true
 
-        TODO: Wait for DB
-        return axios.get('/users.json?orderBy="email"&equalTo="' + email + '"')
+        return axios.get('http://localhost:8081/auth/email/' + email)
           .then(res => {
-            return Object.keys(res.data).length === 0
+            if (res.status === 200) {
+              return false
+            } else {
+              return true
+            }
           })
-
-      } */
+      }
     },
     username: {
-      /*
       unique: username => {
         if (username === '') return true
 
-        TODO: Wait for DB
-        return axios.get('/users.json?orderBy="username"&equalTo="' + username + '"')
+        return axios.get('http://localhost:8081/auth/username/' + username)
           .then(res => {
-            return Object.keys(res.data).length === 0
+            console.log(res)
+            console.log(res)
+            return Object.keys(res).length === 0
           })
-
-      } */
+      }
     },
     confirmPassword: {
       sameAs: sameAs(vm => {
