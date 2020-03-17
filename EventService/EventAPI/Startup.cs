@@ -1,5 +1,3 @@
-using System.Globalization;
-using System.Text;
 using AutoMapper;
 using EventAPI.Configuration;
 using EventAPI.Data.Context;
@@ -14,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace EventAPI
 {
@@ -64,6 +63,7 @@ namespace EventAPI
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IEventService, EventService>();
             services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddHttpContextAccessor();
 
             services.AddCors(options =>
             {

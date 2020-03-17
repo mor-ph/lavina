@@ -1,9 +1,7 @@
 ﻿using EventAPI.Models.Enums;
 using EventAPI.Models.Validations;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace EventAPI.Models.ViewModels
 {

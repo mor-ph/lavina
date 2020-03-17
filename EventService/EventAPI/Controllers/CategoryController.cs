@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using EventAPI.Data.Context;
-using EventAPI.Models;
+﻿using AutoMapper;
 using EventAPI.Models.Models;
 using EventAPI.Models.ViewModels.Categories;
 using EventAPI.Services.Categories;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EventAPI.Controllers
 {
@@ -69,12 +62,12 @@ namespace EventAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCategory([FromBody] CategoriesAddViewModel category)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 if (await _categoryService.CategoryExists(category.Name))
                     return BadRequest("Category already exists");
-                
-                if(!(await _categoryService.ParentCategoryExists((int)category.ParentCategoryId)))
+
+                if (!(await _categoryService.ParentCategoryExists((int)category.ParentCategoryId)))
                 {
                     return BadRequest("Parent Category is not a main Category");
                 }
@@ -83,11 +76,11 @@ namespace EventAPI.Controllers
 
                 await _categoryService.AddCategory(addcategory);
                 return StatusCode(201, "Successfully added category");
- 
+
             }
             return BadRequest();
         }
 
-       
+
     }
 }

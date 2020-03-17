@@ -1,13 +1,6 @@
-﻿using EventAPI.Models.Enums;
-using EventAPI.Models.Models;
-using EventAPI.Models.ViewModels.Categories;
+﻿using EventAPI.Models.ViewModels.Categories;
 using EventAPI.Models.ViewModels.Cities;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Newtonsoft.Json.Converters;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
 
 namespace EventAPI.Models.ViewModels.Events
 {

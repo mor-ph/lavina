@@ -2208,6 +2208,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
           "EventAPI.Models": "1.0.0",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.1.2",
           "Microsoft.EntityFrameworkCore": "3.1.2",
@@ -2218,12 +2219,16 @@
         },
         "runtime": {
           "bin/placeholder/EventAPI.Data.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "EventAPI.Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.1.2",
           "Microsoft.EntityFrameworkCore": "3.1.2",
           "Pomelo.EntityFrameworkCore.MySql": "3.1.1"
@@ -2233,7 +2238,10 @@
         },
         "runtime": {
           "bin/placeholder/EventAPI.Models.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "EventAPI.Services/1.0.0": {
         "type": "project",
@@ -2250,7 +2258,10 @@
         },
         "runtime": {
           "bin/placeholder/EventAPI.Services.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -7300,23 +7311,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Decho\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
       "projectName": "EventAPI",
-      "projectPath": "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI\\obj\\",
+      "projectPath": "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
+      "packagesPath": "C:\\Users\\Decho\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Decho\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7329,14 +7336,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj": {
-              "projectPath": "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj"
+            "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj": {
+              "projectPath": "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj"
             },
-            "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj": {
-              "projectPath": "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj"
+            "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj": {
+              "projectPath": "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj"
             },
-            "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj": {
-              "projectPath": "C:\\Users\\User\\Documents\\GitHub\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj"
+            "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj": {
+              "projectPath": "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj"
             }
           }
         }

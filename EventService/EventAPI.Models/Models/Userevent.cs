@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace EventAPI.Models.Models
+﻿namespace EventAPI.Models.Models
 {
     public partial class Userevent
     {

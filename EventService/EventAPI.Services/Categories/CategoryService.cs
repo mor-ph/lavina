@@ -1,10 +1,8 @@
 ﻿using EventAPI.Data.Context;
 using EventAPI.Models.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EventAPI.Services.Categories
@@ -64,7 +62,7 @@ namespace EventAPI.Services.Categories
             return false;
         }
 
-        public async  Task<bool> ParentCategoryExists(int id)
+        public async Task<bool> ParentCategoryExists(int id)
         {
             var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
             if (category.ParentCategoryId == 1)
