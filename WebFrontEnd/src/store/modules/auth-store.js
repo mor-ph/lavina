@@ -106,13 +106,14 @@ export default {
           Authorization: 'Bearer ' + state.idToken
         }
       }
-      axiosAuth.put('users/' + state.userId,
-                  {
-                    username: formData.username,
-                    email: formData.email,
-                    password: password
-                  },
-                   headers)
+      axiosAuth.put(
+        'users/' + state.userId,
+        {
+          username: formData.username,
+          email: formData.email,
+          password: password
+        },
+        headers)
         .then(() => {
           dispatch('logout')
         })
