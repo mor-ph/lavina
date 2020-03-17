@@ -207,7 +207,6 @@
             <b-col sm="6" offset-sm="3">
               <b-form-textarea
                 id="textarea-no-resize"
-                placeholder="Fixed height textarea"
                 rows="7"
                 no-resize
                 required
