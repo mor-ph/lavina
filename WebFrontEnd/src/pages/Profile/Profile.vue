@@ -136,6 +136,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   created () {
+    this.$store.dispatch('tryAutoLogin')
     this.$store.dispatch('fetchCreatedEvents')
     this.$store.dispatch('fetchJoinedEvents')
   },

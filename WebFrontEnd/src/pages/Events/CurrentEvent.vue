@@ -124,8 +124,8 @@ import { mapGetters } from 'vuex'
 import router from '../../router'
 export default {
   created () {
+    this.$store.dispatch('tryAutoLogin')
     this.$store.dispatch('fetchEventById', this.$route.params.id)
-    console.log(this.currentEvent.data)
   },
   data () {
     return {
