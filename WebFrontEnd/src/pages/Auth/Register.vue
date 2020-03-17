@@ -5,7 +5,7 @@
         <b-row class="text-center">
           <b-col>
             <h1 class="hhh">Register</h1>
-            <br />
+            <br>
             <b-iconstack font-scale="10">
               <b-icon stacked icon="person-fill" font-scale="10"></b-icon>
               <b-icon
@@ -20,6 +20,7 @@
           </b-col>
         </b-row>
         <b-form @submit.prevent="onSubmit" style="padding: 2.2%">
+          <div :class="{invalid: $v.email.$error}">
           <b-row>
             <b-col sm="6" offset-sm="3">
               <b-form-group
@@ -38,9 +39,11 @@
                   @blur="$v.email.$touch()"
                 ></b-form-input>
                 <p v-if="!$v.email.email">Please provide a valid email address.</p>
+                <p class="unique" v-if="!$v.email.unique">Email already taken</p>
               </b-form-group>
             </b-col>
           </b-row>
+          </div>
           <b-row>
             <b-col sm="6" offset-sm="3">
               <b-form-group
@@ -57,6 +60,7 @@
                   v-model="username"
                   @blur="$v.username.$touch()"
                 ></b-form-input>
+                <p class="unique" v-if="!$v.username.unique">Username already taken</p>
               </b-form-group>
             </b-col>
           </b-row>
@@ -108,7 +112,7 @@
 
 <script>
 import { email, sameAs } from 'vuelidate/lib/validators'
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   data () {
@@ -121,31 +125,33 @@ export default {
   },
   validations: {
     email: {
-      email
-      /*
+      email,
       unique: email => {
         if (email === '') return true
 
-        TODO: Wait for DB
-        return axios.get('/users.json?orderBy="email"&equalTo="' + email + '"')
-          .then(res => {
-            return Object.keys(res.data).length === 0
+        return axios.get('http://localhost:8081/auth/email/' + email)
+          // When server return status 200 that means there is a match so the validation is false,
+          // otherwise it returns 500 so it's true
+          .then(() => {
+            return false
+          }).catch(() => {
+            return true
           })
-
-      } */
+      }
     },
     username: {
-      /*
       unique: username => {
         if (username === '') return true
 
-        TODO: Wait for DB
-        return axios.get('/users.json?orderBy="username"&equalTo="' + username + '"')
-          .then(res => {
-            return Object.keys(res.data).length === 0
+        return axios.get('http://localhost:8081/auth/username/' + username)
+          // when server return status 200 that means there is a match so the validation is false,
+          // otherwise it returns 500 so it's true
+          .then(() => {
+            return false
+          }).catch(() => {
+            return true
           })
-
-      } */
+      }
     },
     confirmPassword: {
       sameAs: sameAs(vm => {
@@ -162,7 +168,7 @@ export default {
       }
       console.log(formData)
       // TODO: Waiting for DB
-      this.$store.dispatch('register', formData)
+      this.$store.dispatch('register', formData).then(response => console.log(response.status))
     }
   }
 }
@@ -180,5 +186,9 @@ export default {
 
 .text-center {
   text-align: center;
+}
+
+.unique {
+  color: red;
 }
 </style>

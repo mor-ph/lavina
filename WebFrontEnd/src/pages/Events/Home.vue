@@ -93,6 +93,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   created () {
+    this.$store.dispatch('tryAutoLogin')
     this.$store.dispatch('loadInitalState')
   },
   data () {
