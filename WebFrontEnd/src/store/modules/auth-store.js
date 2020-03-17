@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import axios from 'axios' if we make fetchUser
 import axiosAuth from '../../axios-auth'
 
 import router from '../../router'
@@ -33,10 +32,9 @@ export default {
     setLogoutTimer ({ commit }) {
       setTimeout(() => {
         commit('clearAuthData')
-      }, 3600 * 1000)
+      }, 21600 * 1000) // logout 6 hours after logging in
     },
     register ({ dispatch }, authData) {
-      console.log(authData)
       axiosAuth.post('users', {
         email: authData.email,
         username: authData.username,
@@ -50,21 +48,16 @@ export default {
     },
 
     login ({ commit, dispatch }, authData) {
-      console.log(authData)
       axiosAuth.post('login', {
         username: authData.username,
         password: authData.password
       })
         .then(res => {
           const now = new Date()
-          const expirationDate = new Date(now.getTime() + 3600 * 1000)
+          const expirationDate = new Date(now.getTime() + 21600 * 1000) // 6 hours after login
           localStorage.setItem('token', res.data.accessToken)
           localStorage.setItem('userId', res.data.id)
           localStorage.setItem('expirationDate', expirationDate)
-          console.log('USERDATA', {
-            token: res.data.accessToken,
-            id: res.data.id
-          })
           commit('authUser', {
             token: res.data.accessToken,
             userId: res.data.id
@@ -89,7 +82,6 @@ export default {
         return
       }
       const userId = localStorage.getItem('userId')
-      // dispatch fetchUser by ID
       commit('authUser', {
         token: token,
         userId: userId
@@ -110,6 +102,9 @@ export default {
         password = formData.newPassword
       }
       axiosAuth.put('users/' + state.userId, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        },
         username: formData.username,
         email: formData.email,
         password: password
