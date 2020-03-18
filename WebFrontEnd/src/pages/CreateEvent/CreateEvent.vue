@@ -44,8 +44,8 @@
         </b-row>
 
         <!-- Subcategory -->
-        <b-row class="text-left my-2"
-         v-if="category !== ''">
+        <div v-if="category !== null">
+        <b-row class="text-left my-2">
           <b-col sm="6" offset-sm="3">
             <div class="text-left">
               <label for="example-subcategorys">
@@ -58,7 +58,6 @@
         <b-row class="text-left my-2">
           <b-col sm="6" offset-sm="3">
             <b-form-select id="example-subcategorys"
-            v-if="category !== ''"
             v-model="subcategory"
             required
             :options="filters.subcategories"></b-form-select>
@@ -93,6 +92,7 @@
             </b-modal>
           </div>
         </b-row>
+        </div>
 
         <!--  Date & Time picker -->
         <b-row class="text-left my-2" style="padding-left:8px">
@@ -170,7 +170,7 @@
           <b-col sm="6" offset-sm="3">
             <b-form-row >
               <label for="example-i18n-picker">
-                <strong>Your event will occur </strong>
+                <strong>Your event will occur: </strong>
               </label>
               <b-col class="rec float-right">
                 <b-form-select v-model="recurring" :options="options"></b-form-select>
@@ -241,8 +241,8 @@ export default {
     return {
       // Form data
       title: '',
-      category: '',
-      subcategory: '',
+      category: null,
+      subcategory: null,
       location: '',
       city: '',
       address: '',
