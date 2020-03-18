@@ -36,6 +36,13 @@ namespace CommentService.Controllers
             var commentsToReturn = _mapper.Map <IEnumerable<CommentDto>>(commentsList);
             return Ok(commentsToReturn);
         }
+
+        //GET: api/Comment/5
+        //[HttpGet("{id}", Name = "GetComments")]
+        //public async Task<IActionResult> Get(int id)
+        //{
+        //    return "value";
+        //}
         //GET: api/comment/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCommentsByEventId(int id)
@@ -69,5 +76,17 @@ namespace CommentService.Controllers
             await CommentRepo.Add(cm);
             return Ok(await CommentRepo.GetAll());
         }
+
+        // PUT: api/Comment/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
+
+        //// DELETE: api/ApiWithActions/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }

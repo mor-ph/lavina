@@ -6,7 +6,6 @@ using EventAPI.Models.ViewModels;
 using EventAPI.Models.ViewModels.Events;
 using EventAPI.Services.EventService;
 using EventAPI.Services.UserEventService;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,16 +19,22 @@ namespace EventAPI.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
+    // [Authorize]
 
     public class EventController : ControllerBase
     {
         //Database 
+        private readonly LetsPlayDbContext _dbContext;
         private readonly IEventService _eventService;
+        private readonly IMapper _mapper;
         private readonly IUserEventService _userEventService;
 
-        public EventController( IEventService eventService,IUserEventService userEventService)
+        public EventController(LetsPlayDbContext dbContext, IEventService eventService,
+            IMapper mapper, IUserEventService userEventService)
         {
+            _dbContext = dbContext;
             _eventService = eventService;
+            _mapper = mapper;
             _userEventService = userEventService;
         }
 
@@ -56,7 +61,6 @@ namespace EventAPI.Controllers
 
 
         // POST: api/event
-        [Authorize]
         [HttpPost()]
         public async Task<ActionResult<Event>> CreateEvent([FromBody] EventInputModel model)
         {
@@ -78,13 +82,14 @@ namespace EventAPI.Controllers
                 //Add event to database and save context
                 await _eventService.CreateEvent(model);
                 return StatusCode(201,"Event created.");
-            }   
+        }
             else
                 return BadRequest("Invalid data");
-        }
+
+
+    }
 
         // PUT: api/event/id
-        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEventById(int id, [FromBody]EventUpdateModel model)
         {
@@ -101,7 +106,6 @@ namespace EventAPI.Controllers
         }
 
         // DELETE: api/event/id
-        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
@@ -124,21 +128,25 @@ namespace EventAPI.Controllers
 
             return Ok(userEvents);
         }
-        [Authorize]
         // POST: api/event/userevents
         [HttpPost("userevents")]
         public async Task<IActionResult> PostUserEvents([FromBody] UserEventAddViewModel userEvent)
         {
-            if (await _eventService.GetEventByID(userEvent.EventId) == null ||
-                await _userEventService.GetUser(userEvent.UserId) == null)
+            var user = await _dbContext.Users.FirstOrDefaultAsync(c => c.Id == userEvent.UserId);
+            var Event = await _dbContext.Events.FirstOrDefaultAsync(c => c.Id == userEvent.EventId);
+            if (user == null || Event == null)
             {
                 return BadRequest("No such user or event");
             }
-            if (await _userEventService.GetUserEvent(userEvent) != null)
+            Userevent userevent = new Userevent();
+            userevent.EventId = userEvent.EventId;
+            userevent.UserId = userEvent.UserId;
+            if (await _dbContext.Userevent.FindAsync(userevent.UserId, userevent.EventId) != null)
             {
                 return BadRequest("Already joined event");
             }
-            await _userEventService.AddUserEvent(userEvent);
+            _dbContext.Userevent.Add(userevent);
+            await _dbContext.SaveChangesAsync();
 
             return StatusCode(201, "Successfully joined event");
         }

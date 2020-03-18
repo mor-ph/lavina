@@ -64,7 +64,7 @@ namespace EventAPI
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IEventService, EventService>();
             services.AddTransient<IUserEventService, UserEventService>();
-            services.AddAutoMapper(typeof(EventAPI.Models.Helpers.MappingProfile).Assembly);
+            services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddHttpContextAccessor();
 
             services.AddCors(options =>

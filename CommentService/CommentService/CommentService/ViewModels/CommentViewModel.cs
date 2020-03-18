@@ -22,6 +22,7 @@ namespace CommentService.ViewModels
         [Required]
         [StringLength(600, MinimumLength = 1)]
         [DataType(DataType.Text)]
+        [RegularExpression(@"[\S+]+")]
         public string Message { get; set; }
 
         public DateTime PostedOn { get; set; }

@@ -21,23 +21,9 @@ namespace EventAPI.Services.UserEventService
             _context = context;
             _mapper = mapper;
         }
-        public async Task AddUserEvent(UserEventAddViewModel userevent)
+        public Task<Userevent> AddUserEvent(UserEventAddViewModel userEvent)
         {
-            var userEvent = _mapper.Map<Userevent>(userevent);
-
-            await _context.Userevent.AddAsync(userEvent);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<User> GetUser(int id)
-        {
-            return await _context.Users.FirstOrDefaultAsync(c => c.Id == id);
-        }
-
-        public async Task<Userevent> GetUserEvent(UserEventAddViewModel userevent)
-        {
-            var userEvent = _mapper.Map<Userevent>(userevent);
-            return await _context.Userevent.FindAsync(userEvent.EventId, userEvent.UserId);
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<UserEventViewModel>> GetUsersEvents()
