@@ -4,6 +4,12 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
+const headers = {
+  headers: {
+    Authorization: 'Bearer ' + localStorage.getItem('token').toString()
+  }
+}
+
 export default {
   state: {
     initialState: true,
@@ -117,11 +123,6 @@ export default {
 
     createEvent (payload, eventData) {
       console.log(payload)
-      const headers = {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token').toString()
-        }
-      }
       axios.post('http://localhost:5103/api/event', {
         title: eventData.title,
         category: eventData.category,
@@ -144,11 +145,6 @@ export default {
 
     addSubCategory ({ state }, data) {
       console.log(data)
-      const headers = {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token').toString()
-        }
-      }
       axios.post('http://localhost:5103/api/category/' + data.category, {
         name: data.subName
       }, headers).then(() => {
@@ -171,11 +167,6 @@ export default {
     },
 
     addComment (payload, data) {
-      const headers = {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token').toString()
-        }
-      }
       axios.post('http://localhost:5101/comments', {
         eventId: data.eventId,
         message: data.message
