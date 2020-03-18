@@ -6,7 +6,7 @@ namespace EventAPI.Services.Categories
 {
     public interface ICategoryService
     {
-        Task<Category> GetCategory(int id);
+        Task<Category> GetCategory(string name);
         Task<IEnumerable<Category>> GetCategories();
         Task<IEnumerable<Category>> GetSubCategories(string parentName);
         Task AddCategory(Category category);

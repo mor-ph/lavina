@@ -39,16 +39,8 @@ namespace EventAPI.Controllers
             var categoriesToReturn = _mapper.Map<IEnumerable<MainCategoriesViewModel>>(mainCategories);
             return Ok(categoriesToReturn);
         }
-        //GET: api/category/id
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetCategoryById(int id)
-        {
-            var category = await _categoryService.GetCategory(id);
 
-            return Ok(category);
-        }
-
-        // GET: api/category/getsub/id
+        // GET: api/category/getsub/name
         [HttpGet("getsub/{name}")]
         public async Task<IActionResult> GetSubCategories(string name)
         {
@@ -80,7 +72,28 @@ namespace EventAPI.Controllers
             }
             return BadRequest();
         }
+        // POST: api/category/name
+        [HttpPost("{name}")]
+        public async Task<IActionResult> AddSubCategory(string name,[FromBody] CategoriesAddViewModel category)
+        {
+            if (ModelState.IsValid)
+            {
+                var mainCategory = await _categoryService.GetCategory(name);
+                if(mainCategory.ParentCategoryId!=20)
+                {
+                    return BadRequest("Not a main Category");
+                }
+                if (await _categoryService.CategoryExists(category.Name))
+                    return BadRequest("Category already exists");
 
+                var addcategory = _mapper.Map<Category>(category);
 
+                await _categoryService.AddCategory(addcategory);
+                return StatusCode(201, "Successfully added category");
+
+            }
+            return BadRequest();
+        }
     }
+
 }

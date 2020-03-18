@@ -30,9 +30,28 @@ namespace EventAPI.Services.EventService
             _httpContext = httpContext;
         }
 
-        public async Task CreateEvent(Event ev)
+        public async Task CreateEvent(EventInputModel ev)
         {
-            await _dbContext.Events.AddAsync(ev);
+            var eventToSave = _mapper.Map<Event>(ev);
+            //Event eventToSave = new Event
+            //{
+            //    Id=ev.Id,
+            //    Address=ev.Address,
+            //    EventStatus = (int)ev.EventStatus,
+            //    CreatedOn = ev.CreatedOn,
+            //    UpdatedOn = ev.UpdatedOn,
+            //    Description = ev.Description,
+            //    Recurring = (int?)ev.Recurring,
+            //    EventStartDate = ev.EventStartDate,
+            //    Title = ev.Title,
+            //    City = await GetCity(ev.City),
+            //    Category = await GetCategory(ev.Category),
+            //    PeopleNeeded = ev.PeopleNeeded
+            //};
+            eventToSave.Category = await GetCategory(ev.Category);
+            eventToSave.City = await GetCity(ev.City);
+            eventToSave.UserCreatedById = GetCurrentUsersId();
+            await _dbContext.Events.AddAsync(eventToSave);
             await _dbContext.SaveChangesAsync();
         }
 
@@ -90,6 +109,7 @@ namespace EventAPI.Services.EventService
                 .Include(e => e.Category)
                 .Include(e => e.City)
                 .Include(e => e.User)
+                .Include(e => e.Userevent)
                 .FirstOrDefaultAsync(e => e.Id == id);
             try
             {
@@ -121,7 +141,7 @@ namespace EventAPI.Services.EventService
         }
         public async Task<CreatedAndJoinedEventDto> GetCreatedAndJoinedEvents()
         {
-            int userId = int.Parse(_httpContext.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "userId").Value);
+            int userId = GetCurrentUsersId();
 
             var joinedEvents = await _dbContext.Userevent
                 .Include(ue => ue.Event).ThenInclude(ue => ue.Category)
@@ -138,6 +158,29 @@ namespace EventAPI.Services.EventService
             };
         }
 
+        public async Task<Category> GetCategory(string name)
+        {
+            return await _dbContext.Categories.FirstOrDefaultAsync(c => c.Name == name);
+        }
+
+        public async Task<City> GetCity(string name)
+        {
+            return await _dbContext.Cities.FirstOrDefaultAsync(c => c.Name == name);
+        }
+
+        public async Task<bool> EventExists(EventInputModel model)
+        {
+            var ev = await _dbContext.Events.Include(e => e.Category)
+                 .Where(x => x.UserCreatedById == GetCurrentUsersId() &&
+                        x.Title == model.Title &&
+                        x.Category.Name == model.Category)
+                 .ToListAsync();
+
+            bool isDuplicate = ev.Any(x => Math.Abs((model.EventStartDate - x.EventStartDate).TotalHours) < 1);
+
+            return isDuplicate;
+
+        }
         private bool AreAllNullOrEmpty(object myObject)
         {
             int count = 0;
@@ -154,6 +197,11 @@ namespace EventAPI.Services.EventService
                 return true;
             }
             return false;
+        }
+
+        private int GetCurrentUsersId()
+        {
+            return int.Parse(_httpContext.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "userId").Value);
         }
     }
 }

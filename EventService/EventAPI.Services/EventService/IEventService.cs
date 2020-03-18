@@ -11,10 +11,13 @@ namespace EventAPI.Services.EventService
     public interface IEventService
     {
         Task<IEnumerable<EventsForListViewModel>> GetAllEvents(EventsQueryParameters parameters);
-        Task CreateEvent(Event ev);
+        Task CreateEvent(EventInputModel ev);
         Task<Event> UpdateEvent(int id, EventUpdateModel model);
         Task DeleteEvent(Event evt);
         Task<Event> GetEventByID(int id);
+        Task<Category> GetCategory(string name);
+        Task<City> GetCity(string name);
         Task<CreatedAndJoinedEventDto> GetCreatedAndJoinedEvents();
+        Task<bool> EventExists(EventInputModel model);
     }
 }

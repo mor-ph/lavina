@@ -3,6 +3,7 @@ using EventAPI.Configuration;
 using EventAPI.Data.Context;
 using EventAPI.Services.Categories;
 using EventAPI.Services.EventService;
+using EventAPI.Services.UserEventService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -62,6 +63,7 @@ namespace EventAPI
             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IEventService, EventService>();
+            services.AddTransient<IUserEventService, UserEventService>();
             services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddHttpContextAccessor();
 

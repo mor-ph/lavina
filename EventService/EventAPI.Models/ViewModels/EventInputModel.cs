@@ -13,13 +13,13 @@ namespace EventAPI.Models.ViewModels
         [DataType(DataType.DateTime, ErrorMessage = "Invalid Date")]
         public DateTime EventStartDate { get; set; }
 
-        [Required]
+        //[Required]
         [DataType(DataType.DateTime, ErrorMessage = "Invalid Date")]
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
 
-        [Required]
+        //[Required]
         [DataType(DataType.DateTime, ErrorMessage = "Invalid Date")]
-        public DateTime UpdatedOn { get; set; }
+        public DateTime UpdatedOn { get; set; } = DateTime.Now;
 
 
         [DataType(DataType.Text)]
@@ -37,7 +37,7 @@ namespace EventAPI.Models.ViewModels
         public string Category { get; set; }
 
 
-        [Required]
+        //[Required]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer Number")]
         public int PeopleNeeded { get; set; }
 
@@ -48,7 +48,7 @@ namespace EventAPI.Models.ViewModels
         [Required]
         [Range(1, 3, ErrorMessage = "Invalid Status, availible status is 1-3")]
         public Status EventStatus { get; set; }
-        [Required]
+        //[Required]
         [DataType(DataType.Text)]
         [MaxLength(100, ErrorMessage = "Address cannot be longer that {0} symbols")]
         public string Address { get; set; }

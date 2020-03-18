@@ -31,9 +31,9 @@ namespace EventAPI.Services.Categories
             return mainCategories;
         }
 
-        public async Task<Category> GetCategory(int id)
+        public async Task<Category> GetCategory(string name)
         {
-            var category = await _context.Categories.Include(c => c.SubCategories).FirstOrDefaultAsync(c => c.Id == id);
+            var category = await _context.Categories.Include(c => c.SubCategories).FirstOrDefaultAsync(c => c.Name == name);
 
             return category;
         }
