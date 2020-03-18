@@ -13,7 +13,7 @@
           </b-col>
         </b-row>
         <b-form @submit.prevent="onSubmit" style="padding: 2.2%">
-          <div :class="{invalid: $v.email.$error}">
+          <div>
             <b-row>
               <b-col sm="6" offset-sm="3">
                 <b-form-group
@@ -24,6 +24,7 @@
                   description="We'll never share your email with anyone else."
                 >
                   <b-form-input
+                    :class="{invalid: !$v.email.unique}"
                     id="email-input"
                     type="email"
                     placeholder="Enter email"
@@ -31,7 +32,6 @@
                     @blur="setEmail"
                   ></b-form-input>
                   <p class="unique" v-if="!$v.email.email">Please provide a valid email address.</p>
-                  <p class="unique" v-show="!$v.email.unique">Email already taken</p>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -45,13 +45,13 @@
                 label-for="username-input"
               >
                 <b-form-input
+                  :class="{invalid: !$v.username.unique}"
                   id="username-input"
                   type="text"
                   placeholder="Enter Username"
                   required
                   @blur="setUsername"
                 ></b-form-input>
-                <p class="unique" v-if="!$v.username.unique">Username already taken</p>
               </b-form-group>
             </b-col>
           </b-row>
@@ -133,7 +133,7 @@ export default {
       }
     },
     username: {
-      unique: username => {
+      unique: async username => {
         if (username === '') return true
 
         return (axios.get('http://localhost:8081/auth/username/' + username)
@@ -189,6 +189,10 @@ export default {
 .unique {
   color: red;
   transition-delay: 1s;
+}
+
+.invalid {
+  border: 1px solid red;
 }
 
 </style>
