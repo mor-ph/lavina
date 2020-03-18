@@ -48,26 +48,26 @@ const routes = [
     path: '/createEvent',
     name: 'CreateEvent',
     component: CreateEvent,
-    beforeEnter (to, from, next) {
-      store.dispatch('tryAutoLogin')
-        .then(() => {
-          next()
-        }).catch(() => {
-          next('/login')
-        })
+    async beforeEnter (to, from, next) {
+      await store.dispatch('tryAutoLogin')
+      if (store.state.auth.idToken) {
+        next()
+      } else {
+        next('/login')
+      }
     }
   },
   {
     path: '/profile',
     name: 'Profile',
     component: Profile,
-    beforeEnter (to, from, next) {
-      store.dispatch('tryAutoLogin')
-        .then(() => {
-          next()
-        }).catch(() => {
-          next('/login')
-        })
+    async beforeEnter (to, from, next) {
+      await store.dispatch('tryAutoLogin')
+      if (store.state.auth.idToken) {
+        next()
+      } else {
+        next('/login')
+      }
     }
   },
   {
