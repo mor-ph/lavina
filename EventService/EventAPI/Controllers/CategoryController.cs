@@ -2,6 +2,7 @@
 using EventAPI.Models.Models;
 using EventAPI.Models.ViewModels.Categories;
 using EventAPI.Services.Categories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -50,6 +51,7 @@ namespace EventAPI.Controllers
             return Ok(subCategoriesToReturn);
         }
 
+        [Authorize]
         // POST: api/category
         [HttpPost]
         public async Task<IActionResult> AddCategory([FromBody] CategoriesAddViewModel category)
@@ -72,6 +74,7 @@ namespace EventAPI.Controllers
             }
             return BadRequest();
         }
+        [Authorize]
         // POST: api/category/name
         [HttpPost("{name}")]
         public async Task<IActionResult> AddSubCategory(string name,[FromBody] CategoriesAddViewModel category)

@@ -6,6 +6,7 @@ using EventAPI.Models.ViewModels;
 using EventAPI.Models.ViewModels.Events;
 using EventAPI.Services.EventService;
 using EventAPI.Services.UserEventService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,7 +20,6 @@ namespace EventAPI.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    // [Authorize]
 
     public class EventController : ControllerBase
     {
@@ -56,6 +56,7 @@ namespace EventAPI.Controllers
 
 
         // POST: api/event
+        [Authorize]
         [HttpPost()]
         public async Task<ActionResult<Event>> CreateEvent([FromBody] EventInputModel model)
         {
@@ -83,6 +84,7 @@ namespace EventAPI.Controllers
         }
 
         // PUT: api/event/id
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEventById(int id, [FromBody]EventUpdateModel model)
         {
@@ -99,6 +101,7 @@ namespace EventAPI.Controllers
         }
 
         // DELETE: api/event/id
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
@@ -121,6 +124,7 @@ namespace EventAPI.Controllers
 
             return Ok(userEvents);
         }
+        [Authorize]
         // POST: api/event/userevents
         [HttpPost("userevents")]
         public async Task<IActionResult> PostUserEvents([FromBody] UserEventAddViewModel userEvent)

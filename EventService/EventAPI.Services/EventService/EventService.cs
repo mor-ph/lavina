@@ -134,7 +134,12 @@ namespace EventAPI.Services.EventService
                 .Include(ue => ue.Event).ThenInclude(ue => ue.User)
                 .Where(ue => ue.UserId == userId).Select(ue => ue.Event).ToListAsync();
 
-            var createdEvents = await _dbContext.Events.Where(ue => ue.UserCreatedById == userId).ToListAsync();
+            var createdEvents = await _dbContext.Events
+                .Include(ue => ue.City)
+                .Include(ue => ue.Category)
+                .Include(ue => ue.User)
+                .Where(ue => ue.UserCreatedById == userId)
+                .ToListAsync();
 
             return new CreatedAndJoinedEventDto
             {
