@@ -3,6 +3,7 @@ package com.codecoda.authservice.controller;
 import com.codecoda.authservice.config.JwtUtils;
 import com.codecoda.authservice.config.payload.JwtResponse;
 import com.codecoda.authservice.config.payload.LoginRequest;
+import com.codecoda.authservice.config.payload.UpdateRequest;
 import com.codecoda.authservice.models.Role;
 import com.codecoda.authservice.models.User;
 import com.codecoda.authservice.service.RoleService;
@@ -129,7 +130,7 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<?> updateUser(@RequestBody @Valid User theUser, @PathVariable int id) {
+    public ResponseEntity<?> updateUser(@RequestBody @Valid UpdateRequest theUser, @PathVariable int id) {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int loggedUserId = userDetails.getId();
@@ -158,8 +159,14 @@ public class UserController {
                 return ResponseEntity.notFound().build();
             }
 
+            if(theUser.getPassword() != null ){
+                updatedUser.setPassword(encoder.encode(theUser.getPassword()));
+            }
+            else {
+                updatedUser.setPassword(updatedUser.getPassword());
+            }
+
             updatedUser.setUsername(theUser.getUsername());
-            updatedUser.setPassword(encoder.encode(theUser.getPassword()));
             updatedUser.setEmail(theUser.getEmail());
             updatedUser.setCreatedAt(updatedUser.getCreatedAt());
             updatedUser.setUpdatedAt(LocalDateTime.now());
