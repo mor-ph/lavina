@@ -6,6 +6,12 @@ import router from '../../router'
 
 Vue.use(Vuex)
 
+const headers = {
+  headers: {
+    Authorization: 'Bearer ' + localStorage.getItem('token')
+  }
+}
+
 export default {
   state: {
     idToken: null,
@@ -41,7 +47,7 @@ export default {
         password: authData.password,
         crossdomain: true
       })
-        .then(res => {
+        .then(() => {
           dispatch('login', authData)
         })
         .catch(error => console.log(error))
@@ -69,9 +75,11 @@ export default {
           dispatch('setLogoutTimer')
           router.replace('/')
         })
-        .catch(error => console.log(error))
+        .catch(error => {
+          console.log(error)
+        })
     },
-    tryAutoLogin ({ commit }) {
+    tryAutoLogin ({ commit, dispatch }) {
       const token = localStorage.getItem('token')
       if (!token) {
         return
@@ -86,6 +94,7 @@ export default {
         token: token,
         userId: userId
       })
+      dispatch('fetchUserById')
     },
     logout ({ commit }) {
       commit('clearAuthData')
@@ -94,22 +103,34 @@ export default {
       localStorage.removeItem('userId')
       router.replace('/')
     },
-    updateProfileSettings ({ state }, formData) {
+    updateProfileSettings ({ state, dispatch }, formData) {
       let password
       if (formData.newPassword === null) {
         password = formData.password
       } else {
         password = formData.newPassword
       }
-      axiosAuth.put('users/' + state.userId, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token')
+      axiosAuth.put(
+        'users/' + state.userId,
+        {
+          username: formData.username,
+          email: formData.email,
+          password: password
         },
-        username: formData.username,
-        email: formData.email,
-        password: password
-      }).then(res => console.log(res))
+        headers)
+        .then(() => {
+          dispatch('logout')
+        })
         .catch(res => console.log(res))
+    },
+    fetchUserById ({ commit, state }) {
+      axiosAuth.get('users/' + state.userId, headers)
+        .then((res) => {
+          commit('storeUser', {
+            username: res.data.username,
+            email: res.data.email
+          })
+        }).catch(error => console.log(error))
     }
   },
   getters: {

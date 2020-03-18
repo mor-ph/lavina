@@ -8,41 +8,33 @@
             <br>
             <b-iconstack font-scale="10">
               <b-icon stacked icon="person-fill" font-scale="10"></b-icon>
-              <b-icon
-                stacked
-                icon="plus"
-                scale="0.5"
-                shift-v="3.5"
-                shift-h="5"
-              ></b-icon>
-
+              <b-icon stacked icon="plus" scale="0.5" shift-v="3.5" shift-h="5"></b-icon>
             </b-iconstack>
           </b-col>
         </b-row>
         <b-form @submit.prevent="onSubmit" style="padding: 2.2%">
-          <div :class="{invalid: $v.email.$error}">
-          <b-row>
-            <b-col sm="6" offset-sm="3">
-              <b-form-group
-                class="label"
-                id="email-input-group"
-                label="Email address:"
-                label-for="email-input"
-                description="We'll never share your email with anyone else."
-              >
-                <b-form-input
-                  id="email-input"
-                  type="email"
-                  placeholder="Enter email"
-                  required
-                  v-model="email"
-                  @blur="$v.email.$touch()"
-                ></b-form-input>
-                <p v-if="!$v.email.email">Please provide a valid email address.</p>
-                <p class="unique" v-if="!$v.email.unique">Email already taken</p>
-              </b-form-group>
-            </b-col>
-          </b-row>
+          <div>
+            <b-row>
+              <b-col sm="6" offset-sm="3">
+                <b-form-group
+                  class="label"
+                  id="email-input-group"
+                  label="Email address:"
+                  label-for="email-input"
+                  description="We'll never share your email with anyone else."
+                >
+                  <b-form-input
+                    :class="{invalid: !$v.email.unique}"
+                    id="email-input"
+                    type="email"
+                    placeholder="Enter email"
+                    required
+                    @blur="setEmail"
+                  ></b-form-input>
+                  <p class="unique" v-if="!$v.email.email">Please provide a valid email address.</p>
+                </b-form-group>
+              </b-col>
+            </b-row>
           </div>
           <b-row>
             <b-col sm="6" offset-sm="3">
@@ -53,14 +45,13 @@
                 label-for="username-input"
               >
                 <b-form-input
+                  :class="{invalid: !$v.username.unique}"
                   id="username-input"
                   type="text"
                   placeholder="Enter Username"
                   required
-                  v-model="username"
-                  @blur="$v.username.$touch()"
+                  @blur="setUsername"
                 ></b-form-input>
-                <p class="unique" v-if="!$v.username.unique">Username already taken</p>
               </b-form-group>
             </b-col>
           </b-row>
@@ -82,7 +73,7 @@
               </b-form-group>
             </b-col>
           </b-row>
-          <b-row >
+          <b-row>
             <b-col sm="6" offset-sm="3">
               <b-form-group
                 class="label"
@@ -129,28 +120,32 @@ export default {
       unique: email => {
         if (email === '') return true
 
-        return axios.get('http://localhost:8081/auth/email/' + email)
-          // When server return status 200 that means there is a match so the validation is false,
-          // otherwise it returns 500 so it's true
+        return (axios.get('http://localhost:8081/auth/email/' + email)
+        // When server return status 200 that means there is a match so the validation is false,
+        // otherwise it returns 500 so it's true
           .then(() => {
             return false
-          }).catch(() => {
+          })
+          .catch(() => {
             return true
           })
+        )
       }
     },
     username: {
-      unique: username => {
+      unique: async username => {
         if (username === '') return true
 
-        return axios.get('http://localhost:8081/auth/username/' + username)
-          // when server return status 200 that means there is a match so the validation is false,
-          // otherwise it returns 500 so it's true
+        return (axios.get('http://localhost:8081/auth/username/' + username)
+        // when server return status 200 that means there is a match so the validation is false,
+        // otherwise it returns 500 so it's true
           .then(() => {
             return false
-          }).catch(() => {
+          })
+          .catch(() => {
             return true
           })
+        )
       }
     },
     confirmPassword: {
@@ -160,24 +155,27 @@ export default {
     }
   },
   methods: {
+    setUsername: function (event) {
+      this.username = event.target.value
+    },
+    setEmail: function (event) {
+      this.email = event.target.value
+    },
     onSubmit () {
       const formData = {
         email: this.email,
         username: this.username,
         password: this.password
       }
-      console.log(formData)
-      // TODO: Waiting for DB
-      this.$store.dispatch('register', formData).then(response => console.log(response.status))
+      this.$store.dispatch('register', formData)
     }
   }
 }
 </script>
 
 <style scoped>
-
 .hhh {
-  color:rgb(65, 72, 77);
+  color: rgb(65, 72, 77);
 }
 
 .label.label {
@@ -190,5 +188,11 @@ export default {
 
 .unique {
   color: red;
+  transition-delay: 1s;
 }
+
+.invalid {
+  border: 1px solid red;
+}
+
 </style>

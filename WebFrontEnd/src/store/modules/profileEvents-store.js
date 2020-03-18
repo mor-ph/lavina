@@ -6,41 +6,32 @@ Vue.use(Vuex)
 
 export default {
   state: {
-    createdEvents: [],
-    joinedEvents: []
+    userEvents: []
   },
   mutations: {
-    setCreatedEvents (state, events) {
-      state.createdEvents = events
-    },
-    setJoinedEvents (state, events) {
-      state.joinedEvents = events
+    setUserEvents (state, events) {
+      state.userEvents = events
     }
   },
   actions: {
-    fetchCreatedEvents ({ commit }, userId) {
-      axios.get('', { params: { userId: userId } })
+    fetchUserEvents ({ commit }) {
+      const headers = {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token').toString()
+        }
+      }
+      axios.get('http://localhost:5103/api/event/da', headers)
         .then(events => {
-          console.log(events)
-          commit('setCreatedEvents', events)
-        })
-        .catch(error => console.log(error))
-    },
-    fetchJoinedEvents ({ commit }, userId) {
-      axios.get('', { params: { userId: userId } })
-        .then(events => {
-          console.log(events)
-          commit('setJoinedEvents', events)
+          console.log(events.data)
+          commit('setUserEvents', events)
+          console.log('commited')
         })
         .catch(error => console.log(error))
     }
   },
   getters: {
-    createdEvents: (state) => {
-      return state.createdEvents
-    },
-    joinedEvents: (state) => {
-      return state.joinedEvents
+    userEvents: state => {
+      return state.userEvents
     }
   }
 }
