@@ -25,21 +25,20 @@ export default {
   mutations: {
     setEvents (state, events) {
       state.events = events
-    }, // Check later if u can combine setSelectedFilters
-    // with emptyCategoryAndLocationArrays
+    },
     setSelectedFilters (state, filters) {
       state.selectedFilters = filters
     },
     emptySubcategoriesArray (state) {
-      state.filters.subcategories = []
+      state.filters.subcategories = [{ value: null, text: 'None' }]
       state.selectedFilters.subcategory = null
     },
     changeInitialState (state) {
       state.initialState = !state.initialState
     },
     emptyCategoryAndLocationArray (state) {
-      state.filters.category = []
-      state.filters.location = []
+      state.filters.category = [{ value: null, text: 'None' }]
+      state.filters.location = [{ value: null, text: 'None' }]
     },
     setCurrentEvent (state, currentEvent) {
       state.currentEvent = []
@@ -105,6 +104,7 @@ export default {
     },
 
     fetchSubcategories ({ state, commit }, category) {
+      if (category === null) return
       commit('emptySubcategoriesArray')
       axios.get('http://localhost:5103/api/category/getsub/' + category)
         .then(subCategories => {
@@ -117,6 +117,11 @@ export default {
 
     createEvent (formData) {
       console.log(formData)
+      const headers = {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token').toString()
+        }
+      }
       axios.post('http://localhost:5103/api/event', {
         title: formData.title,
         category: formData.category,
@@ -128,13 +133,18 @@ export default {
         peopleNeeded: formData.peopleNeeded,
         description: formData.description,
         eventStatus: 1
-      })
+      }, headers)
         .then(response => {
           console.log(formData)
           console.log(response)
         }).catch(error => {
           console.log(error)
         })
+    },
+
+    addSubCategory (category, subName) {
+      // TODO new endpoint
+      axios.post('http://localhost:5103/api/' + category)
     },
 
     fetchEventById ({ commit }, eventId) {
