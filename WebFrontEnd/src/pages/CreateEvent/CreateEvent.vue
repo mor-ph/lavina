@@ -59,7 +59,6 @@
           <b-col sm="6" offset-sm="3">
             <b-form-select id="example-subcategorys"
             v-model="subcategory"
-            required
             :options="filters.subcategories"></b-form-select>
           </b-col>
 
@@ -77,9 +76,9 @@
               title="Submit Your Name"
               @show="resetModal"
               @hidden="resetModal"
-              @ok="handleOk"
+              @ok="handleAddSubSubmit"
             >
-              <form ref="form" @submit.stop.prevent="handleAddSubSubmit">
+              <form ref="form">
                 <b-form-group
                   :state="nameState"
                   label="Name"
@@ -159,7 +158,6 @@
               placeholder="Please enter an address"
               rows="1"
               no-resize
-              required
               v-model="address"
             ></b-form-textarea>
           </b-col>
@@ -187,7 +185,7 @@
                 <strong>People Needed: </strong>
               </label>
               <b-col class="rec float-right">
-                <b-form-input  v-model="peopleNeeded"  type="number" min="0" title="How many people do you need?" ></b-form-input>
+                <b-form-input v-model="peopleNeeded"  type="number" min="0" title="How many people do you need?" ></b-form-input>
               </b-col>
             </b-form-row>
           </b-col>
@@ -209,7 +207,6 @@
                 id="textarea-no-resize"
                 rows="7"
                 no-resize
-                required
                 v-model="description"
               ></b-form-textarea>
             </b-col>
@@ -278,7 +275,7 @@ export default {
     onSubmit () {
       if (this.valueDate === '' || this.valueTime === '') return
 
-      const formData = {
+      const eventData = {
         title: this.title,
         category: this.category,
         subcategory: this.subcategory,
@@ -289,8 +286,8 @@ export default {
         peopleNeeded: this.peopleNeeded,
         description: this.description
       }
-      console.log(formData)
-      this.$store.dispatch('createEvent', formData)
+      console.log(eventData)
+      this.$store.dispatch('createEvent', eventData)
     },
     fetchSubCategories () {
       this.$store.dispatch('fetchSubcategories', this.category)
@@ -306,22 +303,16 @@ export default {
       this.nameState = null
     },
     handleOk (bvModalEvt) {
-      // Prevent modal from closing
       bvModalEvt.preventDefault()
-      // Trigger submit handler
       this.handleAddSubSubmit()
     },
     handleAddSubSubmit () {
-      // Exit when the form isn't valid
       if (!this.checkFormValidity()) {
         return
       }
 
       this.$store.dispatch('addSubCategory', this.category, this.subCategoryName)
-      // Push the name to submitted names
-      this.$store.state.filters.subcategory
-        .push(this.subCategoryName)
-      // Hide the modal manually
+
       this.$nextTick(() => {
         this.$bvModal.hide('modal-prevent-closing')
       })
