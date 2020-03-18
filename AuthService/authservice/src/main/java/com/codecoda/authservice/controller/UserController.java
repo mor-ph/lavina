@@ -162,9 +162,6 @@ public class UserController {
             if(theUser.getPassword() != null ){
                 updatedUser.setPassword(encoder.encode(theUser.getPassword()));
             }
-            else {
-                updatedUser.setPassword(updatedUser.getPassword());
-            }
 
             updatedUser.setUsername(theUser.getUsername());
             updatedUser.setEmail(theUser.getEmail());
@@ -177,7 +174,6 @@ public class UserController {
         }
 
         return ResponseEntity.badRequest().build();
-
     }
 
 //    @DeleteMapping("/users/{userId}")
