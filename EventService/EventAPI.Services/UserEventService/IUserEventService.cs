@@ -9,8 +9,11 @@ namespace EventAPI.Services.UserEventService
 {
     public interface IUserEventService
     {
-        Task<Userevent> AddUserEvent(UserEventAddViewModel userEvent);
+        Task AddUserEvent(UserEventAddViewModel userevent);
 
         Task<IEnumerable<UserEventViewModel>> GetUsersEvents();
+
+        Task<User> GetUser(int id);
+        Task<Userevent> GetUserEvent(UserEventAddViewModel userevent);
     }
 }

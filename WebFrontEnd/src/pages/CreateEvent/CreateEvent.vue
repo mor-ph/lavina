@@ -311,7 +311,10 @@ export default {
         return
       }
 
-      this.$store.dispatch('addSubCategory', this.category, this.subCategoryName)
+      this.$store.dispatch('addSubCategory', {
+        category: this.category,
+        subName: this.subCategoryName
+      })
 
       this.$nextTick(() => {
         this.$bvModal.hide('modal-prevent-closing')
