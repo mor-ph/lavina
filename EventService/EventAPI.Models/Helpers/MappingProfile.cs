@@ -19,7 +19,6 @@ namespace EventAPI.Models.Helpers
             CreateMap<EventInputModel, Event>()
                 .ForMember(dest => dest.City, opt => opt.Ignore())
                 .ForMember(dest => dest.Category, opt => opt.Ignore());
-
             CreateMap<EventUpdateModel, Event>();
             CreateMap<Event, EventsForListViewModel>()
                 .ForMember(dest => dest.IsActive,
@@ -28,6 +27,8 @@ namespace EventAPI.Models.Helpers
                  opt => opt.MapFrom(src => src.EventStatus.EventStatusConvert()));
             CreateMap<City, CityViewModel>();
             CreateMap<User, UserViewModel>();
+
+            CreateMap<UserEventAddViewModel, Userevent>();
         }
     }
 }

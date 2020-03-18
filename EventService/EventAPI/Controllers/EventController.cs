@@ -24,17 +24,12 @@ namespace EventAPI.Controllers
     public class EventController : ControllerBase
     {
         //Database 
-        private readonly LetsPlayDbContext _dbContext;
         private readonly IEventService _eventService;
-        private readonly IMapper _mapper;
         private readonly IUserEventService _userEventService;
 
-        public EventController(LetsPlayDbContext dbContext, IEventService eventService,
-            IMapper mapper, IUserEventService userEventService)
+        public EventController( IEventService eventService,IUserEventService userEventService)
         {
-            _dbContext = dbContext;
             _eventService = eventService;
-            _mapper = mapper;
             _userEventService = userEventService;
         }
 
@@ -82,12 +77,10 @@ namespace EventAPI.Controllers
                 //Add event to database and save context
                 await _eventService.CreateEvent(model);
                 return StatusCode(201,"Event created.");
-        }
+            }   
             else
                 return BadRequest("Invalid data");
-
-
-    }
+        }
 
         // PUT: api/event/id
         [HttpPut("{id}")]
@@ -132,21 +125,16 @@ namespace EventAPI.Controllers
         [HttpPost("userevents")]
         public async Task<IActionResult> PostUserEvents([FromBody] UserEventAddViewModel userEvent)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(c => c.Id == userEvent.UserId);
-            var Event = await _dbContext.Events.FirstOrDefaultAsync(c => c.Id == userEvent.EventId);
-            if (user == null || Event == null)
+            if (await _eventService.GetEventByID(userEvent.EventId) == null ||
+                await _userEventService.GetUser(userEvent.UserId) == null)
             {
                 return BadRequest("No such user or event");
             }
-            Userevent userevent = new Userevent();
-            userevent.EventId = userEvent.EventId;
-            userevent.UserId = userEvent.UserId;
-            if (await _dbContext.Userevent.FindAsync(userevent.UserId, userevent.EventId) != null)
+            if (await _userEventService.GetUserEvent(userEvent) != null)
             {
                 return BadRequest("Already joined event");
             }
-            _dbContext.Userevent.Add(userevent);
-            await _dbContext.SaveChangesAsync();
+            await _userEventService.AddUserEvent(userEvent);
 
             return StatusCode(201, "Successfully joined event");
         }

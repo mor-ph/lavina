@@ -33,21 +33,6 @@ namespace EventAPI.Services.EventService
         public async Task CreateEvent(EventInputModel ev)
         {
             var eventToSave = _mapper.Map<Event>(ev);
-            //Event eventToSave = new Event
-            //{
-            //    Id=ev.Id,
-            //    Address=ev.Address,
-            //    EventStatus = (int)ev.EventStatus,
-            //    CreatedOn = ev.CreatedOn,
-            //    UpdatedOn = ev.UpdatedOn,
-            //    Description = ev.Description,
-            //    Recurring = (int?)ev.Recurring,
-            //    EventStartDate = ev.EventStartDate,
-            //    Title = ev.Title,
-            //    City = await GetCity(ev.City),
-            //    Category = await GetCategory(ev.Category),
-            //    PeopleNeeded = ev.PeopleNeeded
-            //};
             eventToSave.Category = await GetCategory(ev.Category);
             eventToSave.City = await GetCity(ev.City);
             eventToSave.UserCreatedById = GetCurrentUsersId();
@@ -116,8 +101,8 @@ namespace EventAPI.Services.EventService
                 List<Comment> comments;
                 using (var httpClient = new HttpClient())
                 {
-                    //using (var response = await httpClient.GetAsync(@"http://commentapi:80/api/comment/" + id))
-                    using (var response = await httpClient.GetAsync(@"https://localhost:44369//api/comment/" + id))
+                    using (var response = await httpClient.GetAsync(@"http://commentapi:80/api/comment/" + id))
+                    //using (var response = await httpClient.GetAsync(@"https://localhost:44369//api/comment/" + id))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
                         comments = JsonConvert.DeserializeObject<List<Comment>>(apiResponse);
