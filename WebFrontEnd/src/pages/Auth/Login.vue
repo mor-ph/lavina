@@ -34,7 +34,6 @@
               v-model="password"
             ></b-form-input>
           </b-form-group>
-          <p v-if="invalid" style="color: red">Invalid username or password</p>
 
           <b-button type="submit">Login</b-button>
            </b-col>
@@ -50,8 +49,7 @@ export default {
   data () {
     return {
       username: '',
-      password: '',
-      invalid: null
+      password: ''
     }
   },
   methods: {
@@ -62,9 +60,6 @@ export default {
       }
       console.log(formData)
       this.$store.dispatch('login', { username: formData.username, password: formData.password })
-        .then(() => {
-          this.invalid = true
-        })
     }
   }
 }
