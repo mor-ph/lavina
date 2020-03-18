@@ -66,7 +66,7 @@
           </b-row>
           <b-row >
 
-                <!-- label="Confirm New Password:" -->
+            <!-- label="Confirm New Password:" -->
             <b-col sm="6" offset-sm="3">
               <b-form-group
                 class="label"
@@ -87,20 +87,6 @@
           </b-row>
           <b-row class="text-left">
             <b-col sm="6" offset-sm="3">
-              <b-form-group
-                class="text-left"
-                id="password-input-group"
-                label="Enter current password to apply changes:"
-                label-for="password-input"
-              >
-                <b-form-input class="text-left"
-                  id="password-input"
-                  type="password"
-                  placeholder="Current Password"
-                  required
-                  v-model="password"
-                ></b-form-input>
-              </b-form-group>
                <b-button type="submit" :disabled="$v.$invalid">Update</b-button>
             </b-col>
           </b-row>
@@ -142,7 +128,6 @@ export default {
     return {
       newPassword: null,
       confirmNewPassword: null,
-      password: '',
       showMyEvents: true
     }
   },
@@ -164,8 +149,7 @@ export default {
       const formData = {
         email: this.getUser.email,
         username: this.getUser.username,
-        password: this.password,
-        newPassword: this.newPassword
+        password: this.newPassword
       }
       console.log(formData)
       this.$store.dispatch('updateProfileSettings', formData)
