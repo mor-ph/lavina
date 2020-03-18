@@ -6,6 +6,12 @@ import router from '../../router'
 
 Vue.use(Vuex)
 
+const headers = {
+  headers: {
+    Authorization: 'Bearer ' + localStorage.getItem('token')
+  }
+}
+
 export default {
   state: {
     idToken: null,
@@ -69,9 +75,11 @@ export default {
           dispatch('setLogoutTimer')
           router.replace('/')
         })
-        .catch(error => console.log(error))
+        .catch(error => {
+          console.log(error)
+        })
     },
-    tryAutoLogin ({ commit }) {
+    tryAutoLogin ({ commit, dispatch }) {
       const token = localStorage.getItem('token')
       if (!token) {
         return
@@ -86,6 +94,7 @@ export default {
         token: token,
         userId: userId
       })
+      dispatch('fetchUserById')
     },
     logout ({ commit }) {
       commit('clearAuthData')
@@ -101,11 +110,6 @@ export default {
       } else {
         password = formData.newPassword
       }
-      const headers = {
-        headers: {
-          Authorization: 'Bearer ' + state.idToken
-        }
-      }
       axiosAuth.put(
         'users/' + state.userId,
         {
@@ -118,6 +122,15 @@ export default {
           dispatch('logout')
         })
         .catch(res => console.log(res))
+    },
+    fetchUserById ({ commit, state }) {
+      axiosAuth.get('users/' + state.userId, headers)
+        .then((res) => {
+          commit('storeUser', {
+            username: res.data.username,
+            email: res.data.email
+          })
+        }).catch(error => console.log(error))
     }
   },
   getters: {
