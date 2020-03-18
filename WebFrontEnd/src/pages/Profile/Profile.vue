@@ -22,7 +22,6 @@
                   type="text"
                   required
                   v-model="getUser.username"
-                  @blur="$v.username.$touch()"
                 ></b-form-input>
               </b-form-group>
             </b-col>
@@ -41,9 +40,7 @@
                   type="email"
                   required
                   v-model="getUser.email"
-                  @blur="$v.email.$touch()"
                 ></b-form-input>
-                <p v-if="!$v.email.email">Please provide a valid email address.</p>
               </b-form-group>
             </b-col>
           </b-row>
@@ -121,8 +118,8 @@
     </b-button-group>
      </b-col>
           </b-row>
-          <app-event-grid v-if="showMyEvents" :events="createdEvents.data"></app-event-grid>
-          <app-event-grid v-else :events="joinedEvents.data"></app-event-grid>
+          <app-event-grid v-if="showMyEvents" :events="userEvents.data.createdEvents"></app-event-grid>
+          <app-event-grid v-else :events="userEvents.data.joinedEvents"></app-event-grid>
       </b-container>
          </div>
     </div>
@@ -130,15 +127,13 @@
 
 <script>
 import EventsGrid from '../../components/Event/EventsGrid.vue'
-import { email, sameAs } from 'vuelidate/lib/validators'
-// import axios from 'axios'
+import { sameAs } from 'vuelidate/lib/validators'
 import { mapGetters } from 'vuex'
 
 export default {
   created () {
     this.$store.dispatch('tryAutoLogin')
-    this.$store.dispatch('fetchCreatedEvents')
-    this.$store.dispatch('fetchJoinedEvents')
+    this.$store.dispatch('fetchUserEvents')
   },
   components: {
     appEventGrid: EventsGrid
@@ -154,38 +149,10 @@ export default {
   computed: {
     ...mapGetters([
       'getUser',
-      'createdEvents',
-      'joinedEvents'
+      'userEvents'
     ])
   },
   validations: {
-    email: {
-      email
-      /*
-      unique: email => {
-        if (email === '') return true
-
-        TODO: Wait for DB
-        return axios.get('/users.json?orderBy="email"&equalTo="' + email + '"')
-          .then(res => {
-            return Object.keys(res.data).length === 0
-          })
-
-      } */
-    },
-    username: {
-      /*
-      unique: username => {
-        if (username === '') return true
-
-        TODO: Wait for DB
-        return axios.get('/users.json?orderBy="username"&equalTo="' + username + '"')
-          .then(res => {
-            return Object.keys(res.data).length === 0
-          })
-
-      } */
-    },
     confirmNewPassword: {
       sameAs: sameAs(vm => {
         return vm.newPassword
@@ -215,8 +182,6 @@ hr{
   border-top: 2px solid white;
 }
 .hhh{
-  /* padding-top: 110px;
-  text-align: center; */
   color:rgb(65, 72, 77);
 }
 </style>
