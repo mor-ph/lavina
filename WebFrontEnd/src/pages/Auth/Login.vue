@@ -17,7 +17,6 @@
                   id="username-input"
                   type="text"
                   required
-                  placeholder="Enter Username"
                   v-model="username"
                 ></b-form-input>
               </b-form-group>
@@ -30,7 +29,6 @@
               id="password-input"
               type="password"
               required
-              placeholder="Enter Password"
               v-model="password"
             ></b-form-input>
           </b-form-group>

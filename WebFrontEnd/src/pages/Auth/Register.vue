@@ -27,7 +27,6 @@
                     :class="{invalid: !$v.email.unique}"
                     id="email-input"
                     type="email"
-                    placeholder="Enter email"
                     required
                     @blur="setEmail"
                   ></b-form-input>
@@ -48,7 +47,6 @@
                   :class="{invalid: !$v.username.unique}"
                   id="username-input"
                   type="text"
-                  placeholder="Enter Username"
                   required
                   @blur="setUsername"
                 ></b-form-input>
@@ -66,7 +64,6 @@
                 <b-form-input
                   id="password-input"
                   type="password"
-                  placeholder="Enter Password"
                   required
                   v-model="password"
                 ></b-form-input>
@@ -85,7 +82,6 @@
                 <b-form-input
                   id="confirm-password-input"
                   type="password"
-                  placeholder="Confirm Password"
                   required
                   v-model="confirmPassword"
                   @blur="$v.confirmPassword.$touch()"
