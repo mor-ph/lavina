@@ -18,9 +18,6 @@ export default {
 </script>
 
 <style>
-*{
-  font-family: "Comic Sans MS", cursive, sans-serif;
-}
 body, .body{
   position: relative;
   background: rgb(227, 227, 228);

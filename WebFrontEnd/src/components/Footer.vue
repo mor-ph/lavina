@@ -4,11 +4,11 @@
       <!-- Footer -->
       <footer class="fixed-bottom" style="position:absolute">
         <div class="footer p-2 d-flex justify-content-between">
-            <b-container fluid style="padding-right:0">
+            <b-container fluid>
               <span><b-icon class="icon" icon="envelope-fill"></b-icon></span>
               <span> info@codecoda.com</span>
             </b-container>
-            <b-container fluid class="text-right cr">
+            <b-container fluid class="text-right">
               &copy; 2020 Copyright:
               <span>
                 <a href="https://codecoda.com/en" style="color:white"><span>Codecoda.com</span></a>
@@ -41,8 +41,5 @@
   outline-style: inset;
   outline-color: white;
   padding-right: 0.3%;
-}
-.cr{
-  padding-left: 0;
 }
 </style>
