@@ -17,7 +17,7 @@ export default {
     fetchUserEvents ({ commit }) {
       const headers = {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token').toString()
+          Authorization: 'Bearer ' + localStorage.getItem('token')
         }
       }
       axios.get('http://localhost:5103/api/event/da', headers)
