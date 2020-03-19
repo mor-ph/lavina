@@ -1,16 +1,10 @@
-﻿using AutoMapper;
-using EventAPI.Data.Context;
-using EventAPI.Models.Models;
+﻿using EventAPI.Models.Models;
 using EventAPI.Models.QueryParameters;
 using EventAPI.Models.ViewModels;
-using EventAPI.Models.ViewModels.Events;
 using EventAPI.Services.EventService;
 using EventAPI.Services.UserEventService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,7 +21,7 @@ namespace EventAPI.Controllers
         private readonly IEventService _eventService;
         private readonly IUserEventService _userEventService;
 
-        public EventController( IEventService eventService,IUserEventService userEventService)
+        public EventController(IEventService eventService, IUserEventService userEventService)
         {
             _eventService = eventService;
             _userEventService = userEventService;
@@ -77,8 +71,8 @@ namespace EventAPI.Controllers
                 }
                 //Add event to database and save context
                 await _eventService.CreateEvent(model);
-                return StatusCode(201,"Event created.");
-            }   
+                return StatusCode(201, "Event created.");
+            }
             else
                 return BadRequest("Invalid data");
         }

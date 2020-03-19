@@ -4,9 +4,7 @@ using EventAPI.Models.Models;
 using EventAPI.Models.ViewModels;
 using EventAPI.Models.ViewModels.Events;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EventAPI.Services.UserEventService
@@ -16,7 +14,7 @@ namespace EventAPI.Services.UserEventService
         private readonly LetsPlayDbContext _context;
         private readonly IMapper _mapper;
 
-        public UserEventService(LetsPlayDbContext context,IMapper mapper)
+        public UserEventService(LetsPlayDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
