@@ -10,7 +10,7 @@ namespace EventAPI.Models.ViewModels.Events
         public DateTime EventStartDate { get; set; }
         public int? Recurring { get; set; }
         public DateTime CreatedOn { get; set; }
-        public DateTime UpdatedOn { get; set; }
+        public string AddedAgo { get; set; }
         public string EventStatus { get; set; }
         public string Description { get; set; }
         public int PeopleNeeded { get; set; }

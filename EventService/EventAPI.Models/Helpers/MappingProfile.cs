@@ -24,7 +24,9 @@ namespace EventAPI.Models.Helpers
                 .ForMember(dest => dest.IsActive,
                  opt => opt.MapFrom(src => src.EventStartDate.IsEventActive()))
                 .ForMember(dest => dest.EventStatus,
-                 opt => opt.MapFrom(src => src.EventStatus.EventStatusConvert()));
+                 opt => opt.MapFrom(src => src.EventStatus.EventStatusConvert()))
+                .ForMember(dest => dest.AddedAgo,
+                opt => opt.MapFrom(src => src.CreatedOn.TimeAgo()));
             CreateMap<City, CityViewModel>();
             CreateMap<User, UserViewModel>();
 
