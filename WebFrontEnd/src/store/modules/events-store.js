@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 const headers = {
   headers: {
-    Authorization: 'Bearer ' + localStorage.getItem('token').toString()
+    Authorization: 'Bearer ' + localStorage.getItem('token')
   }
 }
 
@@ -25,8 +25,7 @@ export default {
       subcategory: null,
       location: null,
       date: null
-    },
-    currentEvent: []
+    }
   },
   mutations: {
     setEvents (state, events) {
@@ -36,15 +35,15 @@ export default {
       state.selectedFilters = filters
     },
     emptySubcategoriesArray (state) {
-      state.filters.subcategories = [{ value: null, text: 'None' }]
+      state.filters.subcategories = [{ value: null, text: 'All' }]
       state.selectedFilters.subcategory = null
     },
     changeInitialState (state) {
       state.initialState = !state.initialState
     },
     emptyCategoryAndLocationArray (state) {
-      state.filters.category = [{ value: null, text: 'None' }]
-      state.filters.location = [{ value: null, text: 'None' }]
+      state.filters.category = [{ value: null, text: 'All' }]
+      state.filters.location = [{ value: null, text: 'All' }]
     },
     setCurrentEvent (state, currentEvent) {
       state.currentEvent = []
@@ -61,13 +60,11 @@ export default {
       }
     },
     fetchRecentEvents ({ commit }) {
-      // fix this query when the endpoint is ready
       axios.get('http://localhost:5103/api/event')
         .then(events => {
           commit('setEvents', events)
         }).catch(err => console.log(err))
     },
-    // fix this query when the endpoint is ready
     fetchEvents ({ commit, state }) {
       axios.get('http://localhost:5103/api/event', {
         params: {
@@ -121,8 +118,8 @@ export default {
         }).catch(err => console.log(err))
     },
 
-    createEvent (payload, eventData) {
-      console.log(payload)
+    createEvent (context, eventData) {
+      console.log(context)
       axios.post('http://localhost:5103/api/event', {
         title: eventData.title,
         category: eventData.category,
@@ -150,29 +147,6 @@ export default {
       }, headers).then(() => {
         state.filters.subCategories.push(data.subName)
       }).catch(error => console.log(error))
-    },
-
-    fetchEventById ({ commit }, eventId) {
-      axios.get('http://localhost:5103/api/event/' + eventId)
-        .then(currentEvent => {
-          commit('setCurrentEvent', currentEvent)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-
-    joinEvent ({ state }) {
-      // TODO: add this event
-    },
-
-    addComment (payload, data) {
-      axios.post('http://localhost:5101/comments', {
-        eventId: data.eventId,
-        message: data.message
-      }, headers).then(response => {
-        console.log(response)
-      }).catch(error => console.log(error))
     }
   },
   getters: {
@@ -184,9 +158,6 @@ export default {
     },
     selectedFilters: (state) => {
       return state.selectedFilters
-    },
-    currentEvent: (state) => {
-      return state.currentEvent
     }
   }
 }
