@@ -104,20 +104,14 @@ export default {
       router.replace('/')
     },
     updateProfileSettings ({ state, dispatch }, formData) {
-      let password
-      if (formData.newPassword === null) {
-        password = formData.password
-      } else {
-        password = formData.newPassword
+      if (formData.password === null) {
+        formData = {
+          username: formData.username,
+          email: formData.email
+        }
       }
       axiosAuth.put(
-        'users/' + state.userId,
-        {
-          username: formData.username,
-          email: formData.email,
-          password: password
-        },
-        headers)
+        'users/' + state.userId, formData, headers)
         .then(() => {
           dispatch('logout')
         })

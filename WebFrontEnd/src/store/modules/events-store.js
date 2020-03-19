@@ -4,6 +4,12 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
+const headers = {
+  headers: {
+    Authorization: 'Bearer ' + localStorage.getItem('token').toString()
+  }
+}
+
 export default {
   state: {
     initialState: true,
@@ -115,36 +121,35 @@ export default {
         }).catch(err => console.log(err))
     },
 
-    createEvent (formData) {
-      console.log(formData)
-      const headers = {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token').toString()
-        }
-      }
+    createEvent (payload, eventData) {
+      console.log(payload)
       axios.post('http://localhost:5103/api/event', {
-        title: formData.title,
-        category: formData.category,
-        subcategory: formData.subcategory,
-        eventStartDate: formData.eventStartDate,
-        city: formData.city,
-        address: formData.address,
-        recurring: formData.recurring,
-        peopleNeeded: formData.peopleNeeded,
-        description: formData.description,
+        title: eventData.title,
+        category: eventData.category,
+        subcategory: eventData.subcategory,
+        eventStartDate: eventData.eventStartDate,
+        city: eventData.city,
+        address: eventData.address,
+        recurring: eventData.recurring,
+        peopleNeeded: eventData.peopleNeeded,
+        description: eventData.description,
         eventStatus: 1
       }, headers)
         .then(response => {
-          console.log(formData)
+          console.log(eventData)
           console.log(response)
         }).catch(error => {
           console.log(error)
         })
     },
 
-    addSubCategory (category, subName) {
-      // TODO new endpoint
-      axios.post('http://localhost:5103/api/' + category)
+    addSubCategory ({ state }, data) {
+      console.log(data)
+      axios.post('http://localhost:5103/api/category/' + data.category, {
+        name: data.subName
+      }, headers).then(() => {
+        state.filters.subCategories.push(data.subName)
+      }).catch(error => console.log(error))
     },
 
     fetchEventById ({ commit }, eventId) {
@@ -157,19 +162,15 @@ export default {
         })
     },
 
-    joinToEvent ({ state }) {
+    joinEvent ({ state }) {
       // TODO: add this event
     },
 
-    addComment (data) {
-      console.log(data)
+    addComment (payload, data) {
       axios.post('http://localhost:5101/comments', {
-        headers: {
-          Authorization: localStorage.getItem('token')
-        },
         eventId: data.eventId,
         message: data.message
-      }).then(response => {
+      }, headers).then(response => {
         console.log(response)
       }).catch(error => console.log(error))
     }

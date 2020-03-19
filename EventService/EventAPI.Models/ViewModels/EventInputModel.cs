@@ -13,14 +13,11 @@ namespace EventAPI.Models.ViewModels
         [DataType(DataType.DateTime, ErrorMessage = "Invalid Date")]
         public DateTime EventStartDate { get; set; }
 
-        //[Required]
         [DataType(DataType.DateTime, ErrorMessage = "Invalid Date")]
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 
-        //[Required]
         [DataType(DataType.DateTime, ErrorMessage = "Invalid Date")]
         public DateTime UpdatedOn { get; set; } = DateTime.Now;
-
 
         [DataType(DataType.Text)]
         [MaxLength(100, ErrorMessage = "Description cannot be greater than {0}")]
@@ -36,8 +33,6 @@ namespace EventAPI.Models.ViewModels
         [MaxLength(50, ErrorMessage = "Category cannot be longer that {0} symbols")]
         public string Category { get; set; }
 
-
-        //[Required]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer Number")]
         public int PeopleNeeded { get; set; }
 
@@ -48,13 +43,9 @@ namespace EventAPI.Models.ViewModels
         [Required]
         [Range(1, 3, ErrorMessage = "Invalid Status, availible status is 1-3")]
         public Status EventStatus { get; set; }
-        //[Required]
         [DataType(DataType.Text)]
         [MaxLength(100, ErrorMessage = "Address cannot be longer that {0} symbols")]
         public string Address { get; set; }
-        [Required]
-        public int CreatedBy { get; set; }
-
 
         [Range(1, 3, ErrorMessage = "Invalid Reccuring data")]
         public Recurring? Recurring { get; set; }
