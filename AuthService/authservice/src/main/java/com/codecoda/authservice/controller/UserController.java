@@ -4,7 +4,6 @@ import com.codecoda.authservice.config.JwtUtils;
 import com.codecoda.authservice.config.payload.JwtResponse;
 import com.codecoda.authservice.config.payload.LoginRequest;
 import com.codecoda.authservice.config.payload.UpdateRequest;
-import com.codecoda.authservice.models.Role;
 import com.codecoda.authservice.models.User;
 import com.codecoda.authservice.service.RoleService;
 import com.codecoda.authservice.service.UserDetailsImpl;
@@ -12,22 +11,18 @@ import com.codecoda.authservice.service.UserService;
 import com.codecoda.authservice.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -125,7 +120,6 @@ public class UserController {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getEmail(),
                 roles));
     }
 

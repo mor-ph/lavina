@@ -25,7 +25,7 @@ export default {
     return {
       subTitleString:
         'Location: ' + this.event.city.name +
-        ' Date: ' + new Date(this.event.eventStartDate).toUTCString()
+        ' Date: ' + new Date(this.event.eventStartDate).toString()
     }
   },
   props: ['event']

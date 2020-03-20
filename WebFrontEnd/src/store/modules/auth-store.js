@@ -6,12 +6,6 @@ import router from '../../router'
 
 Vue.use(Vuex)
 
-const headers = {
-  headers: {
-    Authorization: 'Bearer ' + localStorage.getItem('token')
-  }
-}
-
 export default {
   state: {
     idToken: null,
@@ -84,7 +78,7 @@ export default {
       if (!token) {
         return
       }
-      const expirationDate = localStorage.getItem('expirationDate')
+      const expirationDate = localStorage.getItem('expirationDate').toString()
       const now = new Date()
       if (now >= expirationDate) {
         return
@@ -95,6 +89,7 @@ export default {
         userId: userId
       })
       dispatch('fetchUserById')
+      dispatch('setLogoutTimer')
     },
     logout ({ commit }) {
       commit('clearAuthData')
@@ -104,6 +99,11 @@ export default {
       router.replace('/')
     },
     updateProfileSettings ({ state, dispatch }, formData) {
+      const headers = {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      }
       if (formData.password === null) {
         formData = {
           username: formData.username,
@@ -118,6 +118,11 @@ export default {
         .catch(res => console.log(res))
     },
     fetchUserById ({ commit, state }) {
+      const headers = {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      }
       axiosAuth.get('users/' + state.userId, headers)
         .then((res) => {
           commit('storeUser', {
@@ -133,6 +138,12 @@ export default {
     },
     isAuthenticated: (state) => {
       return state.idToken !== null
+    },
+    token: (state) => {
+      return state.idToken
+    },
+    userId: (state) => {
+      return state.userId
     }
   }
 }
