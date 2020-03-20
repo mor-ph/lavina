@@ -12,7 +12,7 @@ const headers = {
 
 export default {
   state: {
-    initialState: true,
+    refreshed: false,
     events: [],
     filters: {
       category: [],
@@ -38,8 +38,8 @@ export default {
       state.filters.subcategories = [{ value: null, text: 'All' }]
       state.selectedFilters.subcategory = null
     },
-    changeInitialState (state) {
-      state.initialState = !state.initialState
+    refreshed (state) {
+      state.refreshed = !state.refreshed
     },
     emptyCategoryAndLocationArray (state) {
       state.filters.category = [{ value: null, text: 'All' }]
@@ -52,8 +52,8 @@ export default {
   },
   actions: {
     loadInitalState ({ dispatch, commit, state }) {
-      if (state.initialState) {
-        commit('changeInitialState')
+      if (!state.refreshed) {
+        commit('refreshed')
         const recentEvents = dispatch('fetchRecentEvents')
         const filters = dispatch('fetchFilters')
         return Promise.all([recentEvents, filters])
@@ -118,34 +118,12 @@ export default {
         }).catch(err => console.log(err))
     },
 
-    createEvent (context, eventData) {
-      console.log(context)
-      axios.post('http://localhost:5103/api/event', {
-        title: eventData.title,
-        category: eventData.category,
-        subcategory: eventData.subcategory,
-        eventStartDate: eventData.eventStartDate,
-        city: eventData.city,
-        address: eventData.address,
-        recurring: eventData.recurring,
-        peopleNeeded: eventData.peopleNeeded,
-        description: eventData.description,
-        eventStatus: 1
-      }, headers)
-        .then(response => {
-          console.log(eventData)
-          console.log(response)
-        }).catch(error => {
-          console.log(error)
-        })
-    },
-
     addSubCategory ({ state }, data) {
       console.log(data)
       axios.post('http://localhost:5103/api/category/' + data.category, {
         name: data.subName
       }, headers).then(() => {
-        state.filters.subCategories.push(data.subName)
+        state.filters.subcategories.push(data.subName)
       }).catch(error => console.log(error))
     }
   },

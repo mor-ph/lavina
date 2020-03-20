@@ -164,7 +164,7 @@ export default {
           { eventId: this.event.id, userId: this.userId },
           { headers: { Authorization: 'Bearer ' + this.token } })
 
-        if (response.status === 200) {
+        if (response.status === 201) {
           this.joined = true
         }
       } else {
