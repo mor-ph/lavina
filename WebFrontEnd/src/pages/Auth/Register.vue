@@ -92,7 +92,7 @@
                 ></b-form-input>
               </b-form-group>
 
-              <b-button type="submit" :disabled="$v.$invalid">Register</b-button>
+              <b-button type="submit" :disabled="$v.$invalid"  class="submitBtn">Register</b-button>
             </b-col>
           </b-row>
         </b-form>

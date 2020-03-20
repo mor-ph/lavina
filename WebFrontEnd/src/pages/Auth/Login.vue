@@ -1,10 +1,10 @@
 <template>
   <div id="signin" class="innerDiv body">
-    <div  style="padding-bottom: 6%">
+    <div style="height:100%"><!-- style="padding-bottom: 6%">-->
       <b-container>
         <b-row class="text-center">
             <b-col>
-        <h1 class="hhh">Login</h1>
+        <h1 class="hhh">Log in</h1>
         <br> <b-icon icon="person-fill"  font-scale="10"></b-icon>
         </b-col>
          </b-row>
@@ -35,7 +35,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-button type="submit">Login</b-button>
+          <b-button type="submit" class="submitBtn">Log in</b-button>
            </b-col>
           </b-row>
         </b-form>

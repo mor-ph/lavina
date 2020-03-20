@@ -23,7 +23,7 @@ body, .body{
   background: rgb(227, 227, 228);
   color:rgb(65, 72, 77);
   padding: auto;
-  height: auto;
+  /* height: auto; */
 }
 .yellowbtn{
   background: rgb(250, 220, 85);
@@ -35,4 +35,11 @@ label{
 .innerDiv{
   padding-bottom:20%;
 }
+body, .body, footer, #header, #modal-prevent-closing{
+  font-family: system-ui;
+}
+.submitBtn{
+  width: 100%;
+}
+
 </style>

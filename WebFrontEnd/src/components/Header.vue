@@ -1,6 +1,6 @@
 <template>
   <!-- Navbar -->
-  <b-container fluid>
+  <b-container fluid id="header">
     <b-row>
       <b-navbar toggleable="lg" type="dark" class="fixed-top justify-content-between">
         <b-col style="padding-left:0">
@@ -16,7 +16,7 @@
                     <router-link to="/createEvent" class="aCr">
                       <b-button class="yellowbtn mb-2" size="lg">
                         Create Event
-                        <b-icon icon="plus" style="color:rgb(60, 71, 78)"></b-icon>
+                        <b-icon id="plusIcon" icon="plus" ></b-icon>
                       </b-button>
                     </router-link>
                   </div>
@@ -25,12 +25,12 @@
         </b-col>
         <b-col class="loginreg" v-if="$mq === 'tablet' || $mq === 'desktop'">
             <div >
-                <b-icon v-if="auth" icon="person-fill" ></b-icon>
+                <b-icon v-if="auth" icon="person-fill" class="hicon"></b-icon>
                 <router-link v-if="auth" to="/profile" class="hLink">Profile</router-link>
-                <router-link v-if="!auth" to="/login" class="hLink">Login</router-link>
+                <router-link v-if="!auth" to="/login" class="hLink">Log in</router-link>
                 <span style="color:white"> | </span>
                 <router-link v-if="!auth" to="/register"  class="hLink">Register</router-link>
-                <b-icon v-if="auth" icon="box-arrow-right" ></b-icon>
+                <b-icon v-if="auth" icon="box-arrow-right" class="hicon"></b-icon>
                 <router-link v-if="auth" @click.native="onLogout" to="/" class="hLink">Log out</router-link>
             </div>
         </b-col>
@@ -38,13 +38,13 @@
         <b-collapse id="nav-collapse" is-nav v-if="$mq === 'mobile'" style="padding-top:3px">
           <b-navbar-nav class="mr-auto dropNav" v-if="$mq === 'mobile'" >
             <b-dropdown-item class="dItem" to="profile" v-if="auth"  variant="light">
-              <b-icon icon="person-fill"></b-icon> Profile
+              <b-icon icon="person-fill" class="hicon"></b-icon> Profile
             </b-dropdown-item>
             <b-dropdown-item class="text-white" to="home" variant="light">All Events</b-dropdown-item>
             <b-dropdown-item to="CreateEvent"  variant="light">Create Event</b-dropdown-item>
             <div class="dropdown-divider"></div>
             <b-dropdown-item class="dItem" @click="onLogout"  v-if="auth" variant="light">
-              <b-icon icon="box-arrow-right"></b-icon> Log out
+              <b-icon icon="box-arrow-right" class="hicon"></b-icon> Log out
             </b-dropdown-item>
             <b-dropdown-item class="dItem" to="/login" v-if="!auth" variant="light">Log in</b-dropdown-item>
             <b-dropdown-item class="dItem" to="/register" v-if="!auth" variant="light">Register</b-dropdown-item>
@@ -123,7 +123,10 @@ export default {
 .dropdown-item:hover{
   color:rgb(60, 71, 78);
 }
-.b-icon{
+.hicon{
+  color: ivory;
+}
+.yellowbtn :hover{
   color: ivory;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-    <div>
-<div class="body innerDiv"><!-- style="padding-bottom:60%">-->
+  <div>
+    <div class="body innerDiv"><!-- style="padding-bottom:60%">-->
       <b-container>
         <b-row class="text-center">
             <b-col>
@@ -87,28 +87,30 @@
           </b-row>
           <b-row class="text-left">
             <b-col sm="6" offset-sm="3">
-               <b-button type="submit" :disabled="$v.$invalid">Update</b-button>
+               <b-button type="submit" :disabled="$v.$invalid" class="submitBtn">Update</b-button>
             </b-col>
           </b-row>
- </b-form>
-           <b-row class="text-center">
-            <b-col sm="6" offset-sm="3">
-      <b-button-group>
-      <b-button @click="btnClick"
-                :pressed="showMyEvents"
-                :disabled="showMyEvents">My Events</b-button>
+        </b-form>
+        <b-row class="text-center" style="padding-top:30px">
+          <b-col sm="10" offset-sm="1">
+            <b-button-group style="width:100%">
+              <b-button @click="btnClick"
+                        :pressed="showMyEvents"
+                        :disabled="showMyEvents">Hosted by me</b-button>
 
-      <b-button @click="btnClick"
-                :pressed="!showMyEvents"
-                :disabled="!showMyEvents">Join Events</b-button>
-    </b-button-group>
-     </b-col>
-          </b-row>
-          <app-event-grid v-if="showMyEvents" :events="userEvents.data.createdEvents"></app-event-grid>
-          <app-event-grid v-else :events="userEvents.data.joinedEvents"></app-event-grid>
+              <b-button @click="btnClick"
+                        :pressed="!showMyEvents"
+                        :disabled="!showMyEvents">Joined by me</b-button>
+            </b-button-group>
+          </b-col>
+        </b-row>
+        <b-col sm="10" offset-sm="1" v-if="showMyEvents">
+        <app-event-grid v-if="showMyEvents" :events="userEvents.data.createdEvents"></app-event-grid>
+        <app-event-grid v-else :events="userEvents.data.joinedEvents"></app-event-grid>
+        </b-col>
       </b-container>
-         </div>
     </div>
+  </div>
 </template>
 
 <script>
