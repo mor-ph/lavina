@@ -13,5 +13,6 @@ namespace EventAPI.Services.UserEventService
 
         Task<User> GetUser(int id);
         Task<Userevent> GetUserEvent(UserEventAddViewModel userevent);
+        Task<Event> GetEvent(int id);
     }
 }
