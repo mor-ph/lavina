@@ -224,6 +224,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import router from '../../router'
 export default {
   created () {
     this.$store.dispatch('tryAutoLogin')
@@ -288,6 +289,7 @@ export default {
       }
       console.log(eventData)
       this.$store.dispatch('createEvent', eventData)
+      router.replace('/')
     },
     fetchSubCategories () {
       this.$store.dispatch('fetchSubcategories', this.category)
