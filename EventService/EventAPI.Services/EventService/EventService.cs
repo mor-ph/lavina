@@ -95,6 +95,7 @@ namespace EventAPI.Services.EventService
                 .Include(e => e.City)
                 .Include(e => e.User)
                 .Include(e => e.Userevent)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Id == id);
             try
             {
@@ -102,7 +103,6 @@ namespace EventAPI.Services.EventService
                 using (var httpClient = new HttpClient())
                 {
                     using (var response = await httpClient.GetAsync(@"http://commentapi:80/api/comment/" + id))
-                    //using (var response = await httpClient.GetAsync(@"https://localhost:44369//api/comment/" + id))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
                         comments = JsonConvert.DeserializeObject<List<Comment>>(apiResponse);
@@ -110,7 +110,9 @@ namespace EventAPI.Services.EventService
                     }
                 }
             }
-            catch { }
+            catch{
+
+            }
             return eventToreturn;
         }
 
