@@ -73,12 +73,28 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    async beforeEnter (to, from, next) {
+      await store.dispatch('tryAutoLogin')
+      if (store.state.auth.idToken) {
+        next('/')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: '/register',
     name: 'Register',
-    component: Register
+    component: Register,
+    async beforeEnter (to, from, next) {
+      await store.dispatch('tryAutoLogin')
+      if (store.state.auth.idToken) {
+        next('/')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: '*',

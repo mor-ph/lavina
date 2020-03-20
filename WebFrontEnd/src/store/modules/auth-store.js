@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axiosAuth from '../../axios-auth'
-
 import router from '../../router'
+import jwtDecode from 'jwt-decode'
 
 Vue.use(Vuex)
 
@@ -29,10 +29,10 @@ export default {
     }
   },
   actions: {
-    setLogoutTimer ({ commit }) {
+    setLogoutTimer ({ commit }, milliseconds) {
       setTimeout(() => {
         commit('clearAuthData')
-      }, 21600 * 1000) // logout 6 hours after logging in
+      }, milliseconds)
     },
     register ({ dispatch }, authData) {
       axiosAuth.post('users', {
@@ -53,32 +53,32 @@ export default {
         password: authData.password
       })
         .then(res => {
-          const now = new Date()
-          const expirationDate = new Date(now.getTime() + 21600 * 1000) // 6 hours after login
+          const decoded = jwtDecode(res.data.accessToken)
+          console.log(decoded.exp)
+          const expirationDate = new Date(decoded.exp * 1000)
           localStorage.setItem('token', res.data.accessToken)
-          localStorage.setItem('userId', res.data.id)
+          localStorage.setItem('userId', decoded.userId)
           localStorage.setItem('expirationDate', expirationDate)
           commit('authUser', {
             token: res.data.accessToken,
             userId: res.data.id
           })
-          commit('storeUser', {
-            username: res.data.username,
-            email: res.data.email
-          })
-          dispatch('setLogoutTimer')
+          dispatch('fetchUserById')
+          const now = new Date()
+
+          dispatch('setLogoutTimer', expirationDate.getTime() - now.getTime())
           router.replace('/')
         })
         .catch(error => {
           console.log(error)
         })
     },
-    tryAutoLogin ({ commit, dispatch }) {
+    tryAutoLogin ({ commit, dispatch, state }) {
       const token = localStorage.getItem('token')
-      if (!token) {
+      if (!token || state.idToken) {
         return
       }
-      const expirationDate = localStorage.getItem('expirationDate').toString()
+      const expirationDate = new Date(localStorage.getItem('expirationDate'))
       const now = new Date()
       if (now >= expirationDate) {
         return
@@ -89,7 +89,7 @@ export default {
         userId: userId
       })
       dispatch('fetchUserById')
-      dispatch('setLogoutTimer')
+      dispatch('setLogoutTimer', expirationDate.getTime() - now.getTime())
     },
     logout ({ commit }) {
       commit('clearAuthData')
@@ -101,7 +101,7 @@ export default {
     updateProfileSettings ({ state, dispatch }, formData) {
       const headers = {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token')
+          Authorization: 'Bearer ' + state.idToken
         }
       }
       if (formData.password === null) {
@@ -120,7 +120,7 @@ export default {
     fetchUserById ({ commit, state }) {
       const headers = {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token')
+          Authorization: 'Bearer ' + state.idToken
         }
       }
       axiosAuth.get('users/' + state.userId, headers)

@@ -41,7 +41,7 @@
               class="text-left"
               id="example-category"
               v-model="category"
-              :options= filters.category
+              :options= filters.category.slice(1)
               @change= "fetchSubCategories"
               required
             ></b-form-select>
@@ -170,7 +170,7 @@
             <b-form-row >
               <label for="example-i18n-picker">People Needed</label>
               <b-col class="rec float-right">
-                <b-form-input v-model="peopleNeeded"  type="number" min="0" title="How many people do you need?" ></b-form-input>
+                <b-form-input required v-model="peopleNeeded"  type="number" min="0" title="How many people do you need?" ></b-form-input>
               </b-col>
             </b-form-row>
           </b-col>
@@ -207,7 +207,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
+import router from '../../router'
+import axios from 'axios'
 export default {
   created () {
     this.$store.dispatch('tryAutoLogin')
@@ -251,15 +253,18 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'refreshed'
+    ]),
     dateDisabled (ymd, date) {
       if (date.getDate() > Date()) {
         return true
       }
     },
-    onSubmit () {
+    async onSubmit () {
       if (this.valueDate === '' || this.valueTime === '') return
 
-      const eventData = {
+      await axios.post('http://localhost:5103/api/event', {
         title: this.title,
         category: this.category,
         subcategory: this.subcategory,
@@ -268,15 +273,17 @@ export default {
         address: this.address,
         recurring: this.recurring,
         peopleNeeded: this.peopleNeeded,
-        description: this.description
-      }
-      console.log(eventData)
-      this.$store.dispatch('createEvent', eventData)
+        description: this.description,
+        eventStatus: 1
+      }, { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } })
+      this.refreshed()
+      router.replace('/')
     },
     fetchSubCategories () {
+      this.subcategory = null
       this.$store.dispatch('fetchSubcategories', this.category)
     },
-    // Template Methods
+
     checkFormValidity () {
       const valid = this.$refs.form.checkValidity()
       this.nameState = valid
@@ -299,7 +306,7 @@ export default {
         category: this.category,
         subName: this.subCategoryName
       })
-
+      this.subcategory = this.subCategoryName
       this.$nextTick(() => {
         this.$bvModal.hide('modal-prevent-closing')
       })

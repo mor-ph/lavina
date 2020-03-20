@@ -27,15 +27,20 @@ namespace EventAPI.Services.UserEventService
             await _context.SaveChangesAsync();
         }
 
+        public async Task<Event> GetEvent(int id)
+        {
+            return await _context.Events.FindAsync(id);
+        }
+
         public async Task<User> GetUser(int id)
         {
-            return await _context.Users.FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.Users.FindAsync(id);
         }
 
         public async Task<Userevent> GetUserEvent(UserEventAddViewModel userevent)
         {
             var userEvent = _mapper.Map<Userevent>(userevent);
-            return await _context.Userevent.FindAsync(userEvent.EventId, userEvent.UserId);
+            return await _context.Userevent.FindAsync(userEvent.UserId,userEvent.EventId);
         }
 
         public async Task<IEnumerable<UserEventViewModel>> GetUsersEvents()

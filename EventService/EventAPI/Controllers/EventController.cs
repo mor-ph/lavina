@@ -123,7 +123,7 @@ namespace EventAPI.Controllers
         [HttpPost("userevents")]
         public async Task<IActionResult> PostUserEvents([FromBody] UserEventAddViewModel userEvent)
         {
-            if (await _eventService.GetEventByID(userEvent.EventId) == null ||
+            if (await _userEventService.GetEvent(userEvent.EventId) == null ||
                 await _userEventService.GetUser(userEvent.UserId) == null)
             {
                 return BadRequest("No such user or event");

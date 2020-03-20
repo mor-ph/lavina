@@ -1,21 +1,19 @@
 <template>
-    <div class="col-sm-6 col-md-4 col-lg-4">
+    <div class="col-sm-6 col-md-4 col-lg-3">
 
     <b-card
-    img-src="https://picsum.photos/600/300/?image=25"
+    img-src="https://pm1.narvii.com/5984/b66523e362d75cd7154918e1d5b8779bd10cfeed_00.jpg"
     img-alt="Image"
     img-top
     :title = "event.title"
     :sub-title= "subTitleString"
     tag="article"
     >
-    <button>
-      <router-link tag="button"
-                  class="primary"
-                  :to="{ name: 'CurrentEvent', params: { title: event.title,
-                                                          id: event.id}
-                  }">See more..</router-link>
-    </button>
+    <router-link tag="button"
+                 class="primary"
+                 :to="{ name: 'CurrentEvent', params: { title: event.title,
+                                                        id: event.id}
+                 }">Details</router-link>
   </b-card>
 
     </div>
