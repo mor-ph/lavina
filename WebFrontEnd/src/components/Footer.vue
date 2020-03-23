@@ -1,8 +1,8 @@
 <template>
-  <b-container fluid class="ftr">
+  <b-container fluid>
     <div>
       <!-- Footer -->
-      <footer class="fixed-bottom" style="position:absolute">
+      <footer >
         <div class="footer p-2 d-flex justify-content-between">
             <b-container fluid>
               <span><b-icon class="icon" icon="envelope-fill"></b-icon></span>
@@ -28,18 +28,24 @@
 .text-center {
   padding-top: 0.5%;
 }
-.footer {
+/* .footer {
   background-color: #7da2a9;
-  padding-top: 0.7%;
-  padding-left: 0.7%;
-  padding-right: 0.7%;
+  padding: 0.7%;
   padding-bottom: 0%;
   width: 100%;
-}
+} */
 .icon {
   margin: 0.3%;
   outline-style: inset;
   outline-color: white;
   padding-right: 0.3%;
+}
+footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 2.5rem;
+  width: 100%;
+  background-color: #7da2a9;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-    <div>
-<div class="body innerDiv"><!-- style="padding-bottom:60%">-->
+  <div>
+    <div class="body innerDiv"><!-- style="padding-bottom:60%">-->
       <b-container>
         <b-row class="text-center">
             <b-col>
@@ -92,18 +92,18 @@
           </b-row>
           <b-row class="text-left">
             <b-col sm="6" offset-sm="3">
-               <b-button type="submit" :disabled="$v.$invalid && !$v.$pending ||
-                                                  $v.$pending ||
-                                                  !dataChanged">Update</b-button>
+               <b-button type="submit" class="submitBtn" :disabled="$v.$invalid && !$v.$pending ||
+                                                         $v.$pending ||
+                                                         !dataChanged">Update</b-button>
             </b-col>
           </b-row>
- </b-form>
-           <b-row class="text-center">
-            <b-col sm="6" offset-sm="3">
-      <b-button-group>
-      <b-button @click="btnClick"
-                :pressed="showMyEvents"
-                :disabled="showMyEvents">My Events</b-button>
+        </b-form>
+        <b-row class="text-center" style="padding-top:30px">
+          <b-col sm="10" offset-sm="1">
+            <b-button-group style="width:100%">
+              <b-button @click="btnClick"
+                        :pressed="showMyEvents"
+                        :disabled="showMyEvents">Hosted by me</b-button>
 
       <b-button @click="btnClick"
                 :pressed="!showMyEvents"
@@ -111,11 +111,13 @@
     </b-button-group>
      </b-col>
           </b-row>
+          <b-col sm="10" offset-sm="1">
           <app-event-grid v-if="showMyEvents" :events="userEvents.createdEvents"></app-event-grid>
           <app-event-grid v-else :events="userEvents.joinedEvents"></app-event-grid>
+          </b-col>
       </b-container>
-         </div>
     </div>
+  </div>
 </template>
 
 <script>

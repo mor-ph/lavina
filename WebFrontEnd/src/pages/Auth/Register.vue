@@ -89,7 +89,7 @@
                   @blur="$v.confirmPassword.$touch()"
                 ></b-form-input>
               </b-form-group>
-              <b-button type="submit" :disabled="$v.$invalid && !$v.$pending || $v.$pending">Register</b-button>
+              <b-button type="submit" class="submitBtn" :disabled="$v.$invalid && !$v.$pending || $v.$pending">Register</b-button>
             </b-col>
           </b-row>
         </b-form>
