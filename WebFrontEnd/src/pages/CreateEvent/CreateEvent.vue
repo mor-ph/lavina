@@ -3,70 +3,53 @@
     <!-- Color fon -->
     <div class="body">
       <b-container fluid>
-        <b-form @submit.prevent="onSubmit">
-          <b-row class="text-center my-2">
+        <b-row class="text-center my-2">
             <b-col md="6" offset-md="3" lg="6" offset-lg="3">
               <h3> Create new event</h3><hr>
             </b-col>
           </b-row>
+        <b-form @submit.prevent="onSubmit">
 
-        <!-- Title -->
-        <b-row class="text-end my-2">
-          <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-            <b-form-row>
+<!--------------  new style hu dis---------------->
+      <b-form-row id="crform">
+          <b-col md="4" lg="4" sm="12" class="crcol">
               <label for="example-i18n-picker">Title</label>
-            <b-col><!--style="padding-left:40px">-->
-            <b-form-textarea
-              class="text-left"
-              id="textarea-no-resize"
-              rows="1"
-              no-resize
-              required
-              v-model="title"
-            ></b-form-textarea>
-            </b-col>
-            </b-form-row>
+                <b-form-textarea
+                  style="height:38px"
+                  class="text-left"
+                  id="textarea-no-resize"
+                  rows="1"
+                  no-resize
+                  required
+                  v-model="title"
+                ></b-form-textarea>
           </b-col>
-        </b-row>
-
-        <!-- Category -->
-        <b-row class="text-right my-2">
-          <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-            <b-form-row>
-            <!-- <div class="text-left"> -->
+          <b-col md="4" lg="4" sm="12" class="crcol">
               <label for="example-category">Category</label>
-            <!-- </div> -->
-            <b-col  style="padding-left:6px">
-            <b-form-select
-              class="text-left"
-              id="example-category"
-              v-model="category"
-              :options= filters.category.slice(1)
-              @change= "fetchSubCategories"
-              required
-            ></b-form-select>
-            </b-col>
-            </b-form-row>
+                <b-form-select
+                  class="text-left"
+                  id="example-category"
+                  v-model="category"
+                  :options= filters.category.slice(1)
+                  @change= "fetchSubCategories"
+                  required
+                ></b-form-select>
           </b-col>
-        </b-row>
-
-        <!-- Subcategory -->
-        <b-row class="text-right my-2" v-if="category !== null">
-          <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-              <hr>
-            <b-form-row>
-              <label for="example-subcategorys">Subcategory</label>
-              <b-col>
-                <b-form-select id="example-subcategorys"
-                v-model="subcategory"
-                :options="filters.subcategories"></b-form-select>
-                <b-button v-b-modal.modal-prevent-closing class="colorbutton">
-                  Create new subcategory</b-button>
-              </b-col>
-            </b-form-row>
-              <hr>
+          <b-col md="4" lg="4" sm="12" class="crcol"><!--  v-if="category !== null">-->
+                <label for="example-subcategorys">Subcategory</label>
+                <b-form-row>
+                  <b-col sm="10">
+                  <b-form-select id="example-subcategorys"
+                  v-model="subcategory"
+                  :options="filters.subcategories"></b-form-select>
+                  </b-col>
+                  <b-col sm="2">
+                  <b-button v-b-modal.modal-prevent-closing class="colorbutton" title="Create new subcategory">
+                    <b-icon id="plusIcon" icon="plus" ></b-icon></b-button>
+                  </b-col>
+                </b-form-row>
           </b-col>
-          <b-modal
+            <b-modal
                 id="modal-prevent-closing"
                 ref="modal"
                 title="Subcategory"
@@ -85,122 +68,68 @@
                   </b-form-group>
                 </form>
               </b-modal>
-        </b-row>
-
-        <!--  Date & Time picker -->
-        <b-row class="text-right my-2">
-          <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-            <!-- <div class="text-left my-2"> -->
-              <b-form-row >
+              <hr>
+          <b-col md="4" lg="4" sm="12" class="crcol">
               <label for="example-i18n-picker">Date</label>
-              <b-col style="padding-left:38px">
-                <b-form-datepicker id="datepicker-valid"
-                              :state ="valueDate ? true : false"
-                               v-model="valueDate" :min="minDate"></b-form-datepicker>
-              </b-col>
-              </b-form-row>
-            <!-- </div> -->
+                  <b-form-datepicker id="datepicker-valid"
+                    :state ="valueDate ? true : false"
+                    v-model="valueDate" :min="minDate"></b-form-datepicker>
           </b-col>
-        </b-row>
-        <b-row class="text-left my-2">
-          <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-            <b-form-row >
+          <b-col md="4" lg="4" sm="12" class="crcol">
               <label for="example-i18n-picker">Time</label>
-              <b-col style="padding-left:37px">
-               <b-form-timepicker id="timepicker-valid"
-                            :state="valueTime ? true : false"
-                             v-model="valueTime"></b-form-timepicker>
-              </b-col>
-            </b-form-row>
+                <b-form-timepicker id="timepicker-valid"
+                              :state="valueTime ? true : false"
+                              v-model="valueTime"></b-form-timepicker>
           </b-col>
-        </b-row>
-
-          <!-- Location -->
-          <b-row class="text-left my-2">
-          <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-            <b-form-row >
-                <label for="example-location">City</label>
-              <b-col style="padding-left:44px">
-              <b-form-select
-                class="text-left"
-                id="example-location"
-                required
-                v-model="city"
-                :options="filters.location"
-              ></b-form-select>
-              </b-col>
-            </b-form-row>
-            </b-col>
-          </b-row>
-
-        <!-- Address -->
-        <b-row class="text-left my-2">
-          <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-            <b-form-row>
-              <label for="example-i18n-picker">Address</label>
-            <b-col style="padding-left:15px">
-              <b-form-textarea
-                class=""
-                id="textarea-no-resize"
-                placeholder="Please enter an address"
-                rows="1"
-                no-resize
-                v-model="address"
-              ></b-form-textarea>
-            </b-col>
-            </b-form-row>
-          </b-col>
-        </b-row>
-
-        <!--Repeating-->
-        <b-row class="text-left my-2">
-          <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-            <b-form-row >
-              <label for="example-i18n-picker">Happening</label>
-              <b-col><!-- class="rec float-right">-->
+          <b-col md="4" lg="4" sm="12" class="crcol">
+              <label for="example-i18n-picker">This event will happen</label>
                 <b-form-select v-model="recurring" :options="options"></b-form-select>
-              </b-col>
-            </b-form-row>
           </b-col>
-        </b-row>
-
-      <!--People Needed-->
-      <b-row class="my-2 text-left">
-          <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-            <b-form-row >
-              <label for="example-i18n-picker">People Needed</label>
-              <b-col class="rec float-right">
-                <b-form-input required v-model="peopleNeeded"  type="number" min="0" title="How many people do you need?" ></b-form-input>
-              </b-col>
-            </b-form-row>
+          <b-col md="4" lg="4" sm="12" class="crcol">
+                <label for="example-location">City</label>
+                  <b-form-select
+                    class="text-left"
+                    id="example-location"
+                    required
+                    v-model="city"
+                    :options="filters.location"
+                  ></b-form-select>
           </b-col>
-      </b-row>
-
-        <!--  Details -->
-        <b-row class="text-left my-2">
-          <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-            <div class="text-left">
-              <label for="example-i18n-picker">Description</label>
-            </div>
+          <b-col md="4" lg="4" sm="12" class="crcol">
+              <label for="example-i18n-picker">Exact address</label>
+                <b-form-textarea
+                  style="height:38px"
+                  class=""
+                  id="textarea-no-resize"
+                  placeholder="Please enter an address"
+                  rows="1"
+                  no-resize
+                  v-model="address"
+                ></b-form-textarea>
           </b-col>
-        </b-row>
-          <b-row class="text-left my-2">
-          <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-              <b-form-textarea
-                id="textarea-no-resize"
-                rows="7"
-                no-resize
-                v-model="description"
-              ></b-form-textarea>
+          <b-col md="4" lg="4" sm="12" class="crcol">
+                <label for="example-i18n-picker">People Needed</label>
+                <b-form-input required v-model="peopleNeeded"
+                  type="number"
+                  min="0"
+                  title="How many people do you need to come?"
+                ></b-form-input>
+          </b-col>
+          <b-col sm="12"  class="crcol">
+            <label>Description</label>
+            <b-form-textarea
+              id="textarea-no-resize"
+              rows="7"
+              no-resize
+              v-model="description"
+            ></b-form-textarea>
+          </b-col>
+           <b-col sm="12"  class="crcol">
+              <b-button class="yellowbtn submitBtn" type="submit" style="margin-bottom:20px">Create</b-button>
             </b-col>
-          </b-row>
-          <b-row class="text-left my-2">
-          <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-              <b-button class="yellowbtn submitBtn" type="submit">Create</b-button>
-            </b-col>
-          </b-row>
+        </b-form-row>
         </b-form>
-        <!-- </b-container> -->
+<!--------------  new style hu dis---------------->
       </b-container>
     </div>
   </div>
@@ -327,12 +256,18 @@ export default {
   margin-left: 10px;
 }
 label{
-  margin-top: 8px;
+  margin-top: 12px;
+  margin-bottom:0;
 }
-.colorbutton, .yellowbtn{
-  margin-top:5px;
-  float: right;
-  margin-bottom: 0;
-  width: 100%;
+.crcol{
+  padding: 15px;
+  padding-right:30px;
+  padding-left:30px;
+}
+#crform{
+  background-color:rgba(253, 253, 253, 0.644);
+  margin-left: 7%;
+  margin-right: 7%;
+  border-radius: 8px;
 }
 </style>

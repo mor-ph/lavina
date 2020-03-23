@@ -87,13 +87,14 @@ export default {
 
 <style scoped>
 .fixed-top {
-  background: #7da2a9;
+  background: rgb(125, 162, 169, 0.88);
    }
  .yellowbtn {
-  background: white;
+  background: rgb(255, 255, 255,0.95);
   color: rgb(60, 71, 78);
   /* align-self: center; */
   border-color: darkgray;
+  /* border-style: hidden; */
 }
 .loginreg{
   text-align: end;
