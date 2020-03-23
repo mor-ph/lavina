@@ -23,6 +23,11 @@ export function postSubCategory (category, subCategoryName, token) {
   return instance.post(`category/${category}`, { name: subCategoryName }, { headers })
 }
 
+export function createEvent (formData, token) {
+  const headers = { Authorization: `Bearer ${token}` }
+  return instance.post('event', formData, { headers })
+}
+
 export default {
   getRecentEvents: () => instance.get('event'),
 
