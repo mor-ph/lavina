@@ -65,6 +65,7 @@
                   type="password"
                   placeholder="Enter New Password"
                   v-model="newPassword"
+                  @change="dataChanged=true"
                 ></b-form-input>
               </b-form-group>
             </b-col>
