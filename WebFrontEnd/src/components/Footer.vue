@@ -1,9 +1,6 @@
 <template>
-  <b-container fluid>
-    <div>
-      <!-- Footer -->
-      <footer >
-        <div class="footer p-2 d-flex justify-content-between">
+      <footer>
+        <div class="p-2 d-flex justify-content-between">
             <b-container fluid>
               <span><b-icon class="icon" icon="envelope-fill"></b-icon></span>
               <span> info@codecoda.com</span>
@@ -16,9 +13,6 @@
             </b-container>
         </div>
       </footer>
-      <!-- Footer -->
-    </div>
-  </b-container>
 </template>
 <script>
 
@@ -28,12 +22,6 @@
 .text-center {
   padding-top: 0.5%;
 }
-/* .footer {
-  background-color: #7da2a9;
-  padding: 0.7%;
-  padding-bottom: 0%;
-  width: 100%;
-} */
 .icon {
   margin: 0.3%;
   outline-style: inset;
@@ -41,11 +29,10 @@
   padding-right: 0.3%;
 }
 footer{
-  position: fixed;
-  left: 0;
-  bottom: 0;
+  position: absolute;
   height: 2.5rem;
   width: 100%;
   background-color: #7da2a9;
+  z-index: 100;
 }
 </style>
