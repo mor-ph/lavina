@@ -31,11 +31,11 @@
                   id="example-category"
                   v-model="category"
                   :options= filters.category.slice(1)
-                  @change= "fetchSubCategories"
+                  @change= "getSubCategories"
                   required
                 ></b-form-select>
           </b-col>
-          <b-col md="4" lg="4" sm="12" class="crcol"><!--  v-if="category !== null">-->
+          <b-col md="4" lg="4" sm="12" class="crcol">
                 <label for="example-subcategorys">Subcategory</label>
                 <b-form-row>
                   <b-col sm="10">
@@ -44,7 +44,7 @@
                   :options="filters.subcategories"></b-form-select>
                   </b-col>
                   <b-col sm="2">
-                  <b-button v-b-modal.modal-prevent-closing class="colorbutton" title="Create new subcategory">
+                  <b-button v-b-modal.modal-prevent-closing class="colorbutton" title="Create new subcategory" :disabled="category === null">
                     <b-icon id="plusIcon" icon="plus" ></b-icon></b-button>
                   </b-col>
                 </b-form-row>
@@ -83,7 +83,7 @@
           </b-col>
           <b-col md="4" lg="4" sm="12" class="crcol">
               <label for="example-i18n-picker">This event will happen</label>
-                <b-form-select v-model="recurring" :options="options"></b-form-select>
+                <b-form-select v-model="recurring" :options="recurringOptions"></b-form-select>
           </b-col>
           <b-col md="4" lg="4" sm="12" class="crcol">
                 <label for="example-location">City</label>
@@ -125,6 +125,7 @@
             ></b-form-textarea>
           </b-col>
            <b-col sm="12"  class="crcol">
+             <p v-if="createEventError !== null">{{ createEventError }}</p>
               <b-button class="yellowbtn submitBtn" type="submit" style="margin-bottom:20px">Create</b-button>
             </b-col>
         </b-form-row>
@@ -136,22 +137,18 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import router from '../../router'
-import axios from 'axios'
+import { postSubCategory, createEvent } from '../../api/eventApi'
+
 export default {
   created () {
-    this.$store.dispatch('tryAutoLogin')
-    this.$store.dispatch('fetchFilters')
+    this.tryAutoLogin()
+    this.fetchFilters()
   },
   data () {
     const now = new Date()
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-    // 15th two months prior
-    const minDate = new Date(today)
-    minDate.setDate(minDate.getDate())
     return {
-      // Form data
       title: '',
       category: null,
       subcategory: null,
@@ -162,28 +159,32 @@ export default {
       peopleNeeded: null,
       description: '',
 
-      // Template data
       subCategoryName: '',
       nameState: null,
 
       types: ['date', 'time'],
       valueDate: '',
-      minDate: null,
-
+      minDate: now,
       valueTime: '',
 
-      options: [
+      recurringOptions: [
         { value: null, text: 'Once' },
         { value: '1', text: 'Everyday' },
         { value: '2', text: 'Every week' },
         { value: '3', text: 'Every month' }
-      ]
+      ],
 
+      createEventError: null
     }
   },
   methods: {
     ...mapMutations([
       'changeRefreshed'
+    ]),
+    ...mapActions([
+      'tryAutoLogin',
+      'fetchFilters',
+      'fetchSubcategories'
     ]),
     dateDisabled (ymd, date) {
       if (date.getDate() > Date()) {
@@ -192,8 +193,7 @@ export default {
     },
     async onSubmit () {
       if (this.valueDate === '' || this.valueTime === '') return
-
-      await axios.post('http://localhost:5103/api/event', {
+      const formData = {
         title: this.title,
         category: this.category,
         subcategory: this.subcategory,
@@ -204,13 +204,19 @@ export default {
         peopleNeeded: this.peopleNeeded,
         description: this.description,
         eventStatus: 1
-      }, { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } })
-      this.changeRefreshed()
-      router.replace('/')
+      }
+      try {
+        await createEvent(formData, this.token)
+        this.changeRefreshed()
+        alert('Your event was created successfully!')
+        router.replace('/')
+      } catch (error) {
+        this.createEventError = error
+      }
     },
-    fetchSubCategories () {
+    getSubCategories () {
       this.subcategory = null
-      this.$store.dispatch('fetchSubcategories', this.category)
+      this.fetchSubcategories(this.category)
     },
 
     checkFormValidity () {
@@ -226,15 +232,12 @@ export default {
       bvModalEvt.preventDefault()
       this.handleAddSubSubmit()
     },
-    handleAddSubSubmit () {
+    async handleAddSubSubmit () {
       if (!this.checkFormValidity()) {
         return
       }
-
-      this.$store.dispatch('addSubCategory', {
-        category: this.category,
-        subName: this.subCategoryName
-      })
+      await postSubCategory(this.category, this.subCategoryName, this.token)
+      this.fetchSubcategories(this.category)
       this.subcategory = this.subCategoryName
       this.$nextTick(() => {
         this.$bvModal.hide('modal-prevent-closing')
@@ -242,7 +245,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['filters'])
+    ...mapGetters(['filters', 'token'])
   }
 }
 </script>
