@@ -271,7 +271,7 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'refreshed'
+      'changeRefreshed'
     ]),
     dateDisabled (ymd, date) {
       if (date.getDate() > Date()) {
@@ -293,7 +293,7 @@ export default {
         description: this.description,
         eventStatus: 1
       }, { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } })
-      this.refreshed()
+      this.changeRefreshed()
       router.replace('/')
     },
     fetchSubCategories () {

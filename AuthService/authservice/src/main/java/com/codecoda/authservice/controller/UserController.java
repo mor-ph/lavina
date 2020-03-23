@@ -65,19 +65,19 @@ public class UserController {
     }
 
     @GetMapping("/email/{email}")
-    public String getEmail(@PathVariable String email){
+    public Boolean uniqueEmail(@PathVariable String email){
 
-        User userByEmail = userService.findByEmail(email);
+        boolean uniqueEmail = userService.existsByEmail(email);
 
-        return userByEmail.getEmail();
+        return uniqueEmail;
     }
 
     @GetMapping("/username/{username}")
-    public String getUsername(@PathVariable String username){
+    public Boolean uniqueUsername(@PathVariable String username){
 
-        User userByUsername = userService.findByUsername(username);
+        boolean uniqueUsername = userService.existsByUsername(username);
 
-        return userByUsername.getEmail();
+        return uniqueUsername;
     }
 
 

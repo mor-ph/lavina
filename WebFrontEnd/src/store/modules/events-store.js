@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import eventApi from '../../api/eventApi'
 
 Vue.use(Vuex)
 
@@ -38,7 +39,7 @@ export default {
       state.filters.subcategories = [{ value: null, text: 'All' }]
       state.selectedFilters.subcategory = null
     },
-    refreshed (state) {
+    changeRefreshed (state) {
       state.refreshed = !state.refreshed
     },
     emptyCategoryAndLocationArray (state) {
@@ -53,40 +54,35 @@ export default {
   actions: {
     loadInitalState ({ dispatch, commit, state }) {
       if (!state.refreshed) {
-        commit('refreshed')
+        commit('changeRefreshed')
         const recentEvents = dispatch('fetchRecentEvents')
         const filters = dispatch('fetchFilters')
         return Promise.all([recentEvents, filters])
       }
     },
-    fetchRecentEvents ({ commit }) {
-      axios.get('http://localhost:5103/api/event')
-        .then(events => {
-          commit('setEvents', events)
-        }).catch(err => console.log(err))
-    },
-    fetchEvents ({ commit, state }) {
-      axios.get('http://localhost:5103/api/event', {
-        params: {
-          category: state.selectedFilters.category,
-          subCategory: state.selectedFilters.subcategory,
-          location: state.selectedFilters.location,
-          date: state.selectedFilters.date
-        }
-      }).then(events => {
-        console.log(events)
+
+    async fetchRecentEvents ({ commit }) {
+      try {
+        const events = await eventApi.getRecentEvents()
         commit('setEvents', events)
-      }).catch(err => console.log(err))
+      } catch (error) { console.log(error) }
     },
 
-    fetchCategories ({ state }) {
-      axios.get('http://localhost:5103/api/category/main')
-        .then(categories => {
-          console.log(categories)
-          categories.data.map(category => {
-            state.filters.category.push(category.name)
-          })
-        }).catch(err => console.log(err))
+    fetchFilters ({ dispatch, commit }) {
+      commit('emptyCategoryAndLocationArray')
+      const categories = dispatch('fetchCategories')
+      const locations = dispatch('fetchLocations')
+
+      return Promise.all([categories, locations])
+    },
+
+    async fetchCategories ({ state }) {
+      try {
+        const categories = await eventApi.getCategories()
+        categories.data.map(category => {
+          state.filters.category.push(category.name)
+        })
+      } catch (error) { console.log(error) }
     },
 
     fetchLocations ({ state }) {
@@ -98,26 +94,31 @@ export default {
         }).catch(err => console.log(err))
     },
 
-    fetchFilters ({ dispatch, commit }) {
-      commit('emptyCategoryAndLocationArray')
-      const categories = dispatch('fetchCategories')
-      const locations = dispatch('fetchLocations')
-
-      return Promise.all([categories, locations])
+    async fetchFilteredEvents ({ commit, state }) {
+      const filters = {
+        category: state.selectedFilters.category,
+        subCategory: state.selectedFilters.subcategory,
+        location: state.selectedFilters.location,
+        date: state.selectedFilters.date
+      }
+      try {
+        const events = await eventApi.getFilteredEvents(filters)
+        commit('setEvents', events)
+      } catch (error) { console.log(error) }
     },
 
-    fetchSubcategories ({ state, commit }, category) {
+    async fetchSubcategories ({ state, commit }, category) {
       if (category === null) return
       commit('emptySubcategoriesArray')
-      axios.get('http://localhost:5103/api/category/getsub/' + category)
-        .then(subCategories => {
-          console.log(subCategories)
-          subCategories.data.map(subcategory => {
-            state.filters.subcategories.push(subcategory.name)
-          })
-        }).catch(err => console.log(err))
+      try {
+        const subCategories = await eventApi.getSubcategories(category)
+        subCategories.data.map(subcategory => {
+          state.filters.subcategories.push(subcategory.name)
+        })
+      } catch (error) { console.log(error) }
     },
 
+    // This will go in CreateEvent
     addSubCategory ({ state }, data) {
       console.log(data)
       axios.post('http://localhost:5103/api/category/' + data.category, {
@@ -127,6 +128,7 @@ export default {
       }).catch(error => console.log(error))
     }
   },
+
   getters: {
     events: (state) => {
       return state.events

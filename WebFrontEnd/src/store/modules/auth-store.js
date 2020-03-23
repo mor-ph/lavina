@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axiosAuth from '../../axios-auth'
+import authApi from '../../api/authApi'
 import router from '../../router'
 import jwtDecode from 'jwt-decode'
 
@@ -29,111 +29,93 @@ export default {
     }
   },
   actions: {
+    async register ({ dispatch }, formData) {
+      await authApi.register(formData)
+      dispatch('login', formData)
+    },
+
+    async login ({ commit, dispatch }, authData) {
+      const response = await authApi.login(authData)
+
+      const token = jwtDecode(response.data.accessToken)
+      const expirationDate = new Date(token.exp * 1000)
+
+      localStorage.setItem('token', response.data.accessToken)
+      localStorage.setItem('userId', token.userId)
+      localStorage.setItem('expirationDate', expirationDate)
+
+      commit('authUser', {
+        token: response.data.accessToken,
+        userId: response.data.id
+      })
+      dispatch('getUserById')
+
+      const now = new Date()
+      dispatch('setLogoutTimer', expirationDate.getTime() - now.getTime())
+      router.replace('/')
+    },
+
     setLogoutTimer ({ commit }, milliseconds) {
       setTimeout(() => {
         commit('clearAuthData')
       }, milliseconds)
     },
-    register ({ dispatch }, authData) {
-      axiosAuth.post('users', {
-        email: authData.email,
-        username: authData.username,
-        password: authData.password,
-        crossdomain: true
-      })
-        .then(() => {
-          dispatch('login', authData)
-        })
-        .catch(error => console.log(error))
-    },
 
-    login ({ commit, dispatch }, authData) {
-      axiosAuth.post('login', {
-        username: authData.username,
-        password: authData.password
-      })
-        .then(res => {
-          const decoded = jwtDecode(res.data.accessToken)
-          console.log(decoded.exp)
-          const expirationDate = new Date(decoded.exp * 1000)
-          localStorage.setItem('token', res.data.accessToken)
-          localStorage.setItem('userId', decoded.userId)
-          localStorage.setItem('expirationDate', expirationDate)
-          commit('authUser', {
-            token: res.data.accessToken,
-            userId: res.data.id
-          })
-          dispatch('fetchUserById')
-          const now = new Date()
-
-          dispatch('setLogoutTimer', expirationDate.getTime() - now.getTime())
-          router.replace('/')
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-    tryAutoLogin ({ commit, dispatch, state }) {
-      const token = localStorage.getItem('token')
-      if (!token || state.idToken) {
-        return
-      }
-      const expirationDate = new Date(localStorage.getItem('expirationDate'))
-      const now = new Date()
-      if (now >= expirationDate) {
-        return
-      }
-      const userId = localStorage.getItem('userId')
-      commit('authUser', {
-        token: token,
-        userId: userId
-      })
-      dispatch('fetchUserById')
-      dispatch('setLogoutTimer', expirationDate.getTime() - now.getTime())
-    },
     logout ({ commit }) {
       commit('clearAuthData')
       localStorage.removeItem('expirationDate')
       localStorage.removeItem('token')
       localStorage.removeItem('userId')
-      router.replace('/')
     },
-    updateProfileSettings ({ state, dispatch }, formData) {
-      const headers = {
-        headers: {
-          Authorization: 'Bearer ' + state.idToken
-        }
+
+    tryAutoLogin ({ commit, dispatch, state }) {
+      const token = localStorage.getItem('token')
+      if (!token || state.idToken) {
+        return
       }
+
+      const expirationDate = new Date(localStorage.getItem('expirationDate'))
+      const now = new Date()
+      if (now >= expirationDate) {
+        return
+      }
+
+      const userId = localStorage.getItem('userId')
+      commit('authUser', {
+        token: token,
+        userId: userId
+      })
+
+      dispatch('getUserById')
+      dispatch('setLogoutTimer', expirationDate.getTime() - now.getTime())
+    },
+
+    async updateProfile ({ state, dispatch }, formData) {
       if (formData.password === null) {
         formData = {
           username: formData.username,
           email: formData.email
         }
       }
-      axiosAuth.put(
-        'users/' + state.userId, formData, headers)
-        .then(() => {
-          dispatch('logout')
-        })
-        .catch(res => console.log(res))
+      await authApi.updateProfile(state.userId, formData, state.idToken)
+      dispatch('logout')
+      router.replace('/login')
     },
-    fetchUserById ({ commit, state }) {
-      const headers = {
-        headers: {
-          Authorization: 'Bearer ' + state.idToken
-        }
+
+    async getUserById ({ commit, state }) {
+      try {
+        const response = await authApi.getUserById(state.userId, state.idToken)
+        commit('storeUser', {
+          username: response.data.username,
+          email: response.data.email
+        })
+      } catch (error) {
+        console.log(error)
       }
-      axiosAuth.get('users/' + state.userId, headers)
-        .then((res) => {
-          commit('storeUser', {
-            username: res.data.username,
-            email: res.data.email
-          })
-        }).catch(error => console.log(error))
     }
   },
   getters: {
-    getUser: (state) => {
+    user: (state) => {
       return state.user
     },
     isAuthenticated: (state) => {

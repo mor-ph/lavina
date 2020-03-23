@@ -25,29 +25,29 @@
         </b-col>
         <b-col class="loginreg" v-if="$mq === 'tablet' || $mq === 'desktop'">
             <div >
-                <b-icon v-if="auth" icon="person-fill" ></b-icon>
-                <router-link v-if="auth" to="/profile" class="hLink">Profile</router-link>
-                <router-link v-if="!auth" to="/login" class="hLink">Login</router-link>
+                <b-icon v-if="isAuthenticated" icon="person-fill" ></b-icon>
+                <router-link v-if="isAuthenticated" to="/profile" class="hLink">Profile</router-link>
+                <router-link v-if="!isAuthenticated" to="/login" class="hLink">Login</router-link>
                 <span style="color:white"> | </span>
-                <router-link v-if="!auth" to="/register"  class="hLink">Register</router-link>
-                <b-icon v-if="auth" icon="box-arrow-right" ></b-icon>
-                <router-link v-if="auth" @click.native="onLogout" to="/" class="hLink">Log out</router-link>
+                <router-link v-if="!isAuthenticated" to="/register"  class="hLink">Register</router-link>
+                <b-icon v-if="isAuthenticated" icon="box-arrow-right" ></b-icon>
+                <router-link v-if="isAuthenticated" @click.native="logout" to="/" class="hLink">Log out</router-link>
             </div>
         </b-col>
         <b-navbar-toggle target="nav-collapse" v-if="$mq === 'mobile'"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav v-if="$mq === 'mobile'" style="padding-top:3px">
           <b-navbar-nav class="mr-auto dropNav" v-if="$mq === 'mobile'" >
-            <b-dropdown-item class="dItem" to="profile" v-if="auth"  variant="light">
+            <b-dropdown-item class="dItem" to="profile" v-if="isAuthenticated"  variant="light">
               <b-icon icon="person-fill"></b-icon> Profile
             </b-dropdown-item>
             <b-dropdown-item class="text-white" to="home" variant="light">All Events</b-dropdown-item>
             <b-dropdown-item to="CreateEvent"  variant="light">Create Event</b-dropdown-item>
             <div class="dropdown-divider"></div>
-            <b-dropdown-item class="dItem" @click="onLogout"  v-if="auth" variant="light">
+            <b-dropdown-item class="dItem" @click="logout"  v-if="isAuthenticated" variant="light">
               <b-icon icon="box-arrow-right"></b-icon> Log out
             </b-dropdown-item>
-            <b-dropdown-item class="dItem" to="/login" v-if="!auth" variant="light">Log in</b-dropdown-item>
-            <b-dropdown-item class="dItem" to="/register" v-if="!auth" variant="light">Register</b-dropdown-item>
+            <b-dropdown-item class="dItem" to="/login" v-if="!isAuthenticated" variant="light">Log in</b-dropdown-item>
+            <b-dropdown-item class="dItem" to="/register" v-if="!isAuthenticated" variant="light">Register</b-dropdown-item>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
@@ -59,6 +59,7 @@
 // import { showAt, hideAt } from 'vue-breakpoints'
 import Vue from 'vue'
 import VueMq from 'vue-mq'
+import { mapActions, mapGetters } from 'vuex'
 
 Vue.use(VueMq, {
   breakpoints: {
@@ -70,17 +71,11 @@ Vue.use(VueMq, {
 
 export default {
   methods: {
-    onLogout () {
-      this.$store.dispatch('logout')
-      console.log('logged out')
-    }
+    ...mapActions(['logout'])
   },
   computed: {
-    auth () {
-      return this.$store.getters.isAuthenticated
-    }
+    ...mapGetters(['isAuthenticated'])
   }
-  // components: { hideAt, showAt }
 }
 
 </script>

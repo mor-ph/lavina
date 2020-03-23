@@ -123,7 +123,8 @@
 import CommentsGrid from '../../components/Comment/CommentsGrid'
 import { mapGetters, mapActions } from 'vuex'
 import router from '../../router'
-import axios from 'axios'
+import commentsApi from '../../api/commentsApi'
+import { getEventById, joinToEvent } from '../../api/eventApi'
 
 export default {
   created () {
@@ -151,8 +152,8 @@ export default {
     ...mapActions([
       'tryAutoLogin'
     ]),
-    async fetchEventById (id) {
-      const response = await axios.get(`http://localhost:5103/api/event/${id}`)
+    async fetchEventById (eventId) {
+      const response = await getEventById(eventId)
       this.event = response.data
       if (this.event.userCreatedById.toString() === this.userId) {
         this.role = 'host'
@@ -160,13 +161,9 @@ export default {
     },
     async join () {
       if (this.token) {
-        const response = await axios.post('http://localhost:5103/api/event/userevents',
-          { eventId: this.event.id, userId: this.userId },
-          { headers: { Authorization: 'Bearer ' + this.token } })
-
-        if (response.status === 201) {
-          this.joined = true
-        }
+        await joinToEvent(this.event.id, this.userId, this.token)
+        this.joined = true
+        this.event.peopleNeeded--
       } else {
         router.replace('/login')
       }
@@ -175,14 +172,9 @@ export default {
       if (this.newComment.length === 0) return
 
       if (this.token) {
-        const response = await axios.post('http://localhost:5101/comments',
-          { eventId: this.event.id, message: this.newComment },
-          { headers: { Authorization: 'Bearer ' + this.token } })
-
-        if (response.status === 200) {
-          this.event.comments = response.data.filter(comment => comment.eventId === this.event.id)
-          this.newComment = null
-        }
+        const response = await commentsApi.postComment(this.event.id, this.newComment, this.token)
+        this.event.comments = response.data.filter(comment => comment.eventId === this.event.id)
+        this.newComment = null
       } else {
         router.replace('/login')
       }

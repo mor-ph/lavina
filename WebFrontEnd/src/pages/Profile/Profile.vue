@@ -21,8 +21,10 @@
                   id="username-input"
                   type="text"
                   required
-                  v-model="getUser.username"
+                  :value="user.username"
+                  @blur="setUsername"
                 ></b-form-input>
+                <p class="unique" v-if="!$v.username.unique && !$v.username.$pending">This Username is already registered.</p>
               </b-form-group>
             </b-col>
           </b-row>
@@ -39,8 +41,11 @@
                   id="email-input"
                   type="email"
                   required
-                  v-model="getUser.email"
+                  :value="user.email"
+                  @blur="setEmail"
                 ></b-form-input>
+                <p class="unique" v-if="!$v.email.email">Please provide a valid Email</p>
+                <p class="unique" v-if="!$v.email.unique && !$v.email.$pending">This Email is already registered.</p>
               </b-form-group>
             </b-col>
           </b-row>
@@ -87,7 +92,9 @@
           </b-row>
           <b-row class="text-left">
             <b-col sm="6" offset-sm="3">
-               <b-button type="submit" :disabled="$v.$invalid">Update</b-button>
+               <b-button type="submit" :disabled="$v.$invalid && !$v.$pending ||
+                                                  $v.$pending ||
+                                                  !dataChanged">Update</b-button>
             </b-col>
           </b-row>
  </b-form>
@@ -104,8 +111,8 @@
     </b-button-group>
      </b-col>
           </b-row>
-          <app-event-grid v-if="showMyEvents" :events="userEvents.data.createdEvents"></app-event-grid>
-          <app-event-grid v-else :events="userEvents.data.joinedEvents"></app-event-grid>
+          <app-event-grid v-if="showMyEvents" :events="userEvents.createdEvents"></app-event-grid>
+          <app-event-grid v-else :events="userEvents.joinedEvents"></app-event-grid>
       </b-container>
          </div>
     </div>
@@ -113,31 +120,52 @@
 
 <script>
 import EventsGrid from '../../components/Event/EventsGrid.vue'
-import { sameAs } from 'vuelidate/lib/validators'
-import { mapGetters } from 'vuex'
+import { sameAs, email } from 'vuelidate/lib/validators'
+import { mapGetters, mapActions } from 'vuex'
+import { getUserEvents } from '../../api/eventApi'
+import { checkEmail, checkUsername } from '../../api/authApi'
 
 export default {
   created () {
-    this.$store.dispatch('tryAutoLogin')
-    this.$store.dispatch('fetchUserEvents')
+    this.tryAutoLogin()
+    this.fetchUserEvents()
   },
   components: {
     appEventGrid: EventsGrid
   },
   data () {
     return {
+      username: this.$store.getters.user.username,
+      email: this.$store.getters.user.email,
       newPassword: null,
       confirmNewPassword: null,
-      showMyEvents: true
+      showMyEvents: true,
+      userEvents: [],
+      dataChanged: false
     }
   },
   computed: {
     ...mapGetters([
-      'getUser',
-      'userEvents'
+      'user',
+      'token'
     ])
   },
   validations: {
+    email: {
+      email,
+      async unique (email) {
+        if (email === '' || email === this.user.email) return true
+        const response = await checkEmail(email)
+        return !response.data
+      }
+    },
+    username: {
+      async unique (username) {
+        if (username === '' || username === this.user.username) return true
+        const response = await checkUsername(username)
+        return !response.data
+      }
+    },
     confirmNewPassword: {
       sameAs: sameAs(vm => {
         return vm.newPassword
@@ -145,17 +173,36 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'tryAutoLogin',
+      'updateProfile'
+    ]),
+    async fetchUserEvents () {
+      const events = await getUserEvents(this.token)
+      this.userEvents = events.data
+    },
     onSubmit () {
       const formData = {
-        email: this.getUser.email,
-        username: this.getUser.username,
+        email: this.email,
+        username: this.username,
         password: this.newPassword
       }
-      console.log(formData)
-      this.$store.dispatch('updateProfileSettings', formData)
+      this.updateProfile(formData)
     },
     btnClick () {
       this.showMyEvents = !this.showMyEvents
+    },
+    setUsername: function (event) {
+      this.username = event.target.value
+      if (this.username === this.user.username) {
+        this.dataChanged = false
+      } else this.dataChanged = true
+    },
+    setEmail: function (event) {
+      this.email = event.target.value
+      if (this.email === this.user.email) {
+        this.dataChanged = false
+      } else this.dataChanged = true
     }
   }
 }
@@ -167,5 +214,8 @@ hr{
 }
 .hhh{
   color:rgb(65, 72, 77);
+}
+.unique {
+  color: red;
 }
 </style>

@@ -17,7 +17,7 @@
          <b-form-select
     v-model="selectedFilters.category"
     :options= filters.category
-    @change= "fetchSubCategories(); fetchEvents();"></b-form-select>
+    @change= "fetchSubCategories(); fetchFilteredEvents();"></b-form-select>
         </b-col>
       </b-row>
       <!-- SubCategory -->
@@ -36,7 +36,7 @@
            <b-form-select
     v-model="selectedFilters.subcategory"
     :options="filters.subcategories"
-    @change= "fetchEvents"></b-form-select>
+    @change= "fetchFilteredEvents"></b-form-select>
         </b-col>
       </b-row>
       </div>
@@ -54,7 +54,7 @@
         <b-col sm="6" offset-sm="3">
            <b-form-select v-model="selectedFilters.location"
     :options="filters.location"
-    @change= "fetchEvents"></b-form-select>
+    @change= "fetchFilteredEvents"></b-form-select>
         </b-col>
       </b-row>
       <!-- Datepicker -->
@@ -73,7 +73,7 @@
           id="datepicker-valid"
           v-model="selectedFilters.date"
           :min="minDate"
-          @input= "fetchEvents"></b-form-datepicker>
+          @input= "fetchFilteredEvents"></b-form-datepicker>
         </b-col>
       </b-row>
      <!-- No event -->
@@ -89,23 +89,19 @@
 
 <script>
 import EventsGrid from '../../components/Event/EventsGrid'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   created () {
-    this.$store.dispatch('tryAutoLogin')
-    this.$store.dispatch('loadInitalState')
+    this.tryAutoLogin()
+    this.loadInitalState()
   },
   data () {
-    const now = new Date()
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-    const minDate = today
-    minDate.setDate(minDate.getDate())
+    const minDate = new Date()
     return {
       types: ['date'],
       valueDate: '',
-      minDate: minDate,
-      selectedFilters: this.$store.getters.selectedFilters
+      minDate: minDate
     }
   },
   components: {
@@ -114,15 +110,20 @@ export default {
   computed: {
     ...mapGetters([
       'events',
-      'filters'
+      'filters',
+      'selectedFilters'
     ])
   },
   methods: {
+    ...mapActions([
+      'tryAutoLogin',
+      'loadInitalState',
+      'fetchSubcategories',
+      'fetchFilteredEvents'
+    ]),
     fetchSubCategories () {
-      this.$store.dispatch('fetchSubcategories', this.selectedFilters.category)
-    },
-    fetchEvents () {
-      this.$store.dispatch('fetchEvents')
+      this.selectedFilters.subcategory = null
+      this.fetchSubcategories(this.selectedFilters.category)
     }
   }
 }

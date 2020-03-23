@@ -34,6 +34,7 @@
               v-model="password"
             ></b-form-input>
           </b-form-group>
+          <p class="invalid" v-if="invalid">Invalid Username or Password!</p>
 
           <b-button type="submit">Login</b-button>
            </b-col>
@@ -45,21 +46,31 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      invalid: false
     }
   },
   methods: {
+    ...mapActions([
+      'login'
+    ]),
     onSubmit () {
-      const formData = {
+      const authData = {
         username: this.username,
         password: this.password
       }
-      console.log(formData)
-      this.$store.dispatch('login', { username: formData.username, password: formData.password })
+      this.login(authData).catch(this.isInvalid())
+    },
+    isInvalid () {
+      setTimeout(() => {
+        this.invalid = true
+        this.password = null
+      }, 200)
     }
   }
 }
@@ -71,7 +82,10 @@ export default {
 }
 .label.label{
   color: white;
-
+}
+.invalid {
+  color: red;
+  font-weight: bolder;
 }
 
 </style>
