@@ -25,18 +25,16 @@ body, .body{
   padding: auto;
   /* height: auto; */
 }
-.yellowbtn{
-  background: rgb(250, 220, 85);
-  padding-left: 3%;
-}
 label{
   color:rgb(65, 72, 77);
 }
 .innerDiv{
   padding-bottom:20%;
+  padding-top: 150px;
 }
 body, .body, footer, #header, #modal-prevent-closing{
   font-family: system-ui;
+  font-size: 0.9rem;
 }
 .submitBtn{
   width: 100%;

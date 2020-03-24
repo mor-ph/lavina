@@ -121,10 +121,6 @@ export default {
 </script>
 
 <style>
-.innerDiv{
-  /* padding-bottom: 120px; */
-  padding-top: 150px;
-}
 label{
   margin-top:6px;
   margin-bottom:0;
