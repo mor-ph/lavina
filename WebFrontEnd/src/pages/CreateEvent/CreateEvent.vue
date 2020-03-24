@@ -8,11 +8,11 @@
               <hr>
             </b-col>
           </b-row>
-        <b-form @submit.prevent="onSubmit">
+    <b-form @submit.prevent="onSubmit">
       <b-form-row id="crform">
         <b-row class="innerRow">
           <b-col md="4" lg="4" sm="12" class="crcol">
-              <label for="example-i18n-picker">Title</label>
+              <label for="example-i18n-picker">Title<span red> *</span></label>
                 <b-form-textarea
                   style="height:38px"
                   class="text-left"
@@ -24,7 +24,7 @@
                 ></b-form-textarea>
           </b-col>
           <b-col md="4" lg="4" sm="12" class="crcol">
-              <label for="example-category">Category</label>
+              <label for="example-category">Category<span red> *</span></label>
                 <b-form-select
                   class="text-left"
                   id="example-category"
@@ -34,19 +34,20 @@
                   required
                 ></b-form-select>
           </b-col>
-          <b-col md="4" lg="4" sm="12" class="crcol">
-                <label for="example-subcategorys">Subcategory</label>
-                <b-form-row>
-                  <b-col sm="10" md="9">
-                    <b-form-select id="example-subcategorys"
-                    v-model="subcategory"
-                    :options="filters.subcategories"></b-form-select>
-                  </b-col>
-                  <b-col sm="2">
-                  <b-button v-b-modal.modal-prevent-closing class="colorbutton" title="Create new subcategory" :disabled="category === null">
-                    <b-icon id="plusIcon" icon="plus" ></b-icon></b-button>
-                  </b-col>
-                </b-form-row>
+          <b-col md="4" lg="4" sm="12" class="crcol" style="padding-right:15px">
+            <label for="example-subcategorys">Subcategory</label>
+            <b-form-row>
+              <b-col sm="9">
+                <b-form-select id="example-subcategorys"
+                v-model="subcategory"
+                :options="filters.subcategories"></b-form-select>
+              </b-col>
+              <b-col sm="2"  class="colorbutton">
+                <b-button v-b-modal.modal-prevent-closing title="Create new subcategory" :disabled="category === null">
+                  <b-icon id="plusIcon" icon="plus" ></b-icon>
+                </b-button>
+              </b-col>
+            </b-form-row>
           </b-col>
         </b-row>
             <b-modal
@@ -70,13 +71,13 @@
               </b-modal>
         <b-row class="innerRow">
           <b-col md="4" lg="4" sm="12"  class="crcol">
-              <label for="example-i18n-picker">Date</label>
+              <label for="example-i18n-picker">Date<span red> *</span></label>
                   <b-form-datepicker id="datepicker-valid"
                     :state ="valueDate ? true : false"
                     v-model="valueDate" :min="minDate"></b-form-datepicker>
           </b-col>
           <b-col md="4" lg="4" sm="12" class="crcol">
-              <label for="example-i18n-picker">Time</label>
+              <label for="example-i18n-picker">Time<span red> *</span></label>
                 <b-form-timepicker id="timepicker-valid"
                               :state="valueTime ? true : false"
                               v-model="valueTime"></b-form-timepicker>
@@ -88,7 +89,7 @@
         </b-row>
         <b-row class="innerRow">
           <b-col md="4" lg="4" sm="12" class="crcol">
-                <label for="example-location">City</label>
+                <label for="example-location">City<span red> *</span></label>
                   <b-form-select
                     class="text-left"
                     id="example-location"
@@ -109,7 +110,7 @@
                 ></b-form-textarea>
           </b-col>
           <b-col md="4" lg="4" sm="12" class="crcol">
-                <label for="example-i18n-picker">People Needed</label>
+                <label for="example-i18n-picker">People Needed<span red> *</span></label>
                 <b-form-input required v-model="peopleNeeded"
                   type="number"
                   min="0"
@@ -273,7 +274,13 @@ label{
   padding-left: 15px;
 }
 .colorbutton{
-  float: end;
-  margin-right:0;
+  /* width:auto; */
+  float: right;
+  /* align-items: end; */
+  /* margin-right:0; */
+  /* margin-left: auto; */
+}
+span{
+  color:rgb(209, 53, 53);
 }
 </style>
