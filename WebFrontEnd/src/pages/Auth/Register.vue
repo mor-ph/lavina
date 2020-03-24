@@ -24,14 +24,13 @@
                   description="We'll never share your email with anyone else."
                 >
                   <b-form-input
-                    :class="{invalid: !$v.email.unique}"
                     id="email-input"
-                    type="email"
                     placeholder="Enter email"
                     required
                     @blur="setEmail"
                   ></b-form-input>
-                  <p class="unique" v-if="!$v.email.email">Please provide a valid email address.</p>
+                  <p class="unique" v-if="!$v.email.email">Please provide a valid Email</p>
+                  <p class="unique" v-if="!$v.email.unique && !$v.email.$pending">This Email is already registered.</p>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -45,13 +44,13 @@
                 label-for="username-input"
               >
                 <b-form-input
-                  :class="{invalid: !$v.username.unique}"
                   id="username-input"
                   type="text"
                   placeholder="Enter Username"
                   required
                   @blur="setUsername"
                 ></b-form-input>
+                <p class="unique" v-if="!$v.username.unique && !$v.username.$pending">This Username is already registered.</p>
               </b-form-group>
             </b-col>
           </b-row>
@@ -80,7 +79,6 @@
                 id="confirm-password-input-group"
                 label="Confirm Password:"
                 label-for="confirm-password-input"
-                :class="{invalid: $v.confirmPassword.$error}"
               >
                 <b-form-input
                   id="confirm-password-input"
@@ -91,8 +89,7 @@
                   @blur="$v.confirmPassword.$touch()"
                 ></b-form-input>
               </b-form-group>
-
-              <b-button type="submit" :disabled="$v.$invalid"  class="submitBtn">Register</b-button>
+              <b-button type="submit" class="submitBtn" :disabled="$v.$invalid && !$v.$pending || $v.$pending">Register</b-button>
             </b-col>
           </b-row>
         </b-form>
@@ -103,7 +100,8 @@
 
 <script>
 import { email, sameAs } from 'vuelidate/lib/validators'
-import axios from 'axios'
+import { mapActions } from 'vuex'
+import { checkEmail, checkUsername } from '../../api/authApi'
 
 export default {
   data () {
@@ -111,41 +109,24 @@ export default {
       email: '',
       username: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      uniqueEmail: null
     }
   },
   validations: {
     email: {
       email,
-      unique: email => {
+      async unique (email) {
         if (email === '') return true
-
-        return (axios.get('http://localhost:8081/auth/email/' + email)
-        // When server return status 200 that means there is a match so the validation is false,
-        // otherwise it returns 500 so it's true
-          .then(() => {
-            return false
-          })
-          .catch(() => {
-            return true
-          })
-        )
+        const response = await checkEmail(email)
+        return !response.data
       }
     },
     username: {
-      unique: async username => {
+      async unique (username) {
         if (username === '') return true
-
-        return (axios.get('http://localhost:8081/auth/username/' + username)
-        // when server return status 200 that means there is a match so the validation is false,
-        // otherwise it returns 500 so it's true
-          .then(() => {
-            return false
-          })
-          .catch(() => {
-            return true
-          })
-        )
+        const response = await checkUsername(username)
+        return !response.data
       }
     },
     confirmPassword: {
@@ -155,6 +136,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'register'
+    ]),
     setUsername: function (event) {
       this.username = event.target.value
     },
@@ -167,7 +151,7 @@ export default {
         username: this.username,
         password: this.password
       }
-      this.$store.dispatch('register', formData)
+      this.register(formData)
     }
   }
 }
@@ -188,11 +172,5 @@ export default {
 
 .unique {
   color: red;
-  transition-delay: 1s;
 }
-
-.invalid {
-  border: 1px solid red;
-}
-
 </style>

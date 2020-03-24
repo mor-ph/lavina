@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <app-header></app-header>
-    <app-footer></app-footer>
     <router-view></router-view>
+    <app-footer></app-footer>
   </div>
 </template>
 <script>
@@ -19,7 +19,6 @@ export default {
 
 <style>
 body, .body{
-  position: relative;
   background: rgb(227, 227, 228);
   color:rgb(65, 72, 77);
   padding: auto;
@@ -39,5 +38,4 @@ body, .body, footer, #header, #modal-prevent-closing{
 .submitBtn{
   width: 100%;
 }
-
 </style>
