@@ -1,17 +1,16 @@
 <template>
-  <div>
     <!-- Color fon -->
-    <div class="body">
+    <div class="body innerDiv">
       <b-container fluid>
         <b-row class="text-center my-2">
-            <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-              <h3> Create new event</h3><hr>
+            <b-col md="8" offset-md="2" lg="8" offset-lg="2">
+              <h4 style="opacity:0.8"> Create new event</h4>
+              <hr>
             </b-col>
           </b-row>
         <b-form @submit.prevent="onSubmit">
-
-<!--------------  new style hu dis---------------->
       <b-form-row id="crform">
+        <b-row class="innerRow">
           <b-col md="4" lg="4" sm="12" class="crcol">
               <label for="example-i18n-picker">Title</label>
                 <b-form-textarea
@@ -39,10 +38,10 @@
           <b-col md="4" lg="4" sm="12" class="crcol">
                 <label for="example-subcategorys">Subcategory</label>
                 <b-form-row>
-                  <b-col sm="10">
-                  <b-form-select id="example-subcategorys"
-                  v-model="subcategory"
-                  :options="filters.subcategories"></b-form-select>
+                  <b-col sm="10" md="9">
+                    <b-form-select id="example-subcategorys"
+                    v-model="subcategory"
+                    :options="filters.subcategories"></b-form-select>
                   </b-col>
                   <b-col sm="2">
                   <b-button v-b-modal.modal-prevent-closing class="colorbutton" title="Create new subcategory" :disabled="category === null">
@@ -50,6 +49,7 @@
                   </b-col>
                 </b-form-row>
           </b-col>
+        </b-row>
             <b-modal
                 id="modal-prevent-closing"
                 ref="modal"
@@ -70,8 +70,8 @@
                   </b-form-group>
                 </form>
               </b-modal>
-              <hr>
-          <b-col md="4" lg="4" sm="12" class="crcol">
+        <b-row class="innerRow">
+          <b-col md="4" lg="4" sm="12"  class="crcol">
               <label for="example-i18n-picker">Date</label>
                   <b-form-datepicker id="datepicker-valid"
                     :state ="valueDate ? true : false"
@@ -87,6 +87,8 @@
               <label for="example-i18n-picker">This event will happen</label>
                 <b-form-select v-model="recurring" :options="recurringOptions"></b-form-select>
           </b-col>
+        </b-row>
+        <b-row class="innerRow">
           <b-col md="4" lg="4" sm="12" class="crcol">
                 <label for="example-location">City</label>
                   <b-form-select
@@ -103,7 +105,6 @@
                   style="height:38px"
                   class=""
                   id="textarea-no-resize"
-                  placeholder="Please enter an address"
                   rows="1"
                   no-resize
                   v-model="address"
@@ -117,6 +118,7 @@
                   title="How many people do you need to come?"
                 ></b-form-input>
           </b-col>
+        </b-row>
           <b-col sm="12"  class="crcol">
             <label>Description</label>
             <b-form-textarea
@@ -132,10 +134,8 @@
             </b-col>
         </b-form-row>
         </b-form>
-<!--------------  new style hu dis---------------->
       </b-container>
     </div>
-  </div>
 </template>
 
 <script>
@@ -258,27 +258,30 @@ export default {
 </script>
 
 <style scoped>
-.body {
-  padding-top: 120px;
-  padding-bottom: 150px;
-}
-.rec{
-  margin-left: 10px;
-}
 label{
   margin-top: 12px;
   margin-bottom:0;
 }
 .crcol{
   padding: 15px;
-  padding-right:30px;
-  padding-left:30px;
+  padding-right:20px;
+  /* margin-right:30px; */
+  padding-left:20px;
 }
 #crform{
   background-color:rgba(253, 253, 253, 0.644);
-  margin-left: 7%;
-  margin-right: 7%;
+  margin-left: 10%;
+  margin-right: 10%;
   border-radius: 8px;
+  padding: 30px;
+}
+.innerRow{
+  width: 100%;
+  padding-left: 15px;
+}
+.colorbutton{
+  float: end;
+  margin-right:0;
 }
 .error {
   color: red;
