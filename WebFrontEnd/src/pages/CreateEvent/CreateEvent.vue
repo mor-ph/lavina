@@ -12,6 +12,7 @@
           <b-col md="4" lg="4" sm="12"  class="crcol">
               <label for="example-i18n-picker">Title<span red> *</span></label>
                 <b-form-textarea
+                  maxlength="50"
                   style="height:38px"
                   class="text-left"
                   id="textarea-no-resize"
@@ -53,16 +54,17 @@
                 title="Subcategory"
                 @show="resetModal"
                 @hidden="resetModal"
-                @ok="handleAddSubSubmit"
+                @ok="handleOk"
               >
-                <form ref="form">
+                <form ref="form" @submit.stop.prevent="handleOk">
                   <b-form-group
                     :state="nameState"
                     label="Name"
                     label-for="name-input"
-                    invalid-feedback="Name is required"
+                    invalid-feedback="Name must be at least 3 characters!"
                   >
-                    <b-form-input id="name-input" v-model="subCategoryName" :state="nameState" required></b-form-input>
+                    <b-form-input id="name-input" pattern=".{3,}" v-model="subCategoryName" required></b-form-input>
+                    <small v-if="invalidSubCat !== null" style="color: red">{{ invalidSubCat }}</small>
                   </b-form-group>
                 </form>
               </b-modal>
@@ -121,7 +123,7 @@
             ></b-form-textarea>
           </b-col>
            <b-col sm="12"  class="crcol">
-             <p v-if="createEventError !== null">{{ createEventError }}</p>
+             <p class="error" v-if="createEventError !== null">{{ createEventError }}</p>
               <b-button class="yellowbtn submitBtn" type="submit" style="margin-bottom:20px">Create</b-button>
             </b-col>
         </b-form-row>
@@ -155,6 +157,7 @@ export default {
 
       subCategoryName: '',
       nameState: null,
+      invalidSubCat: null,
 
       types: ['date', 'time'],
       valueDate: '',
@@ -205,7 +208,7 @@ export default {
         alert('Your event was created successfully!')
         router.replace('/')
       } catch (error) {
-        this.createEventError = error
+        this.createEventError = error.response.data
       }
     },
     getSubCategories () {
@@ -230,12 +233,16 @@ export default {
       if (!this.checkFormValidity()) {
         return
       }
-      await postSubCategory(this.category, this.subCategoryName, this.token)
-      this.fetchSubcategories(this.category)
-      this.subcategory = this.subCategoryName
-      this.$nextTick(() => {
-        this.$bvModal.hide('modal-prevent-closing')
-      })
+      try {
+        await postSubCategory(this.category, this.subCategoryName, this.token)
+        this.fetchSubcategories(this.category)
+        this.subcategory = this.subCategoryName
+        this.$nextTick(() => {
+          this.$bvModal.hide('modal-prevent-closing')
+        })
+      } catch (error) {
+        this.invalidSubCat = error.response.data
+      }
     }
   },
   computed: {
@@ -301,5 +308,8 @@ label{
 }
 span{
   color:rgb(209, 53, 53);
+}
+.error {
+  color: red;
 }
 </style>

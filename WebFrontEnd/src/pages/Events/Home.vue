@@ -71,7 +71,7 @@
      <!-- No event -->
       <b-row class="text-center my-2">
         <b-col sm="10" offset-sm="1">
-          <app-events-grid :events="events.data" v-if="events.data != 0"></app-events-grid>
+          <app-events-grid :events="events" v-if="events.length != 0"></app-events-grid>
           <p v-else>No Events match your search!</p>
         </b-col>
       </b-row>

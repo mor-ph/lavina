@@ -82,6 +82,26 @@
             </div>
           </b-col>
         </b-row>
+        <b-row class="my-2 text-center">
+          <b-col sm="4" offset-sm="4">
+            <div class="text-center">
+              <label for="example-i18n-picker">
+                <strong>Recurring:</strong>
+              </label><br>
+             <p><b>{{ event.recurring }}</b></p>
+            </div>
+          </b-col>
+        </b-row>
+        <b-row class="my-2 text-center">
+          <b-col sm="4" offset-sm="4">
+            <div class="text-center">
+              <label for="example-i18n-picker">
+                <strong>Status:</strong>
+              </label><br>
+             <p><b>{{ event.eventStatus }}</b></p>
+            </div>
+          </b-col>
+        </b-row>
           <b-row class="text-center my-2">
             <b-col sm="4" offset-sm="4">
               <b-button @click="closeEvent" v-if="this.role === 'host'" variant="primary" size="lg">Close Event!</b-button>
@@ -89,7 +109,7 @@
                                             !joined &&
                                             this.role === 'user'"
                                             variant="primary" size="lg">Join!</b-button>
-              <b-button v-if="joined" disabled variant="primary" size="lg">Joined!</b-button>
+              <b-button v-if="joined && this.role === 'user'" disabled variant="primary" size="lg">Joined!</b-button>
             </b-col>
           </b-row>
          <h1>Comments:</h1>
@@ -158,6 +178,10 @@ export default {
       if (this.event.userCreatedById.toString() === this.userId) {
         this.role = 'host'
       } else this.role = 'user'
+      // eslint-disable-next-line eqeqeq
+      if (this.event.userevent.find(object => object.userId == this.userId) !== null) {
+        this.joined = true
+      }
     },
     async join () {
       if (this.token) {
