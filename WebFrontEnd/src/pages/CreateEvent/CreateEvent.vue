@@ -1,5 +1,4 @@
 <template>
-    <!-- Color fon -->
     <div class="body innerDiv">
       <b-container fluid>
         <b-row class="text-center my-2">
@@ -10,8 +9,7 @@
           </b-row>
     <b-form @submit.prevent="onSubmit">
       <b-form-row id="crform">
-        <b-row class="innerRow">
-          <b-col md="4" lg="4" sm="12" class="crcol">
+          <b-col md="4" lg="4" sm="12"  class="crcol">
               <label for="example-i18n-picker">Title<span red> *</span></label>
                 <b-form-textarea
                   style="height:38px"
@@ -23,7 +21,7 @@
                   v-model="title"
                 ></b-form-textarea>
           </b-col>
-          <b-col md="4" lg="4" sm="12" class="crcol">
+          <b-col d-flex md="4" lg="4" sm="12" class="crcol">
               <label for="example-category">Category<span red> *</span></label>
                 <b-form-select
                   class="text-left"
@@ -34,7 +32,7 @@
                   required
                 ></b-form-select>
           </b-col>
-          <b-col md="4" lg="4" sm="12" class="crcol" style="padding-right:15px">
+          <b-col md="4" lg="4" sm="12" class="crcol">
             <label for="example-subcategorys">Subcategory</label>
             <b-form-row>
               <b-col sm="9">
@@ -42,14 +40,13 @@
                 v-model="subcategory"
                 :options="filters.subcategories"></b-form-select>
               </b-col>
-              <b-col sm="2"  class="colorbutton">
-                <b-button v-b-modal.modal-prevent-closing title="Create new subcategory" :disabled="category === null">
-                  <b-icon id="plusIcon" icon="plus" ></b-icon>
+              <b-col sm="3">
+                <b-button class="colorbutton" v-b-modal.modal-prevent-closing title="Create new subcategory" :disabled="category === null">
+                  <b-icon id="plusIcon" icon="plus" height="33px" width="auto"></b-icon>
                 </b-button>
               </b-col>
             </b-form-row>
           </b-col>
-        </b-row>
             <b-modal
                 id="modal-prevent-closing"
                 ref="modal"
@@ -69,7 +66,6 @@
                   </b-form-group>
                 </form>
               </b-modal>
-        <b-row class="innerRow">
           <b-col md="4" lg="4" sm="12"  class="crcol">
               <label for="example-i18n-picker">Date<span red> *</span></label>
                   <b-form-datepicker id="datepicker-valid"
@@ -82,14 +78,12 @@
                               :state="valueTime ? true : false"
                               v-model="valueTime"></b-form-timepicker>
           </b-col>
-          <b-col md="4" lg="4" sm="12" class="crcol">
+          <b-col md="4" lg="4" sm="12" class="crcol" >
               <label for="example-i18n-picker">This event will happen</label>
                 <b-form-select v-model="recurring" :options="recurringOptions"></b-form-select>
           </b-col>
-        </b-row>
-        <b-row class="innerRow">
           <b-col md="4" lg="4" sm="12" class="crcol">
-                <label for="example-location">City<span red> *</span></label>
+                <label for="example-location">City<span> *</span></label>
                   <b-form-select
                     class="text-left"
                     id="example-location"
@@ -117,7 +111,6 @@
                   title="How many people do you need to come?"
                 ></b-form-input>
           </b-col>
-        </b-row>
           <b-col sm="12"  class="crcol">
             <label>Description</label>
             <b-form-textarea
@@ -252,33 +245,59 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 367px) {
+  .crcol{
+    padding-right:0;
+    /* margin-left:8px; */
+  }
+  #crform{
+    padding:15px;
+    width:100%;
+    margin-left: 1%;
+  }
+}
+@media (min-width: 767px){
+  #crform{
+    padding: 30px;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+}
+@media (min-width: 367px){
+  #crform{
+    padding: 24px;
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+}
+@media (max-width: 575px){
+  .colorbutton{
+    width:100%;
+    margin-top:5px;
+  }
+}
+@media (min-width: 900px){
+  .crcol{
+    padding:20px;
+  }
+}
 label{
   margin-top: 12px;
   margin-bottom:0;
 }
 .crcol{
-  padding: 15px;
-  padding-right:20px;
-  /* margin-right:30px; */
-  padding-left:20px;
+  padding-bottom: 7px;
 }
 #crform{
   background-color:rgba(253, 253, 253, 0.644);
-  margin-left: 10%;
-  margin-right: 10%;
   border-radius: 8px;
-  padding: 30px;
 }
 .innerRow{
   width: 100%;
-  padding-left: 15px;
 }
 .colorbutton{
-  /* width:auto; */
   float: right;
-  /* align-items: end; */
-  /* margin-right:0; */
-  /* margin-left: auto; */
+  padding:0;
 }
 span{
   color:rgb(209, 53, 53);

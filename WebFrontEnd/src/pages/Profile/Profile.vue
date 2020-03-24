@@ -108,7 +108,7 @@
 
       <b-button @click="btnClick"
                 :pressed="!showMyEvents"
-                :disabled="!showMyEvents">Join Events</b-button>
+                :disabled="!showMyEvents">Joined by me</b-button>
     </b-button-group>
      </b-col>
           </b-row>
