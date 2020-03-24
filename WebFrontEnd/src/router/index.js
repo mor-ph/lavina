@@ -102,4 +102,10 @@ const routes = [
   }
 ]
 
-export default new VueRouter({ mode: 'history', routes })
+export default new VueRouter({
+  mode: 'history',
+  routes,
+  scrollBehavior () {
+    window.scrollTo(0, 0)
+  }
+})
