@@ -64,7 +64,7 @@ export default {
     async fetchRecentEvents ({ commit }) {
       try {
         const events = await eventApi.getRecentEvents()
-        commit('setEvents', events)
+        commit('setEvents', events.data)
       } catch (error) { console.log(error) }
     },
 
@@ -103,7 +103,7 @@ export default {
       }
       try {
         const events = await eventApi.getFilteredEvents(filters)
-        commit('setEvents', events)
+        commit('setEvents', events.data)
       } catch (error) { console.log(error) }
     },
 
