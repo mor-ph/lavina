@@ -30,7 +30,7 @@ CREATE TABLE `categories` (
   UNIQUE KEY `IX_Categories_Name` (`Name`),
   KEY `IX_Categories_ParentCategoryID` (`ParentCategoryID`),
   CONSTRAINT `FK_Categories_Categories_ParentCategoryID` FOREIGN KEY (`ParentCategoryID`) REFERENCES `categories` (`ID`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,9 +86,9 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`ID`),
   KEY `IX_Comments_EventID` (`EventID`),
   KEY `IX_Comments_UserId` (`UserId`),
-  CONSTRAINT `FK_Comments_Events_EventID` FOREIGN KEY (`EventID`) REFERENCES `events` (`ID`) ON DELETE RESTRICT,
+  CONSTRAINT `FK_Comments_Events_EventID` FOREIGN KEY (`EventID`) REFERENCES `events` (`ID`) ON DELETE CASCADE,
   CONSTRAINT `FK_Comments_Users_UserId` FOREIGN KEY (`UserId`) REFERENCES `users` (`Id`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,12 +116,12 @@ CREATE TABLE `events` (
   `EventStatus` int NOT NULL,
   `Recurring` int DEFAULT NULL,
   `Description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `PeopleNeeded` int,
+  `PeopleNeeded` int NOT NULL,
   `Title` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `UserCreatedByID` int NOT NULL,
   `CategoryID` int NOT NULL,
   `CityID` int NOT NULL,
-  `Address` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `Address` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `IX_Events_CategoryID` (`CategoryID`),
   KEY `IX_Events_CityID` (`CityID`),
@@ -130,7 +130,7 @@ CREATE TABLE `events` (
   CONSTRAINT `FK_Events_Categories_CategoryID` FOREIGN KEY (`CategoryID`) REFERENCES `categories` (`ID`) ON DELETE CASCADE,
   CONSTRAINT `FK_Events_Cities_CityID` FOREIGN KEY (`CityID`) REFERENCES `cities` (`ID`) ON DELETE CASCADE,
   CONSTRAINT `FK_Events_Users_UserCreatedByID` FOREIGN KEY (`UserCreatedByID`) REFERENCES `users` (`Id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,30 +251,30 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
--- Table structure for table `USERROLES`
+-- Table structure for table `userroles`
 --
 
-DROP TABLE IF EXISTS `USERROLES`;
+DROP TABLE IF EXISTS `userroles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `USERROLES` (
+CREATE TABLE `userroles` (
   `UserId` int NOT NULL,
   `RoleId` int NOT NULL,
   PRIMARY KEY (`UserId`,`RoleId`),
-  KEY `IX_USERROLES_RoleId` (`RoleId`),
-  CONSTRAINT `FK_USERROLES_Roles_RoleId` FOREIGN KEY (`RoleId`) REFERENCES `roles` (`Id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_USERROLES_Users_UserId` FOREIGN KEY (`UserId`) REFERENCES `users` (`Id`) ON DELETE CASCADE
+  KEY `IX_UserRoles_RoleId` (`RoleId`),
+  CONSTRAINT `FK_UserRoles_Roles_RoleId` FOREIGN KEY (`RoleId`) REFERENCES `roles` (`Id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_UserRoles_Users_UserId` FOREIGN KEY (`UserId`) REFERENCES `users` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `USERROLES`
+-- Dumping data for table `userroles`
 --
 
-LOCK TABLES `USERROLES` WRITE;
-/*!40000 ALTER TABLE `USERROLES` DISABLE KEYS */;
-INSERT INTO `USERROLES` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1);
-/*!40000 ALTER TABLE `USERROLES` ENABLE KEYS */;
+LOCK TABLES `userroles` WRITE;
+/*!40000 ALTER TABLE `userroles` DISABLE KEYS */;
+INSERT INTO `userroles` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1);
+/*!40000 ALTER TABLE `userroles` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -325,6 +325,60 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Dumping events for database 'letsplay'
+--
+/*!50106 SET @save_time_zone= @@TIME_ZONE */ ;
+/*!50106 DROP EVENT IF EXISTS `EVENTHAPPENINGNOWSTATUSUPDATE` */;
+DELIMITER ;;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;;
+/*!50003 SET character_set_client  = utf8mb4 */ ;;
+/*!50003 SET character_set_results = utf8mb4 */ ;;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;;
+/*!50003 SET @saved_time_zone      = @@time_zone */ ;;
+/*!50003 SET time_zone             = 'SYSTEM' */ ;;
+/*!50106 CREATE*/ /*!50117 DEFINER=`root`@`localhost`*/ /*!50106 EVENT `EVENTHAPPENINGNOWSTATUSUPDATE` ON SCHEDULE EVERY 1 MINUTE STARTS '2020-03-24 14:23:32' ON COMPLETION PRESERVE ENABLE DO UPDATE EVENTS
+ 		SET 
+ 			EVENTSTATUS = IF(EVENTSTATUS <> 3,2,EVENTSTATUS)
+ 		WHERE  EVENTSTARTDATE < CURRENT_TIMESTAMP */ ;;
+/*!50003 SET time_zone             = @saved_time_zone */ ;;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;;
+/*!50003 SET character_set_results = @saved_cs_results */ ;;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;;
+/*!50106 DROP EVENT IF EXISTS `EVENTUPDATEAFTERTWELVEHOURS` */;;
+DELIMITER ;;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;;
+/*!50003 SET character_set_client  = utf8mb4 */ ;;
+/*!50003 SET character_set_results = utf8mb4 */ ;;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;;
+/*!50003 SET @saved_time_zone      = @@time_zone */ ;;
+/*!50003 SET time_zone             = 'SYSTEM' */ ;;
+/*!50106 CREATE*/ /*!50117 DEFINER=`root`@`localhost`*/ /*!50106 EVENT `EVENTUPDATEAFTERTWELVEHOURS` ON SCHEDULE EVERY 1 MINUTE STARTS '2020-03-24 14:23:31' ON COMPLETION PRESERVE ENABLE DO UPDATE EVENTS
+​
+ 		SET 
+ 			EVENTSTATUS = IF(RECURRING IS NOT NULL AND EVENTSTATUS <> 3,1,EVENTSTATUS),
+ 			EVENTSTATUS = IF(isnull(RECURRING),3,EVENTSTATUS),
+             EVENTSTARTDATE = IF(RECURRING = 1 AND EVENTSTATUS <> 3,adddate(EVENTSTARTDATE,INTERVAL 1 DAY),EVENTSTARTDATE),
+             EVENTSTARTDATE = IF(RECURRING = 2  AND EVENTSTATUS <> 3,adddate(EVENTSTARTDATE,INTERVAL 7 DAY),EVENTSTARTDATE),
+             EVENTSTARTDATE = IF(RECURRING = 3  AND EVENTSTATUS <> 3,adddate(EVENTSTARTDATE,INTERVAL 1 MONTH),EVENTSTARTDATE)
+ 		WHERE  ADDDATE(EVENTSTARTDATE,INTERVAL 12 HOUR) < CURRENT_TIMESTAMP */ ;;
+/*!50003 SET time_zone             = @saved_time_zone */ ;;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;;
+/*!50003 SET character_set_results = @saved_cs_results */ ;;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;;
+DELIMITER ;
+/*!50106 SET TIME_ZONE= @save_time_zone */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -335,4 +389,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-06 13:51:09
+-- Dump completed on 2020-03-24 17:33:13
