@@ -20,18 +20,19 @@ namespace EventAPI.Models.ViewModels
         public DateTime UpdatedOn { get; set; } = DateTime.Now;
 
         [DataType(DataType.Text)]
-        [MaxLength(100, ErrorMessage = "Description cannot be greater than {0}")]
+        [MaxLength(600, ErrorMessage = "Description cannot be greater than {0}")]
         public string Description { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [MaxLength(50, ErrorMessage = "City cannot be longer that {0} symbols")]
         public string City { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [MaxLength(50, ErrorMessage = "Category cannot be longer that {0} symbols")]
         public string Category { get; set; }
+
+        [DataType(DataType.Text)]
+        public string SubCategory { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer Number")]
         public int PeopleNeeded { get; set; }
