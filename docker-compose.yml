@@ -6,10 +6,10 @@ services:
      restart: always
      env_file:
        - variables.env
-       - "TZ=Europe/Sofia"
      volumes:
         - ./mysql-data:/var/lib/mysql
         - ./mysql-initdb:/docker-entrypoint-initdb.d
+        - /etc/localtime:/etc/localtime:ro
      ports:
        - 3306:3306
      networks:
@@ -24,7 +24,6 @@ services:
           dockerfile: ./EventService/Dockerfile
         env_file:
           - variables.env
-          - "TZ=Europe/Sofia"
         ports:
           - "5103:80"
         networks:
@@ -33,6 +32,7 @@ services:
           - commentapi
         volumes:
           - /etc/hosts:/etc/hosts
+          - /etc/localtime:/etc/localtime:ro
     commentapi:
         depends_on:
           - db
@@ -41,19 +41,19 @@ services:
           dockerfile: ./CommentService/CommentService/Dockerfile
         env_file:
           - variables.env
-          - "TZ=Europe/Sofia"
         ports:
           - "5101:80"
         networks:
           - default
         volumes:
           - /etc/hosts:/etc/hosts
+          - /etc/localtime:/etc/localtime:ro
+
 
     authapi:
         restart: on-failure
         environment:
           SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/letsplay?useSSL=false&autoReconnect=true&failOverReadOnly=false&maxReconnects=10&allowPublicKeyRetrieval=true&user=root&password=password
-          - "TZ=Europe/Sofia"
         depends_on:
           - db
         build:
@@ -61,6 +61,7 @@ services:
           dockerfile: ./AuthService/authservice/Dockerfile
         volumes:
           - /data/authservice
+          - /etc/localtime:/etc/localtime:ro
         ports:
           - "8081:8081"
         networks:
