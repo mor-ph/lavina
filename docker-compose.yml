@@ -6,6 +6,7 @@ services:
      restart: always
      env_file:
        - variables.env
+       - "TZ=Europe/Sofia"
      volumes:
         - ./mysql-data:/var/lib/mysql
         - ./mysql-initdb:/docker-entrypoint-initdb.d
@@ -23,6 +24,7 @@ services:
           dockerfile: ./EventService/Dockerfile
         env_file:
           - variables.env
+          - "TZ=Europe/Sofia"
         ports:
           - "5103:80"
         networks:
@@ -39,6 +41,7 @@ services:
           dockerfile: ./CommentService/CommentService/Dockerfile
         env_file:
           - variables.env
+          - "TZ=Europe/Sofia"
         ports:
           - "5101:80"
         networks:
@@ -50,6 +53,7 @@ services:
         restart: on-failure
         environment:
           SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/letsplay?useSSL=false&autoReconnect=true&failOverReadOnly=false&maxReconnects=10&allowPublicKeyRetrieval=true&user=root&password=password
+          - "TZ=Europe/Sofia"
         depends_on:
           - db
         build:
