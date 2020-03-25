@@ -33,6 +33,10 @@ namespace EventAPI.Models.ViewModels
         [MaxLength(50, ErrorMessage = "Category cannot be longer that {0} symbols")]
         public string Category { get; set; }
 
+        [DataType(DataType.Text)]
+        [MaxLength(50, ErrorMessage = "Category cannot be longer that {0} symbols")]
+        public string SubCategory { get; set; }
+
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer Number")]
         public int PeopleNeeded { get; set; }
 

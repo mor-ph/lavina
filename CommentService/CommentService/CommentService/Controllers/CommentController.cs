@@ -67,7 +67,7 @@ namespace CommentService.Controllers
 
             // // Real solution
             await CommentRepo.Add(cm);
-            return Ok(await CommentRepo.GetAll());
+            return Ok(await CommentRepo.GetCommentsForEvent(item.EventId));
         }
     }
 }

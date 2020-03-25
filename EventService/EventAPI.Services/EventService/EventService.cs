@@ -33,7 +33,14 @@ namespace EventAPI.Services.EventService
         public async Task CreateEvent(EventInputModel ev)
         {
             var eventToSave = _mapper.Map<Event>(ev);
-            eventToSave.Category = await GetCategory(ev.Category);
+            if (ev.SubCategory == null)
+            {
+                eventToSave.Category = await GetCategory(ev.Category);
+            }
+            else
+            {
+                eventToSave.Category = await GetCategory(ev.SubCategory);
+            }
             eventToSave.City = await GetCity(ev.City);
             eventToSave.UserCreatedById = GetCurrentUsersId();
             await _dbContext.Events.AddAsync(eventToSave);
@@ -165,7 +172,8 @@ namespace EventAPI.Services.EventService
             var ev = await _dbContext.Events.Include(e => e.Category)
                  .Where(x => x.UserCreatedById == GetCurrentUsersId() &&
                         x.Title == model.Title &&
-                        x.Category.Name == model.Category)
+                        x.Category.Name == model.Category ||
+                        x.Category.Name == model.SubCategory)
                  .ToListAsync();
 
             bool isDuplicate = ev.Any(x => Math.Abs((model.EventStartDate - x.EventStartDate).TotalHours) < 1);
