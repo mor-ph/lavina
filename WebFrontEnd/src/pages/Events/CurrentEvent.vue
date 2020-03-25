@@ -76,114 +76,6 @@
           </b-col>
         </b-form-row>
 <!-------------------------------------------------------------------------->
-        <b-row class="text-center my-2">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center  my-2">
-              <label for="example-i18n-picker">
-                <strong>Title:</strong>
-              </label>
-              <p><b>{{ event.title }}</b></p>
-            </div>
-          </b-col>
-        </b-row>
-
-        <b-row class="text-center my-2">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center my-2">
-              <label for="example-i18n-picker">
-                <strong>Date & Time:</strong>
-              </label><br>
-              <p><b>{{ new Date(event.eventStartDate).toUTCString() }}</b></p><br>
-            </div>
-          </b-col>
-        </b-row>
-
-        <!-- Location -->
-        <b-row class="text-center my-2">
-
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center my-2">
-              <label for="example-location">
-                <strong>Location:</strong>
-              </label> <br>
-            </div>
-           <p><b>{{ event.city.name }}</b></p>
-          </b-col>
-        </b-row>
-
-        <!-- Address -->
-        <b-row class="text-center my-2">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center  my-2">
-              <label for="example-i18n-picker">
-                <strong>Address:</strong>
-              </label> <br>
-            </div>
-           <p><b>{{ event.address }}</b></p>
-          </b-col>
-        </b-row>
-
-        <!--Hosted by-->
-         <b-row class="my-2 text-center">
-          <b-col sm="2" offset-sm="5">
-            <div class="text-center">
-              <label for="example-i18n-picker">
-                <strong>Hosted by:</strong>
-              </label><br>
-             <p><b>{{ event.user.username }}</b></p>
-            </div>
-          </b-col>
-        </b-row>
-        <!--  Details -->
-        <b-row class="text-center my-2">
-          <b-col sm="4" offset-sm="4">
-              <label for="example-i18n-picker">
-                <strong>Description:</strong>
-              </label><br>
-             <p><b>{{ event.description }}</b></p>
-            </b-col>
-          </b-row>
-           <!--People Needed-->
-        <b-row class="my-2 text-center">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center">
-              <label for="example-i18n-picker">
-                <strong>People Needed:</strong>
-              </label><br>
-             <p><b>{{ event.peopleNeeded }}</b></p>
-            </div>
-          </b-col>
-        </b-row>
-        <b-row class="my-2 text-center">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center">
-              <label for="example-i18n-picker">
-                <strong>Recurring:</strong>
-              </label><br>
-             <p><b>{{ event.recurring }}</b></p>
-            </div>
-          </b-col>
-        </b-row>
-        <b-row class="my-2 text-center">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center">
-              <label for="example-i18n-picker">
-                <strong>Status:</strong>
-              </label><br>
-             <p><b>{{ event.eventStatus }}</b></p>
-            </div>
-          </b-col>
-        </b-row>
-          <b-row class="text-center my-2">
-            <b-col sm="4" offset-sm="4">
-              <b-button @click="closeEvent" v-if="this.role === 'host'" variant="primary" size="lg">Close Event!</b-button>
-              <b-button @click="join" v-if="event.peopleNeeded > 0 &&
-                                            !joined &&
-                                            this.role === 'user'"
-                                            variant="primary" size="lg">Join!</b-button>
-              <b-button v-if="joined && this.role === 'user'" disabled variant="primary" size="lg">Joined!</b-button>
-            </b-col>
-          </b-row>
          <h1>Comments:</h1>
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
@@ -227,12 +119,6 @@ export default {
     appCommentsGrid: CommentsGrid
   },
   data () {
-    // let recurrence = 'once'
-    // switch (this.event.recurring) {
-    //   case '1': recurrence = 'every day'; break
-    //   case '2': recurrence = 'every week'; break
-    //   case '3': recurrence = 'every month'; break
-    // }
     return {
       props: ['event'],
       event: [],
@@ -258,7 +144,6 @@ export default {
       'tryAutoLogin'
     ]),
     async fetchEventById (eventId) {
-      // let recurrence = 'once'
       const response = await getEventById(eventId)
       this.event = response.data
       if (this.event.userCreatedById.toString() === this.userId) {
@@ -270,15 +155,6 @@ export default {
       }
       if (this.event.address === null || this.event.address === '') {
         this.event.address = 'not specified'
-      }
-      // switch (event.recurring.toString()) {
-      //   case null: event.recurring = 'once'; break
-      //   case '1': event.recurring = 'every day'; break
-      //   case '2': event.recurring = 'every week'; break
-      //   case '3': event.recurring = 'every month'; break
-      // }
-      if (event.recurring == null) {
-
       }
     },
     async join () {
@@ -321,11 +197,6 @@ export default {
     margin-left: 1%;
   }
 }
-@media (min-width: 367px){
-  /* #crform{
-    padding: 24px;
-  } */
-}
 .body {
   padding-top: 120px;
   padding-bottom: 150px;
@@ -357,12 +228,11 @@ small{
   margin-top:3px;
 }
 .details{
-  padding-top:10px;
+  padding-top:30px;
 }
 #description{
   background-color: rgba(255, 255, 255, 0.562);
   margin: 20px;
-  /* margin-bottom:0; */
   margin-right:12px;
   padding:10px;
   border-radius: 3px;

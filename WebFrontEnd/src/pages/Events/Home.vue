@@ -6,7 +6,7 @@
       <!-- Header -->
       <b-row class="text-center my-2">
         <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-          <h3 style="opacity:0.8">Search events</h3><hr>
+          <h3 style="opacity:0.8">Filter events by</h3><hr>
         </b-col>
       </b-row>
 

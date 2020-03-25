@@ -1,5 +1,5 @@
 <template>
-    <div class="col-sm-12 col-md-6 col-lg-3">
+    <div class="col-sm-12 col-md-6 col-lg-4">
 
     <b-card
     b-card-img-lazy
@@ -12,9 +12,9 @@
     tag="article"
     >
     <b-card-text class="card-text">
-      <p><b-icon icon="cursor-fill" ></b-icon> Location: {{event.city.name}}</p>
-      <p><b-icon icon="calendar-fill" ></b-icon> Date: {{new Date(event.eventStartDate).toDateString()}}</p>
-      <p><b-icon icon="clock-fill" ></b-icon> Time: {{new Date(event.eventStartDate).toLocaleTimeString()}}</p>
+      <p><b-icon icon="cursor-fill" ></b-icon> {{event.city.name}}</p>
+      <p><b-icon icon="calendar-fill" ></b-icon> {{new Date(event.eventStartDate).toDateString()}}</p>
+      <p><b-icon icon="clock-fill" ></b-icon>{{new Date(event.eventStartDate).toLocaleTimeString()}}</p>
       <small>Created {{event.addedAgo}}</small>
     </b-card-text>
     <router-link tag="button"
