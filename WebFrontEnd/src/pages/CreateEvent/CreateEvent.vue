@@ -102,6 +102,7 @@
           <b-col md="4" lg="4" sm="12" class="crcol">
               <label for="example-i18n-picker">Exact address</label>
                 <b-form-textarea
+                  maxlength="100"
                   style="height:38px"
                   class=""
                   id="textarea-no-resize"
@@ -122,6 +123,7 @@
           <b-col sm="12"  class="crcol">
             <label>Description</label>
             <b-form-textarea
+              maxlength="600"
               id="textarea-no-resize"
               rows="7"
               no-resize
@@ -214,7 +216,11 @@ export default {
         alert('Your event was created successfully!')
         router.replace('/')
       } catch (error) {
-        this.createEventError = error.response.data
+        if (error.response.data.errors.EventStartDate) {
+          this.createEventError = 'Event must be in the future!'
+        } else {
+          this.createEventError = error.response.data
+        }
       }
     },
     getSubCategories () {
