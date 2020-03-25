@@ -51,6 +51,7 @@ services:
         restart: on-failure
         environment:
           SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/letsplay?serverTimezone=UTC&useLegacyDatetimeCode=false&useSSL=false&autoReconnect=true&failOverReadOnly=false&maxReconnects=10&allowPublicKeyRetrieval=true&user=root&password=password
+          - variables.env
         depends_on:
           - db
         build:
