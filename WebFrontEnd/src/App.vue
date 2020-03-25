@@ -2,17 +2,21 @@
   <div id="app">
     <app-header></app-header>
     <router-view></router-view>
+    <app-go-top id="backToTop" :max-width="1250" style="background-color: rgb(125, 162, 169, 0.88)"></app-go-top>
     <app-footer></app-footer>
   </div>
 </template>
 <script>
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
+import GoTop from '@inotom/vue-go-top'
+
 export default {
   name: 'app',
   components: {
     'app-header': Header,
-    'app-footer': Footer
+    'app-footer': Footer,
+    'app-go-top': GoTop
   }
 }
 </script>

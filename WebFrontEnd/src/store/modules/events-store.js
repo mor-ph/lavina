@@ -5,12 +5,6 @@ import eventApi from '../../api/eventApi'
 
 Vue.use(Vuex)
 
-const headers = {
-  headers: {
-    Authorization: 'Bearer ' + localStorage.getItem('token')
-  }
-}
-
 export default {
   state: {
     refreshed: false,
@@ -116,16 +110,6 @@ export default {
           state.filters.subcategories.push(subcategory.name)
         })
       } catch (error) { console.log(error) }
-    },
-
-    // This will go in CreateEvent
-    addSubCategory ({ state }, data) {
-      console.log(data)
-      axios.post('http://localhost:5103/api/category/' + data.category, {
-        name: data.subName
-      }, headers).then(() => {
-        state.filters.subcategories.push(data.subName)
-      }).catch(error => console.log(error))
     }
   },
 
