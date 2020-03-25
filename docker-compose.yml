@@ -9,7 +9,6 @@ services:
      volumes:
         - ./mysql-data:/var/lib/mysql
         - ./mysql-initdb:/docker-entrypoint-initdb.d
-        - /etc/localtime:/etc/localtime:ro
      ports:
        - 3306:3306
      networks:
@@ -32,7 +31,6 @@ services:
           - commentapi
         volumes:
           - /etc/hosts:/etc/hosts
-          - /etc/localtime:/etc/localtime:ro
     commentapi:
         depends_on:
           - db
@@ -47,7 +45,6 @@ services:
           - default
         volumes:
           - /etc/hosts:/etc/hosts
-          - /etc/localtime:/etc/localtime:ro
 
 
     authapi:
@@ -61,8 +58,6 @@ services:
           dockerfile: ./AuthService/authservice/Dockerfile
         volumes:
           - /data/authservice
-          - "/etc/timezone:/etc/timezone:ro"
-          - "/etc/localtime:/etc/localtime:ro"
         ports:
           - "8081:8081"
         networks:
