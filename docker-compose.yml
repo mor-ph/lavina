@@ -61,6 +61,7 @@ services:
           dockerfile: ./AuthService/authservice/Dockerfile
         volumes:
           - /data/authservice
+          - /etc/hosts:/etc/hosts
           - /etc/localtime:/etc/localtime:ro
         ports:
           - "8081:8081"
