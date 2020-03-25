@@ -109,7 +109,7 @@
                                             !joined &&
                                             this.role === 'user'"
                                             variant="primary" size="lg">Join!</b-button>
-              <b-button v-if="joined && this.role === 'user'" disabled variant="primary" size="lg">Joined!</b-button>
+              <b-button v-if="joined && this.role === 'user' && this.userId !== null" disabled variant="primary" size="lg">Joined!</b-button>
             </b-col>
           </b-row>
          <h1>Comments:</h1>
