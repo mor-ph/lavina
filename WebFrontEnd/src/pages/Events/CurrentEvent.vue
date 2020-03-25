@@ -74,8 +74,62 @@
               </b-row>
             </b-row>
           </b-col>
+<<<<<<< HEAD
         </b-form-row>
 <!-------------------------------------------------------------------------->
+=======
+        </b-row>
+        <!--  Details -->
+        <b-row class="text-center my-2">
+          <b-col sm="4" offset-sm="4">
+              <label for="example-i18n-picker">
+                <strong>Description:</strong>
+              </label><br>
+             <p><b>{{ event.description }}</b></p>
+            </b-col>
+          </b-row>
+           <!--People Needed-->
+        <b-row class="my-2 text-center">
+          <b-col sm="4" offset-sm="4">
+            <div class="text-center">
+              <label for="example-i18n-picker">
+                <strong>People Needed:</strong>
+              </label><br>
+             <p><b>{{ event.peopleNeeded }}</b></p>
+            </div>
+          </b-col>
+        </b-row>
+        <b-row class="my-2 text-center">
+          <b-col sm="4" offset-sm="4">
+            <div class="text-center">
+              <label for="example-i18n-picker">
+                <strong>Recurring:</strong>
+              </label><br>
+             <p><b>{{ event.recurring }}</b></p>
+            </div>
+          </b-col>
+        </b-row>
+        <b-row class="my-2 text-center">
+          <b-col sm="4" offset-sm="4">
+            <div class="text-center">
+              <label for="example-i18n-picker">
+                <strong>Status:</strong>
+              </label><br>
+             <p><b>{{ event.eventStatus }}</b></p>
+            </div>
+          </b-col>
+        </b-row>
+          <b-row class="text-center my-2">
+            <b-col sm="4" offset-sm="4">
+              <b-button @click="closeEvent" v-if="this.role === 'host'" variant="primary" size="lg">Close Event!</b-button>
+              <b-button @click="join" v-if="event.peopleNeeded > 0 &&
+                                            !joined &&
+                                            this.role === 'user'"
+                                            variant="primary" size="lg">Join!</b-button>
+              <b-button v-if="joined && this.role === 'user' && this.userId !== null" disabled variant="primary" size="lg">Joined!</b-button>
+            </b-col>
+          </b-row>
+>>>>>>> 907e7bb472d4d050dfcb312dd3287c349ced9c12
          <h1>Comments:</h1>
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
