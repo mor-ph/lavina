@@ -4,6 +4,78 @@
     <div class="body">
       <b-container fluid>
         <!-- Title -->
+<!-------------------------------------------------------------------------->
+        <b-form-row id="crform">
+          <b-col md="4">
+            <img src="https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-8/couple-hiking-mountain-climbing-1296x728-header.jpg?w=1155">
+          </b-col>
+          <b-col md="8">
+            <b-row id="info">
+              <b-col id="title" sm="12">
+                <b-col style="padding-left:0">
+                  <h3 style="margin-bottom:0">{{ event.title }} | {{this.event.eventStatus}}
+                  <small><span v-if="event.category.parentCategoryId!==null">cat: {{event.category.parentCategoryId}} -></span>
+                    subcat:{{event.category.name}}
+                  </small></h3>
+                </b-col>
+                <p style="margin-bottom:0">hosted by <b>{{ event.user.username }}</b></p>
+              </b-col>
+              <b-col md="5" class="details">
+                <b-row style="padding-left:5px">
+                  <b-icon icon="arrow-clockwise"></b-icon>
+                  <b-col style="padding-left:5px">
+                Created {{event.addedAgo}}
+                  </b-col>
+                </b-row>
+                <b-row style="padding-left:5px">
+                  <b-icon icon="arrow-clockwise"></b-icon>
+                  <b-col style="padding-left:5px">
+                Happening {{event.recurring}}, {{recurringOptions.text}}
+                  </b-col>
+                </b-row>
+                <b-row style="padding-left:5px">
+                    <b-icon icon="calendar-fill" ></b-icon>
+                  <b-col style="padding-left:5px">
+                  {{new Date(event.eventStartDate).toDateString()}}
+                  </b-col>
+                </b-row>
+                <b-row style="padding-left:5px">
+                    <b-icon icon="clock-fill" ></b-icon>
+                  <b-col style="padding-left:5px">
+                  {{new Date(event.eventStartDate).toLocaleTimeString()}}
+                  </b-col>
+                </b-row>
+                <b-row style="padding-left:5px">
+                    <b-icon icon="cursor-fill" ></b-icon>
+                  <b-col style="padding-left:5px">
+                    <b> {{event.city.name}}, Bulgaria</b>
+                    <p>Address:<b> {{event.address}}</b></p>
+                  </b-col>
+                </b-row>
+              </b-col>
+              <div class=" row grid-divider"></div>
+              <b-col id="description">
+                <h6>Description:</h6>
+                <p v-if="event.description!=null || event.description!=''" style="padding-left:20px">{{event.description}}</p>
+                <p v-if="event.description==null || event.description==''"
+                  style="padding-left:20px">Sorry, <b>{{event.user.username}}</b> didn't provide any :/</p>
+              </b-col>
+              <b-row style="width:100%">
+                <b-col id="needs">
+                  <b>{{event.user.username}}</b> still needs {{event.peopleNeeded}} people for this event.
+                </b-col>
+                <b-button @click="closeEvent" v-if="this.role === 'host'"
+                           id="close">Close Event!</b-button>
+                <b-button @click="join" v-if="event.peopleNeeded > 0 &&
+                                              !joined &&
+                                              this.role === 'user'"
+                                              size="lg" id="join">Join!</b-button>
+                <b-button v-if="joined && this.role === 'user'" disabledsize="lg" id="join">Joined!</b-button>
+              </b-row>
+            </b-row>
+          </b-col>
+        </b-form-row>
+<!-------------------------------------------------------------------------->
         <b-row class="text-center my-2">
           <b-col sm="4" offset-sm="4">
             <div class="text-center  my-2">
@@ -155,11 +227,24 @@ export default {
     appCommentsGrid: CommentsGrid
   },
   data () {
+    // let recurrence = 'once'
+    // switch (this.event.recurring) {
+    //   case '1': recurrence = 'every day'; break
+    //   case '2': recurrence = 'every week'; break
+    //   case '3': recurrence = 'every month'; break
+    // }
     return {
+      props: ['event'],
       event: [],
       joined: false,
       newComment: null,
-      role: null
+      role: null,
+      recurringOptions: [
+        { value: null, text: 'Once' },
+        { value: '1', text: 'Every day' },
+        { value: '2', text: 'Every week' },
+        { value: '3', text: 'Every month' }
+      ]
     }
   },
   computed: {
@@ -173,6 +258,7 @@ export default {
       'tryAutoLogin'
     ]),
     async fetchEventById (eventId) {
+      // let recurrence = 'once'
       const response = await getEventById(eventId)
       this.event = response.data
       if (this.event.userCreatedById.toString() === this.userId) {
@@ -181,6 +267,18 @@ export default {
       // eslint-disable-next-line eqeqeq
       if (this.event.userevent.find(object => object.userId == this.userId) !== null) {
         this.joined = true
+      }
+      if (this.event.address === null || this.event.address === '') {
+        this.event.address = 'not specified'
+      }
+      // switch (event.recurring.toString()) {
+      //   case null: event.recurring = 'once'; break
+      //   case '1': event.recurring = 'every day'; break
+      //   case '2': event.recurring = 'every week'; break
+      //   case '3': event.recurring = 'every month'; break
+      // }
+      if (event.recurring == null) {
+
       }
     },
     async join () {
@@ -211,8 +309,76 @@ export default {
 </script>
 
 <style scoped>
+@media(max-width: 575px){
+  #title{
+    margin-left:20px;
+  }
+}
+@media (max-width: 367px) {
+  #crform{
+    padding:15px;
+    width:100%;
+    margin-left: 1%;
+  }
+}
+@media (min-width: 367px){
+  /* #crform{
+    padding: 24px;
+  } */
+}
 .body {
   padding-top: 120px;
   padding-bottom: 150px;
+}
+#crform{
+  background-color:rgba(253, 253, 253, 0.644);
+  border-radius: 3px;
+}
+img{
+width:inherit;
+height: auto;
+border-radius: 3px;
+}
+#title{
+  height: fit-content;
+  width:inherit
+}
+#info{
+  padding:15px;
+}
+small{
+  float:right;
+  color:white;
+  padding:4px;
+  background-color: rgba(80, 69, 97, 0.712);
+  border-radius: 3px;
+}
+.b-icon{
+  margin-top:3px;
+}
+.details{
+  padding-top:10px;
+}
+#description{
+  background-color: rgba(255, 255, 255, 0.562);
+  margin: 20px;
+  /* margin-bottom:0; */
+  margin-right:12px;
+  padding:10px;
+  border-radius: 3px;
+}
+button{
+  float:end;
+}
+#close{
+  background-color: rgb(107, 32, 32);
+}
+#join{
+  background-color: rgb(85, 155, 82);
+}
+#needs{
+  font-size: 1.3rem;
+  padding-top:5px;
+  margin-left:10px;
 }
 </style>

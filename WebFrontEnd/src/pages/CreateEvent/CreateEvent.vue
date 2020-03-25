@@ -166,7 +166,7 @@ export default {
 
       recurringOptions: [
         { value: null, text: 'Once' },
-        { value: '1', text: 'Everyday' },
+        { value: '1', text: 'Every day' },
         { value: '2', text: 'Every week' },
         { value: '3', text: 'Every month' }
       ],
