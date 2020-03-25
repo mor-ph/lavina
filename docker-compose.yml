@@ -60,8 +60,8 @@ services:
           context: .
           dockerfile: ./AuthService/authservice/Dockerfile
         volumes:
-          - /etc/localtime:/etc/localtime:ro
           - /data/authservice
+          -v /etc/localtime:/etc/localtime:ro
         ports:
           - "8081:8081"
         networks:
