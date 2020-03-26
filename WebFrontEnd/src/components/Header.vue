@@ -5,7 +5,7 @@
       <b-navbar toggleable="lg" type="dark" class="fixed-top justify-content-between">
         <b-col style="padding-left:0">
           <router-link to="/">
-            <img src="./lavina-logo.png" alt="logo" width="50px" height="50px" style="padding-right:3px">
+            <img src="./lavina-logo.png" alt="logo" style="padding-right:3px">
             <b-navbar-brand id="lavina">LAVINA</b-navbar-brand>
           </router-link>
         </b-col>
@@ -14,7 +14,7 @@
                 <b-navbar-nav>
                   <div class="cr">
                     <router-link to="/createEvent" class="aCr">
-                      <b-button class="yellowbtn mb-2" size="lg">
+                      <b-button class="yellowbtn mb-1" size="lg">
                         Create Event
                         <b-icon id="plusIcon" icon="plus" ></b-icon>
                       </b-button>
@@ -114,7 +114,7 @@ export default {
     font-size: small;
     position: absolute;
     padding-top: 0;
-    padding-top: 35px;
+    padding-top: 45px;
 }
 .dropdown-item:hover{
   color:rgb(60, 71, 78);
