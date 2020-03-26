@@ -11,6 +11,16 @@ namespace EventAPI.Models.Helpers
 
             return status.ToString();
         }
+        public static string RecurringStatusConvert(this int? recurringStatus)
+        {
+            if(recurringStatus== null)
+            {
+                return "Once";
+            }
+            var recurring = (Recurring)Enum.Parse(typeof(Recurring), recurringStatus.ToString());
+
+            return recurring.ToString();
+        }
         public static string TimeAgo(this DateTime yourDate)
         {
             const int SECOND = 1;

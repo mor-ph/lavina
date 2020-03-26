@@ -25,7 +25,9 @@ namespace EventAPI.Models.Helpers
                 .ForMember(dest => dest.EventStatus,
                 opt => opt.MapFrom(src => src.EventStatus.EventStatusConvert()))
                 .ForMember(dest => dest.AddedAgo,
-                opt => opt.MapFrom(src => src.CreatedOn.TimeAgo()));
+                opt => opt.MapFrom(src => src.CreatedOn.TimeAgo()))
+                .ForMember(dest => dest.Recurring,
+                opt => opt.MapFrom(src => src.Recurring.RecurringStatusConvert()));
 
             CreateMap<Event, EventsForListViewModel>()
                 .ForMember(dest => dest.EventStatus,
