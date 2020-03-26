@@ -12,9 +12,9 @@ namespace EventAPI.Models.ViewModels
         public DateTime UpdatedOn { get; set; } = DateTime.UtcNow;
 
 
-        [Required]
-        [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer Number")]
-        public int PeopleNeeded { get; set; }
+        //[Required]
+        //[Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer Number")]
+        //public int PeopleNeeded { get; set; }
 
         [Required]
         [Range(1, 3, ErrorMessage = "Invalid Status, available status is 1-4")]

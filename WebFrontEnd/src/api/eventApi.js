@@ -28,6 +28,10 @@ export function createEvent (formData, token) {
   return instance.post('event', formData, { headers })
 }
 
+export function closeEvent (eventId, token) {
+  const headers = { Authorization: `Bearer ${token}` }
+  return instance.put(`event/${eventId}`, { eventStatus: 3 }, { headers })
+}
 export default {
   getRecentEvents: () => instance.get('event'),
 

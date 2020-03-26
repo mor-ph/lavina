@@ -126,7 +126,7 @@ namespace EventAPI.Services.EventService
         public async Task<Event> UpdateEvent(int id, EventUpdateModel model)
         {
             var dbEvent = await _dbContext.Events.FirstOrDefaultAsync(x => x.Id == id);
-            dbEvent.PeopleNeeded = model.PeopleNeeded;
+            //dbEvent.PeopleNeeded = model.PeopleNeeded;
             dbEvent.EventStatus = (int)model.EventStatus;
             dbEvent.UpdatedOn = DateTime.UtcNow;
 
