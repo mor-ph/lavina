@@ -22,7 +22,6 @@ namespace EventAPI.Services.UserEventService
         public async Task AddUserEvent(UserEventAddViewModel userevent)
         {
             var userEvent = _mapper.Map<Userevent>(userevent);
-
             await _context.Userevent.AddAsync(userEvent);
             await _context.SaveChangesAsync();
         }
