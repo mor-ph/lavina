@@ -50,14 +50,14 @@ namespace EventAPI.Services.Categories
 
             return categoriesToReturn;
         }
-        public async Task<IEnumerable<SubCategoriesViewModel>> GetSubCategories(string parentName)
+        public async Task<IEnumerable<MainCategoriesViewModel>> GetSubCategories(string parentName)
         {
             var category = await _context.Categories.FirstOrDefaultAsync(c => c.Name == parentName);
 
             var subCategories = await _context.Categories
                 .Where(c => c.ParentCategoryId == category.Id)
                 .ToListAsync();
-            var subCategoriesToReturn = _mapper.Map<IEnumerable<SubCategoriesViewModel>>(subCategories);
+            var subCategoriesToReturn = _mapper.Map<IEnumerable<MainCategoriesViewModel>>(subCategories);
             return subCategoriesToReturn;
         }
         public async Task<bool> CategoryExists(string name)

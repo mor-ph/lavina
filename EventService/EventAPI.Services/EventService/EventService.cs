@@ -3,6 +3,7 @@ using EventAPI.Data.Context;
 using EventAPI.Models.Models;
 using EventAPI.Models.QueryParameters;
 using EventAPI.Models.ViewModels;
+using EventAPI.Models.ViewModels.Categories;
 using EventAPI.Models.ViewModels.Events;
 using EventAPI.Models.ViewModels.UserEvents;
 using Microsoft.AspNetCore.Http;
@@ -47,9 +48,9 @@ namespace EventAPI.Services.EventService
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteEvent(Event evt)
+        public async Task DeleteEvent(int id)
         {
-            _dbContext.Events.Remove(evt);
+            _dbContext.Events.Remove(_dbContext.Events.Find(id));
             await _dbContext.SaveChangesAsync();
         }
 
@@ -95,32 +96,37 @@ namespace EventAPI.Services.EventService
             var eventsToReturn = _mapper.Map<List<EventsForListViewModel>>(events);
             return eventsToReturn;
         }
-        public async Task<Event> GetEventByID(int id)
+        public async Task<EventDetailsViewModel> GetEventByID(int id)
         {
-            var eventToreturn = await _dbContext.Events
+            var eventDb = await _dbContext.Events
                 .Include(e => e.Category)
                 .Include(e => e.City)
                 .Include(e => e.User)
                 .Include(e => e.Userevent)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Id == id);
-            try
+            List<Comment> comments;
+            using (var httpClient = new HttpClient())
             {
-                List<Comment> comments;
-                using (var httpClient = new HttpClient())
+                using (var response = await httpClient.GetAsync(@"http://commentapi:80/api/comment/" + id))
                 {
-                    using (var response = await httpClient.GetAsync(@"http://commentapi:80/api/comment/" + id))
-                    {
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-                        comments = JsonConvert.DeserializeObject<List<Comment>>(apiResponse);
-                        eventToreturn.Comments = comments;
-                    }
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    comments = JsonConvert.DeserializeObject<List<Comment>>(apiResponse);
+                    eventDb.Comments = comments;
                 }
             }
-            catch{
-
+            var eventToReturn = _mapper.Map<EventDetailsViewModel>(eventDb);
+            if(eventDb.Category.ParentCategoryId!=1)
+            {
+                eventToReturn.MainCategory = _mapper
+                    .Map<MainCategoriesViewModel>(await GetCategory(_dbContext.Categories.FirstOrDefault(c => c.Id == eventDb.Category.ParentCategoryId).Name));
+                eventToReturn.SubCategory = _mapper.Map<MainCategoriesViewModel>(eventDb.Category);
             }
-            return eventToreturn;
+            else
+            {
+                eventToReturn.MainCategory = _mapper.Map<MainCategoriesViewModel>(eventDb.Category);
+            }
+            return eventToReturn;
         }
 
         public async Task<Event> UpdateEvent(int id, EventUpdateModel model)

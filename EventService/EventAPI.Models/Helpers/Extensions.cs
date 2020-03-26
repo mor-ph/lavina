@@ -5,19 +5,21 @@ namespace EventAPI.Models.Helpers
 {
     public static class Extensions
     {
-        public static bool IsEventActive(this DateTime theDateTime)
-        {
-            if (theDateTime > DateTime.Now)
-            {
-                return true;
-            }
-            return false;
-        }
         public static string EventStatusConvert(this int eventstatus)
         {
             var status = (Status)Enum.Parse(typeof(Status), eventstatus.ToString());
 
             return status.ToString();
+        }
+        public static string RecurringStatusConvert(this int? recurringStatus)
+        {
+            if(recurringStatus== null)
+            {
+                return "Once";
+            }
+            var recurring = (Recurring)Enum.Parse(typeof(Recurring), recurringStatus.ToString());
+
+            return recurring.ToString();
         }
         public static string TimeAgo(this DateTime yourDate)
         {

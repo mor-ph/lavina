@@ -14,8 +14,9 @@
               <b-col id="title" sm="12">
                 <b-col style="padding-left:0">
                   <h3 style="margin-bottom:0">{{ event.title }} | {{this.event.eventStatus}}
-                  <small><span v-if="event.category.parentCategoryId!==null">cat: {{event.category.parentCategoryId}} -></span>
-                    subcat:{{event.category.name}}
+                  <small>
+                    <span>cat: {{event.mainCategory.name}} -></span>
+                    <span v-if="event.subCategory !== null">subcat:{{event.subCategory.name}}</span>
                   </small></h3>
                 </b-col>
                 <p style="margin-bottom:0">Hosted by <b>{{ event.user.username }}</b></p>
@@ -30,7 +31,7 @@
                 <b-row style="padding-left:5px">
                   <b-icon icon="arrow-clockwise"></b-icon>
                   <b-col style="padding-left:5px">
-                Happening {{event.recurring}}, {{recurringOptions.text}}
+                Happening {{event.recurring}}
                   </b-col>
                 </b-row>
                 <b-row style="padding-left:5px">
@@ -61,15 +62,14 @@
               <div class=" row grid-divider"></div>
               <b-col id="description">
                 <h6>Description:</h6>
-                <p v-if="event.description!=null || event.description!=''" style="padding-left:20px">{{event.description}}</p>
-                <p v-if="event.description==null || event.description==''"
-                  style="padding-left:20px">Sorry, <b>{{event.user.username}}</b> didn't provide any :/</p>
+                <p v-if="event.description !== ''" style="padding-left:20px">{{event.description}}</p>
+                <p v-else style="padding-left:20px">Sorry, <b>{{event.user.username}}</b> didn't provide any :/</p>
               </b-col>
               <b-row style="width:100%">
-                <b-col id="needs" v-if="event.eventStatus !== 3">
+                <b-col id="needs" v-if="event.eventStatus !== 'Finished'">
                   <b>{{event.user.username}}</b> still needs {{event.peopleNeeded}} people for this event.
                 </b-col>
-                <div v-if="this.event.eventStatus !== 3">
+                <div v-if="this.event.eventStatus !== 'Finished'">
                 <b-button @click="closeEvent" v-if="this.role === 'host'"
                            id="close">Close Event!</b-button>
                 <b-button @click="join" v-if="event.peopleNeeded > 0 &&
@@ -154,7 +154,7 @@ export default {
       const response = await getEventById(eventId)
       this.event = response.data
       // eslint-disable-next-line eqeqeq
-      if (this.event.userCreatedById == this.userId) {
+      if (this.event.user.id == this.userId) {
         this.role = 'host'
       } else this.role = 'user'
       // eslint-disable-next-line eqeqeq
@@ -188,7 +188,7 @@ export default {
     async closeEvent () {
       if (confirm('Are you sure you want to close this event ?\nTo confirm click "OK". To quit click "Cancel"')) {
         await closeEvent(this.event.id, this.token)
-        this.event.eventStatus = 3
+        this.event.eventStatus = 'Finished'
       }
     }
   }
