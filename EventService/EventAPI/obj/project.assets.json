@@ -2219,10 +2219,7 @@
         },
         "runtime": {
           "bin/placeholder/EventAPI.Data.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       },
       "EventAPI.Models/1.0.0": {
         "type": "project",
@@ -2238,10 +2235,7 @@
         },
         "runtime": {
           "bin/placeholder/EventAPI.Models.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       },
       "EventAPI.Services/1.0.0": {
         "type": "project",
@@ -2258,10 +2252,7 @@
         },
         "runtime": {
           "bin/placeholder/EventAPI.Services.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       }
     }
   },
@@ -3715,7 +3706,7 @@
       ]
     },
     "NuGet.Frameworks/4.7.0": {
-      "sha512": "qbXaB76XYUVLocLBs8Z9TS/ERGK2wm797feO+0JEPFvT7o7MRadOR77mqaSD4J1k8G+DlZQyq+MlkCuxrkr3ag==",
+      "sha512": "KuqDbPzjOWbUM6gPMbkvdhlQ10roQAoMM7mNZ8hcY/fH+9J4Zc+qT8dLWoNzGyr0OrxQVdZdbSjy/fxwoICgGg==",
       "type": "package",
       "path": "nuget.frameworks/4.7.0",
       "files": [
@@ -4283,11 +4274,12 @@
       ]
     },
     "System.Composition/1.0.31": {
-      "sha512": "I+D26qpYdoklyAVUdqwUBrEIckMNjAYnuPJy/h9dsQItpQwVREkDFs4b4tkBza0kT2Yk48Lcfsv2QQ9hWsh9Iw==",
+      "sha512": "CbzwbjxT04VU+JzQuPOYfUCybzBtbGZdqGJS9482dDBoBHbt3Zz0QAJ/Cjzpmq5xdL+hhW4FYWf/3wq2OCVXgg==",
       "type": "package",
       "path": "system.composition/1.0.31",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "system.composition.1.0.31.nupkg.sha512",
@@ -4323,11 +4315,12 @@
       ]
     },
     "System.Composition.Hosting/1.0.31": {
-      "sha512": "fN1bT4RX4vUqjbgoyuJFVUizAl2mYF5VAb+bVIxIYZSSc0BdnX+yGAxcavxJuDDCQ1K+/mdpgyEFc8e9ikjvrg==",
+      "sha512": "KlZ4qkaa1p/U2WKr353XeQ9bjrxBwn9FcD5k9WFEuV1MloDMnTnhUwQU7h1WigvsCYykzoRdnDLq33wnUPwBeg==",
       "type": "package",
       "path": "system.composition.hosting/1.0.31",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/System.Composition.Hosting.dll",
@@ -5242,7 +5235,7 @@
       ]
     },
     "System.Net.Http/4.3.0": {
-      "sha512": "sYg+FtILtRQuYWSIAuNOELwVuVsxVyJGWQyOnlAzhV4xvhyFnON1bAzYYC+jjRW8JREM45R0R5Dgi8MTC5sEwA==",
+      "sha512": "Z1UfSF6dlpCdZdxh6LeoGlYH+q6ptG/iiIWgUUeKhE3DbQACmZkU7Sz2nOX0qdHjz72MOdYRbkSJ5Qwl6sZgvg==",
       "type": "package",
       "path": "system.net.http/4.3.0",
       "files": [
@@ -5768,7 +5761,7 @@
       ]
     },
     "System.Reflection.Metadata/1.6.0": {
-      "sha512": "COC1aiAJjCoA5GBF+QKL2uLqEBew4JsCkQmoHKbN3TlOZKa2fKLz5CpiRQKDz0RsAOEGsVKqOD5bomsXq/4STQ==",
+      "sha512": "I4aWCii7N1bmn43vviRfJQYW6UAco1G/CcjJouvgGdb/sr2BRTSnddhaPMg2oxu9VHFn8T1z3dTLq0pna8zmtA==",
       "type": "package",
       "path": "system.reflection.metadata/1.6.0",
       "files": [
@@ -6409,7 +6402,7 @@
       ]
     },
     "System.Security.Cryptography.Cng/4.5.0": {
-      "sha512": "WG3r7EyjUe9CMPFSs6bty5doUqT+q9pbI80hlNzo2SkPkZ4VTuZkGWjpp77JB8+uaL4DFPRdBsAY+DX3dBK92A==",
+      "sha512": "O4tqXxWCD8y1IU1VTgzbuBFwoRahrADhDUxHjwezhHCsqyFNyQ5EytjWBxu0EsZuH14b4UO2pFkG063K2h/9Ug==",
       "type": "package",
       "path": "system.security.cryptography.cng/4.5.0",
       "files": [
@@ -6811,7 +6804,7 @@
       ]
     },
     "System.Text.Encodings.Web/4.5.0": {
-      "sha512": "Xg4G4Indi4dqP1iuAiMSwpiWS54ZghzR644OtsRCm/m/lBMG8dUBhLVN7hLm8NNrNTR+iGbshCPTwrvxZPlm4g==",
+      "sha512": "JF+wDdfFiRl3rz3dPMfR6aR568AW2J5CUMmhSflgHDz4zbVK4/00ax8UHnHyEMvblPewgNugjuA4oyoL8Pex2g==",
       "type": "package",
       "path": "system.text.encodings.web/4.5.0",
       "files": [
@@ -7311,19 +7304,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Decho\\.nuget\\packages\\": {}
+    "C:\\Users\\N&S\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
+      "projectUniqueName": "C:\\Users\\N&S\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
       "projectName": "EventAPI",
-      "projectPath": "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
-      "packagesPath": "C:\\Users\\Decho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI\\obj\\",
+      "projectPath": "C:\\Users\\N&S\\letsplay\\EventService\\EventAPI\\EventAPI.csproj",
+      "packagesPath": "C:\\Users\\N&S\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\N&S\\letsplay\\EventService\\EventAPI\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Decho\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\N&S\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7336,14 +7333,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj": {
-              "projectPath": "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj"
+            "C:\\Users\\N&S\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj": {
+              "projectPath": "C:\\Users\\N&S\\letsplay\\EventService\\EventAPI.Data\\EventAPI.Data.csproj"
             },
-            "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj": {
-              "projectPath": "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj"
+            "C:\\Users\\N&S\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj": {
+              "projectPath": "C:\\Users\\N&S\\letsplay\\EventService\\EventAPI.Models\\EventAPI.Models.csproj"
             },
-            "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj": {
-              "projectPath": "C:\\Users\\Decho\\Desktop\\neznamveche\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj"
+            "C:\\Users\\N&S\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj": {
+              "projectPath": "C:\\Users\\N&S\\letsplay\\EventService\\EventAPI.Services\\EventAPI.Services.csproj"
             }
           }
         }
