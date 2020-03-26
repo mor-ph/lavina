@@ -5,6 +5,7 @@ using EventAPI.Services.EventService;
 using EventAPI.Services.UserEventService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -99,16 +100,16 @@ namespace EventAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var evt = await _eventService.GetEventByID(id);
-            if (evt == null)
+            try
+            {
+                await _eventService.DeleteEvent(id);
+                return this.Ok("Event successfully deleted!");
+            }
+            catch
             {
                 return NotFound();
             }
-            else
-            {
-                await _eventService.DeleteEvent(evt);
-                return this.Ok("Event successfully deleted!");
-            }
+            
         }
         // GET: api/event/userevents
         [HttpGet("userevents")]

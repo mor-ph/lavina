@@ -9,7 +9,7 @@ namespace EventAPI.Services.Categories
     {
         Task<Category> GetCategory(string name);
         Task<IEnumerable<MainCategoriesViewModel>> GetCategories();
-        Task<IEnumerable<SubCategoriesViewModel>> GetSubCategories(string parentName);
+        Task<IEnumerable<MainCategoriesViewModel>> GetSubCategories(string parentName);
         Task AddCategory(CategoriesAddViewModel category);
         Task<bool> CategoryExists(string name);
 

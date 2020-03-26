@@ -13,8 +13,8 @@ namespace EventAPI.Services.EventService
         Task<IEnumerable<EventsForListViewModel>> GetAllEvents(EventsQueryParameters parameters);
         Task CreateEvent(EventInputModel ev);
         Task<Event> UpdateEvent(int id, EventUpdateModel model);
-        Task DeleteEvent(Event evt);
-        Task<Event> GetEventByID(int id);
+        Task DeleteEvent(int id);
+        Task<EventDetailsViewModel> GetEventByID(int id);
         Task<Category> GetCategory(string name);
         Task<City> GetCity(string name);
         Task<CreatedAndJoinedEventDto> GetCreatedAndJoinedEvents();

@@ -17,9 +17,8 @@ namespace EventAPI.Models.ViewModels.Events
         public string Title { get; set; }
         public int UserCreatedById { get; set; }
         public string Address { get; set; }
-        public bool IsActive { get; set; }
 
-        public virtual SubCategoriesViewModel Category { get; set; }
+        public virtual MainCategoriesViewModel Category { get; set; }
         public virtual CityViewModel City { get; set; }
         public virtual UserViewModel User { get; set; }
         //public virtual ICollection<Userevent> Userevent { get; set; }
