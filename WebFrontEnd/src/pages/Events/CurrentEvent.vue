@@ -49,7 +49,12 @@
                     <b-icon icon="cursor-fill" ></b-icon>
                   <b-col style="padding-left:5px">
                     <b> {{event.city.name}}, Bulgaria</b>
-                    <p>Address:<b> {{event.address}}</b></p>
+                  </b-col>
+                </b-row>
+                <b-row style="padding-left:5px">
+                  <b-icon icon="eye-fill"></b-icon>
+                  <b-col style="padding-left:5px">
+                  <b>Address: {{event.address}}</b>
                   </b-col>
                 </b-row>
               </b-col>
@@ -61,9 +66,10 @@
                   style="padding-left:20px">Sorry, <b>{{event.user.username}}</b> didn't provide any :/</p>
               </b-col>
               <b-row style="width:100%">
-                <b-col id="needs">
+                <b-col id="needs" v-if="event.eventStatus !== 3">
                   <b>{{event.user.username}}</b> still needs {{event.peopleNeeded}} people for this event.
                 </b-col>
+                <div v-if="this.event.eventStatus !== 3">
                 <b-button @click="closeEvent" v-if="this.role === 'host'"
                            id="close">Close Event!</b-button>
                 <b-button @click="join" v-if="event.peopleNeeded > 0 &&
@@ -71,6 +77,7 @@
                                               this.role === 'user'"
                                               size="lg" id="join">Join!</b-button>
                 <b-button v-if="joined && this.role === 'user' && this.userId !== null" disabledsize="lg" id="join">Joined!</b-button>
+                </div>
               </b-row>
             </b-row>
           </b-col>
@@ -108,7 +115,7 @@ import CommentsGrid from '../../components/Comment/CommentsGrid'
 import { mapGetters, mapActions } from 'vuex'
 import router from '../../router'
 import commentsApi from '../../api/commentsApi'
-import { getEventById, joinToEvent } from '../../api/eventApi'
+import { getEventById, joinToEvent, closeEvent } from '../../api/eventApi'
 
 export default {
   created () {
@@ -178,8 +185,11 @@ export default {
         router.replace('/login')
       }
     },
-    closeEvent () {
-      // Add axios.put change eventStatus to 3
+    async closeEvent () {
+      if (confirm('Are you sure you want to close this event ?\nTo confirm click "OK". To quit click "Cancel"')) {
+        await closeEvent(this.event.id, this.token)
+        this.event.eventStatus = 3
+      }
     }
   }
 }
