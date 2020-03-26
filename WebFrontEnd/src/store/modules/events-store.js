@@ -12,8 +12,7 @@ export default {
     filters: {
       category: [],
       subcategories: [],
-      location: [],
-      date: ''
+      location: []
     },
     selectedFilters: {
       category: null,

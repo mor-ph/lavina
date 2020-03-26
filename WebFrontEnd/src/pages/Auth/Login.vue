@@ -59,18 +59,20 @@ export default {
     ...mapActions([
       'login'
     ]),
-    onSubmit () {
+    async onSubmit () {
       const authData = {
         username: this.username,
         password: this.password
       }
-      this.login(authData).catch(this.isInvalid())
+      try {
+        await this.login(authData)
+      } catch { this.isInvalid() }
     },
     isInvalid () {
       setTimeout(() => {
         this.invalid = true
         this.password = null
-      }, 200)
+      }, 500)
     }
   }
 }

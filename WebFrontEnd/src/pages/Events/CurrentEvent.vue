@@ -18,7 +18,7 @@
                     subcat:{{event.category.name}}
                   </small></h3>
                 </b-col>
-                <p style="margin-bottom:0">hosted by <b>{{ event.user.username }}</b></p>
+                <p style="margin-bottom:0">Hosted by <b>{{ event.user.username }}</b></p>
               </b-col>
               <b-col md="5" class="details">
                 <b-row style="padding-left:5px">
@@ -146,11 +146,12 @@ export default {
     async fetchEventById (eventId) {
       const response = await getEventById(eventId)
       this.event = response.data
-      if (this.event.userCreatedById.toString() === this.userId) {
+      // eslint-disable-next-line eqeqeq
+      if (this.event.userCreatedById == this.userId) {
         this.role = 'host'
       } else this.role = 'user'
       // eslint-disable-next-line eqeqeq
-      if (this.event.userevent.find(object => object.userId == this.userId) !== null) {
+      if (this.event.userevent.find(event => event.userId == this.userId) !== undefined) {
         this.joined = true
       }
       if (this.event.address === null || this.event.address === '') {
