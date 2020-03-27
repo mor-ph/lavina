@@ -1,5 +1,6 @@
 ﻿using CommentService.Data;
 using CommentService.Models;
+using CommentService.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

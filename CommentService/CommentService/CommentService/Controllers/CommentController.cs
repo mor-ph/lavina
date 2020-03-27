@@ -33,7 +33,7 @@ namespace CommentService.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var commentsList = await CommentRepo.GetAll();
-            var commentsToReturn = _mapper.Map <IEnumerable<CommentDto>>(commentsList);
+            var commentsToReturn = _mapper.Map<IEnumerable<CommentDto>>(commentsList);
             return Ok(commentsToReturn);
         }
         //GET: api/comment/1
@@ -41,7 +41,8 @@ namespace CommentService.Controllers
         public async Task<IActionResult> GetCommentsByEventId(int id)
         {
             var comments = await CommentRepo.GetCommentsForEvent(id);
-            return Ok(comments);
+            var commentsToReturn = _mapper.Map<IEnumerable<CommentDto>>(comments);
+            return Ok(commentsToReturn);
         }
 
         [HttpPost]
@@ -66,7 +67,8 @@ namespace CommentService.Controllers
 
             // // Real solution
             await CommentRepo.Add(cm);
-            return Ok(await CommentRepo.GetCommentsForEvent(item.EventId));
+            var commentsToReturn = _mapper.Map<IEnumerable<CommentDto>>(await CommentRepo.GetCommentsForEvent(item.EventId));
+            return Ok(commentsToReturn);
         }
     }
 }
