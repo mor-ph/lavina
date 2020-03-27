@@ -91,7 +91,7 @@
                     id="example-location"
                     required
                     v-model="city"
-                    :options="filters.location"
+                    :options= filters.location.slice(1)
                   ></b-form-select>
           </b-col>
           <b-col md="4" lg="4" sm="12" class="crcol">
@@ -210,11 +210,7 @@ export default {
         alert('Your event was created successfully!')
         router.replace('/')
       } catch (error) {
-        if (error.response.data.errors.EventStartDate) {
-          this.createEventError = 'Event must be in the future!'
-        } else {
-          this.createEventError = error.response.data
-        }
+        this.createEventError = error.response.data
       }
     },
     getSubCategories () {
