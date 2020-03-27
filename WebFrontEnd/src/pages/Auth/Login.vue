@@ -34,7 +34,7 @@
               v-model="password"
             ></b-form-input>
           </b-form-group>
-          <p class="invalid" v-if="invalid">Invalid Username or Password!</p>
+          <p class="invalid" v-if="invalid">Incorrect username or password!</p>
 
           <b-button type="submit" class="submitBtn">Log in</b-button>
            </b-col>

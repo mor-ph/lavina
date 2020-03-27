@@ -104,11 +104,11 @@
             <b-button-group style="width:100%">
               <b-button @click="btnClick"
                         :pressed="showMyEvents"
-                        :disabled="showMyEvents">Hosted by me</b-button>
+                        :disabled="showMyEvents">Events I host</b-button>
 
       <b-button @click="btnClick"
                 :pressed="!showMyEvents"
-                :disabled="!showMyEvents">Joined by me</b-button>
+                :disabled="!showMyEvents">Events I joined</b-button>
     </b-button-group>
      </b-col>
           </b-row>
