@@ -59,9 +59,9 @@ namespace CommentService.Controllers
             Comment cm = item;
             cm.UserId = userId;
             cm.PostedOn = DateTime.Now;
-
             // // Real solution
             await CommentRepo.Add(cm);
+            cm.User = await CommentRepo.GetUser(userId);
             var lastComment = _mapper.Map<CommentDto>(cm);
             return Ok(lastComment);
         }

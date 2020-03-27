@@ -38,6 +38,11 @@ namespace CommentService.Repository
             return commentsList;
         }
 
+        public async Task<User> GetUser(int id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
+            return user;
+        }
     }
 }
