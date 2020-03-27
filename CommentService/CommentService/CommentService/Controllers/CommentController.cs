@@ -54,7 +54,6 @@ namespace CommentService.Controllers
                 return BadRequest();
             }
            
-
             int userId;
             if (!int.TryParse(User.Claims.FirstOrDefault(x => x.Type == "userId").Value.ToString(), out userId))
             {
