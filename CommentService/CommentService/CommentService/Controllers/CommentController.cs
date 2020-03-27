@@ -50,11 +50,6 @@ namespace CommentService.Controllers
         [Route("/Comments")]
         public async Task<IActionResult> Create([FromBody] CommentViewModel item)
         {           
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-           
             int userId;
             if (!int.TryParse(User.Claims.FirstOrDefault(x => x.Type == "userId").Value.ToString(), out userId))
             {
@@ -67,8 +62,8 @@ namespace CommentService.Controllers
 
             // // Real solution
             await CommentRepo.Add(cm);
-            var commentsToReturn = _mapper.Map<IEnumerable<CommentDto>>(await CommentRepo.GetCommentsForEvent(item.EventId));
-            return Ok(commentsToReturn);
+            var lastComment = _mapper.Map<CommentDto>(cm);
+            return Ok(lastComment);
         }
     }
 }
