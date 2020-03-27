@@ -116,7 +116,7 @@ namespace EventAPI.Services.EventService
                 }
             }
             var eventToReturn = _mapper.Map<EventDetailsViewModel>(eventDb);
-            if(eventDb.Category.ParentCategoryId!=20)
+            if(eventDb.Category.ParentCategoryId!=1)
             {
                 eventToReturn.MainCategory = _mapper
                     .Map<MainCategoriesViewModel>(await GetCategory(_dbContext.Categories.FirstOrDefault(c => c.Id == eventDb.Category.ParentCategoryId).Name));
