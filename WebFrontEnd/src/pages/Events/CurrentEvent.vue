@@ -179,7 +179,7 @@ export default {
 
       if (this.token) {
         const response = await commentsApi.postComment(this.event.id, this.newComment, this.token)
-        this.event.comments = response.data
+        this.event.comments.push(response.data)
         this.newComment = null
       } else {
         router.replace('/login')

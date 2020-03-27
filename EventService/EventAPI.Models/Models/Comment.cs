@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventAPI.Models.ViewModels;
+using System;
 
 namespace EventAPI.Models.Models
 {
@@ -10,5 +11,6 @@ namespace EventAPI.Models.Models
         public int UserId { get; set; }
         public DateTime PostedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
+        public UserViewModel User { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using EventAPI.Models.Models;
 using EventAPI.Models.QueryParameters;
+using EventAPI.Models.Validations;
 using EventAPI.Models.ViewModels;
 using EventAPI.Services.EventService;
 using EventAPI.Services.UserEventService;
@@ -15,7 +16,6 @@ namespace EventAPI.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-
     public class EventController : ControllerBase
     {
         //Database 
@@ -53,29 +53,26 @@ namespace EventAPI.Controllers
         // POST: api/event
         [Authorize]
         [HttpPost()]
+        [ValidateModel]
         public async Task<ActionResult<Event>> CreateEvent([FromBody] EventInputModel model)
         {
-            if (ModelState.IsValid)
-            {
-                if (await _eventService.GetCategory(model.Category) == null ||
+            if (await _eventService.GetCategory(model.Category) == null ||
                     await _eventService.GetCity(model.City) == null)
-                    return BadRequest("City or Category is incorrect!");
+                return BadRequest("City or Category is incorrect!");
 
-                int userId;
-                if (!int.TryParse(User.Claims.FirstOrDefault(x => x.Type == "userId").Value.ToString(), out userId))
-                {
-                    return BadRequest("Invalid EventCreatedByID");
-                }
-                if (await _eventService.EventExists(model))
-                {
-                    return BadRequest("This event was added recently.");
-                }
-                //Add event to database and save context
-                await _eventService.CreateEvent(model);
-                return StatusCode(201, "Event created.");
+            int userId;
+            if (!int.TryParse(User.Claims.FirstOrDefault(x => x.Type == "userId").Value.ToString(), out userId))
+            {
+                return BadRequest("Invalid EventCreatedByID");
             }
-            else
-                return BadRequest("Invalid data");
+            if (await _eventService.EventExists(model))
+            {
+                return BadRequest("This event was added recently.");
+            }
+            //Add event to database and save context
+            await _eventService.CreateEvent(model);
+            return StatusCode(201, "Event created.");
+
         }
 
         // PUT: api/event/id
@@ -109,7 +106,7 @@ namespace EventAPI.Controllers
             {
                 return NotFound();
             }
-            
+
         }
         // GET: api/event/userevents
         [HttpGet("userevents")]

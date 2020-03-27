@@ -33,7 +33,7 @@ namespace CommentService.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var commentsList = await CommentRepo.GetAll();
-            var commentsToReturn = _mapper.Map <IEnumerable<CommentDto>>(commentsList);
+            var commentsToReturn = _mapper.Map<IEnumerable<CommentDto>>(commentsList);
             return Ok(commentsToReturn);
         }
         //GET: api/comment/1
@@ -41,7 +41,8 @@ namespace CommentService.Controllers
         public async Task<IActionResult> GetCommentsByEventId(int id)
         {
             var comments = await CommentRepo.GetCommentsForEvent(id);
-            return Ok(comments);
+            var commentsToReturn = _mapper.Map<IEnumerable<CommentDto>>(comments);
+            return Ok(commentsToReturn);
         }
 
         [HttpPost]
@@ -49,12 +50,6 @@ namespace CommentService.Controllers
         [Route("/Comments")]
         public async Task<IActionResult> Create([FromBody] CommentViewModel item)
         {           
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-           
-
             int userId;
             if (!int.TryParse(User.Claims.FirstOrDefault(x => x.Type == "userId").Value.ToString(), out userId))
             {
@@ -64,10 +59,11 @@ namespace CommentService.Controllers
             Comment cm = item;
             cm.UserId = userId;
             cm.PostedOn = DateTime.Now;
-
             // // Real solution
             await CommentRepo.Add(cm);
-            return Ok(await CommentRepo.GetCommentsForEvent(item.EventId));
+            cm.User = await CommentRepo.GetUser(userId);
+            var lastComment = _mapper.Map<CommentDto>(cm);
+            return Ok(lastComment);
         }
     }
 }
