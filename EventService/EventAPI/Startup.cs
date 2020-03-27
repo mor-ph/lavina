@@ -1,6 +1,7 @@
 using AutoMapper;
 using EventAPI.Configuration;
 using EventAPI.Data.Context;
+using EventAPI.Models.Validations;
 using EventAPI.Services.Categories;
 using EventAPI.Services.EventService;
 using EventAPI.Services.UserEventService;
@@ -58,7 +59,11 @@ namespace EventAPI
 
                 };
             });
-            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+                .ConfigureApiBehaviorOptions(options => 
+                {
+                    options.SuppressModelStateInvalidFilter = true;  
+                });
             services.AddDbContext<LetsPlayDbContext>(options =>
             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<ICategoryService, CategoryService>();

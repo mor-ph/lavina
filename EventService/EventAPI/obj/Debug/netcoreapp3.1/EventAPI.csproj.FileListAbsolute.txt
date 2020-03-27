@@ -1392,6 +1392,7 @@ C:\Users\Decho\Desktop\neznamveche\letsplay\EventService\EventAPI\bin\Debug\netc
 C:\Users\Decho\Desktop\neznamveche\letsplay\EventService\EventAPI\bin\Debug\netcoreapp3.1\EventAPI.Services.pdb
 C:\Users\Decho\Desktop\neznamveche\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.csprojAssemblyReference.cache
 C:\Users\Decho\Desktop\neznamveche\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.csproj.CoreCompileInputs.cache
+C:\Users\Decho\Desktop\neznamveche\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Decho\Desktop\neznamveche\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Decho\Desktop\neznamveche\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.AssemblyInfoInputs.cache
 C:\Users\Decho\Desktop\neznamveche\letsplay\EventService\EventAPI\obj\Debug\netcoreapp3.1\EventAPI.AssemblyInfo.cs
