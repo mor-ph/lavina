@@ -21,7 +21,6 @@
                   id="email-input-group"
                   label="Email address:"
                   label-for="email-input"
-                  description="We'll never share your email with anyone else."
                 >
                   <b-form-input
                     id="email-input"
@@ -29,8 +28,8 @@
                     required
                     @blur="setEmail"
                   ></b-form-input>
-                  <p class="unique" v-if="!$v.email.email">Please provide a valid Email</p>
-                  <p class="unique" v-if="!$v.email.unique && !$v.email.$pending">This Email is already registered.</p>
+                  <p class="unique" v-if="!$v.email.email">Please provide a valid email.</p>
+                  <p class="unique" v-if="!$v.email.unique && !$v.email.$pending">This email is already taken.</p>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -50,7 +49,7 @@
                   required
                   @blur="setUsername"
                 ></b-form-input>
-                <p class="unique" v-if="!$v.username.unique && !$v.username.$pending">This Username is already registered.</p>
+                <p class="unique" v-if="!$v.username.unique && !$v.username.$pending">This username is already taken.</p>
               </b-form-group>
             </b-col>
           </b-row>
@@ -88,6 +87,7 @@
                   v-model="confirmPassword"
                   @blur="$v.confirmPassword.$touch()"
                 ></b-form-input>
+                  <p class="unique" v-if="confirmPassword != '' && !$v.confirmPassword.sameAs">Passwords do not match.</p><!--add v-if-->
               </b-form-group>
               <b-button type="submit" class="submitBtn" :disabled="$v.$invalid && !$v.$pending || $v.$pending">Register</b-button>
             </b-col>

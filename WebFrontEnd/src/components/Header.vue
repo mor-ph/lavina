@@ -5,7 +5,7 @@
       <b-navbar toggleable="lg" type="dark" class="fixed-top justify-content-between">
         <b-col style="padding-left:0">
           <router-link to="/">
-            <img src="./lavina-logo_50x50.png" alt="logo" width="50px" height="50px" style="padding-right:3px">
+            <img src="./lavina-logo_110x110.png" alt="logo" width="50px" height="50px" style="padding-right:3px">
             <b-navbar-brand id="lavina">LAVINA</b-navbar-brand>
           </router-link>
         </b-col>
@@ -14,7 +14,7 @@
                 <b-navbar-nav>
                   <div class="cr">
                     <router-link to="/createEvent" class="aCr">
-                      <b-button class="yellowbtn mb-2" size="lg">
+                      <b-button class="yellowbtn mb-1" size="lg">
                         Create Event
                         <b-icon id="plusIcon" icon="plus" ></b-icon>
                       </b-button>
@@ -83,18 +83,16 @@ export default {
 <style scoped>
 .fixed-top {
   background: rgb(125, 162, 169, 0.88);
-   }
- .yellowbtn {
+}
+.yellowbtn {
   background: rgb(255, 255, 255,0.95);
   color: rgb(60, 71, 78);
-  /* align-self: center; */
   border-color: darkgray;
-  /* border-style: hidden; */
 }
 .loginreg{
   text-align: end;
 }
- .cr{
+.cr{
   align-self: center;
   display: flex;
   align-items: center;
@@ -120,9 +118,6 @@ export default {
   color:rgb(60, 71, 78);
 }
 .hicon{
-  color: ivory;
-}
-.yellowbtn :hover{
   color: ivory;
 }
 </style>
