@@ -40,7 +40,7 @@ CREATE TABLE `categories` (
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
 INSERT INTO `categories` VALUES (1,'Root',-1),(2,'Sports',1),(3,'Video Games',1),(4,'Music',1),
-(5,'Football',2),(6,'Volleyball',2),(7,'Basketball',2),(8,'Tenis',2),(9,'League of Legends',2),
+(5,'Football',2),(6,'Volleyball',2),(7,'Basketball',2),(8,'Tenis',2),(9,'League of Legends',3),
 (10,'Dota 2',3),(11,'Fortnite',3),(12,'PUBG',3),(13,'World of Warcraft',3);
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
