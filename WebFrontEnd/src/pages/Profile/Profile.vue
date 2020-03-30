@@ -23,6 +23,7 @@
                   required
                   :value="user.username"
                   @blur="setUsername"
+                  autocomplete="new-username"
                 ></b-form-input>
                 <p class="unique" v-if="!$v.username.unique && !$v.username.$pending">This Username is already registered.</p>
               </b-form-group>
@@ -66,6 +67,7 @@
                   placeholder="Enter New Password"
                   v-model="newPassword"
                   @change="dataChanged=true"
+                  autocomplete="new-password"
                 ></b-form-input>
               </b-form-group>
             </b-col>
@@ -86,6 +88,7 @@
                   placeholder="Confirm New Password"
                   v-model="confirmNewPassword"
                   @blur="$v.confirmNewPassword.$touch()"
+                  autocomplete="new-password"
                 ></b-form-input>
               <hr>
               </b-form-group>

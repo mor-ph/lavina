@@ -48,6 +48,7 @@
                   placeholder="Enter Username"
                   required
                   @blur="setUsername"
+                  autocomplete="new-username"
                 ></b-form-input>
                 <p class="unique" v-if="!$v.username.unique && !$v.username.$pending">This username is already taken.</p>
               </b-form-group>
@@ -67,6 +68,7 @@
                   placeholder="Enter Password"
                   required
                   v-model="password"
+                  autocomplete="new-password"
                 ></b-form-input>
               </b-form-group>
             </b-col>
@@ -86,8 +88,9 @@
                   required
                   v-model="confirmPassword"
                   @blur="$v.confirmPassword.$touch()"
+                  autocomplete="new-password"
                 ></b-form-input>
-                  <p class="unique" v-if="confirmPassword != '' && !$v.confirmPassword.sameAs">Passwords do not match.</p><!--add v-if-->
+                  <p class="unique" v-if="!$v.confirmPassword.sameAs && confirmPassword !== ''">Passwords do not match.</p>
               </b-form-group>
               <b-button type="submit" class="submitBtn" :disabled="$v.$invalid && !$v.$pending || $v.$pending">Register</b-button>
             </b-col>
