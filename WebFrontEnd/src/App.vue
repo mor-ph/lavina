@@ -22,11 +22,17 @@ export default {
 </script>
 
 <style>
+#app{
+  min-height: 100vh;
+ overflow: hidden;
+ display: block;
+ position: relative;
+ padding-bottom: 289px;
+}
 body, .body{
   background: rgb(227, 227, 228);
   color:rgb(65, 72, 77);
   padding: auto;
-  /* height: auto; */
 }
 label{
   color:rgb(65, 72, 77);
