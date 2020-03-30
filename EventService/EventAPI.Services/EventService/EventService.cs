@@ -54,7 +54,7 @@ namespace EventAPI.Services.EventService
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<EventsForListViewModel>> GetAllEvents(EventsQueryParameters parameters)
+        public async Task<IEnumerable<EventsForListViewModel>> GetAllEvents(EventsQueryParameters parameters, string sortOrder)
         {
             List<Event> events;
             if (AreAllNullOrEmpty(parameters) == false)
@@ -94,6 +94,18 @@ namespace EventAPI.Services.EventService
                     .ToListAsync();
             }
             var eventsToReturn = _mapper.Map<List<EventsForListViewModel>>(events);
+
+            if(AreAllNullOrEmpty(sortOrder) == false){
+
+                if(sortOrder == "start_date"){
+                    eventsToReturn = eventsToReturn.OrderByDescending(e => e.EventStartDate).ToList();
+                }
+
+                if(sortOrder == "created_date"){
+                    eventsToReturn = eventsToReturn.OrderByDescending(e => e.CreatedOn).ToList();
+                }
+            }
+            
             return eventsToReturn;
         }
         public async Task<EventDetailsViewModel> GetEventByID(int id)
