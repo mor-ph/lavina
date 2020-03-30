@@ -11,6 +11,7 @@
     :sub-title="subTitle"
     tag="article"
     >
+    <b><p class="card-img-overlay text-left" id="category">{{event.category.name}}</p></b>
     <b-card-text class="card-text">
       <p><b-icon icon="cursor-fill" ></b-icon> {{event.city.name}}</p>
       <p><b-icon icon="calendar-fill" ></b-icon> {{new Date(event.eventStartDate).toDateString()}}</p>
@@ -69,5 +70,20 @@ button{
 .card-text p {
   font-weight: bolder;
   margin: 0;
+}
+.card-img-overlay{
+    width: fit-content;
+    height: fit-content;
+    color:rgb(100, 117, 148);
+    padding: 5px;
+    padding-left: 28px;
+    padding-right: 10px;
+    margin: -9px;
+    font-size: large;
+    background: rgb(252,206,81);
+    /* background: linear-gradient(282deg, rgba(252,206,81,1) 85%, #eec24b 100%); */
+
+    background: linear-gradient(279deg, rgba(252,206,81,1) 85%, #eec24b 100%);
+
 }
 </style>
