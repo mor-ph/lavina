@@ -12,21 +12,22 @@ export default {
     filters: {
       category: [],
       subcategories: [],
-      location: []
+      location: [],
+      orderBy: [
+        { value: 'created_date', text: 'Recent' },
+        { value: 'start_date', text: 'Date' }]
     },
     selectedFilters: {
       category: null,
       subcategory: null,
       location: null,
-      date: null
+      date: null,
+      orderBy: 'created_date'
     }
   },
   mutations: {
     setEvents (state, events) {
       state.events = events
-    },
-    setSelectedFilters (state, filters) {
-      state.selectedFilters = filters
     },
     emptySubcategoriesArray (state) {
       state.filters.subcategories = [{ value: null, text: 'All' }]
@@ -92,7 +93,8 @@ export default {
         category: state.selectedFilters.category,
         subCategory: state.selectedFilters.subcategory,
         location: state.selectedFilters.location,
-        date: state.selectedFilters.date
+        date: state.selectedFilters.date,
+        sortOrder: state.selectedFilters.orderBy
       }
       try {
         const events = await eventApi.getFilteredEvents(filters)

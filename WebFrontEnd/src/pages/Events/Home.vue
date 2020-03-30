@@ -36,7 +36,7 @@
            <b-form-select
     v-model="selectedFilters.subcategory"
     :options="filters.subcategories"
-    @change= "fetchFilteredEvents"></b-form-select>
+    @change="fetchFilteredEvents"></b-form-select>
         </b-col>
       </b-row>
       </div>
@@ -50,7 +50,7 @@
         <b-col sm="6" offset-sm="3">
            <b-form-select v-model="selectedFilters.location"
     :options="filters.location"
-    @change= "fetchFilteredEvents"></b-form-select>
+    @change="fetchFilteredEvents"></b-form-select>
         </b-col>
       </b-row>
       <!-- Datepicker -->
@@ -65,9 +65,15 @@
           id="datepicker-valid"
           v-model="selectedFilters.date"
           :min="minDate"
-          @input= "fetchFilteredEvents"></b-form-datepicker><hr>
+          @input="fetchFilteredEvents"></b-form-datepicker>
         </b-col>
-      </b-row>
+        </b-row>
+      <b-row class="text-center my-2">
+        <b-col sm="6" offset-sm="3">
+          <label for="sortBy">Sort by:</label>
+          <b-form-select v-model="selectedFilters.orderBy" :options="filters.orderBy" @change="fetchFilteredEvents"></b-form-select>
+        </b-col>
+      </b-row><hr>
      <!-- No event -->
       <b-row class="text-center my-2">
         <b-col sm="10" offset-sm="1">
