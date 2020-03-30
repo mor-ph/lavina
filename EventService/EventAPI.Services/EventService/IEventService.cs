@@ -10,7 +10,7 @@ namespace EventAPI.Services.EventService
 {
     public interface IEventService
     {
-        Task<IEnumerable<EventsForListViewModel>> GetAllEvents(EventsQueryParameters parameters, string sortOrder);
+        Task<IEnumerable<EventsForListViewModel>> GetAllEvents(EventsQueryParameters parameters);
         Task CreateEvent(EventInputModel ev);
         Task<Event> UpdateEvent(int id, EventUpdateModel model);
         Task DeleteEvent(int id);

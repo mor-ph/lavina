@@ -54,7 +54,7 @@ namespace EventAPI.Services.EventService
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<EventsForListViewModel>> GetAllEvents(EventsQueryParameters parameters, string sortOrder)
+        public async Task<IEnumerable<EventsForListViewModel>> GetAllEvents(EventsQueryParameters parameters)
         {
             List<Event> events;
             if (AreAllNullOrEmpty(parameters) == false)
@@ -80,6 +80,19 @@ namespace EventAPI.Services.EventService
                 {
                     events = events.Where(e => e.EventStartDate.Date == parameters.Date.Value.Date).ToList();
                 }
+                if (parameters.sortOrder != null)
+                {
+
+                    if (parameters.sortOrder == "start_date")
+                    {
+                        events = events.OrderByDescending(e => e.EventStartDate).ToList();
+                    }
+
+                    if (parameters.sortOrder == "created_date")
+                    {
+                        events = events.OrderByDescending(e => e.CreatedOn).ToList();
+                    }
+                }
             }
             else
             {
@@ -95,17 +108,20 @@ namespace EventAPI.Services.EventService
             }
             var eventsToReturn = _mapper.Map<List<EventsForListViewModel>>(events);
 
-            if(AreAllNullOrEmpty(sortOrder) == false){
+            // if (AreAllNullOrEmpty(sortOrder) == false)
+            // {
 
-                if(sortOrder == "start_date"){
-                    eventsToReturn = eventsToReturn.OrderByDescending(e => e.EventStartDate).ToList();
-                }
+            //     if (sortOrder == "start_date")
+            //     {
+            //         eventsToReturn = eventsToReturn.OrderByDescending(e => e.EventStartDate).ToList();
+            //     }
 
-                if(sortOrder == "created_date"){
-                    eventsToReturn = eventsToReturn.OrderByDescending(e => e.CreatedOn).ToList();
-                }
-            }
-            
+            //     if (sortOrder == "created_date")
+            //     {
+            //         eventsToReturn = eventsToReturn.OrderByDescending(e => e.CreatedOn).ToList();
+            //     }
+            // }
+
             return eventsToReturn;
         }
         public async Task<EventDetailsViewModel> GetEventByID(int id)
@@ -128,7 +144,7 @@ namespace EventAPI.Services.EventService
                 }
             }
             var eventToReturn = _mapper.Map<EventDetailsViewModel>(eventDb);
-            if(eventDb.Category.ParentCategoryId!=1)
+            if (eventDb.Category.ParentCategoryId != 1)
             {
                 eventToReturn.MainCategory = _mapper
                     .Map<MainCategoriesViewModel>(await GetCategory(_dbContext.Categories.FirstOrDefault(c => c.Id == eventDb.Category.ParentCategoryId).Name));
