@@ -30,9 +30,9 @@ namespace EventAPI.Controllers
 
         //GET: api/event
         [HttpGet()]
-        public async Task<IActionResult> GetAll([FromQuery] EventsQueryParameters eventsQueryParameters,[FromQuery] string sortOrder)
+        public async Task<IActionResult> GetAll([FromQuery] EventsQueryParameters eventsQueryParameters)
         {
-            var events = await _eventService.GetAllEvents(eventsQueryParameters, sortOrder);
+            var events = await _eventService.GetAllEvents(eventsQueryParameters);
             return Ok(events);
 
         }
