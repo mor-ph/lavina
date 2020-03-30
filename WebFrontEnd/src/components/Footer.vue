@@ -16,7 +16,6 @@
         <hr style="background-color:white; ">
         <router-link to="/profile" class="flink row">MY PROFILE</router-link>
         <router-link to="/profile" class="flink row">EDIT PROFILE</router-link>
-        <router-link to="/createEvent" class="flink row">LOG OUT</router-link>
       </b-col>
       <b-col class="infocol" sm="3" md="3">
         <p class="fheader"><b>CONTACT US</b></p>
@@ -38,6 +37,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
+// TODO: log out da si vurshi rabotata i kato ne si lognat vmesto nego da ima register!!!!!!!!!!!!!!!!!
 export default {
   computed: {
     ...mapGetters(['isAuthenticated'])
@@ -59,7 +59,7 @@ footer {
   width: 100%;
   background-color: #7da2a9;
   z-index: 100;
-  /* background-color: #461f6ea8; */
+  bottom:0;
 }
 #ftr {
   margin: 0;
