@@ -85,7 +85,7 @@ namespace EventAPI.Services.EventService
 
                     if (parameters.sortOrder == "start_date")
                     {
-                        events = events.OrderByDescending(e => e.EventStartDate).ToList();
+                        events = events.OrderBy(e => e.EventStartDate).ToList();
                     }
 
                     if (parameters.sortOrder == "created_date")
