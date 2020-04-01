@@ -68,12 +68,9 @@
           @input="fetchFilteredEvents"></b-form-datepicker>
         </b-col>
         </b-row>
-      <b-row class="text-center my-2">
-        <b-col sm="6" offset-sm="3">
-          <label for="sortBy">Sort by:</label>
-          <b-form-select v-model="selectedFilters.orderBy" :options="filters.orderBy" @change="fetchFilteredEvents"></b-form-select>
-        </b-col>
-      </b-row><hr>
+      <label for="sortBy" id="sort">Sort by </label>
+      <b-form-select id="sortsel" v-model="selectedFilters.orderBy" :options="filters.orderBy" @change="fetchFilteredEvents"></b-form-select>
+      <hr style="margin:0; margin-top:-10px; padding-bottom:8px;">
      <!-- No event -->
       <b-row class="text-center my-2">
         <b-col sm="10" offset-sm="1">
@@ -135,5 +132,19 @@ label{
 .slabel{
   margin: 0;
   padding:0;
+}
+#sort{
+  color:rgb(100, 117, 148);
+  width:fit-content;
+  margin-left:10px;
+  font-size:1rem;
+}
+#sortsel{
+  color: #647594;
+  background-color: inherit;
+  width:fit-content;
+  margin-bottom:4px;
+  border:none;
+  font-weight: bold;
 }
 </style>
