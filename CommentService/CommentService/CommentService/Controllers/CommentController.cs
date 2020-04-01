@@ -59,6 +59,7 @@ namespace CommentService.Controllers
             Comment cm = item;
             cm.UserId = userId;
             cm.PostedOn = DateTime.Now;
+            cm.UpdatedOn = DateTime.Now;
             // // Real solution
             await CommentRepo.Add(cm);
             cm.User = await CommentRepo.GetUser(userId);
