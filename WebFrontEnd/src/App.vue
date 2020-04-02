@@ -22,12 +22,21 @@ export default {
 </script>
 
 <style>
+@media(max-width:575px){
+  #app{
+    padding-bottom: 510px;
+  }
+}
+@media(min-width: 576px){
+  #app{
+    padding-bottom: 289px;
+  }
+}
 #app{
   min-height: 100vh;
  overflow: hidden;
  display: block;
  position: relative;
- padding-bottom: 289px;
 }
 body, .body{
   background: rgb(227, 227, 228);
@@ -41,7 +50,11 @@ label{
   padding-bottom:20%;
   padding-top: 150px;
 }
-body, .body, footer, #header, #modal-prevent-closing{
+body, .body, #modal-prevent-closing,  .custom-control-label::before, .custom-file-label, .custom-select{
+  font-family: system-ui;
+  font-size: 0.75rem;
+}
+#header,  footer{
   font-family: system-ui;
   font-size: 0.9rem;
 }

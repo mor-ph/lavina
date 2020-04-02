@@ -1,5 +1,5 @@
 <template>
-    <div class="col-sm-12 col-md-6 col-lg-4">
+    <div class="col-sm-12 col-md-6 col-lg-3">
 
     <b-card
     b-card-img-lazy
@@ -8,7 +8,7 @@
     img-alt="Image"
     img-top
     :title ="event.title"
-    :sub-title="subTitle"
+    :sub-title=normalize()
     tag="article"
     >
     <b><p class="card-img-overlay text-left" id="category">{{event.category.name}}</p></b>
@@ -29,9 +29,18 @@
 
 <script>
 export default {
+  methods: {
+    normalize: function String () {
+      if (this.subTitle === 'HappeningNow') {
+        this.subTitle = 'happening now'
+      }
+      return this.subTitle.toLowerCase()
+    }
+  },
   data () {
     return {
-      subTitle: `Status: ${this.event.eventStatus}`
+      subTitle: `${this.event.eventStatus}`,
+      normalStatus: ''
     }
   },
   props: ['event']
@@ -47,6 +56,7 @@ img{
   overflow: hidden;
   text-overflow: ellipsis;
   padding-bottom: 3px;
+  font-size: 1.3rem;
 }
 article{
   margin:5px;
@@ -79,10 +89,8 @@ button{
     padding-left: 28px;
     padding-right: 10px;
     margin: -9px;
-    font-size: large;
+    font-size:1rem;
     background: rgb(252,206,81);
-    /* background: linear-gradient(282deg, rgba(252,206,81,1) 85%, #eec24b 100%); */
-
     background: linear-gradient(279deg, rgba(252,206,81,1) 85%, #eec24b 100%);
 
 }

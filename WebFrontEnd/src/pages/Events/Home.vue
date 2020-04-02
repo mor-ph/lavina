@@ -6,7 +6,7 @@
       <!-- Header -->
       <b-row class="text-center my-2">
         <b-col md="6" offset-md="3" lg="6" offset-lg="3">
-          <h3 style="opacity:0.8">Filter events by</h3><hr>
+          <h5 style="opacity:0.8">Filter events by</h5><hr>
         </b-col>
       </b-row>
 
@@ -18,10 +18,11 @@
       </b-row>
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
-         <b-form-select
-    v-model="selectedFilters.category"
-    :options= filters.category
-    @change= "fetchSubCategories(); fetchFilteredEvents();"></b-form-select>
+          <b-form-select
+            style="font-size:0.85rem"
+            v-model="selectedFilters.category"
+            :options= filters.category
+            @change= "fetchSubCategories(); fetchFilteredEvents();"></b-form-select>
         </b-col>
       </b-row>
       <!-- SubCategory -->
@@ -33,10 +34,11 @@
       </b-row>
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
-           <b-form-select
-    v-model="selectedFilters.subcategory"
-    :options="filters.subcategories"
-    @change="fetchFilteredEvents"></b-form-select>
+            <b-form-select
+              style="font-size:0.85rem"
+              v-model="selectedFilters.subcategory"
+              :options="filters.subcategories"
+              @change="fetchFilteredEvents"></b-form-select>
         </b-col>
       </b-row>
       </div>
@@ -48,9 +50,11 @@
       </b-row>
       <b-row class="text-center my-2">
         <b-col sm="6" offset-sm="3">
-           <b-form-select v-model="selectedFilters.location"
-    :options="filters.location"
-    @change="fetchFilteredEvents"></b-form-select>
+            <b-form-select
+            v-model="selectedFilters.location"
+            style="font-size:0.85rem"
+            :options="filters.location"
+            @change="fetchFilteredEvents"></b-form-select>
         </b-col>
       </b-row>
       <!-- Datepicker -->
@@ -125,6 +129,9 @@ export default {
 </script>
 
 <style>
+select{
+  font-size:0.85rem;
+}
 label{
   margin-top:6px;
   margin-bottom:0;
