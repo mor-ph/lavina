@@ -5,47 +5,45 @@
       <b-container fluid>
         <!-- Title -->
 <!-------------------------------------------------------------------------->
-        <b-form-row id="crform">
-          <b-col md="4">
-            <img src="https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-8/couple-hiking-mountain-climbing-1296x728-header.jpg?w=1155">
-          </b-col>
-          <b-col md="8">
-            <b-row id="info">
-              <b-col id="title" sm="12">
-                <b-col style="padding-left:0">
-                  <h3 style="margin-bottom:0">{{ event.title }} | {{this.event.eventStatus}}
-                  <small>
-                    <span>cat: {{event.mainCategory.name}} -></span>
-                    <span v-if="event.subCategory !== null">subcat:{{event.subCategory.name}}</span>
-                  </small></h3>
+        <b-form-row id="crform" class="col-md-8">
+          <b-row style="margin:0px; height:fit-content; padding:0" class="col-md-4">
+            <b-col id="imgCol">
+              <img src="https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-8/couple-hiking-mountain-climbing-1296x728-header.jpg?w=1155">
+            </b-col>
+          </b-row>
+          <b-col md="8" style="padding:0;">
+              <b-col id="title">
+                <b-col style="padding:0">
+                  <h4 style="margin-bottom:0">{{ event.title }}<sup>{{this.event.eventStatus}}</sup></h4>
+                  <p style="margin-bottom:0">Hosted by <b>{{ event.user.username }}</b></p>
                 </b-col>
-                <p style="margin-bottom:0">Hosted by <b>{{ event.user.username }}</b></p>
               </b-col>
-              <b-col md="5" class="details">
-                <b-row style="padding-left:5px">
-                  <b-icon icon="arrow-clockwise"></b-icon>
-                  <b-col style="padding-left:5px">
-                Created {{event.addedAgo}}
-                  </b-col>
-                </b-row>
-                <b-row style="padding-left:5px">
-                  <b-icon icon="arrow-clockwise"></b-icon>
-                  <b-col style="padding-left:5px">
-                Happening {{event.recurring}}
-                  </b-col>
-                </b-row>
-                <b-row style="padding-left:5px">
+              <div id="category">
+                  <p class="ctgrTag">{{event.mainCategory.name}}</p>
+                  <p class="ctgrTag" v-if="event.subCategory !== null">{{event.subCategory.name}}</p>
+                </div>
+            <b-row class="info" style="padding-top:0;; margin-top:0">
+              <b-col class="details" lg="5">
+                <b-row style="padding-left:5px" >
                     <b-icon icon="calendar-fill" ></b-icon>
                   <b-col style="padding-left:5px">
                   {{new Date(event.eventStartDate).toDateString()}}
                   </b-col>
                 </b-row>
-                <b-row style="padding-left:5px">
+                <b-row style="padding-left:5px" >
                     <b-icon icon="clock-fill" ></b-icon>
                   <b-col style="padding-left:5px">
                   {{new Date(event.eventStartDate).toLocaleTimeString()}}
                   </b-col>
                 </b-row>
+                 <b-row style="padding-left:5px">
+                  <b-icon icon="arrow-clockwise"></b-icon>
+                  <b-col style="padding-left:5px">
+                Happening <b>{{normalize()}}</b>
+                  </b-col>
+                </b-row>
+              </b-col>
+              <b-col class="details" lg="7">
                 <b-row style="padding-left:5px">
                     <b-icon icon="cursor-fill" ></b-icon>
                   <b-col style="padding-left:5px">
@@ -58,53 +56,62 @@
                   <b>Address: {{event.address}}</b>
                   </b-col>
                 </b-row>
+                <b-row style="padding-left:5px">
+                  <b-icon icon="plus"></b-icon>
+                  <b-col style="padding-left:5px">
+                Created {{event.addedAgo}}
+                  </b-col>
+                </b-row>
               </b-col>
-              <div class=" row grid-divider"></div>
-              <b-col id="description">
-                <h6>Description:</h6>
-                <p v-if="event.description !== ''" style="padding-left:20px">{{event.description}}</p>
-                <p v-else style="padding-left:20px">Sorry, <b>{{event.user.username}}</b> didn't provide any :/</p>
-              </b-col>
-              <b-row style="width:100%">
-                <b-col id="needs" v-if="event.eventStatus !== 'Finished'">
-                  <b>{{event.user.username}}</b> still needs {{event.peopleNeeded}} people for this event.
-                </b-col>
-                <div v-if="this.event.eventStatus !== 'Finished'">
-                <b-button @click="closeEvent" v-if="this.role === 'host'"
-                           id="close">Close Event!</b-button>
-                <b-button @click="join" v-if="event.peopleNeeded > 0 &&
-                                              !joined &&
-                                              this.role === 'user'"
-                                              size="lg" id="join">Join!</b-button>
-                <b-button v-if="joined && this.role === 'user' && this.userId !== null" disabledsize="lg" id="join">Joined!</b-button>
-                </div>
-              </b-row>
             </b-row>
+            <b-col id="description">
+              <h7>Description:</h7>
+              <p v-if="event.description !== ''" style="padding-left:20px">{{event.description}}</p>
+              <p v-else style="padding-left:20px">Sorry, <b>{{event.user.username}}</b> didn't provide any :/</p>
+            </b-col>
           </b-col>
+          <b-row class="col-sm-12" id="btnDiv" style="margin:0; padding:0"
+              v-if="this.event.eventStatus !== 'Finished'">
+            <b-button @click="closeEvent" v-if="this.role === 'host'" id="close">
+              <b>{{event.user.username}}</b> still needs {{event.peopleNeeded}}
+                people for this event. <b style="font-size:1.2rem">Click here to close it!</b>
+            </b-button>
+            <b-button @click="join" v-if="event.peopleNeeded > 0 &&
+                                    !joined && this.role === 'user'" id="join">
+              <b>{{event.user.username}}</b> still needs {{event.peopleNeeded}}
+                 people for this event. <b style="font-size:1.2rem">Click here to join it!</b>
+            </b-button>
+            <b-button v-if="joined && this.role === 'user' && this.userId !== null"
+                disabledsize="100%" id="join">
+                <b>{{event.user.username}}</b> still needs {{event.peopleNeeded}}
+                 people for this event. <b style="font-size:1.2rem">You have already joined it!</b>
+            </b-button>
+          </b-row>
         </b-form-row>
 <!-------------------------------------------------------------------------->
-         <h1>Comments:</h1>
-      <b-row class="text-center my-2">
-        <b-col sm="6" offset-sm="3">
-          <app-comments-grid :comments="event.comments" :key="event.comments.length"></app-comments-grid>
-        </b-col>
-      </b-row>
-      <b-form @submit.prevent="addComment">
-      <b-row class="text-center my-2">
-        <b-col sm="4" offset-sm="4">
-              <b-form-textarea
-                id="textarea-no-resize"
-                placeholder="Fixed height textarea"
-                rows="7"
-                no-resize
-                v-model="newComment"
-              ></b-form-textarea>
-            </b-col>
-        <b-col sm="4" offset-sm="4">
-          <b-button @click="addComment" variant="primary" size="lg">Comment</b-button>
-          </b-col>
-      </b-row>
-      </b-form>
+        <b-row id="comments" class="col-md-8">
+          <b-row style="height:fit-content; width:100%">
+            <h6>{{this.event.comments.length}} Comments:</h6>
+          </b-row>
+          <b-row style="width:100%">
+              <app-comments-grid :comments="event.comments" :key="event.comments.length"></app-comments-grid>
+          </b-row>
+          <b-form @submit.prevent="addComment" style="width:100%; margin:0">
+            <b-row class="text-center col-sm-12" style="padding:0">
+                <b-form-textarea
+                  id="textarea-no-resize"
+                  placeholder="Write your comment here..."
+                  rows="5"
+                  no-resize
+                  v-model="newComment"
+                  style="font-size:0.9rem"
+                ></b-form-textarea>
+              <b-col style="margin-top:10px; padding:0">
+                <b-button style="font-size:1rem; width:100%" @click="addComment">Comment</b-button>
+              </b-col>
+            </b-row>
+          </b-form>
+        </b-row>
       </b-container>
     </div>
   </div>
@@ -131,13 +138,7 @@ export default {
       event: [],
       joined: false,
       newComment: null,
-      role: null,
-      recurringOptions: [
-        { value: null, text: 'Once' },
-        { value: '1', text: 'Every day' },
-        { value: '2', text: 'Every week' },
-        { value: '3', text: 'Every month' }
-      ]
+      role: null
     }
   },
   computed: {
@@ -147,6 +148,9 @@ export default {
     ])
   },
   methods: {
+    normalize: function String () {
+      return this.event.recurring.match(/[A-Z][a-z]+|[0-9]+/g).join(' ').toLowerCase()
+    },
     ...mapActions([
       'tryAutoLogin'
     ]),
@@ -163,6 +167,9 @@ export default {
       }
       if (this.event.address === null || this.event.address === '') {
         this.event.address = 'not specified'
+      }
+      if (this.event.eventStatus === 'HappeningNow') {
+        this.event.eventStatus = 'Happening now'
       }
     },
     async join () {
@@ -196,16 +203,21 @@ export default {
 </script>
 
 <style scoped>
-@media(max-width: 575px){
-  #title{
-    margin-left:20px;
+@media(max-width: 450px){
+  .container-fluid{
+    padding: 0;
   }
 }
 @media (max-width: 367px) {
   #crform{
-    padding:15px;
-    width:100%;
-    margin-left: 1%;
+    margin-left:0;
+  }
+  #title{
+    padding:5px;
+    width:fit-content;
+  }
+  .info{
+    padding-top: 0;
   }
 }
 .body {
@@ -215,51 +227,89 @@ export default {
 #crform{
   background-color:rgba(253, 253, 253, 0.644);
   border-radius: 3px;
+  position:relative;
+  padding-bottom:15px;
+  height: fit-content;
+}
+#comments{
+  margin:5px;
+  margin-top:25px;
 }
 img{
 width:inherit;
 height: auto;
 border-radius: 3px;
+margin-bottom: 10px;
 }
 #title{
   height: fit-content;
-  width:inherit
+  padding-top:15px;
+  padding-left:15px;
+  width:fit-content;
 }
-#info{
-  padding:15px;
-}
-small{
-  float:right;
-  color:white;
-  padding:4px;
-  background-color: rgba(80, 69, 97, 0.712);
-  border-radius: 3px;
+.info{
+  margin-left:15px;
+  position: relative;
 }
 .b-icon{
   margin-top:3px;
 }
 .details{
-  padding-top:30px;
+  padding-top:7px;
+  margin-top:15px;
 }
 #description{
   background-color: rgba(255, 255, 255, 0.562);
-  margin: 20px;
-  margin-right:12px;
+  margin-top: 20px;
+  margin-bottom:12px;
+  margin-right:20px;
   padding:10px;
   border-radius: 3px;
 }
 button{
   float:end;
+  bottom:0;
+  border-radius: 5px;
 }
 #close{
-  background-color: rgb(107, 32, 32);
+  background-color: rgba(49, 49, 49, 0.685);
+  border:none;
+  width:inherit;
 }
 #join{
-  background-color: rgb(85, 155, 82);
+  background-color: rgba(61, 118, 131, 0.87);
+  width:inherit;
+  border:none;
 }
-#needs{
-  font-size: 1.3rem;
-  padding-top:5px;
-  margin-left:10px;
+.ctgrTag{
+  color:rgb(100, 117, 148);
+  padding: 5px;
+  padding-right: 28px;
+  padding-left: 10px;
+  font-size: 0.9rem;
+  background: #fcce51;
+  background: linear-gradient(79deg, rgba(252,206,81,1) 85%, #eec24b 100%);
+  margin-right: -15px;
+}
+#imgCol{
+  padding:0;
+  margin-top:10px;
+}
+#category{
+  align-items: right;
+  margin-right: -17px;
+  float:right;
+  width: min-content;
+  text-align:left;
+  margin-top:-50px;
+  padding:0;
+}
+sup{
+  font-size:0.95rem;
+  color:rgb(60, 118, 131);
+  padding-left:3px;
+}
+h5{
+  color:rgb(92, 91, 91);
 }
 </style>
