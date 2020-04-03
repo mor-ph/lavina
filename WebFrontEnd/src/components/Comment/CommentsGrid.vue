@@ -1,6 +1,6 @@
 <template>
   <b-row sm="8" id="commentgrid">
-    <app-comment id="commentgrid" :key="comment" v-for="comment in comments" :comment="comment"></app-comment>
+    <app-comment id="commentgrid" :key="comment.id" v-for="comment in comments" :comment="comment"></app-comment>
   </b-row>
 </template>
 
