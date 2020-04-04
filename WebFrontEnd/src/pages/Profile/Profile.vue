@@ -65,7 +65,7 @@
                   type="password"
                   placeholder="Enter new password"
                   v-model="newPassword"
-                  @change="dataChanged=true"
+                  @change="newPassword === '' ? dataChanged = false : dataChanged = true"
                   autocomplete="new-password"
                 ></b-form-input>
               </b-form-group>
@@ -142,8 +142,8 @@ export default {
     return {
       username: this.$store.getters.user.username,
       email: this.$store.getters.user.email,
-      newPassword: null,
-      confirmNewPassword: null,
+      newPassword: '',
+      confirmNewPassword: '',
       showMyEvents: true,
       userEvents: [],
       dataChanged: false
