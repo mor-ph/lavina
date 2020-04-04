@@ -4,7 +4,7 @@
       <b-container>
         <b-row class="text-center">
             <b-col>
-        <h1 class="hhh">Profile</h1>
+        <h3 class="hhh">Profile</h3>
         <br> <b-icon icon="person-fill" font-scale="10"></b-icon>
         </b-col>
          </b-row>
@@ -36,7 +36,6 @@
                 id="email-input-group"
                 label="Email address:"
                 label-for="email-input"
-                description="We'll never share your email with anyone else."
               >
                 <b-form-input class="text-left"
                   id="email-input"
@@ -45,8 +44,8 @@
                   :value="user.email"
                   @blur="setEmail"
                 ></b-form-input>
-                <p class="unique" v-if="!$v.email.email">Please provide a valid Email</p>
-                <p class="unique" v-if="!$v.email.unique && !$v.email.$pending">This Email is already registered.</p>
+                <p class="unique" v-if="!$v.email.email">Please provide a valid email.</p>
+                <p class="unique" v-if="!$v.email.unique && !$v.email.$pending">This email is already taken.</p>
               </b-form-group>
             </b-col>
           </b-row>
@@ -64,7 +63,7 @@
                 <b-form-input
                   id="password-input"
                   type="password"
-                  placeholder="Enter New Password"
+                  placeholder="Enter new password"
                   v-model="newPassword"
                   @change="dataChanged=true"
                   autocomplete="new-password"
@@ -85,7 +84,7 @@
                 <b-form-input
                   id="confirm-password-input"
                   type="password"
-                  placeholder="Confirm New Password"
+                  placeholder="Confirm new password"
                   v-model="confirmNewPassword"
                   @blur="$v.confirmNewPassword.$touch()"
                   autocomplete="new-password"
@@ -215,6 +214,9 @@ export default {
 </script>
 
 <style scoped>
+input{
+  font-size: 0.75rem;
+}
 hr{
   border-top: 2px solid white;
 }

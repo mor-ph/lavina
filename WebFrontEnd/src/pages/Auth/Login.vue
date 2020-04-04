@@ -4,7 +4,7 @@
       <b-container>
         <b-row class="text-center">
             <b-col>
-        <h1 class="hhh">Log in</h1>
+        <h3 class="hhh">Log in</h3>
         <br> <b-icon icon="person-fill"  font-scale="10"></b-icon>
         </b-col>
          </b-row>
@@ -25,18 +25,21 @@
           </b-row>
           <b-row class="text-left">
             <b-col sm="6" offset-sm="3">
-          <b-form-group class="label" id="password-input-group" label="Password:" label-for="password-input" >
-            <b-form-input
-              id="password-input"
-              type="password"
-              required
-              placeholder="Enter Password"
-              v-model="password"
-            ></b-form-input>
-          </b-form-group>
-          <p class="invalid" v-if="invalid">Incorrect username or password!</p>
+              <b-form-group class="label" id="password-input-group" label="Password:" label-for="password-input" >
+                <b-form-input
+                  id="password-input"
+                  type="password"
+                  required
+                  placeholder="Enter Password"
+                  v-model="password"
+                ></b-form-input>
+              </b-form-group>
+              <p class="invalid" v-if="invalid">Incorrect username or password!</p>
 
-          <b-button type="submit" class="submitBtn">Log in</b-button>
+              <b-button type="submit" class="submitBtn">Log in</b-button>
+              <p id="regLink">New to Lavina?
+                <router-link style="color:#1a6b7e; font-size:1.1rem" to="/register">Create an account.</router-link>
+              </p>
            </b-col>
           </b-row>
         </b-form>
@@ -79,8 +82,12 @@ export default {
 </script>
 
 <style scoped>
+#regLink{
+  text-align:center;
+  margin-top:20px;
+}
 .hhh{
-  color:rgb(65, 72, 77);
+  color:#41484d;
 }
 .label.label{
   color: white;

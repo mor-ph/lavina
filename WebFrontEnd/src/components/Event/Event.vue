@@ -1,5 +1,5 @@
 <template>
-    <div class="col-sm-12 col-md-6 col-lg-3">
+    <div class="col-sm-12 col-md-4 col-lg-3">
 
     <b-card
     b-card-img-lazy
@@ -83,7 +83,7 @@ button{
 }
 .card-img-overlay{
     width: fit-content;
-    height: fit-content;
+    height: min-content;
     color:rgb(100, 117, 148);
     padding: 5px;
     padding-left: 28px;
@@ -92,6 +92,6 @@ button{
     font-size:1rem;
     background: rgb(252,206,81);
     background: linear-gradient(279deg, rgba(252,206,81,1) 85%, #eec24b 100%);
-
+    bottom: inherit;
 }
 </style>

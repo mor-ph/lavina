@@ -4,7 +4,7 @@
       <b-container>
         <b-row class="text-center">
           <b-col>
-            <h1 class="hhh">Register</h1>
+            <h3 class="hhh">Register</h3>
             <br>
             <b-iconstack font-scale="10">
               <b-icon stacked icon="person-fill" font-scale="10"></b-icon>
@@ -93,6 +93,9 @@
                   <p class="unique" v-if="!$v.confirmPassword.sameAs && confirmPassword !== ''">Passwords do not match.</p>
               </b-form-group>
               <b-button type="submit" class="submitBtn" :disabled="$v.$invalid && !$v.$pending || $v.$pending">Register</b-button>
+              <p id="regLink">Already have an account?
+                <router-link style="color:#1a6b7e; font-size:1.1rem" to="/login">Log in.</router-link>
+              </p>
             </b-col>
           </b-row>
         </b-form>
@@ -161,18 +164,22 @@ export default {
 </script>
 
 <style scoped>
+#regLink{
+  text-align:center;
+  margin-top:20px;
+}
+input{
+  font-size: 0.75rem;
+}
 .hhh {
   color: rgb(65, 72, 77);
 }
-
 .label.label {
   color: white;
 }
-
 .text-center {
   text-align: center;
 }
-
 .unique {
   color: red;
 }

@@ -3,7 +3,7 @@
       <b-container fluid>
         <b-row class="text-center my-2">
             <b-col md="8" offset-md="2" lg="8" offset-lg="2">
-              <h4 style="opacity:0.8"> Create new event</h4>
+              <h5 style="opacity:0.8"> Create new event</h5>
               <hr>
             </b-col>
           </b-row>
@@ -13,7 +13,7 @@
               <label for="example-i18n-picker">Title<span red> *</span></label>
                 <b-form-textarea
                   maxlength="50"
-                  style="height:38px"
+                  style="height:32px"
                   class="text-left"
                   id="textarea-no-resize"
                   rows="1"
@@ -71,13 +71,11 @@
           <b-col md="4" lg="4" sm="12"  class="crcol">
               <label for="example-i18n-picker">Date<span red> *</span></label>
                   <b-form-datepicker id="datepicker-valid"
-                    :state ="valueDate ? true : false"
                     v-model="valueDate" :min="minDate"></b-form-datepicker>
           </b-col>
           <b-col md="4" lg="4" sm="12" class="crcol">
               <label for="example-i18n-picker">Time<span red> *</span></label>
                 <b-form-timepicker id="timepicker-valid"
-                              :state="valueTime ? true : false"
                               v-model="valueTime"></b-form-timepicker>
           </b-col>
           <b-col md="4" lg="4" sm="12" class="crcol" >
@@ -98,7 +96,7 @@
               <label for="example-i18n-picker">Exact address</label>
                 <b-form-textarea
                   maxlength="100"
-                  style="height:38px"
+                  style="height:32px"
                   class=""
                   id="textarea-no-resize"
                   rows="1"
@@ -281,8 +279,12 @@ export default {
 }
 @media (max-width: 575px){
   .colorbutton{
-    width:100%;
-    margin-top:5px;
+    margin-top:10px;
+  }
+}
+@media(min-width: 576px){
+  .colorbutton{
+    margin-top: -4px;
   }
 }
 @media (min-width: 900px){
@@ -305,6 +307,7 @@ label{
   width: 100%;
 }
 .colorbutton{
+  width:100%;
   float: right;
   padding:0;
 }
@@ -313,5 +316,8 @@ span{
 }
 .error {
   color: red;
+}
+.custom-select, #textarea-no-resize, #__BVID__259{
+  font-size: 0.75rem;
 }
 </style>

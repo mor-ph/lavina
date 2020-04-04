@@ -2,7 +2,7 @@
   <div id="app">
     <app-header></app-header>
     <router-view></router-view>
-    <app-go-top id="backToTop" :max-width="1250" style="background-color: rgb(125, 162, 169, 0.88)"></app-go-top>
+    <app-go-top id="backToTop"></app-go-top>
     <app-footer></app-footer>
   </div>
 </template>
@@ -48,14 +48,15 @@ label{
 }
 .innerDiv{
   padding-bottom:20%;
-  padding-top: 150px;
+  padding-top: 110px;
 }
-body, .body, #modal-prevent-closing,  .custom-control-label::before, .custom-file-label, .custom-select{
-  font-family: system-ui;
+body, .body, #modal-prevent-closing,  .custom-control-label::before,
+.custom-file-label, .custom-select, #datepicker-valid__value_, #timepicker-valid__value_{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 0.75rem;
 }
 #header,  footer{
-  font-family: system-ui;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 0.9rem;
 }
 .submitBtn{
