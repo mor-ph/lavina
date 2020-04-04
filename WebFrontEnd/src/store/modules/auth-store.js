@@ -91,7 +91,7 @@ export default {
     },
 
     async updateProfile ({ state, dispatch }, formData) {
-      if (formData.password === null) {
+      if (formData.password === '') {
         formData = {
           username: formData.username,
           email: formData.email
