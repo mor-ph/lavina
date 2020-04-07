@@ -65,12 +65,16 @@
                 </b-row>
               </b-col>
             </b-row>
-            <b-row id="description">
-              <b-col>
+            <b-row>
+              <b-row style="margin-left:36px;margin-top:7px;">
                 <h7>Description:</h7>
-                <p v-if="event.description !== ''" style="padding-left:20px">{{event.description}}</p>
-                <p v-else style="padding-left:20px">Sorry, <b>{{event.user.username}}</b> didn't provide any :/</p>
+              </b-row>
+              <b-row id="description">
+              <b-col style="background-color: rgba(255, 255, 255, 0.562);">
+                <p v-if="event.description !== ''" style="margin-top:7px; margin-bottom:7px;">{{event.description}}</p>
+                <p v-else style="margin-top:7px; margin-bottom:7px;">Sorry, <b>{{event.user.username}}</b> didn't provide any :/</p>
               </b-col>
+              </b-row>
             </b-row>
           </b-col>
           <b-row class="col-sm-12" id="btnDiv" style="margin:0; padding:0"
@@ -267,12 +271,14 @@ margin-bottom: 10px;
   margin-top:15px;
 }
 #description{
-  background-color: rgba(255, 255, 255, 0.562);
-  margin-top: 20px;
-  margin-bottom:12px;
-  margin-right:0px;
-  margin-left: 15px;;
-  padding:10px;
+  margin-left:30px;
+  margin-right:7px;
+  /* padding:10px; */
+  border-radius: 5px;
+  width:100%;
+  height:inherit;
+  /* padding-top: 0; */
+  /* padding-left:0px; */
   border-radius: 5px;
 }
 button{
