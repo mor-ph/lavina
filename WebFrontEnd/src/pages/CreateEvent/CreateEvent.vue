@@ -105,7 +105,7 @@
                 ></b-form-textarea>
           </b-col>
           <b-col md="4" lg="4" sm="12" class="crcol">
-                <label for="example-i18n-picker">People Needed<span red> *</span></label>
+                <label for="example-i18n-picker">People needed<span red> *</span></label>
                 <b-form-input required v-model="peopleNeeded"
                   type="number"
                   min="0"
@@ -120,6 +120,7 @@
               rows="7"
               no-resize
               v-model="description"
+              placeholder="Write a short, clear description. You've got 600 characters."
             ></b-form-textarea>
           </b-col>
            <b-col sm="12"  class="crcol">

@@ -5,10 +5,11 @@
       <b-container fluid>
         <!-- Title -->
 <!-------------------------------------------------------------------------->
-        <b-form-row id="crform" class="col-md-8">
+      <b-col md="8" offset-md="2">
+        <b-form-row id="crform">
           <b-row style="margin:0px; height:fit-content; padding:0" class="col-md-4">
             <b-col id="imgCol">
-              <img src="https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-8/couple-hiking-mountain-climbing-1296x728-header.jpg?w=1155">
+              <img alt="event image" src="../../components/892022.png">
             </b-col>
           </b-row>
           <b-col md="8" style="padding:0;">
@@ -21,8 +22,8 @@
               <div id="category">
                   <p class="ctgrTag">{{event.mainCategory.name}}</p>
                   <p class="ctgrTag" v-if="event.subCategory !== null">{{event.subCategory.name}}</p>
-                </div>
-            <b-row class="info" style="padding-top:0;; margin-top:0">
+              </div>
+            <b-row class="info" style="padding-top:0; margin-top:0">
               <b-col class="details" lg="5">
                 <b-row style="padding-left:5px" >
                     <b-icon icon="calendar-fill" ></b-icon>
@@ -64,11 +65,13 @@
                 </b-row>
               </b-col>
             </b-row>
-            <b-col id="description">
-              <h7>Description:</h7>
-              <p v-if="event.description !== ''" style="padding-left:20px">{{event.description}}</p>
-              <p v-else style="padding-left:20px">Sorry, <b>{{event.user.username}}</b> didn't provide any :/</p>
-            </b-col>
+            <b-row id="description">
+              <b-col>
+                <h7>Description:</h7>
+                <p v-if="event.description !== ''" style="padding-left:20px">{{event.description}}</p>
+                <p v-else style="padding-left:20px">Sorry, <b>{{event.user.username}}</b> didn't provide any :/</p>
+              </b-col>
+            </b-row>
           </b-col>
           <b-row class="col-sm-12" id="btnDiv" style="margin:0; padding:0"
               v-if="this.event.eventStatus !== 'Finished'">
@@ -88,30 +91,33 @@
             </b-button>
           </b-row>
         </b-form-row>
+      </b-col>
 <!-------------------------------------------------------------------------->
-        <b-row id="comments" class="col-md-8">
-          <b-row style="height:fit-content; width:100%">
+      <b-col md="8" offset-md="2">
+        <b-form-row id="comments">
+          <b-col sm="12">
             <h6>{{this.event.comments.length}} Comments:</h6>
-          </b-row>
-          <b-row style="width:100%">
+          </b-col>
+          <b-col sm="12">
               <app-comments-grid :comments="event.comments" :key="event.comments.length"></app-comments-grid>
-          </b-row>
-          <b-form @submit.prevent="addComment" style="width:100%; margin:0">
-            <b-row class="text-center col-sm-12" style="padding:0">
-                <b-form-textarea
-                  id="textarea-no-resize"
-                  placeholder="Write your comment here..."
-                  rows="5"
-                  no-resize
-                  v-model="newComment"
-                  style="font-size:0.9rem"
-                ></b-form-textarea>
+          </b-col>
+          <b-col sm="12">
+            <b-form @submit.prevent="addComment" style="width:100%; margin:0">
+              <b-form-textarea
+                id="textarea-no-resize"
+                placeholder="Write your comment here..."
+                rows="5"
+                no-resize
+                v-model="newComment"
+                style="font-size:0.9rem"
+              ></b-form-textarea>
               <b-col style="margin-top:10px; padding:0">
                 <b-button style="font-size:1rem; width:100%" @click="addComment">Comment</b-button>
               </b-col>
-            </b-row>
-          </b-form>
-        </b-row>
+            </b-form>
+          </b-col>
+        </b-form-row>
+      </b-col>
       </b-container>
     </div>
   </div>
@@ -228,12 +234,14 @@ export default {
   background-color:rgba(253, 253, 253, 0.644);
   border-radius: 3px;
   position:relative;
-  padding-bottom:15px;
+  padding:15px;
   height: fit-content;
 }
 #comments{
-  margin:5px;
+  /* margin:0px; */
+  padding:15px;
   margin-top:25px;
+  /* margin-left:15px; */
 }
 img{
 width:inherit;
@@ -262,9 +270,10 @@ margin-bottom: 10px;
   background-color: rgba(255, 255, 255, 0.562);
   margin-top: 20px;
   margin-bottom:12px;
-  margin-right:20px;
+  margin-right:0px;
+  margin-left: 15px;;
   padding:10px;
-  border-radius: 3px;
+  border-radius: 5px;
 }
 button{
   float:end;
@@ -293,7 +302,6 @@ button{
 }
 #imgCol{
   padding:0;
-  margin-top:10px;
 }
 #category{
   align-items: right;

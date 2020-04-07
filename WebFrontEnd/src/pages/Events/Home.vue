@@ -4,74 +4,64 @@
     <b-container fluid>
 
       <!-- Header -->
-      <b-row class="text-center my-2">
+      <b-row class="text-center">
         <b-col md="6" offset-md="3" lg="6" offset-lg="3">
           <h5 style="opacity:0.8">Filter events by</h5><hr>
         </b-col>
       </b-row>
 
       <!-- Category -->
-      <b-row class="text-left my-2 slabel">
-        <b-col sm="6" offset-sm="3">
+      <b-row text-left>
+        <b-col md="2" offset-md="2" class="text-left filter">
+          <b-row class="slabel">
             <label for="example-i18n-picker">Category:</label>
-        </b-col>
-      </b-row>
-      <b-row class="text-center my-2">
-        <b-col sm="6" offset-sm="3">
+          </b-row>
+        <b-row>
           <b-form-select
             style="font-size:0.85rem"
             v-model="selectedFilters.category"
             :options= filters.category
             @change= "fetchSubCategories(); fetchFilteredEvents();"></b-form-select>
+        </b-row>
         </b-col>
-      </b-row>
-      <!-- SubCategory -->
-      <div v-if="selectedFilters.category !== null">
-      <b-row class="text-left my-2">
-        <b-col sm="6" offset-sm="3">
+        <b-col md="2" class="filter">
+          <b-row>
             <label for="example-i18n-picker">Subcategory:</label>
-        </b-col>
-      </b-row>
-      <b-row class="text-center my-2">
-        <b-col sm="6" offset-sm="3">
+          </b-row>
+          <b-row>
             <b-form-select
               style="font-size:0.85rem"
               v-model="selectedFilters.subcategory"
               :options="filters.subcategories"
               @change="fetchFilteredEvents"></b-form-select>
+        </b-row>
         </b-col>
-      </b-row>
-      </div>
-      <!-- Location -->
-      <b-row class="text-left my-2">
-        <b-col sm="6" offset-sm="3">
+        <b-col md="2" class="filter">
+          <b-row>
             <label for="example-i18n-picker">Location:</label>
-        </b-col>
-      </b-row>
-      <b-row class="text-center my-2">
-        <b-col sm="6" offset-sm="3">
+          </b-row>
+          <b-row>
             <b-form-select
             v-model="selectedFilters.location"
             style="font-size:0.85rem"
             :options="filters.location"
             @change="fetchFilteredEvents"></b-form-select>
+        </b-row>
         </b-col>
-      </b-row>
-      <!-- Datepicker -->
-      <b-row class="text-left my-2">
-        <b-col sm="6" offset-sm="3">
-            <label for="example-i18n-picker">Date:</label>
-        </b-col>
-      </b-row>
-      <b-row class="text-center my-2">
-        <b-col sm="6" offset-sm="3">
+        <b-col md="2" class="filter">
+          <b-row>
+            <label for="example-i18n-picker" >Date:</label>
+          </b-row>
+          <b-row>
           <b-form-datepicker
+          placeholder="Any date"
           id="datepicker-valid"
           v-model="selectedFilters.date"
           :min="minDate"
           @input="fetchFilteredEvents"></b-form-datepicker>
-        </b-col>
         </b-row>
+        </b-col>
+      </b-row>
       <label for="sortBy" id="sort">Sort by </label>
       <b-form-select id="sortsel" v-model="selectedFilters.orderBy" :options="filters.orderBy" @change="fetchFilteredEvents"></b-form-select>
       <hr style="margin:0; margin-top:-10px; padding-bottom:8px;">
@@ -136,9 +126,10 @@ label{
   margin-top:6px;
   margin-bottom:0;
 }
-.slabel{
-  margin: 0;
-  padding:0;
+.filter{
+  height:inherit;
+  margin-right:15px;
+  float:center;
 }
 #sort{
   color:rgb(100, 117, 148);
@@ -153,5 +144,9 @@ label{
   margin-bottom:4px;
   border:none;
   font-weight: bold;
+}
+#datepicker-valid__value_{
+  padding-top:7px;
+  padding-bottom:7px;
 }
 </style>

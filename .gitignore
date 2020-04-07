@@ -367,3 +367,5 @@ healthchecksdb
 /mysql-data/mysql/
 /mysql-data/letsplay/
 /mysql-data/#innodb_temp/
+
+*.cache
