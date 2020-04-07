@@ -23,14 +23,20 @@
         <p class="flink row">
         <b-icon class="icon" icon="envelope-fill"></b-icon>
         <span>info@lavina.be</span>
-        </P>
+        </p>
       </b-col>
     </b-row>
-    <b-row id="ftr" style="flex-flow: row-reverse">
+    <b-row>
+    <b-row id="ftr" class="col-sm-6" style="padding-left:30px; padding-bottom:8px;">
+      <a href="https://www.vecteezy.com/free-vector/people-together" class="row flink">
+        <b-icon class="icon" icon="images"></b-icon>Event image by Vecteezy</a>
+    </b-row>
+    <b-row id="ftr" style="flex-flow: row-reverse" class="col-sm-6">
       <p class="copyright">
         &copy; 2020 Copyright:
         <a href="https://lavina.be" style="color:white"><b style="font-size: 1.1rem">lavina.be</b></a>
       </p>
+    </b-row>
     </b-row>
   </footer>
 </template>
