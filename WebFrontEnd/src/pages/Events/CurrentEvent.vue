@@ -9,7 +9,7 @@
         <b-form-row id="crform">
           <b-row style="margin:0px; height:fit-content; padding:0" class="col-md-4">
             <b-col id="imgCol">
-              <img alt="event image" src="../../components/892022.png">
+              <img alt="event image" src="../../components/ideas.png">
             </b-col>
           </b-row>
           <b-col md="8" style="padding:0;">
@@ -302,6 +302,7 @@ button{
 }
 #imgCol{
   padding:0;
+  margin:0;
 }
 #category{
   align-items: right;

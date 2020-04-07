@@ -1,17 +1,15 @@
 <template>
     <div class="col-sm-12 col-md-4 col-lg-3">
-
     <b-card
     b-card-img-lazy
     style="max-width: 100%; max-height: 100%"
-    img-src="http://clipart-library.com/img1/892022.jpg"
-    img-alt="event image"
-    img-top
     :title ="event.title"
     :sub-title=normalize()
     tag="article"
+    :img-src="require('../ideas.png')"
+    img-alt="event image"
+    img-top
     >
-    <!-- img-src="https://imgix.bustle.com/uploads/image/2019/12/12/ed336be3-2ce1-4f50-9f73-967b0c9bd6d7-gettyimages-1129878609.jpg?w=1020&h=576&fit=crop&crop=faces&auto=format&q=70" -->
     <b><p class="card-img-overlay text-left" id="category">{{event.category.name}}</p></b>
     <b-card-text class="card-text">
       <p><b-icon icon="cursor-fill" ></b-icon> {{event.city.name}}</p>
@@ -66,6 +64,7 @@ article{
 }
 div.card-body{
 padding-bottom: 10px;
+padding-top:0;
 }
 button{
   background-color: #7da2a9;
