@@ -15,7 +15,7 @@
           <b-col md="8" style="padding:0;">
               <b-col id="title">
                 <b-col style="padding:0">
-                  <h4 style="margin-bottom:0">{{ event.title }}<sup>{{this.event.eventStatus}}</sup></h4>
+                  <h4 style="margin-bottom:0;overflow-wrap: break-word;">{{ event.title }}<sup>{{this.event.eventStatus}}</sup></h4>
                   <p style="margin-bottom:0">Hosted by <b>{{ event.user.username }}</b></p>
                 </b-col>
               </b-col>
@@ -65,8 +65,8 @@
                 </b-row>
               </b-col>
             </b-row>
-            <b-row>
-              <b-row style="margin-left:36px;margin-top:7px;">
+            <b-row style="width:100%">
+              <b-row style="margin-left:21px;margin-top:7px;">
                 <h7>Description:</h7>
               </b-row>
               <b-row id="description">
@@ -219,9 +219,6 @@ export default {
   }
 }
 @media (max-width: 367px) {
-  #crform{
-    margin-left:0;
-  }
   #title{
     padding:5px;
     width:fit-content;
@@ -230,6 +227,26 @@ export default {
     padding-top: 0;
   }
 }
+@media (max-width:767px){
+  .info{
+    margin-left:0;
+  }
+  #description{
+    margin-left: 15px;
+  }
+}
+@media(min-width: 768px){
+  .info{
+  margin-left:15px;
+  }
+  #description{
+    margin-left: 35px;
+  }
+  h7{
+    margin-left:15px;
+  }
+}
+
 .body {
   padding-top: 120px;
   padding-bottom: 150px;
@@ -242,10 +259,8 @@ export default {
   height: fit-content;
 }
 #comments{
-  /* margin:0px; */
   padding:15px;
   margin-top:25px;
-  /* margin-left:15px; */
 }
 img{
 width:inherit;
@@ -259,10 +274,6 @@ margin-bottom: 10px;
   padding-left:15px;
   width:fit-content;
 }
-.info{
-  margin-left:15px;
-  position: relative;
-}
 .b-icon{
   margin-top:3px;
 }
@@ -271,15 +282,9 @@ margin-bottom: 10px;
   margin-top:15px;
 }
 #description{
-  margin-left:30px;
-  margin-right:7px;
-  /* padding:10px; */
+  margin-bottom:10px;
   border-radius: 5px;
-  width:100%;
-  height:inherit;
-  /* padding-top: 0; */
-  /* padding-left:0px; */
-  border-radius: 5px;
+  width:inherit;
 }
 button{
   float:end;
@@ -316,7 +321,7 @@ button{
   float:right;
   width: min-content;
   text-align:left;
-  margin-top:-50px;
+  margin-top:-25px;
   padding:0;
 }
 sup{

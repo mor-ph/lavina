@@ -1,5 +1,5 @@
 <template>
-    <div class="col-sm-12 col-md-4 col-lg-3">
+    <div class="col-sm-12 col-md-4 col-lg-3" style="padding:5px">
     <b-card
     b-card-img-lazy
     style="max-width: 100%; max-height: 100%"
@@ -10,20 +10,20 @@
     img-alt="event image"
     img-top
     >
-    <b><p class="card-img-overlay text-left" id="category">{{event.category.name}}</p></b>
-    <b-card-text class="card-text">
-      <p><b-icon icon="cursor-fill" ></b-icon> {{event.city.name}}</p>
-      <p><b-icon icon="calendar-fill" ></b-icon> {{new Date(event.eventStartDate).toDateString()}}</p>
-      <p><b-icon icon="clock-fill" ></b-icon>{{new Date(event.eventStartDate).toLocaleTimeString()}}</p>
-      <small>Created {{event.addedAgo}}</small>
-    </b-card-text>
-    <router-link tag="button"
-                 class="primary"
-                 :to="{ name: 'CurrentEvent', params: { title: event.title,
-                                                        id: event.id}
-                 }">Details</router-link>
-  </b-card>
-    </div>
+      <b><p class="card-img-overlay text-left" id="category">{{event.category.name}}</p></b>
+      <b-card-text class="card-text">
+        <p><b-icon icon="cursor-fill" ></b-icon> {{event.city.name}}</p>
+        <p><b-icon icon="calendar-fill" ></b-icon> {{new Date(event.eventStartDate).toDateString()}}</p>
+        <p><b-icon icon="clock-fill" ></b-icon>{{new Date(event.eventStartDate).toLocaleTimeString()}}</p>
+        <small>Created {{event.addedAgo}}</small>
+      </b-card-text>
+      <router-link tag="button"
+                  class="primary"
+                  :to="{ name: 'CurrentEvent', params: { title: event.title,
+                                                          id: event.id}
+                  }">Details</router-link>
+    </b-card>
+  </div>
 </template>
 
 <script>

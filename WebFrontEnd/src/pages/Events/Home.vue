@@ -10,13 +10,13 @@
         </b-col>
       </b-row>
 
-      <!-- Category -->
-      <b-row text-left>
-        <b-col md="2" offset-md="2" class="text-left filter">
+      <!-- Filters -->
+      <b-row text-left id="filterRow" class="offset-lg-1">
+        <b-col offset-sm="1" sm="10" lg="2" class="text-left filter">
           <b-row class="slabel">
             <label for="example-i18n-picker">Category:</label>
           </b-row>
-        <b-row>
+          <b-row>
           <b-form-select
             style="font-size:0.85rem"
             v-model="selectedFilters.category"
@@ -24,7 +24,7 @@
             @change= "fetchSubCategories(); fetchFilteredEvents();"></b-form-select>
         </b-row>
         </b-col>
-        <b-col md="2" class="filter">
+        <b-col offset-sm="1" sm="10" lg="2" offset-lg="0" class="filter">
           <b-row>
             <label for="example-i18n-picker">Subcategory:</label>
           </b-row>
@@ -36,7 +36,7 @@
               @change="fetchFilteredEvents"></b-form-select>
         </b-row>
         </b-col>
-        <b-col md="2" class="filter">
+        <b-col offset-sm="1" sm="10" lg="2" offset-lg="0" class="filter">
           <b-row>
             <label for="example-i18n-picker">Location:</label>
           </b-row>
@@ -48,7 +48,7 @@
             @change="fetchFilteredEvents"></b-form-select>
         </b-row>
         </b-col>
-        <b-col md="2" class="filter">
+        <b-col offset-sm="1" sm="10" lg="2" offset-lg="0" class="filter">
           <b-row>
             <label for="example-i18n-picker" >Date:</label>
           </b-row>
@@ -119,6 +119,18 @@ export default {
 </script>
 
 <style>
+@media(min-width: 992px){
+  .filter{
+    margin-right:25px;
+    margin-left:15px;
+  }
+}
+@media(max-width: 575px){
+  .filter{
+    margin-right:16px;
+    margin-left:16px;
+  }
+}
 select{
   font-size:0.85rem;
 }
@@ -128,7 +140,6 @@ label{
 }
 .filter{
   height:inherit;
-  margin-right:15px;
   float:center;
 }
 #sort{

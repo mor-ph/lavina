@@ -3,20 +3,19 @@
     <div class="body innerDiv"><!-- style="padding-bottom:60%">-->
       <b-container>
         <b-row class="text-center">
-            <b-col>
-        <h3 class="hhh">Profile</h3>
-        <br> <b-icon icon="person-fill" font-scale="10"></b-icon>
-        </b-col>
-         </b-row>
-         <b-form @submit.prevent="onSubmit">
+          <b-col>
+            <h3 class="hhh">Profile</h3>
+            <br><b-icon icon="person-fill" font-scale="10"></b-icon>
+          </b-col>
+        </b-row>
+        <b-form @submit.prevent="onSubmit">
           <b-row class="text-left">
             <b-col sm="6" offset-sm="3">
               <b-form-group
                 class="label"
                 id="username-input-group"
                 label="Username:"
-                label-for="username-input"
-              >
+                label-for="username-input">
                 <b-form-input class="text-left"
                   id="username-input"
                   type="text"
@@ -29,14 +28,13 @@
               </b-form-group>
             </b-col>
           </b-row>
-           <b-row>
+          <b-row>
             <b-col sm="6" offset-sm="3">
               <b-form-group
                 class="text-left"
                 id="email-input-group"
                 label="Email address:"
-                label-for="email-input"
-              >
+                label-for="email-input">
                 <b-form-input class="text-left"
                   id="email-input"
                   type="email"
@@ -52,14 +50,11 @@
           <b-row>
             <b-col sm="6" offset-sm="3">
               <hr>
-
-                <!-- label="New password:" -->
               <p class="text-left">Change your password</p>
               <b-form-group
                 class="label"
                 id="password-input-group"
-                label-for="password-input"
-              >
+                label-for="password-input">
                 <b-form-input
                   id="password-input"
                   type="password"
@@ -72,15 +67,12 @@
             </b-col>
           </b-row>
           <b-row >
-
-            <!-- label="Confirm New Password:" -->
             <b-col sm="6" offset-sm="3">
               <b-form-group
                 class="label"
                 id="confirm-password-input-group"
                 label-for="confirm-password-input"
-                :class="{invalid: $v.confirmNewPassword.$error}"
-              >
+                :class="{invalid: $v.confirmNewPassword.$error}">
                 <b-form-input
                   id="confirm-password-input"
                   type="password"
@@ -89,9 +81,9 @@
                   @blur="$v.confirmNewPassword.$touch()"
                   autocomplete="new-password"
                 ></b-form-input>
-              <hr>
+                <hr>
               </b-form-group>
-              </b-col>
+            </b-col>
           </b-row>
           <b-row class="text-left">
             <b-col sm="6" offset-sm="3">
@@ -107,17 +99,16 @@
               <b-button @click="btnClick"
                         :pressed="showMyEvents"
                         :disabled="showMyEvents">Events I host</b-button>
-
-      <b-button @click="btnClick"
-                :pressed="!showMyEvents"
-                :disabled="!showMyEvents">Events I joined</b-button>
-    </b-button-group>
-     </b-col>
-          </b-row>
-          <b-col sm="10" offset-sm="1">
+              <b-button @click="btnClick"
+                        :pressed="!showMyEvents"
+                        :disabled="!showMyEvents">Events I joined</b-button>
+            </b-button-group>
+          </b-col>
+        </b-row>
+        <b-col sm="10" offset-sm="1" style="margin-top:7px;">
           <app-event-grid v-if="showMyEvents" :events="userEvents.createdEvents"></app-event-grid>
           <app-event-grid v-else :events="userEvents.joinedEvents"></app-event-grid>
-          </b-col>
+        </b-col>
       </b-container>
     </div>
   </div>

@@ -24,7 +24,7 @@ export default {
 <style>
 @media(max-width:575px){
   #app{
-    padding-bottom: 510px;
+    padding-bottom: 560px;
   }
 }
 @media(min-width: 576px){

@@ -63,7 +63,7 @@
                     label-for="name-input"
                     invalid-feedback="Name must be at least 3 characters!"
                   >
-                    <b-form-input id="name-input" pattern=".{3,}" v-model="subCategoryName" required></b-form-input>
+                    <b-form-input id="name-input" pattern=".{3,}" v-model="subCategoryName" maxlength="20" required></b-form-input>
                     <small v-if="invalidSubCat !== null" style="color: red">{{ invalidSubCat }}</small>
                   </b-form-group>
                 </form>
@@ -261,7 +261,7 @@ export default {
   #crform{
     padding:15px;
     width:100%;
-    margin-left: 1%;
+    margin-left: 0;
   }
 }
 @media (min-width: 767px){

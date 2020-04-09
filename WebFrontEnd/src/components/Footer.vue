@@ -21,29 +21,38 @@
         <p class="fheader"><b>CONTACT US</b></p>
         <hr style="background-color:white; ">
         <p class="flink row">
-        <b-icon class="icon" icon="envelope-fill"></b-icon>
-        <span>info@lavina.be</span>
+          <b-icon class="icon" icon="envelope-fill"></b-icon>
+          <span>info@lavina.be</span>
         </p>
       </b-col>
     </b-row>
     <b-row>
-    <b-row id="ftr" class="col-sm-6" style="padding-left:30px; padding-bottom:8px;">
-      <a href="https://www.vecteezy.com/free-vector/people-together" class="row flink">
-        <b-icon class="icon" icon="images"></b-icon>Event image by Vecteezy</a>
-    </b-row>
-    <b-row id="ftr" style="flex-flow: row-reverse" class="col-sm-6">
-      <p class="copyright">
-        &copy; 2020 Copyright:
-        <a href="https://lavina.be" style="color:white"><b style="font-size: 1.1rem">lavina.be</b></a>
-      </p>
-    </b-row>
+      <b-col class="btm">
+        <a class="row flink" style="width: max-content" href="https://www.vecteezy.com/free-vector/people-together">
+          <b-icon class="icon" icon="images"></b-icon>Event image by Vecteezy</a>
+      </b-col>
+      <b-col class="cent row">
+        <div class="copyright row">
+          &copy; 2020 Copyright: -
+          <a href="https://lavina.be" style="color:white; "> <b> lavina.be</b>-</a>
+        </div>
+      </b-col>
     </b-row>
   </footer>
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import Vue from 'vue'
+import VueMq from 'vue-mq'
 
-// TODO: log out da si vurshi rabotata i kato ne si lognat vmesto nego da ima register!!!!!!!!!!!!!!!!!
+Vue.use(VueMq, {
+  breakpoints: {
+    mobile: 666,
+    tablet: 1000,
+    desktop: Infinity
+  }
+})
+
 export default {
   computed: {
     ...mapGetters(['isAuthenticated'])
@@ -52,6 +61,7 @@ export default {
 </script>
 
 <style scoped>
+
 .text-center {
   padding-top: 0.5%;
 }
@@ -70,7 +80,6 @@ footer {
 #ftr {
   margin: 0;
   padding-top: 50px;
-  padding-right: 50px;
 }
 .flink {
   color: white;
@@ -86,8 +95,8 @@ footer {
   background: rgba(255, 255, 255, 0.774);
 }
 .copyright {
-  text-align: end;
   color:white;
+  width:max-content;
 }
 img {
   margin-top: -77px;
@@ -96,6 +105,42 @@ img {
 .fheader{
   color:white;
   text-align-last:center;
+}
+@media(max-width: 422px){
+  .cent{
+    flex-basis: auto;
+  }
+  .btm{
+    text-align: -webkit-center;
+    padding-left:0;
+  }
+  .copyright {
+    margin:auto;
+    margin-bottom:10px;
+  }
+}
+@media(min-width: 423px){
+  .cent{
+    flex-direction: row-reverse;
+    margin-right:30px;
+  }
+  .btm{
+    padding-left:30px;
+    margin-bottom:7px;
+  }
+  .copyright {
+    padding-top:5px;
+  }
+}
+@media(max-width: 673px){
+  #ftr{
+  padding-right: 30px;
+  }
+}
+@media(min-width: 674px){
+   #ftr{
+  padding-right: 50px;
+  }
 }
 @media(max-width: 575px){
   .fheader{
