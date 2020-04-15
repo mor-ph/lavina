@@ -7,21 +7,28 @@
 <!-------------------------------------------------------------------------->
       <b-col md="8" offset-md="2">
         <b-form-row id="crform">
+          <b-row class="stat" :class="statusColor">{{this.event.eventStatus}}</b-row>
           <b-row style="margin:0px; height:fit-content; padding:0" class="col-md-4">
             <b-col id="imgCol">
-              <img alt="event image" src="../../components/ideas.png">
+              <img v-if="this.event.eventStatus != 'Finished'" alt="event image" src="../../components/ideas.png">
+              <img v-if="this.event.eventStatus === 'Finished'" alt="event image" src="../../components/ideas-bnw.png">
             </b-col>
           </b-row>
           <b-col md="8" style="padding:0;">
               <b-col id="title">
                 <b-col style="padding:0">
-                  <h4 style="margin-bottom:0;overflow-wrap: break-word;">{{ event.title }}<sup>{{this.event.eventStatus}}</sup></h4>
-                  <p style="margin-bottom:0">Hosted by <b>{{ event.user.username }}</b></p>
+                  <h4 style="margin-bottom:0;overflow-wrap: break-word;">{{ event.title }}
+                    <!-- <sup :class="statusColor">{{this.event.eventStatus}}</sup> -->
+                  </h4>
+                  <p style="margin-bottom:0">
+                    Hosted by <b>{{ event.user.username }}</b></p>
                 </b-col>
               </b-col>
               <div id="category">
-                  <p class="ctgrTag">{{event.mainCategory.name}}</p>
-                  <p class="ctgrTag" v-if="event.subCategory !== null">{{event.subCategory.name}}</p>
+                  <p v-if="this.event.eventStatus != 'Finished'" class="ctgrTag">{{event.mainCategory.name}}</p>
+                  <p v-if="this.event.eventStatus != 'Finished' && event.subCategory !== null" class="ctgrTag">{{event.subCategory.name}}</p>
+                  <p v-if="this.event.eventStatus === 'Finished'" class="ctgrTag ctgr-bnw">{{event.mainCategory.name}}</p>
+                  <p v-if="this.event.eventStatus === 'Finished' && event.subCategory !== null" class="ctgrTag ctgr-bnw">{{event.subCategory.name}}</p>
               </div>
             <b-row class="info" style="padding-top:0; margin-top:0">
               <b-col class="details" lg="5">
@@ -72,7 +79,7 @@
               <b-row id="description">
               <b-col style="background-color: rgba(255, 255, 255, 0.562);">
                 <p v-if="event.description !== ''" style="margin-top:7px; margin-bottom:7px;">{{event.description}}</p>
-                <p v-else style="margin-top:7px; margin-bottom:7px;">Sorry, <b>{{event.user.username}}</b> didn't provide any :/</p>
+                <p v-else style="margin-top:7px; margin-bottom:7px;"><b>{{event.user.username}}</b> didn't provide any :/</p>
               </b-col>
               </b-row>
             </b-row>
@@ -155,7 +162,12 @@ export default {
     ...mapGetters([
       'token',
       'userId'
-    ])
+    ]),
+    statusColor () {
+      const color = this.event.eventStatus === 'Finished' ? 'finished' : (
+        this.event.eventStatus === 'Upcoming' ? 'blu' : 'hn')
+      return color
+    }
   },
   methods: {
     normalize: function String () {
@@ -246,7 +258,6 @@ export default {
     margin-left:15px;
   }
 }
-
 .body {
   padding-top: 120px;
   padding-bottom: 150px;
@@ -291,13 +302,14 @@ button{
   bottom:0;
   border-radius: 5px;
 }
-#close{
-  background-color: rgba(49, 49, 49, 0.685);
+#close{  background-color:rgba(252,206,81,1);
+  color:rgb(143, 27, 27);
   border:none;
   width:inherit;
 }
 #join{
-  background-color: rgba(61, 118, 131, 0.87);
+  background-color:rgba(252,206,81,1);
+  color:rgb(100, 117, 148);
   width:inherit;
   border:none;
 }
@@ -310,6 +322,10 @@ button{
   background: #fcce51;
   background: linear-gradient(79deg, rgba(252,206,81,1) 85%, #eec24b 100%);
   margin-right: -15px;
+}
+.ctgr-bnw{
+  color:rgb(255, 255, 255);
+  background: linear-gradient(279deg, rgb(90, 89, 89) 85%, rgb(68, 68, 68) 100%);
 }
 #imgCol{
   padding:0;
@@ -325,11 +341,25 @@ button{
   padding:0;
 }
 sup{
-  font-size:0.95rem;
-  color:rgb(60, 118, 131);
-  padding-left:3px;
+  font-size:0.93rem;
+  color:white;
+  padding:3px;
+  border-radius:3px;
 }
-h5{
-  color:rgb(92, 91, 91);
+.stat{
+/* font-size:0.93rem; */
+  color:white;
+  padding:3px;
+  margin:auto;
+  font-weight: bold;
+  width:fill-available;
+  margin-right:-15px;
+  margin-left:-15px;
+  justify-content: flex-end;
+  /* border-radius:3px; */
 }
+.blu {background-color:rgb(125, 162, 169);}
+.finished {background-color:rgb(168, 12, 12); color:rgb(255, 255, 255)}
+.hn {background-color:rgba(128, 187, 136, 0.911);}
+h5 {color:rgb(92, 91, 91);}
 </style>
