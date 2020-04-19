@@ -26,6 +26,7 @@ class EventList extends StatelessWidget {
               ),
               Container(
                   height: 200,
+                  color: Theme.of(context).canvasColor,
                   child: Image.asset(
                     'assets/images/waiting.png',
                     fit: BoxFit.cover,
@@ -50,8 +51,8 @@ class EventList extends StatelessWidget {
         );
       },
       child: Card(
-        color: isNewEvent ? Colors.brown[100]
-            : Colors.white,
+        color: isNewEvent ? Colors.white
+            : Colors.grey[200],
         elevation: 5,
         margin: EdgeInsets.symmetric(
           vertical: 6,

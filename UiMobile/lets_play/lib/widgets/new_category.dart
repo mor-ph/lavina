@@ -65,7 +65,7 @@ class _NewCategoryState extends State<NewCategory> {
             ),
             RaisedButton(
               child: Text('Add Category'),
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).buttonColor,
               textColor: Theme.of(context).textTheme.button.color,
               onPressed: _submitData,
             ),

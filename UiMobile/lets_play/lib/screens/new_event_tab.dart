@@ -83,7 +83,19 @@ class _NewOrderScreenState extends State<NewEventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("New event"),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Image.asset(
+              'assets/images/lavina-logo.png',
+              fit: BoxFit.contain,
+              height: 32,
+            ),
+            Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Lavina'))
+          ],
+        ),
       ),
       body: Stack(
         children: <Widget>[
@@ -167,7 +179,7 @@ class _NewOrderScreenState extends State<NewEventPage> {
         margin: EdgeInsets.all(25),
         padding: EdgeInsets.all(25),
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).buttonColor,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Row(
@@ -210,6 +222,7 @@ class _NewOrderScreenState extends State<NewEventPage> {
                   Icon(
                     Icons.category,
                     size: 35,
+                    color: Theme.of(context).buttonColor,
                   ),
                 ],
               )
@@ -223,7 +236,7 @@ class _NewOrderScreenState extends State<NewEventPage> {
                   ),
                   Text(
                     _selectedCategory.name,
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Theme.of(context).buttonColor),
                   ),
                   SizedBox(
                     width: 15,
@@ -231,6 +244,7 @@ class _NewOrderScreenState extends State<NewEventPage> {
                   Icon(
                     Icons.category,
                     size: 35,
+                    color: Theme.of(context).buttonColor,
                   ),
                 ],
               ),
@@ -257,7 +271,7 @@ class _NewOrderScreenState extends State<NewEventPage> {
               data: _categories, // pass here List<BaseModel>
               config: Config(
                   parentTextStyle: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w600),
+                      color: Theme.of(context).buttonColor, fontWeight: FontWeight.w600),
                   rootId: "1",
                   parentPaddingEdgeInsets:
                       EdgeInsets.only(left: 16, top: 0, bottom: 0)),
@@ -285,7 +299,7 @@ class _NewOrderScreenState extends State<NewEventPage> {
                 color: Colors.white,
               ),
               heroTag: Text('Approve'),
-              backgroundColor: Colors.green,
+              backgroundColor: Theme.of(context).buttonColor,
               onPressed: () => _startAddNewCategory(context),
             ),
             floatingActionButtonLocation:
@@ -368,7 +382,7 @@ class _NewOrderScreenState extends State<NewEventPage> {
             hintText: 'Title',
             icon: new Icon(
               Icons.text_fields,
-              color: Colors.grey,
+              color: Theme.of(context).buttonColor,
             )),
         validator: (value) => value.isEmpty ? 'Title can\'t be empty' : null,
         onSaved: (value) => _name.text = value.trim(),
@@ -408,7 +422,7 @@ class _NewOrderScreenState extends State<NewEventPage> {
             hintText: 'People needed',
             icon: new Icon(
               Icons.person_add,
-              color: Colors.grey,
+              color: Theme.of(context).buttonColor,
             )),
         validator: (value) =>
             value.isEmpty ? 'People needed can\'t be empty' : null,
@@ -431,7 +445,7 @@ class _NewOrderScreenState extends State<NewEventPage> {
             hintText: 'Description',
             icon: new Icon(
               Icons.message,
-              color: Colors.grey,
+              color: Theme.of(context).buttonColor,
             )),
         onSaved: (value) => _description.text = value.trim(),
       ),
@@ -450,7 +464,7 @@ class _NewOrderScreenState extends State<NewEventPage> {
             hintText: 'Exact address',
             icon: new Icon(
               Icons.add_location,
-              color: Colors.grey,
+              color: Theme.of(context).buttonColor,
             )),
         onSaved: (value) => _exactAddress.text = value.trim(),
       ),
@@ -496,10 +510,12 @@ class _NewOrderScreenState extends State<NewEventPage> {
               Icon(
                 Icons.calendar_today,
                 size: 35,
+                color: Theme.of(context).buttonColor,
               ),
               Icon(
                 Icons.access_time,
                 size: 35,
+                color: Theme.of(context).buttonColor,
               ),
               SizedBox(
                 width: 15,
@@ -544,6 +560,8 @@ class _NewOrderScreenState extends State<NewEventPage> {
                   }
                 });
               },
+              hoverColor: Theme.of(context).buttonColor,
+              focusColor: Theme.of(context).buttonColor,
               activeTrackColor: Colors.lightGreenAccent,
               activeColor: Colors.green,
             ),

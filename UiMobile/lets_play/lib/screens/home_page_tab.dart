@@ -24,12 +24,15 @@ class _HomePageTabState extends State<HomePageTab> {
 
   getEvents() async {
     List<Event> events = await EventService.getEvents();
-    if(events != null){
+    if (events != null) {
       setState(() {
         _events = events;
       });
     }
-    _events = events.where((element) => element.isActive != null && element.isActive==true).toList();
+    _events = events
+        .where(
+            (element) => element.isActive != null && element.isActive == true)
+        .toList();
   }
 
   @override
@@ -40,7 +43,7 @@ class _HomePageTabState extends State<HomePageTab> {
 
   @override
   Widget build(BuildContext context) {
-    if(_events == null){
+    if (_events == null) {
       getEvents();
       return ProgressIndicatorWidget();
     }
@@ -48,10 +51,23 @@ class _HomePageTabState extends State<HomePageTab> {
         bloc: BlocProvider.of<CategoryBloc>(context),
         builder: (context, state) {
           return Scaffold(
+            backgroundColor: Theme.of(context).canvasColor,
             appBar: AppBar(
-              title: Text("Home page"),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    'assets/images/lavina-logo.png',
+                    fit: BoxFit.contain,
+                    height: 32,
+                  ),
+                  Container(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Lavina'))
+                ],
+              ),
             ),
-            body:  Stack(
+            body: Stack(
               children: <Widget>[
                 SingleChildScrollView(
                   child: Column(

@@ -74,6 +74,7 @@ flutter:
     - assets/images/waiting.png
     - assets/images/illuminati.png
     - assets/images/profile_image.png
+    - assets/images/lavina-logo.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

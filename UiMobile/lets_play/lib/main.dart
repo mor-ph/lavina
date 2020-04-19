@@ -20,6 +20,8 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.amber,
           fontFamily: 'Quicksand',
           errorColor: Colors.red,
+          canvasColor: Color.fromRGBO(227, 227, 228, 1),
+          buttonColor: Color.fromRGBO(60, 71, 78, 1),
           textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle(
                 fontFamily: 'OpenSans',
@@ -28,14 +30,13 @@ class MyApp extends StatelessWidget {
               ),
               button: TextStyle(color: Colors.white)),
           appBarTheme: AppBarTheme(
-            textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle(
-                  fontFamily: 'OpenSans',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-            color: Colors.teal[800]
-          )),
+              textTheme: ThemeData.light().textTheme.copyWith(
+                    title: TextStyle(
+                        fontFamily: 'OpenSans',
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+              color: Color.fromRGBO(125, 162, 169, 1))),
       home: RootPage(auth: new Auth()),
 //      home: HomePage(),
     );

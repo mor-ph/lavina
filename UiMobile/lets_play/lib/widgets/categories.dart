@@ -55,6 +55,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
     return Column(
       children: <Widget>[
         Container(
+          color: Color.fromRGBO(227, 227, 228, 0),
           height: 120,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -169,7 +170,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
                       width: 1.5)),
               child: Icon(
                 widget.categoryIcon,
-                color: Colors.black,
+                color: Theme.of(context).buttonColor,
                 size: widget.category.parentId != 1 ? 10 : 30,
               ),
             ),
@@ -179,7 +180,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
                 fontWeight: FontWeight.w700,
                 color: widget.category.isSelected != 1
                     ? Colors.black
-                    : Colors.white,
+                    : Theme.of(context).canvasColor,
               ),
             ),
           ],

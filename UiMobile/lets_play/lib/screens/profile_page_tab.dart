@@ -86,7 +86,19 @@ class _ProfilePageState extends State<ProfilePage>
     }
     return Scaffold(
         appBar: AppBar(
-          title: Text("My profile"),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Image.asset(
+                'assets/images/lavina-logo.png',
+                fit: BoxFit.contain,
+                height: 32,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Lavina'))
+            ],
+          ),
           bottom: _profileTabs(),
           actions: <Widget>[
             Column(
@@ -161,6 +173,7 @@ class _ProfilePageState extends State<ProfilePage>
                       width: 70,
                       height: 70,
                       fit: BoxFit.cover,
+                      color: Theme.of(context).buttonColor,
                     ),
                   ),
                   SizedBox(
@@ -171,6 +184,7 @@ class _ProfilePageState extends State<ProfilePage>
                       Text(
                         _user.userName,
                         style: TextStyle(
+
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: 20),

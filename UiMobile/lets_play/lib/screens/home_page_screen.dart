@@ -133,16 +133,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget _tabs() => TabBar(
-        unselectedLabelColor: Colors.black,
-        labelColor: Colors.red,
-        indicatorColor: Colors.red,
+        unselectedLabelColor: Theme.of(context).buttonColor,
+        labelColor: Colors.red[900],
+        indicatorColor:  Colors.red[900],
         controller: _controller,
         tabs: <Widget>[
           Tab(
             icon: Icon(
               Icons.home,
               size: 30,
-              color: Colors.black,
+              color: Theme.of(context).buttonColor,
             ),
             text: "Home",
           ),
@@ -150,7 +150,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             icon: Icon(
               Icons.add,
               size: 30,
-              color: Colors.black,
+              color: Theme.of(context).buttonColor,
             ),
             text: "New",
           ),
@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             icon: Icon(
               Icons.face,
               size: 30,
-              color: Colors.black,
+              color: Theme.of(context).buttonColor,
             ),
             text: "Profile",
           )
