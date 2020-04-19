@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import axios from 'axios' if we make fetchUser
-import axiosAuth from '../../axios-auth'
-
+import authApi from '../../api/authApi'
 import router from '../../router'
+import jwtDecode from 'jwt-decode'
 
 Vue.use(Vuex)
 
@@ -30,95 +29,103 @@ export default {
     }
   },
   actions: {
-    setLogoutTimer ({ commit }) {
-      setTimeout(() => {
-        commit('clearAuthData')
-      }, 3600 * 1000)
-    },
-    signup ({ commit, dispatch }, authData) {
-      console.log(authData)
-      axiosAuth.post('users', {
-        email: authData.email,
-        username: authData.username,
-        password: authData.password,
-        crossdomain: true
-      })
-        .then(res => {
-          console.log(res)
-          commit('authUser', {
-            token: res.data.accessToken,
-            userId: res.data.id
-          })
-          const now = new Date()
-          const expirationDate = new Date(now.getTime() + 3600 * 1000)
-          localStorage.setItem('token', res.data.accessToken)
-          localStorage.setItem('userId', res.data.id)
-          localStorage.setItem('expirationDate', expirationDate)
-          dispatch('setLogoutTimer')
-          router.replace('/')
-        })
-        .catch(error => console.log(error))
+    async register ({ dispatch }, formData) {
+      await authApi.register(formData)
+      dispatch('login', formData)
     },
 
-    login ({ commit, dispatch }, authData) {
-      axiosAuth.post('login', {
-        username: authData.username,
-        password: authData.password
-      })
-        .then(res => {
-          const now = new Date()
-          const expirationDate = new Date(now.getTime() + 3600 * 1000)
-          localStorage.setItem('token', res.data.accessToken)
-          localStorage.setItem('userId', res.data.id)
-          localStorage.setItem('expirationDate', expirationDate)
-          console.log('USERDATA', {
-            token: res.data.accessToken,
-            id: res.data.id
-          })
-          commit('authUser', {
-            token: res.data.accessToken,
-            userId: res.data.id
-          })
-          commit('storeUser', {
-            username: res.data.username,
-            email: res.data.email
-          })
-          dispatch('setLogoutTimer')
-          router.replace('/')
-        })
-        .catch(error => console.log(error))
-    },
-    tryAutoLogin ({ commit }) {
-      const token = localStorage.getItem('token')
-      if (!token) {
-        return
-      }
-      const expirationDate = localStorage.getItem('expirationDate')
-      const now = new Date()
-      if (now >= expirationDate) {
-        return
-      }
-      const userId = localStorage.getItem('userId')
-      // dispatch fetchUser by ID
+    async login ({ commit, dispatch }, authData) {
+      const response = await authApi.login(authData)
+
+      const token = jwtDecode(response.data.accessToken)
+      const expirationDate = new Date(token.exp * 1000)
+
+      localStorage.setItem('token', response.data.accessToken)
+      localStorage.setItem('userId', token.userId)
+      localStorage.setItem('expirationDate', expirationDate)
+
       commit('authUser', {
-        token: token,
-        userId: userId
+        token: response.data.accessToken,
+        userId: response.data.id
       })
+      dispatch('getUserById')
+
+      const now = new Date()
+      dispatch('setLogoutTimer', expirationDate.getTime() - now.getTime())
+      router.replace('/')
     },
+
+    setLogoutTimer ({ commit }, milliseconds) {
+      setTimeout(() => {
+        commit('clearAuthData')
+      }, milliseconds)
+    },
+
     logout ({ commit }) {
       commit('clearAuthData')
       localStorage.removeItem('expirationDate')
       localStorage.removeItem('token')
       localStorage.removeItem('userId')
-      router.replace('/')
+    },
+
+    tryAutoLogin ({ commit, dispatch, state }) {
+      const token = localStorage.getItem('token')
+      if (!token || state.idToken) {
+        return
+      }
+
+      const expirationDate = new Date(localStorage.getItem('expirationDate'))
+      const now = new Date()
+      if (now >= expirationDate) {
+        return
+      }
+
+      const userId = localStorage.getItem('userId')
+      commit('authUser', {
+        token: token,
+        userId: userId
+      })
+
+      dispatch('getUserById')
+      dispatch('setLogoutTimer', expirationDate.getTime() - now.getTime())
+    },
+
+    async updateProfile ({ state, dispatch }, formData) {
+      if (formData.password === '') {
+        formData = {
+          username: formData.username,
+          email: formData.email
+        }
+      }
+      await authApi.updateProfile(state.userId, formData, state.idToken)
+      dispatch('logout')
+      router.replace('/login')
+    },
+
+    async getUserById ({ commit, state }) {
+      try {
+        const response = await authApi.getUserById(state.userId, state.idToken)
+        commit('storeUser', {
+          username: response.data.username,
+          email: response.data.email
+        })
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   getters: {
-    getUser: (state) => {
+    user: (state) => {
       return state.user
     },
     isAuthenticated: (state) => {
       return state.idToken !== null
+    },
+    token: (state) => {
+      return state.idToken
+    },
+    userId: (state) => {
+      return state.userId
     }
   }
 }

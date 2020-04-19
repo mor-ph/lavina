@@ -1,5 +1,6 @@
 ﻿using CommentService.Data;
 using CommentService.Models;
+using CommentService.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -32,11 +33,16 @@ namespace CommentService.Repository
         }
         public async Task<IEnumerable<Comment>> GetCommentsForEvent(int id)
         {
-            var commentsList = await _context.Comments.Where(c => c.EventId == id).ToListAsync();
+            var commentsList = await _context.Comments.Include(u => u.User).Where(c => c.EventId == id).ToListAsync();
 
             return commentsList;
         }
 
+        public async Task<User> GetUser(int id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
+            return user;
+        }
     }
 }

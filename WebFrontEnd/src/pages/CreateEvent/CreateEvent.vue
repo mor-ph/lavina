@@ -1,290 +1,222 @@
 <template>
-  <div>
-    <!-- Color fon -->
-    <div class="body">
+    <div class="body innerDiv">
       <b-container fluid>
-        <b-form @submit.prevent="onSubmit">
-        <!-- Title -->
-        <b-row class="text-left my-2">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-left  my-2">
-              <label for="example-i18n-picker">
-                <strong>Title:</strong>
-              </label>
-            </div>
-            <b-form-textarea
-              class="text-left"
-              id="textarea-no-resize"
-              rows="1"
-              no-resize
-              required
-              v-model="title"
-            ></b-form-textarea>
-          </b-col>
-        </b-row>
-
-        <!-- Category -->
-        <b-row class="text-left my-2">
-
-          <b-col sm="4" offset-sm="4">
-            <div class="text-left">
-              <label for="example-category">
-                <strong>Category:</strong>
-              </label>
-            </div>
-            <b-form-select
-              class="text-left"
-              id="example-category"
-              v-model="category"
-              :options= filters.category
-              @change= "fetchSubCategories"
-              required
-            ></b-form-select>
-          </b-col>
-        </b-row>
-
-        <!-- Subcategory -->
-        <b-row class="text-left my-2"
-         v-if="category !== ''">
-          <b-col sm="2" offset-sm="5">
-            <div class="text-left">
-              <label for="example-subcategorys">
-                <strong>Subcategories:</strong>
-              </label>
-            </div>
-          </b-col>
-        </b-row>
-
-        <b-row class="text-left my-2">
-          <b-col sm="3" offset-sm="4">
-            <b-form-select id="example-subcategorys"
-            v-if="category !== ''"
-            v-model="subcategory"
-            required
-            :options="filters.subcategories"></b-form-select>
-          </b-col>
-
-          <!-- Add subcategory -->
-          <div v-if="category !== ''">
-            <b-col>
-              <b-button v-b-modal.modal-prevent-closing class="colorbutton">
-                <strong>Add Sub.</strong>
-              </b-button>
+        <b-row class="text-center my-2">
+            <b-col md="8" offset-md="2" lg="8" offset-lg="2">
+              <h5 style="opacity:0.8"> Create new event</h5>
+              <hr>
             </b-col>
-
+          </b-row>
+    <b-form @submit.prevent="onSubmit">
+      <b-form-row id="crform">
+          <b-col md="4" lg="4" sm="12"  class="crcol">
+              <label for="example-i18n-picker">Title<span red> *</span></label>
+                <b-form-textarea
+                  maxlength="50"
+                  style="height:32px"
+                  class="text-left"
+                  id="textarea-no-resize"
+                  rows="1"
+                  no-resize
+                  required
+                  v-model="title"
+                ></b-form-textarea>
+          </b-col>
+          <b-col d-flex md="4" lg="4" sm="12" class="crcol">
+              <label for="example-category">Category<span red> *</span></label>
+                <b-form-select
+                  class="text-left"
+                  id="example-category"
+                  v-model="category"
+                  :options= filters.category.slice(1)
+                  @change= "getSubCategories"
+                  required
+                ></b-form-select>
+          </b-col>
+          <b-col md="4" lg="4" sm="12" class="crcol">
+            <label for="example-subcategorys">Subcategory</label>
+            <b-form-row>
+              <b-col sm="9">
+                <b-form-select id="example-subcategorys"
+                v-model="subcategory"
+                :options="filters.subcategories"></b-form-select>
+              </b-col>
+              <b-col sm="3">
+                <b-button class="colorbutton" v-b-modal.modal-prevent-closing title="Create new subcategory" :disabled="category === null">
+                  <b-icon id="plusIcon" icon="plus" height="33px" width="auto"></b-icon>
+                </b-button>
+              </b-col>
+            </b-form-row>
+          </b-col>
             <b-modal
-              id="modal-prevent-closing"
-              ref="modal"
-              title="Submit Your Name"
-              @show="resetModal"
-              @hidden="resetModal"
-              @ok="handleOk"
-            >
-              <form ref="form" @submit.stop.prevent="handleAddSubSubmit">
-                <b-form-group
-                  :state="nameState"
-                  label="Name"
-                  label-for="name-input"
-                  invalid-feedback="Name is required"
-                >
-                  <b-form-input id="name-input" v-model="subCategoryName" :state="nameState" required></b-form-input>
-                </b-form-group>
-              </form>
-            </b-modal>
-          </div>
-        </b-row>
-
-        <!--  Date & Time picker -->
-        <b-row class="text-left my-2">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-left my-2">
-              <label for="example-i18n-picker">
-                <strong>Date & Time picker:</strong>
-              </label>
-            </div>
+                id="modal-prevent-closing"
+                ref="modal"
+                title="Subcategory"
+                @show="resetModal"
+                @hidden="resetModal"
+                @ok="handleOk"
+              >
+                <form ref="form" @submit.stop.prevent="handleOk">
+                  <b-form-group
+                    :state="nameState"
+                    label="Name"
+                    label-for="name-input"
+                    invalid-feedback="Name must be at least 3 characters!"
+                  >
+                    <b-form-input id="name-input" pattern=".{3,}" v-model="subCategoryName" maxlength="20" required></b-form-input>
+                    <small v-if="invalidSubCat !== null" style="color: red">{{ invalidSubCat }}</small>
+                  </b-form-group>
+                </form>
+              </b-modal>
+          <b-col md="4" lg="4" sm="12"  class="crcol">
+              <label for="example-i18n-picker">Date<span red> *</span></label>
+                  <b-form-datepicker id="datepicker-valid"
+                    v-model="valueDate" :min="minDate"></b-form-datepicker>
           </b-col>
-        </b-row>
-
-        <b-row class=" text-left my-2">
-          <b-col sm="4" offset-sm="4">
-            <b-form-datepicker id="datepicker-valid"
-                              :state ="valueDate ? true : false"
-                               v-model="valueDate" :min="minDate"></b-form-datepicker>
+          <b-col md="4" lg="4" sm="12" class="crcol">
+              <label for="example-i18n-picker">Time<span red> *</span></label>
+                <b-form-timepicker id="timepicker-valid"
+                              v-model="valueTime"></b-form-timepicker>
           </b-col>
-        </b-row>
-        <b-row class=" text-left my-2">
-          <b-col sm="4" offset-sm="4">
-          <b-form-timepicker id="timepicker-valid"
-                            :state="valueTime ? true : false"
-                             v-model="valueTime"></b-form-timepicker>
-         </b-col>
-        </b-row>
-          <!-- Location -->
-          <b-row class="text-left my-2">
-            <b-col sm="4" offset-sm="4">
-              <div class="text-left my-2">
-                <label for="example-location">
-                  <strong>Location:</strong>
-                </label>
-              </div>
-              <b-form-select
-                class="text-left"
-                id="example-location"
-                required
-                v-model="location"
-                :options="filters.location"
-              ></b-form-select>
-            </b-col>
-          </b-row>
-
-        <!-- Address -->
-        <b-row class="text-left my-2">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-left  my-2">
-              <label for="example-i18n-picker">
-                <strong>Address:</strong>
-              </label>
-            </div>
+          <b-col md="4" lg="4" sm="12" class="crcol" >
+              <label for="example-i18n-picker">This event will happen</label>
+                <b-form-select v-model="recurring" :options="recurringOptions"></b-form-select>
+          </b-col>
+          <b-col md="4" lg="4" sm="12" class="crcol">
+                <label for="example-location">City<span> *</span></label>
+                  <b-form-select
+                    class="text-left"
+                    id="example-location"
+                    required
+                    v-model="city"
+                    :options= filters.location.slice(1)
+                  ></b-form-select>
+          </b-col>
+          <b-col md="4" lg="4" sm="12" class="crcol">
+              <label for="example-i18n-picker">Exact address</label>
+                <b-form-textarea
+                  maxlength="100"
+                  style="height:32px"
+                  class=""
+                  id="textarea-no-resize"
+                  rows="1"
+                  no-resize
+                  v-model="address"
+                ></b-form-textarea>
+          </b-col>
+          <b-col md="4" lg="4" sm="12" class="crcol">
+                <label for="example-i18n-picker">People needed<span red> *</span></label>
+                <b-form-input required v-model="peopleNeeded"
+                  type="number"
+                  min="0"
+                  title="How many people do you need to come?"
+                ></b-form-input>
+          </b-col>
+          <b-col sm="12"  class="crcol">
+            <label>Description</label>
             <b-form-textarea
-              class=""
+              maxlength="600"
               id="textarea-no-resize"
-              placeholder="Please enter an address"
-              rows="1"
+              rows="7"
               no-resize
-              required
-              v-model="address"
+              v-model="description"
+              placeholder="Write a short, clear description. You've got 600 characters."
             ></b-form-textarea>
           </b-col>
-        </b-row>
-
-        <!--Repeating-->
-         <b-row class="my-2 text-left">
-          <b-col sm="2" offset-sm="5">
-            <div class="text-left">
-              <label for="example-i18n-picker">
-                <strong>Your event will occur?</strong>
-              </label><br>
-             <b-form-select v-model="recurring" :options="options" class="mb-3">
-    </b-form-select>
-            </div>
-          </b-col>
-        </b-row>
-
-      <!--People Needed-->
-        <b-row class="my-2 text-center">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-center">
-              <label for="example-i18n-picker">
-                <strong>People Needed:</strong>
-              </label><br>
-              <b-form-spinbutton id="sb-vertical" v-model="peopleNeeded" vertical></b-form-spinbutton>
-            </div>
-          </b-col>
-        </b-row>
-
-        <!--  Details -->
-        <b-row class="text-left my-2">
-          <b-col sm="4" offset-sm="4">
-            <div class="text-left">
-              <label for="example-i18n-picker">
-                <strong>Description:</strong>
-              </label>
-            </div>
-          </b-col>
-        </b-row>
-          <b-row class="text-left my-2">
-            <b-col sm="4" offset-sm="4">
-              <b-form-textarea
-                id="textarea-no-resize"
-                placeholder="Fixed height textarea"
-                rows="7"
-                no-resize
-                required
-                v-model="description"
-              ></b-form-textarea>
+           <b-col sm="12"  class="crcol">
+             <p class="error" v-if="createEventError !== null">{{ createEventError }}</p>
+              <b-button class="yellowbtn submitBtn" type="submit" style="margin-bottom:20px">Create</b-button>
             </b-col>
-          </b-row>
-          <b-row class="text-left my-2">
-            <b-col sm="4" offset-sm="4">
-              <b-button class="yellowbtn" type="submit" size="lg">Create</b-button>
-            </b-col>
-          </b-row>
+        </b-form-row>
         </b-form>
       </b-container>
     </div>
-  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
+import router from '../../router'
+import { postSubCategory, createEvent } from '../../api/eventApi'
+
 export default {
   created () {
-    this.$store.dispatch('fetchFilters')
+    this.tryAutoLogin()
+    this.fetchFilters()
   },
   data () {
     const now = new Date()
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-    // 15th two months prior
-    const minDate = new Date(today)
-    minDate.setDate(minDate.getDate())
     return {
-      // Form data
       title: '',
-      category: '',
-      subcategory: '',
+      category: null,
+      subcategory: null,
       location: '',
       city: '',
       address: '',
       recurring: null,
-      peopleNeeded: 1,
+      peopleNeeded: null,
       description: '',
 
-      // Template data
       subCategoryName: '',
       nameState: null,
+      invalidSubCat: null,
 
       types: ['date', 'time'],
       valueDate: '',
-      minDate: null,
-
+      minDate: now,
       valueTime: '',
 
-      options: [
+      recurringOptions: [
         { value: null, text: 'Once' },
-        { value: '1', text: 'Everyday' },
+        { value: '1', text: 'Every day' },
         { value: '2', text: 'Every week' },
         { value: '3', text: 'Every month' }
-      ]
+      ],
 
+      createEventError: null
     }
   },
   methods: {
+    ...mapMutations([
+      'changeRefreshed'
+    ]),
+    ...mapActions([
+      'tryAutoLogin',
+      'fetchFilters',
+      'fetchSubcategories'
+    ]),
     dateDisabled (ymd, date) {
       if (date.getDate() > Date()) {
         return true
       }
     },
-    onSubmit () {
+    async onSubmit () {
       if (this.valueDate === '' || this.valueTime === '') return
-
       const formData = {
         title: this.title,
         category: this.category,
         subcategory: this.subcategory,
-        eventStartDate: new Date(this.valueDate + 'T' + this.valueTime),
+        eventStartDate: this.valueDate + 'T' + this.valueTime,
         city: this.city,
         address: this.address,
         recurring: this.recurring,
         peopleNeeded: this.peopleNeeded,
-        description: this.description
+        description: this.description,
+        eventStatus: 1
       }
-      console.log(formData)
-      this.$store.dispatch('createEvent', formData)
+      try {
+        await createEvent(formData, this.token)
+        this.changeRefreshed()
+        alert('Your event was created successfully!')
+        router.replace('/')
+      } catch (error) {
+        this.createEventError = error.response.data
+      }
     },
-    fetchSubCategories () {
-      this.$store.dispatch('fetchSubcategories', this.category)
+    getSubCategories () {
+      this.subcategory = null
+      this.fetchSubcategories(this.category)
     },
-    // Template Methods
+
     checkFormValidity () {
       const valid = this.$refs.form.checkValidity()
       this.nameState = valid
@@ -295,36 +227,98 @@ export default {
       this.nameState = null
     },
     handleOk (bvModalEvt) {
-      // Prevent modal from closing
       bvModalEvt.preventDefault()
-      // Trigger submit handler
       this.handleAddSubSubmit()
     },
-    handleAddSubSubmit () {
-      // Exit when the form isn't valid
+    async handleAddSubSubmit () {
       if (!this.checkFormValidity()) {
         return
       }
-
-      this.$store.dispatch('addSubCategory', this.category, this.subCategoryName)
-      // Push the name to submitted names
-      this.$store.state.filters.subcategory
-        .push(this.subCategoryName)
-      // Hide the modal manually
-      this.$nextTick(() => {
-        this.$bvModal.hide('modal-prevent-closing')
-      })
+      try {
+        await postSubCategory(this.category, this.subCategoryName, this.token)
+        this.fetchSubcategories(this.category)
+        this.subcategory = this.subCategoryName
+        this.$nextTick(() => {
+          this.$bvModal.hide('modal-prevent-closing')
+        })
+      } catch (error) {
+        this.invalidSubCat = error.response.data
+      }
     }
   },
   computed: {
-    ...mapGetters(['filters'])
+    ...mapGetters(['filters', 'token'])
   }
 }
 </script>
 
 <style scoped>
-.body {
-  padding-top: 120px;
-  padding-bottom: 150px;
+@media (max-width: 367px) {
+  .crcol{
+    padding-right:0;
+    /* margin-left:8px; */
+  }
+  #crform{
+    padding:15px;
+    width:100%;
+    margin-left: 0;
+  }
+}
+@media (min-width: 767px){
+  #crform{
+    padding: 30px;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+}
+@media (min-width: 367px){
+  #crform{
+    padding: 24px;
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+}
+@media (max-width: 575px){
+  .colorbutton{
+    margin-top:10px;
+  }
+}
+@media(min-width: 576px){
+  .colorbutton{
+    margin-top: -4px;
+  }
+}
+@media (min-width: 900px){
+  .crcol{
+    padding:20px;
+  }
+}
+label{
+  margin-top: 12px;
+  margin-bottom:0;
+}
+.crcol{
+  padding-bottom: 7px;
+}
+#crform{
+  background-color:rgba(253, 253, 253, 0.644);
+  border-radius: 8px;
+}
+.innerRow{
+  width: 100%;
+}
+.colorbutton{
+  width:100%;
+  float: right;
+  padding:0;
+}
+span{
+  color:rgb(209, 53, 53);
+}
+.error {
+  color: red;
+}
+.custom-select, #textarea-no-resize, #__BVID__259{
+  font-size: 0.75rem;
 }
 </style>

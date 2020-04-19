@@ -1,34 +1,42 @@
 <template>
-    <div class="col-sm-6 col-md-4 col-lg-3">
-
-    <b-card
-    header-text-variant="white"
-    header-tag="header"
-    header-bg-variant="dark"
-    style="max-width: 50rem;"
-    :title = "comment.title"
-    :header = "user.header"
-    :sub-title= "subTitleString"
-    tag="article"
-    >
-    <b-card-text>
-      {{ comment.description }}
-    </b-card-text>
-
-  </b-card>
-
-    </div>
+  <div style="margin-bottom:15px; border-radius:30px;">
+    <b-row id="header">
+      <b-col style="font-size:larger; padding:0; width:fit-content">
+        <b-icon icon="person-fill"></b-icon>
+        <b> {{comment.user.username}} </b>
+      </b-col>
+      <b-col style="text-align:right; padding-top:4px;" class="text-muted">
+        {{new Date(comment.postedOn).toLocaleTimeString()}}   |
+        {{new Date(comment.postedOn).toDateString()}}
+      </b-col>
+    </b-row>
+    <b-row id="comment" style="border-radius:30px; font-size:0.9rem">
+       {{ comment.message }}
+    </b-row>
+  </div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      subTitleString:
-        'Location: ' + this.comment.location +
-         ' | Date: ' + this.comment.date
-    }
-  },
   props: ['comment']
 }
 </script>
+<style scoped>
+  #header{
+    color:#7da2a9e0;
+    width: auto;
+    margin:0px;
+  }
+  #header, #comment{
+    padding: 5px;
+  }
+  #comment{
+    background-color: white;
+    padding-left:15px;
+    padding-right:15px;
+    border-radius:30px;
+    font-size:large;
+    width: inherit;
+    margin-left:0px;
+  }
+</style>

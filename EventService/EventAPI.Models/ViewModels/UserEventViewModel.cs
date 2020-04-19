@@ -1,14 +1,10 @@
-﻿using EventAPI.Models.Models;
-using EventAPI.Models.ViewModels.Events;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EventAPI.Models.ViewModels.Events;
 
 namespace EventAPI.Models.ViewModels
 {
     public class UserEventViewModel
     {
-        public UserEventViewModel(UserViewModel user,EventsForListViewModel events)
+        public UserEventViewModel(UserViewModel user, EventsForListViewModel events)
         {
             this.User = user;
             this.Event = events;

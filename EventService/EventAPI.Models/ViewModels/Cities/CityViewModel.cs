@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EventAPI.Models.ViewModels.Cities
+﻿namespace EventAPI.Models.ViewModels.Cities
 {
     public class CityViewModel
     {

@@ -1,63 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
-using AutoMapper;
-using EventAPI.Data.Context;
-using EventAPI.Models;
-using EventAPI.Models.Enums;
-using EventAPI.Models.Models;
+﻿using EventAPI.Models.Models;
 using EventAPI.Models.QueryParameters;
+using EventAPI.Models.Validations;
 using EventAPI.Models.ViewModels;
-using EventAPI.Models.ViewModels.Events;
-using EventAPI.Services.Categories;
 using EventAPI.Services.EventService;
+using EventAPI.Services.UserEventService;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EventAPI.Controllers
 {
-     
+
 
     [Route("api/[controller]")]
     [ApiController]
-    // [Authorize]
-    
     public class EventController : ControllerBase
     {
         //Database 
-        private readonly LetsPlayDbContext _dbContext;
         private readonly IEventService _eventService;
-        private readonly IMapper _mapper;
+        private readonly IUserEventService _userEventService;
 
-        public EventController(LetsPlayDbContext dbContext,IEventService eventService, IMapper mapper)
+        public EventController(IEventService eventService, IUserEventService userEventService)
         {
-
-            _dbContext = dbContext;
             _eventService = eventService;
-            _mapper = mapper;
+            _userEventService = userEventService;
         }
 
-
-        //returns events in json format
+        //GET: api/event
         [HttpGet()]
         public async Task<IActionResult> GetAll([FromQuery] EventsQueryParameters eventsQueryParameters)
         {
-            
             var events = await _eventService.GetAllEvents(eventsQueryParameters);
-            var eventsToReturn = _mapper.Map<List<EventsForListViewModel>>(events);
+            return Ok(events);
 
-            //eventsToReturn.ForEach(e => e.EventStatus = (Status)Enum.Parse(typeof(Status), e.EventStatus.ToString()));
-            return Ok(eventsToReturn);
-            
         }
-        //Get event/id
+        //GET: api/event/id
         [HttpGet("{id}")]
         public async Task<ActionResult<Event>> GetEventById(int id)
         {
@@ -65,164 +44,101 @@ namespace EventAPI.Controllers
 
             if (dbEvent != null)
             {
-                List<Comment> comments;
-                using (var httpClient = new HttpClient())
-                {
-                    using (var response = await httpClient.GetAsync(@"http://commentapi:80/api/comment/" + id))
-                    {
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-                        comments = JsonConvert.DeserializeObject<List<Comment>>(apiResponse);
-                        dbEvent.Comments = comments;
-                    }
-                }
-                return dbEvent;
-
+                return Ok(dbEvent);
             }
             else return NotFound();
         }
 
 
         // POST: api/event
+        [Authorize]
         [HttpPost()]
-        public async Task<ActionResult<Event>> CreateEvent([FromBody] EventInputModel model)     
+        [ValidateModel]
+        public async Task<ActionResult<Event>> CreateEvent([FromBody] EventInputModel model)
         {
-            if (ModelState.IsValid)
+            if (await _eventService.GetCategory(model.Category) == null ||
+                    await _eventService.GetCity(model.City) == null)
+                return BadRequest("City or Category is incorrect!");
+
+            int userId;
+            if (!int.TryParse(User.Claims.FirstOrDefault(x => x.Type == "userId").Value.ToString(), out userId))
             {
-                var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Name == model.Category);
-                
-                var city = await _dbContext.Cities.FirstOrDefaultAsync(c => c.Name == model.City);
-                if (category == null || city == null)
-                    return BadRequest("City or Category is incorrect!");
-
-                int userId;
-                if (!int.TryParse(User.Claims.FirstOrDefault(x => x.Type == "userId").Value.ToString(), out userId))
-                {
-                    return this.BadRequest("Invalid EventCreatedByID");
-                }
-                var evt = new Event()
-                {
-                    Title = model.Title,
-                    UserCreatedById = userId,
-                    Description = model.Description,
-                    EventStartDate = model.EventStartDate,
-                    PeopleNeeded = model.PeopleNeeded,
-                    Category = category,
-                    City = city,
-                    EventStatus = (int)model.EventStatus,
-                    Address = model.Address,
-                    CreatedOn = DateTime.UtcNow,
-                    UpdatedOn = DateTime.UtcNow,
-
-                };
-
-                var dbEvents = await _dbContext.Events.Where(
-                   x => x.UserCreatedById == evt.UserCreatedById &&
-                   x.Title == evt.Title &&
-                   x.CategoryId == category.Id).ToListAsync();
-                
-                var result = dbEvents.Any(x => Math.Abs((evt.EventStartDate - x.EventStartDate).TotalHours) < 1);
-
-
-                if (result)
-                {
-                    return BadRequest("Event already exists");
-                }
-                if (model.Recurring == null)
-                {
-                    evt.Recurring = null;
-                }
-                else
-                    evt.Recurring = (int)model.Recurring;
-
-
-
-                //Add event to database and save context
-                await _eventService.CreateEvent(evt);
-                return this.Ok(evt);
+                return BadRequest("Invalid EventCreatedByID");
             }
-            else
-                return this.BadRequest("Invalid data");
-
+            if (await _eventService.EventExists(model))
+            {
+                return BadRequest("This event was added recently.");
+            }
+            //Add event to database and save context
+            await _eventService.CreateEvent(model);
+            return StatusCode(201, "Event created.");
 
         }
 
         // PUT: api/event/id
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEventById(int id, [FromBody]EventUpdateModel model)
         {
-            
             if (ModelState.IsValid)
             {
                 var updatedEvent = await _eventService.UpdateEvent(id, model);
-                if(updatedEvent != null)
-                     return this.Ok(updatedEvent);
+                if (updatedEvent != null)
+                    return this.Ok(updatedEvent);
                 else
-                     return this.BadRequest("Invalid ID");
-
+                    return this.BadRequest("Invalid ID");
             }
             else return this.BadRequest();
 
         }
 
-        // DELETE: api/event/delete/id
+        // DELETE: api/event/id
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var evt = await _dbContext.Events.FindAsync(id);
-            if (evt == null)
+            try
+            {
+                await _eventService.DeleteEvent(id);
+                return this.Ok("Event successfully deleted!");
+            }
+            catch
             {
                 return NotFound();
             }
-            else
-            {
-                await _eventService.DeleteEvent(evt);
-                return this.Ok("Event successfully deleted!");
 
-
-            }
         }
+        // GET: api/event/userevents
         [HttpGet("userevents")]
         public async Task<IActionResult> GetUserEvents()
         {
-            List<UserEventViewModel> userEvent = new List<UserEventViewModel>();
-            foreach (var item in await _dbContext.Userevent.ToListAsync())
-            {
-                var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id==item.UserId);
+            var userEvents = await _userEventService.GetUsersEvents();
 
-                var userToReturn = _mapper.Map<UserViewModel>(user);
-
-                var Event = await _dbContext.Events
-                    .Include(e => e.City)
-                    .Include(e => e.Category)
-                    .Include(e => e.User)
-                    .FirstOrDefaultAsync(e => e.Id == item.EventId);
-                var eventToReturn = _mapper.Map<EventsForListViewModel>(Event);
-
-                userEvent.Add(new UserEventViewModel(userToReturn,eventToReturn));
-            }
-
-            return Ok(userEvent);
+            return Ok(userEvents);
         }
+        [Authorize]
+        // POST: api/event/userevents
         [HttpPost("userevents")]
         public async Task<IActionResult> PostUserEvents([FromBody] UserEventAddViewModel userEvent)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(c => c.Id == userEvent.UserId);
-            var Event = await _dbContext.Events.FirstOrDefaultAsync(c => c.Id == userEvent.EventId);
-            if(user == null || Event == null)
+            if (await _userEventService.GetEvent(userEvent.EventId) == null ||
+                await _userEventService.GetUser(userEvent.UserId) == null)
             {
                 return BadRequest("No such user or event");
             }
-            Userevent userevent = new Userevent();
-            userevent.EventId = userEvent.EventId;
-            userevent.UserId = userEvent.UserId;
-            if(await _dbContext.Userevent.FindAsync(userevent.UserId,userevent.EventId) != null)
+            if (await _userEventService.GetUserEvent(userEvent) != null)
             {
                 return BadRequest("Already joined event");
             }
-            _dbContext.Userevent.Add(userevent);
-            await _dbContext.SaveChangesAsync();
+            await _userEventService.AddUserEvent(userEvent);
 
             return StatusCode(201, "Successfully joined event");
+        }
+        [HttpGet("da")]
+        public async Task<IActionResult> GetEventsForLoggedUser()
+        {
+            var events = await _eventService.GetCreatedAndJoinedEvents();
+            return Ok(events);
         }
 
     }

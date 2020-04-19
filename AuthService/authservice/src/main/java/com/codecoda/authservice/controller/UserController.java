@@ -3,7 +3,7 @@ package com.codecoda.authservice.controller;
 import com.codecoda.authservice.config.JwtUtils;
 import com.codecoda.authservice.config.payload.JwtResponse;
 import com.codecoda.authservice.config.payload.LoginRequest;
-import com.codecoda.authservice.models.Role;
+import com.codecoda.authservice.config.payload.UpdateRequest;
 import com.codecoda.authservice.models.User;
 import com.codecoda.authservice.service.RoleService;
 import com.codecoda.authservice.service.UserDetailsImpl;
@@ -11,22 +11,18 @@ import com.codecoda.authservice.service.UserService;
 import com.codecoda.authservice.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -68,6 +64,23 @@ public class UserController {
         return user;
     }
 
+    @GetMapping("/email/{email}")
+    public Boolean uniqueEmail(@PathVariable String email){
+
+        boolean uniqueEmail = userService.existsByEmail(email);
+
+        return uniqueEmail;
+    }
+
+    @GetMapping("/username/{username}")
+    public Boolean uniqueUsername(@PathVariable String username){
+
+        boolean uniqueUsername = userService.existsByUsername(username);
+
+        return uniqueUsername;
+    }
+
+
     @PostMapping("/users")
     public User addUser(@RequestBody @Valid User theUser) {
 
@@ -107,12 +120,11 @@ public class UserController {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getEmail(),
                 roles));
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<?> updateUser(@RequestBody @Valid User theUser, @PathVariable int id) {
+    public ResponseEntity<?> updateUser(@RequestBody @Valid UpdateRequest theUser, @PathVariable int id) {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int loggedUserId = userDetails.getId();
@@ -141,8 +153,11 @@ public class UserController {
                 return ResponseEntity.notFound().build();
             }
 
+            if(theUser.getPassword() != null ){
+                updatedUser.setPassword(encoder.encode(theUser.getPassword()));
+            }
+
             updatedUser.setUsername(theUser.getUsername());
-            updatedUser.setPassword(encoder.encode(theUser.getPassword()));
             updatedUser.setEmail(theUser.getEmail());
             updatedUser.setCreatedAt(updatedUser.getCreatedAt());
             updatedUser.setUpdatedAt(LocalDateTime.now());
@@ -153,7 +168,6 @@ public class UserController {
         }
 
         return ResponseEntity.badRequest().build();
-
     }
 
 //    @DeleteMapping("/users/{userId}")

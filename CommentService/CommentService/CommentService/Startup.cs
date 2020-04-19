@@ -32,6 +32,7 @@ namespace CommentService
 
         public IConfiguration Configuration { get; }
 
+        readonly string CorsOrigins = "CorsOrigins";
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -64,6 +65,14 @@ namespace CommentService
 
             services.AddScoped<ICommentsRepository, CommentsRepository>();
             services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CorsOrigins,
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,10 +83,10 @@ namespace CommentService
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(CorsOrigins);
             app.UseAuthentication();
             app.UseAuthorization();
 

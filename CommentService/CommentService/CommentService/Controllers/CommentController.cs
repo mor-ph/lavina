@@ -33,22 +33,16 @@ namespace CommentService.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var commentsList = await CommentRepo.GetAll();
-            var commentsToReturn = _mapper.Map <IEnumerable<CommentDto>>(commentsList);
+            var commentsToReturn = _mapper.Map<IEnumerable<CommentDto>>(commentsList);
             return Ok(commentsToReturn);
         }
-
-        //GET: api/Comment/5
-        //[HttpGet("{id}", Name = "GetComments")]
-        //public async Task<IActionResult> Get(int id)
-        //{
-        //    return "value";
-        //}
         //GET: api/comment/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCommentsByEventId(int id)
         {
             var comments = await CommentRepo.GetCommentsForEvent(id);
-            return Ok(comments);
+            var commentsToReturn = _mapper.Map<IEnumerable<CommentDto>>(comments);
+            return Ok(commentsToReturn);
         }
 
         [HttpPost]
@@ -56,12 +50,6 @@ namespace CommentService.Controllers
         [Route("/Comments")]
         public async Task<IActionResult> Create([FromBody] CommentViewModel item)
         {           
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-           
-
             int userId;
             if (!int.TryParse(User.Claims.FirstOrDefault(x => x.Type == "userId").Value.ToString(), out userId))
             {
@@ -71,22 +59,12 @@ namespace CommentService.Controllers
             Comment cm = item;
             cm.UserId = userId;
             cm.PostedOn = DateTime.Now;
-
+            cm.UpdatedOn = DateTime.Now;
             // // Real solution
             await CommentRepo.Add(cm);
-            return Ok(await CommentRepo.GetAll());
+            cm.User = await CommentRepo.GetUser(userId);
+            var lastComment = _mapper.Map<CommentDto>(cm);
+            return Ok(lastComment);
         }
-
-        // PUT: api/Comment/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

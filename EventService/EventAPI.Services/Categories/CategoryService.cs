@@ -1,10 +1,10 @@
-﻿using EventAPI.Data.Context;
+﻿using AutoMapper;
+using EventAPI.Data.Context;
 using EventAPI.Models.Models;
+using EventAPI.Models.ViewModels.Categories;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EventAPI.Services.Categories
@@ -12,49 +12,53 @@ namespace EventAPI.Services.Categories
     public class CategoryService : ICategoryService
     {
         private readonly LetsPlayDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CategoryService(LetsPlayDbContext context)
+        public CategoryService(LetsPlayDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
-        public async Task AddCategory(Category category)
+        public async Task AddCategory(CategoriesAddViewModel category)
         {
-            _context.Categories.Add(category);
+            var addcategory = _mapper.Map<Category>(category);
+            _context.Categories.Add(addcategory);
             await _context.SaveChangesAsync();
 
         }
 
-        public async Task<IEnumerable<Category>> GetCategories()
+        public async Task<IEnumerable<MainCategoriesViewModel>> GetCategories()
         {
 
             var mainCategories = await _context.Categories
                 .ToListAsync();
-
-            return mainCategories;
+            var categoriesToReturn = _mapper.Map<IEnumerable<MainCategoriesViewModel>>(mainCategories);
+            return categoriesToReturn;
         }
 
-        public async Task<Category> GetCategory(int id)
+        public async Task<Category> GetCategory(string name)
         {
-            var category = await _context.Categories.Include(c => c.SubCategories).FirstOrDefaultAsync(c => c.Id == id);
+            var category = await _context.Categories.Include(c => c.SubCategories).FirstOrDefaultAsync(c => c.Name == name);
 
             return category;
         }
 
-        public async Task<IEnumerable<Category>> GetMainCategories()
+        public async Task<IEnumerable<MainCategoriesViewModel>> GetMainCategories()
         {
             var categories = await _context.Categories.Where(c => c.ParentCategoryId == 1).ToListAsync();
+            var categoriesToReturn = _mapper.Map<IEnumerable<MainCategoriesViewModel>>(categories);
 
-            return categories;
+            return categoriesToReturn;
         }
-        public async Task<IEnumerable<Category>> GetSubCategories(string parentName)
+        public async Task<IEnumerable<MainCategoriesViewModel>> GetSubCategories(string parentName)
         {
             var category = await _context.Categories.FirstOrDefaultAsync(c => c.Name == parentName);
 
             var subCategories = await _context.Categories
                 .Where(c => c.ParentCategoryId == category.Id)
                 .ToListAsync();
-
-            return subCategories;
+            var subCategoriesToReturn = _mapper.Map<IEnumerable<MainCategoriesViewModel>>(subCategories);
+            return subCategoriesToReturn;
         }
         public async Task<bool> CategoryExists(string name)
         {
@@ -64,7 +68,7 @@ namespace EventAPI.Services.Categories
             return false;
         }
 
-        public async  Task<bool> ParentCategoryExists(int id)
+        public async Task<bool> ParentCategoryExists(int id)
         {
             var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
             if (category.ParentCategoryId == 1)

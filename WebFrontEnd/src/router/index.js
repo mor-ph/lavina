@@ -48,8 +48,8 @@ const routes = [
     path: '/createEvent',
     name: 'CreateEvent',
     component: CreateEvent,
-    beforeEnter (to, from, next) {
-      console.log(store.state.auth.idToken)
+    async beforeEnter (to, from, next) {
+      await store.dispatch('tryAutoLogin')
       if (store.state.auth.idToken) {
         next()
       } else {
@@ -61,7 +61,8 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile,
-    beforeEnter (to, from, next) {
+    async beforeEnter (to, from, next) {
+      await store.dispatch('tryAutoLogin')
       if (store.state.auth.idToken) {
         next()
       } else {
@@ -72,12 +73,28 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    async beforeEnter (to, from, next) {
+      await store.dispatch('tryAutoLogin')
+      if (store.state.auth.idToken) {
+        next('/')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: '/register',
     name: 'Register',
-    component: Register
+    component: Register,
+    async beforeEnter (to, from, next) {
+      await store.dispatch('tryAutoLogin')
+      if (store.state.auth.idToken) {
+        next('/')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: '*',
@@ -85,4 +102,10 @@ const routes = [
   }
 ]
 
-export default new VueRouter({ mode: 'history', routes })
+export default new VueRouter({
+  mode: 'history',
+  routes,
+  scrollBehavior () {
+    window.scrollTo(0, 0)
+  }
+})

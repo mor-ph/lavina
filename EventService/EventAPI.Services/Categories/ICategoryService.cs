@@ -1,20 +1,19 @@
 ﻿using EventAPI.Models.Models;
-using System;
+using EventAPI.Models.ViewModels.Categories;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EventAPI.Services.Categories
 {
     public interface ICategoryService
     {
-        Task<Category> GetCategory(int id);
-        Task<IEnumerable<Category>> GetCategories();
-        Task<IEnumerable<Category>> GetSubCategories(string parentName);
-        Task AddCategory(Category category);
+        Task<Category> GetCategory(string name);
+        Task<IEnumerable<MainCategoriesViewModel>> GetCategories();
+        Task<IEnumerable<MainCategoriesViewModel>> GetSubCategories(string parentName);
+        Task AddCategory(CategoriesAddViewModel category);
         Task<bool> CategoryExists(string name);
 
         Task<bool> ParentCategoryExists(int id);
-        Task<IEnumerable<Category>> GetMainCategories();
+        Task<IEnumerable<MainCategoriesViewModel>> GetMainCategories();
     }
 }

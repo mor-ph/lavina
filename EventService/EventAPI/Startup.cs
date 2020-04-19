@@ -1,10 +1,10 @@
-using System.Globalization;
-using System.Text;
 using AutoMapper;
 using EventAPI.Configuration;
 using EventAPI.Data.Context;
+using EventAPI.Models.Validations;
 using EventAPI.Services.Categories;
 using EventAPI.Services.EventService;
+using EventAPI.Services.UserEventService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace EventAPI
 {
@@ -58,12 +59,18 @@ namespace EventAPI
 
                 };
             });
-            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+                .ConfigureApiBehaviorOptions(options => 
+                {
+                    options.SuppressModelStateInvalidFilter = true;  
+                });
             services.AddDbContext<LetsPlayDbContext>(options =>
             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IEventService, EventService>();
-            services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddTransient<IUserEventService, UserEventService>();
+            services.AddAutoMapper(typeof(EventAPI.Models.Helpers.MappingProfile).Assembly);
+            services.AddHttpContextAccessor();
 
             services.AddCors(options =>
             {
@@ -83,7 +90,7 @@ namespace EventAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 

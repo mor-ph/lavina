@@ -1,45 +1,44 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import eventApi from '../../api/eventApi'
 
 Vue.use(Vuex)
 
 export default {
   state: {
-    initialState: true,
+    refreshed: false,
     events: [],
     filters: {
       category: [],
       subcategories: [],
       location: [],
-      date: ''
+      orderBy: [
+        { value: 'created_date', text: 'Recent' },
+        { value: 'start_date', text: 'Date' }]
     },
     selectedFilters: {
       category: null,
       subcategory: null,
       location: null,
-      date: null
-    },
-    currentEvent: []
+      date: null,
+      orderBy: 'created_date'
+    }
   },
   mutations: {
     setEvents (state, events) {
       state.events = events
-    }, // Check later if u can combine setSelectedFilters
-    // with emptyCategoryAndLocationArrays
-    setSelectedFilters (state, filters) {
-      state.selectedFilters = filters
     },
     emptySubcategoriesArray (state) {
-      state.filters.subcategories = []
+      state.filters.subcategories = [{ value: null, text: 'All' }]
       state.selectedFilters.subcategory = null
     },
-    changeInitialState (state) {
-      state.initialState = !state.initialState
+    changeRefreshed (state) {
+      state.refreshed = !state.refreshed
     },
     emptyCategoryAndLocationArray (state) {
-      state.filters.category = []
-      state.filters.location = []
+      state.filters.category = [{ value: null, text: 'All' }]
+      state.filters.location = [{ value: null, text: 'All' }]
     },
     setCurrentEvent (state, currentEvent) {
       state.currentEvent = []
@@ -48,44 +47,36 @@ export default {
   },
   actions: {
     loadInitalState ({ dispatch, commit, state }) {
-      if (state.initialState) {
-        commit('changeInitialState')
+      if (!state.refreshed) {
+        commit('changeRefreshed')
         const recentEvents = dispatch('fetchRecentEvents')
         const filters = dispatch('fetchFilters')
         return Promise.all([recentEvents, filters])
       }
     },
-    fetchRecentEvents ({ commit }) {
-      // fix this query when the endpoint is ready
-      axios.get('http://localhost:5103/api/event/getall')
-        .then(events => {
-          commit('setEvents', events)
-        }).catch(err => console.log(err))
-    },
-    // fix this query when the endpoint is ready
-    fetchEvents ({ commit, state }) {
-      axios.get('http://localhost:5103/api/event/getall', {
-        params: {
-          category: state.selectedFilters.category,
-          subCategory: state.selectedFilters.subcategory,
-          location: state.selectedFilters.location,
-          date: state.selectedFilters.date
-        }
-      }).then(events => {
-        console.log(events)
-        commit('setEvents', events)
-      }).catch(err => console.log(err))
+
+    async fetchRecentEvents ({ commit }) {
+      try {
+        const events = await eventApi.getRecentEvents()
+        commit('setEvents', events.data)
+      } catch (error) { console.log(error) }
     },
 
-    fetchCategories ({ state }) {
-      axios.get('http://localhost:5103/api/category')
-        .then(categories => {
-          console.log(categories)
-          categories.data.map(category => {
-            if (category.name === 'Root') return
-            state.filters.category.push(category.name)
-          })
-        }).catch(err => console.log(err))
+    fetchFilters ({ dispatch, commit }) {
+      commit('emptyCategoryAndLocationArray')
+      const categories = dispatch('fetchCategories')
+      const locations = dispatch('fetchLocations')
+
+      return Promise.all([categories, locations])
+    },
+
+    async fetchCategories ({ state }) {
+      try {
+        const categories = await eventApi.getCategories()
+        categories.data.map(category => {
+          state.filters.category.push(category.name)
+        })
+      } catch (error) { console.log(error) }
     },
 
     fetchLocations ({ state }) {
@@ -97,56 +88,32 @@ export default {
         }).catch(err => console.log(err))
     },
 
-    fetchFilters ({ dispatch, commit }) {
-      commit('emptyCategoryAndLocationArray')
-      const categories = dispatch('fetchCategories')
-      const locations = dispatch('fetchLocations')
-
-      return Promise.all([categories, locations])
+    async fetchFilteredEvents ({ commit, state }) {
+      const filters = {
+        category: state.selectedFilters.category,
+        subCategory: state.selectedFilters.subcategory,
+        location: state.selectedFilters.location,
+        date: state.selectedFilters.date,
+        sortOrder: state.selectedFilters.orderBy
+      }
+      try {
+        const events = await eventApi.getFilteredEvents(filters)
+        commit('setEvents', events.data)
+      } catch (error) { console.log(error) }
     },
 
-    fetchSubcategories ({ state, commit }, category) {
+    async fetchSubcategories ({ state, commit }, category) {
+      if (category === null) return
       commit('emptySubcategoriesArray')
-      axios.get('http://localhost:5103/api/category/getsub/' + category)
-        .then(subCategories => {
-          console.log(subCategories)
-          subCategories.data.map(subcategory => {
-            state.filters.subcategories.push(subcategory.name)
-          })
-        }).catch(err => console.log(err))
-    },
-
-    createEvent (formData) {
-      console.log(formData)
-      axios.post('http://localhost:5103/api/event/create', {
-        title: formData.title,
-        category: formData.category,
-        subcategory: formData.subcategory,
-        eventStartDate: formData.eventStartDate,
-        city: formData.city,
-        address: formData.address,
-        recurring: formData.recurring,
-        peopleNeeded: formData.peopleNeeded,
-        description: formData.description,
-        eventStatus: 1
-      })
-        .then(response => {
-          console.log(response)
-        }).catch(error => {
-          console.log(error)
+      try {
+        const subCategories = await eventApi.getSubcategories(category)
+        subCategories.data.map(subcategory => {
+          state.filters.subcategories.push(subcategory.name)
         })
-    },
-
-    fetchEventById ({ commit }, eventId) {
-      axios.get('http://localhost:5103/api/event/id', { params: { id: eventId } })
-        .then(currentEvent => {
-          commit('setCurrentEvent', currentEvent)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      } catch (error) { console.log(error) }
     }
   },
+
   getters: {
     events: (state) => {
       return state.events
@@ -156,9 +123,6 @@ export default {
     },
     selectedFilters: (state) => {
       return state.selectedFilters
-    },
-    currentEvent: (state) => {
-      return state.currentEvent
     }
   }
 }
